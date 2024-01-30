@@ -11805,9 +11805,9 @@ var ___cxa_demangle = createExportWrapper("__cxa_demangle");
 
 var ___cxa_is_pointer_type = createExportWrapper("__cxa_is_pointer_type");
 
-var ___start_em_js = Module["___start_em_js"] = 8946484;
+var ___start_em_js = Module["___start_em_js"] = 8947220;
 
-var ___stop_em_js = Module["___stop_em_js"] = 8946966;
+var ___stop_em_js = Module["___stop_em_js"] = 8947702;
 
 function invoke_ii(index, a1) {
  var sp = stackSave();

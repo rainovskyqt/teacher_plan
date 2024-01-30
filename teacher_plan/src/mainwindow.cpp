@@ -24,3 +24,11 @@ void MainWindow::enterToSystem()
     ui->sw_pages->setCurrentIndex(Pages::TotalTime);
 }
 
+
+void MainWindow::on_label_2_linkActivated(const QString &link)
+{
+    Q_UNUSED(link)
+
+    ui->sw_pages->setCurrentIndex(1);
+}
+

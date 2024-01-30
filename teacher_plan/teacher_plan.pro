@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     src/database.cpp \
+    src/educationworkform.cpp \
     src/header.cpp \
     src/loginform.cpp \
     src/main.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     src/database.h \
+    src/educationworkform.h \
     src/header.h \
     src/loginform.h \
     src/mainwindow.h \
@@ -26,6 +28,7 @@ HEADERS += \
     src/totaltimelist.h
 
 FORMS += \
+    src/educationworkform.ui \
     src/header.ui \
     src/loginform.ui \
     src/mainwindow.ui \

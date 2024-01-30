@@ -17,6 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_label_2_linkActivated(const QString &link);
+
 private:
     Ui::MainWindow *ui;
 

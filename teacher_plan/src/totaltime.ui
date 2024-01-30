@@ -13,7 +13,13 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5">
+  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,1">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4"/>
    </item>
@@ -86,13 +92,22 @@
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1,1,1" columnminimumwidth="0,0,0,0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
             <property name="verticalSpacing">
-             <number>1</number>
+             <number>0</number>
             </property>
             <item row="0" column="0" rowspan="2">
              <widget class="QLabel" name="label_2">
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>№
@@ -106,7 +121,13 @@
             <item row="0" column="1" rowspan="2">
              <widget class="QLabel" name="label_3">
               <property name="frameShape">
-               <enum>QFrame::Box</enum>
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>Наименование вида работ</string>
@@ -124,6 +145,12 @@
               <property name="frameShadow">
                <enum>QFrame::Plain</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>Плановое количество часов</string>
               </property>
@@ -139,6 +166,12 @@
               </property>
               <property name="frameShadow">
                <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>I-е полугодие</string>
@@ -162,6 +195,12 @@
               <property name="frameShadow">
                <enum>QFrame::Plain</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>II-е полугодие</string>
               </property>
@@ -184,6 +223,12 @@
               <property name="frameShadow">
                <enum>QFrame::Plain</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>Всего за год</string>
               </property>
@@ -197,6 +242,12 @@
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>I.</string>
               </property>
@@ -209,6 +260,12 @@
              <widget class="QLabel" name="label_8">
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>Учебная работа</string>
@@ -265,6 +322,12 @@
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>II.</string>
               </property>
@@ -277,6 +340,12 @@
              <widget class="QLabel" name="label_11">
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>Учебно-методическая работа</string>
@@ -333,6 +402,12 @@
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>III.</string>
               </property>
@@ -345,6 +420,12 @@
              <widget class="QLabel" name="label_12">
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>Научно-исследовательская работа</string>
@@ -401,6 +482,12 @@
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>IV.</string>
               </property>
@@ -413,6 +500,12 @@
              <widget class="QLabel" name="label_15">
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>Воспитательная и спортивная работа</string>
@@ -469,6 +562,12 @@
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
               </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
               <property name="text">
                <string>V.</string>
               </property>
@@ -481,6 +580,12 @@
              <widget class="QLabel" name="label_17">
               <property name="frameShape">
                <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
               </property>
               <property name="text">
                <string>Другие виды работы</string>
@@ -668,7 +773,7 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>61</height>
+              <height>58</height>
              </size>
             </property>
            </spacer>
