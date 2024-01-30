@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->sw_pages->setCurrentIndex(Pages::Login);
+    ui->w_header->setVisible(false);
 
     connect(ui->page_login, &LoginForm::enterToSystem, this, &MainWindow::enterToSystem);
 }
@@ -19,6 +20,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::enterToSystem()
 {
+     ui->w_header->setVisible(true);
     ui->sw_pages->setCurrentIndex(Pages::TotalTime);
 }
 

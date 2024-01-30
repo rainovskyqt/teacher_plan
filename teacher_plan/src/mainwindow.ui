@@ -14,26 +14,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
+    <item>
+     <widget class="Header" name="w_header" native="true"/>
+    </item>
     <item>
      <widget class="QStackedWidget" name="sw_pages">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="LoginForm" name="page_login"/>
       <widget class="TotalTime" name="page_totalTime"/>
@@ -53,6 +41,12 @@
    <class>LoginForm</class>
    <extends>QWidget</extends>
    <header>loginform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Header</class>
+   <extends>QWidget</extends>
+   <header>header.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

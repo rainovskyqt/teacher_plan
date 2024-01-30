@@ -9,20 +9,29 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    loginform.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    totaltime.cpp
+    src/database.cpp \
+    src/header.cpp \
+    src/loginform.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/totaltime.cpp \
+    src/totaltimelist.cpp
 
 HEADERS += \
-    loginform.h \
-    mainwindow.h \
-    totaltime.h
+    src/database.h \
+    src/header.h \
+    src/loginform.h \
+    src/mainwindow.h \
+    src/totaltime.h \
+    src/totaltimelist.h
 
 FORMS += \
-    loginform.ui \
-    mainwindow.ui \
-    totaltime.ui
+    src/header.ui \
+    src/loginform.ui \
+    src/mainwindow.ui \
+    src/totaltime.ui
+
+INCLUDEPATH += src
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
