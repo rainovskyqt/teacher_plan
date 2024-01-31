@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FormTotalTime</class>
+ <widget class="QWidget" name="FormTotalTime">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1091</width>
+    <height>630</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,1">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Доля занимаемой ставки</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QRadioButton" name="rb_fullTime">
+        <property name="text">
+         <string>1.0 ст.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rb_threeQuaters">
+        <property name="text">
+         <string>0.75 ст.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rb_halfTime">
+        <property name="text">
+         <string>0.5 ст.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rb_quaterTime">
+        <property name="text">
+         <string>0.25 ст.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,1">
+     <item>
+      <widget class="QWidget" name="w_table" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>РАСПРЕДЕЛЕНИЕ ГОДОВОГО ОБЪЕМА ВРЕМЕНИ НА ОСНОВНЫЕ ВИДЫ РАБОТ</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1,1,1" columnminimumwidth="0,0,0,0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0" rowspan="2">
+             <widget class="QLabel" name="label_2">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>№
+п/п</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" rowspan="2">
+             <widget class="QLabel" name="label_3">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Наименование вида работ</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2" colspan="3">
+             <widget class="QLabel" name="label_4">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Плановое количество часов</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="label_5">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>I-е полугодие</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLabel" name="label_6">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>II-е полугодие</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QLabel" name="label_7">
+              <property name="minimumSize">
+               <size>
+                <width>110</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Всего за год</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>I.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="label_8">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Учебная работа</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QSpinBox" name="sb_studyFirst">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QSpinBox" name="sb_studySecond">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QSpinBox" name="sb_studyYear">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>II.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="label_11">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Учебно-методическая работа</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QSpinBox" name="sb_methodicFirst">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QSpinBox" name="sb_methodicSecond">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="4">
+             <widget class="QSpinBox" name="sb_methodicYear">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_13">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>III.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLabel" name="label_12">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Научно-исследовательская работа</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QSpinBox" name="sb_searchingFirst">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="QSpinBox" name="sb_searchingSecond">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="4">
+             <widget class="QSpinBox" name="sb_searchingYear">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>IV.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLabel" name="label_15">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Воспитательная и спортивная работа</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QSpinBox" name="sb_sportFirst">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="3">
+             <widget class="QSpinBox" name="sb_sportSecond">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="4">
+             <widget class="QSpinBox" name="sb_sportYear">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>V.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="label_17">
+              <property name="frameShape">
+               <enum>QFrame::Panel</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Другие виды работы</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QSpinBox" name="sb_otherFirst">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="3">
+             <widget class="QSpinBox" name="sb_otherSecond">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>1512</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="4">
+             <widget class="QSpinBox" name="sb_otherYear">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0" colspan="2">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Всего за учебный год:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="2">
+             <widget class="QSpinBox" name="sb_totalFirst">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="3">
+             <widget class="QSpinBox" name="sb_totalSecond">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>3000</number>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="4">
+             <widget class="QSpinBox" name="sb_totalYear">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>5000</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QWidget" name="w_contlorBtns" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="btn_reset">
+               <property name="text">
+                <string>Сбросить</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>398</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_save">
+               <property name="text">
+                <string>Сохранить</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="w_totalInput" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>58</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Должно быть&lt;/p&gt;&lt;p&gt;ровно &lt;span style=&quot; font-weight:700;&quot;&gt;1512&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
