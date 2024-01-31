@@ -23,18 +23,18 @@ private:
 
 //===========================================================
 
-class PlanTime: public QObject
-{
-    enum WorkType{
-        StudyWork = 1,
-        MethodicWork,
-        SearchingWork,
-        SportWork,
-        OtherWork
-    };
+// class PlanTime: public QObject
+// {
+//     enum WorkType{
+//         StudyWork = 1,
+//         MethodicWork,
+//         SearchingWork,
+//         SportWork,
+//         OtherWork
+//     };
 
-    explicit PlanTime(int id, int workType, bool firstHalf, int count);
+//     explicit PlanTime(int id, int workType, bool firstHalf, int count);
 
-};
+// };
 
 #endif // TOTALTIMELIST_H

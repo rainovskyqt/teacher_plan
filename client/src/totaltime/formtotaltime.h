@@ -7,6 +7,11 @@
 #include <QWidget>
 #include<QSpinBox>
 
+#include "misc/HierarchicalHeaderView.h"
+
+#include "modeltotaltime.h"
+
+
 namespace Ui {
 class FormTotalTime;
 }
@@ -26,6 +31,8 @@ private slots:
 private:
     Ui::FormTotalTime *ui;
 
+    ModelTotalTime m_model;
+
     TotalTimeList *m_totalTimeList;
     QVector<QSpinBox*> m_totals;
     QVector<QSpinBox*> m_years;
@@ -33,6 +40,7 @@ private:
 
     double m_rate;
 
+    void setTable();
     void createConnections();
     void createRateConnections();
     void loadHours();

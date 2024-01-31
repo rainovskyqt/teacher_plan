@@ -3,7 +3,8 @@
 
 #include <QObject>
 
-#include "totaltime/totaltimelist.h"
+#include "totaltime/plantime.h"
+#include <QVector>
 
 class Database : public QObject
 {
@@ -12,7 +13,7 @@ class Database : public QObject
 public:
     static Database &instance();
 
-    TotalTimeList *getTotaTimeList();
+    QVector<PlanTime*> getTotaTimeList();
 
 
 signals:
