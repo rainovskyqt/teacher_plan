@@ -1,5 +1,7 @@
 QT       += core gui
 
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17

@@ -120,7 +120,6 @@ void FormTotalTime::createRateConnections()
     connect(group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, [&](QAbstractButton *btn, bool checked){
         if(checked){
             m_rate = btn->property("rate").toDouble();
-            qDebug() << m_rate;
         }
         ui->lbl_maxHoursMessage->setText(QString("Должно быть ровно\n%1 часов").arg(m_totalTimeList->maxHoursCount(m_rate)));
     });

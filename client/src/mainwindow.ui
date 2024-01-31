@@ -53,7 +53,7 @@
            <enum>QTabWidget::Rounded</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="FormTotalTime" name="tab_totalTime">
            <attribute name="title">
@@ -83,25 +83,25 @@
   <customwidget>
    <class>LoginForm</class>
    <extends>QWidget</extends>
-   <header>loginform.h</header>
+   <header>login/loginform.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>Header</class>
    <extends>QWidget</extends>
-   <header>header.h</header>
+   <header>header/header.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FormTotalTime</class>
    <extends>QWidget</extends>
-   <header>formtotaltime.h</header>
+   <header>totaltime/formtotaltime.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FormEducationWork</class>
    <extends>QWidget</extends>
-   <header>formeducationwork.h</header>
+   <header>educationwork/formeducationwork.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
