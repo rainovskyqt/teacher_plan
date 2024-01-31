@@ -1,7 +1,8 @@
 #include "formtotaltime.h"
 #include "ui_formtotaltime.h"
 
-#include "database.h"
+#include "database/database.h"
+#include <QButtonGroup>
 #include <QHeaderView>
 
 FormTotalTime::FormTotalTime(QWidget *parent)
@@ -26,6 +27,8 @@ void FormTotalTime::on_btn_save_clicked()
 
 void FormTotalTime::createConnections()
 {
+    createRateConnections();
+
     connect(ui->sb_totalFirst, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int value){
         ui->sb_totalYear->setValue(ui->sb_totalSecond->value() + value);
     });
@@ -85,10 +88,10 @@ void FormTotalTime::createConnections()
     });
 
     connect(ui->sb_totalYear, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int value){
-        if(value > m_totalTimeList->maxHoursCount()){
+        if(value > m_totalTimeList->maxHoursCount(m_rate)){
             ui->sb_totalYear->setStyleSheet("background-color: rgb(255, 0, 0);");
             ui->w_totalInput->setVisible(true);
-        }else if(value == m_totalTimeList->maxHoursCount()){
+        }else if(value == m_totalTimeList->maxHoursCount(m_rate)){
             ui->sb_totalYear->setStyleSheet("background-color: rgb(0, 255, 0);");
             ui->w_totalInput->setVisible(false);
         } else {
@@ -96,10 +99,36 @@ void FormTotalTime::createConnections()
             ui->w_totalInput->setVisible(true);
         }
     });
+
+}
+
+void FormTotalTime::createRateConnections()
+{
+    QButtonGroup *group = new QButtonGroup(this);
+    ui->rb_fullTime->setProperty("rate", 1);
+    group->addButton(ui->rb_fullTime);
+
+    ui->rb_threeQuaters->setProperty("rate", 0.75);
+    group->addButton(ui->rb_threeQuaters);
+
+    ui->rb_halfTime->setProperty("rate", 0.5);
+    group->addButton(ui->rb_halfTime);
+
+    ui->rb_quaterTime->setProperty("rate", 0.25);
+    group->addButton(ui->rb_quaterTime);
+
+    connect(group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, [&](QAbstractButton *btn, bool checked){
+        if(checked){
+            m_rate = btn->property("rate").toDouble();
+            qDebug() << m_rate;
+        }
+        ui->lbl_maxHoursMessage->setText(QString("Должно быть ровно\n%1 часов").arg(m_totalTimeList->maxHoursCount(m_rate)));
+    });
 }
 
 void FormTotalTime::setHoursInForm(TotalTimeList *totalTime)
 {
+    ui->rb_quaterTime->setChecked(true);
 }
 
 void FormTotalTime::loadHours()

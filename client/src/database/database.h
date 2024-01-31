@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "totaltimelist.h"
+#include "totaltime/totaltimelist.h"
 
 class Database : public QObject
 {

@@ -9,29 +9,29 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/database.cpp \
-    src/formeducationwork.cpp \
-    src/formtotaltime.cpp \
-    src/header.cpp \
-    src/loginform.cpp \
+    src/database/database.cpp \
+    src/educationwork/formeducationwork.cpp \
+    src/totaltime/formtotaltime.cpp \
+    src/totaltime/totaltimelist.cpp \
+    src/header/header.cpp \
+    src/login/loginform.cpp \
     src/main.cpp \
-    src/mainwindow.cpp \
-    src/totaltimelist.cpp
+    src/mainwindow.cpp
 
 HEADERS += \
-    src/database.h \
-    src/formeducationwork.h \
-    src/formtotaltime.h \
-    src/header.h \
-    src/loginform.h \
-    src/mainwindow.h \
-    src/totaltimelist.h
+    src/database/database.h \
+    src/educationwork/formeducationwork.h \
+    src/totaltime/formtotaltime.h \
+    src/totaltime/totaltimelist.h \
+    src/header/header.h \
+    src/login/loginform.h \
+    src/mainwindow.h
 
 FORMS += \
-    src/formeducationwork.ui \
-    src/formtotaltime.ui \
-    src/header.ui \
-    src/loginform.ui \
+    src/educationwork/formeducationwork.ui \
+    src/totaltime/formtotaltime.ui \
+    src/header/header.ui \
+    src/login/loginform.ui \
     src/mainwindow.ui
 
 INCLUDEPATH += src

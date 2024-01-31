@@ -31,7 +31,10 @@ private:
     QVector<QSpinBox*> m_years;
     QVector<QSpinBox*> m_current;
 
+    double m_rate;
+
     void createConnections();
+    void createRateConnections();
     void loadHours();
     void setHoursInForm(TotalTimeList *totalTime);
     int getCount();

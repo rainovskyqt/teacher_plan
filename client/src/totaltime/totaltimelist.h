@@ -9,7 +9,7 @@ class TotalTimeList : public QObject
 public:
     explicit TotalTimeList(QObject *parent = nullptr);
 
-    int maxHoursCount() const;
+    int maxHoursCount(double rate) const;
 
 public slots:
     void setTime();
