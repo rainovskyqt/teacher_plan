@@ -21,12 +21,30 @@ public:
 
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
+    void setRate(double rate);
+
 private:
+    using Rows = PlanTime::WorkType;
+    enum Columns{
+        RomanNumber,
+        Name,
+        FirstSemester,
+        SecondSemester,
+        Year,
+        Norma,
+        ElementsCount = 6
+    };
+
     QStandardItemModel m_horizontalHeaderModel;
     QVector<PlanTime*> m_hours;
+    double m_rate;
 
+    QVariant color(const QModelIndex &index) const;
     void setHeaderModel();
     void loadData();
+    QVariant currentHours(const QModelIndex &index) const;
+    QVariant totalHours(const QModelIndex &index) const;
+    int hoursCount(int column) const;
 };
 
 #endif // MODELTOTALTIME_H

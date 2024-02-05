@@ -17,7 +17,6 @@ SOURCES += \
     src/totaltime/formtotaltime.cpp \
     src/totaltime/modeltotaltime.cpp \
     src/totaltime/plantime.cpp \
-    src/totaltime/totaltimelist.cpp \
     src/header/header.cpp \
     src/login/loginform.cpp \
     src/main.cpp \
@@ -30,7 +29,6 @@ HEADERS += \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
     src/totaltime/plantime.h \
-    src/totaltime/totaltimelist.h \
     src/header/header.h \
     src/login/loginform.h \
     src/mainwindow.h

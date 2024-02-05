@@ -1,36 +1,29 @@
 #include "plantime.h"
 
-#define MAX__FULL_RATE_HOURS 1512
+#define MAX_FULL_RATE_HOURS 1512
+#define MAX_FULL_RATE_EDUCATIONAL_HOURS 900
 #define ELEMENTS_COUNT 4
 
-PlanTime::PlanTime(QString romanNumeral, QString name, int firstSemesterHours, int secondSemesterHours, int baseId,QObject *parent)
+PlanTime::PlanTime(int orderNumber,QString name, int firstSemesterHours, int secondSemesterHours, int baseId,QObject *parent)
     : QObject{parent}
 {
-    m_romanNumeral = romanNumeral;
+    m_orderNumber = orderNumber;
     m_name = name;
     m_firstSemesterHours = firstSemesterHours;
     m_secondSemesterHours = secondSemesterHours;
     m_baseId = baseId;
 }
 
-int PlanTime::maxHoursCount(double rate)
+int PlanTime::maxHoursCount(WorkType type)
 {
-    return MAX__FULL_RATE_HOURS;
-}
-
-int PlanTime::elementsCount()
-{
-    return ELEMENTS_COUNT;
-}
-
-QString PlanTime::romanNumeral() const
-{
-    return m_romanNumeral;
-}
-
-void PlanTime::setRomanNumeral(const QString &newRomanNumeral)
-{
-    m_romanNumeral = newRomanNumeral;
+    switch (type) {
+    case WorkType::Total:
+        return MAX_FULL_RATE_HOURS;
+    case WorkType::Educational:
+        return MAX_FULL_RATE_EDUCATIONAL_HOURS;
+    default:
+        return 0;
+    }
 }
 
 QString PlanTime::name() const
@@ -38,27 +31,41 @@ QString PlanTime::name() const
     return m_name;
 }
 
-void PlanTime::setName(const QString &newName)
+int PlanTime::semesterHours(Semester semester) const
 {
-    m_name = newName;
+    if(semester == FirstSemester)
+        return m_firstSemesterHours;
+    else
+        return m_secondSemesterHours;
 }
 
-int PlanTime::firstSemesterHours() const
+void PlanTime::setSemesterHours(int semesterHours, Semester semester)
 {
-    return m_firstSemesterHours;
+    if(semester == FirstSemester)
+        m_firstSemesterHours = semesterHours;
+    else
+        m_secondSemesterHours = semesterHours;
 }
 
-void PlanTime::setFirstSemesterHours(int newFirstSemesterHours)
+QString PlanTime::romanNumeral()
 {
-    m_firstSemesterHours = newFirstSemesterHours;
+    return toRomanNumeral(m_orderNumber);
 }
 
-int PlanTime::secondSemesterHours() const
+QString PlanTime::toRomanNumeral(int numeral)
 {
-    return m_secondSemesterHours;
-}
-
-void PlanTime::setSecondSemesterHours(int newSecondSemesterHours)
-{
-    m_secondSemesterHours = newSecondSemesterHours;
+    switch (numeral) {
+    case 1:
+        return "I";
+    case 2:
+        return "II";
+    case 3:
+        return "III";
+    case 4:
+        return "IV";
+    case 5:
+        return "V";
+    default:
+        return "0";
+    }
 }

@@ -7,33 +7,45 @@ class PlanTime : public QObject
 {
     Q_OBJECT
 public:
-    explicit PlanTime(QString romanNumeral,
+
+    enum WorkType{
+        Educational,
+        MethodicWork,
+        SearchingWork,
+        SportWork,
+        OtherWork,
+        Total,
+        ElementsCount = 6
+    };
+
+    enum Semester{
+        FirstSemester,
+        SecondSemestr
+    };
+
+    explicit PlanTime(int orderNumber,
                       QString name,
                       int firstSemesterHours = 0,
                       int secondSemesterHours = 0,
                       int baseId = 0,
                       QObject *parent = nullptr);
 
-    static int maxHoursCount(double rate);
-    static int elementsCount();
+    static int maxHoursCount(WorkType type);
 
-    QString romanNumeral() const;
-    void setRomanNumeral(const QString &newRomanNumeral);
     QString name() const;
-    void setName(const QString &newName);
-    int firstSemesterHours() const;
-    void setFirstSemesterHours(int newFirstSemesterHours);
-    int secondSemesterHours() const;
-    void setSecondSemesterHours(int newSecondSemesterHours);
+    int semesterHours(Semester semester) const;
+    void setSemesterHours(int semesterHours, Semester semester);
+    QString romanNumeral();
 
 signals:
 
 private:
     int m_baseId;
-    QString m_romanNumeral;
+    int m_orderNumber;
     QString m_name;
     int m_firstSemesterHours;
     int m_secondSemesterHours;
+    QString toRomanNumeral(int numeral);
 };
 
 #endif // PLANTIME_H

@@ -210,7 +210,7 @@
    <item>
     <widget class="QStackedWidget" name="sw_approved">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_approved">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -260,7 +260,7 @@
      <widget class="QWidget" name="page_forApproved">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="btn_toApprove">
          <property name="text">
           <string>На утверждение</string>
          </property>

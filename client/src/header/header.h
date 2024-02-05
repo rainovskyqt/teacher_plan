@@ -15,6 +15,10 @@ public:
     explicit Header(QWidget *parent = nullptr);
     ~Header();
 
+private slots:
+    void on_btn_approvedCancel_clicked();
+    void on_btn_toApprove_clicked();
+
 private:
     Ui::Header *ui;
 };
