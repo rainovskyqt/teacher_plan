@@ -20,7 +20,7 @@ public:
 public slots:
 
 signals:
-
+    void logged(bool, QString);
 
 
 private:
@@ -28,6 +28,12 @@ private:
 
     QNetworkAccessManager m_manager;
     QUrl m_serverUrl;
+
+    QString m_token;
+    QString m_refreshToken;
+    int baseId;
+
+    void setHeaders(QNetworkRequest &request);
 };
 
 #endif // DATABASE_H

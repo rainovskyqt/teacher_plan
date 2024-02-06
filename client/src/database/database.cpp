@@ -1,6 +1,8 @@
 #include "database.h"
 
+#include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkReply>
 
 Database *Database::instance()
 {
@@ -32,9 +34,31 @@ void Database::login(QString login, QString password)
     QJsonObject params;
     params.insert("login", login);
     params.insert("password", password);
+
+    QNetworkRequest request;
+    request.setUrl(m_serverUrl.url() + "/login");
+    setHeaders(request);
+
+    QNetworkReply *reply = m_manager.post(request, QJsonDocument(params).toJson());
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        if(reply->error() == QNetworkReply::NoError){
+
+        } else {
+
+        }
+    });
+
+
 }
 
 Database::Database()
 {
 
 }
+
+void Database::setHeaders(QNetworkRequest &request)
+{
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
+}
+

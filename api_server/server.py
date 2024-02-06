@@ -4,6 +4,8 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.exceptions import HTTPException
 import uvicorn
+from starlette.middleware.cors import CORSMiddleware
+
 from dependencies.database import init_database, close_database
 
 from routers.user import router as user_router
@@ -17,6 +19,15 @@ async def lifespan(app: FastAPI):
     close_database()
 
 app = FastAPI(lifespan=lifespan)  # docs_url=None
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.exception_handler(404)
