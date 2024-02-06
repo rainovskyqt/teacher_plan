@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <database/database.h>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -9,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->sw_pages->setCurrentIndex(Pages::Login);
     ui->w_header->setVisible(false);
+
+    Database::instance()->init("10.0.100.59", 8010);
 
     connect(ui->page_login, &LoginForm::enterToSystem, this, &MainWindow::enterToSystem);
 }
@@ -23,12 +27,3 @@ void MainWindow::enterToSystem()
      ui->w_header->setVisible(true);
     ui->sw_pages->setCurrentIndex(Pages::TotalTime);
 }
-
-
-void MainWindow::on_label_2_linkActivated(const QString &link)
-{
-    Q_UNUSED(link)
-
-    ui->sw_pages->setCurrentIndex(1);
-}
-

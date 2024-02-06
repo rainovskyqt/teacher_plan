@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 

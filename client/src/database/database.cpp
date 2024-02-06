@@ -1,9 +1,18 @@
 #include "database.h"
 
-Database &Database::instance()
+#include <QJsonObject>
+
+Database *Database::instance()
 {
     static Database base;
-    return base;
+    return &base;
+}
+
+void Database::init(QString host, int port)
+{
+    m_serverUrl.setScheme("http");
+    m_serverUrl.setHost(host);
+    m_serverUrl.setPort(port);
 }
 
 QVector<PlanTime *> Database::getTotaTimeList()
@@ -16,6 +25,13 @@ QVector<PlanTime *> Database::getTotaTimeList()
     hours.append(new PlanTime(5, "Другие виды работ", 0, 0));
 
     return hours;
+}
+
+void Database::login(QString login, QString password)
+{
+    QJsonObject params;
+    params.insert("login", login);
+    params.insert("password", password);
 }
 
 Database::Database()

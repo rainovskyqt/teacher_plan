@@ -115,7 +115,7 @@ void ModelTotalTime::setHeaderModel()
 
 void ModelTotalTime::loadData()
 {
-    m_hours = Database::instance().getTotaTimeList();
+    m_hours = Database::instance()->getTotaTimeList();
 }
 
 QVariant ModelTotalTime::currentHours(const QModelIndex &index) const
