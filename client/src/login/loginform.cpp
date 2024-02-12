@@ -17,7 +17,21 @@ LoginForm::LoginForm(QWidget *parent)
 #endif
 
     connect(ui->btn_enter, &QPushButton::clicked, this, [&](){
-        Database::instance()->login(ui->line_login->text(), ui->line_password->text());
+        Database::get()->login(ui->line_login->text(), ui->line_password->text());
+    });
+
+    connect(Database::get(), &Database::logged,
+            this, [&](int id, QString token, QString refreshToken){
+        if(id){
+            emit enterToSystem(id, token, refreshToken);
+        } else {
+            QMessageBox::critical(this, tr("Не верные данные"), tr("Не верные учетные данные"));
+            return;
+        }
+    });
+
+    connect(Database::get(), &Database::connectionError, this, [&](QString error){
+        QMessageBox::critical(this, tr("Ошибка подклчючени"), error);
     });
 }
 

@@ -12,19 +12,27 @@ class Database : public QObject
     Q_OBJECT
 
 public:
-    static Database *instance();
+
+    enum Dictionary{
+        Department,
+        Post
+    };
+
+    explicit Database();
+    static Database *get();
     void init(QString host, int port);
-    QVector<PlanTime*> getTotaTimeList();
+    QVector<PlanTime*> totaTimeList();
     void login(QString login, QString password);
+    QMap<int, QString> dictionary(Dictionary name);
 
 public slots:
 
 signals:
-    void logged(bool, QString);
+    void logged(bool, QString, QString);
+    void connectionError(QString);
 
 
 private:
-     explicit Database();
 
     QNetworkAccessManager m_manager;
     QUrl m_serverUrl;

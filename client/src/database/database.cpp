@@ -4,10 +4,11 @@
 #include <QJsonObject>
 #include <QNetworkReply>
 
-Database *Database::instance()
+Q_GLOBAL_STATIC(Database, globalInst)
+
+Database *Database::get()
 {
-    static Database base;
-    return &base;
+    return globalInst();
 }
 
 void Database::init(QString host, int port)
@@ -17,7 +18,7 @@ void Database::init(QString host, int port)
     m_serverUrl.setPort(port);
 }
 
-QVector<PlanTime *> Database::getTotaTimeList()
+QVector<PlanTime *> Database::totaTimeList()
 {
     QVector<PlanTime *> hours;
     hours.append(new PlanTime(1, "Учебная работа", 0, 0));
@@ -42,13 +43,18 @@ void Database::login(QString login, QString password)
 
     QNetworkReply *reply = m_manager.post(request, QJsonDocument(params).toJson());
     connect(reply, &QNetworkReply::readyRead, this, [=](){
-        qDebug(reply->readAll());
-        // if(reply->error() == QNetworkReply::NoError){
-
-        // } else {
-
-        // }
+        if(reply->error() == QNetworkReply::NoError){
+            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+            emit logged(doc["id"].toInt(), doc["token"].toString(), doc["refresh_token"].toString());
+        } else {
+            emit connectionError(reply->errorString());
+        }
     });
+}
+
+QMap<int, QString> Database::dictionary(Dictionary name)
+{
+    return QMap<int, QString>();
 }
 
 Database::Database()
@@ -58,7 +64,7 @@ Database::Database()
 
 void Database::setHeaders(QNetworkRequest &request)
 {
-    // request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    // request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
 }
 

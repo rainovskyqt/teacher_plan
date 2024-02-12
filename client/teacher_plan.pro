@@ -13,6 +13,7 @@ CONFIG += c++17
 SOURCES += \
     src/database/database.cpp \
     src/educationwork/formeducationwork.cpp \
+    src/login/user.cpp \
     src/misc/HierarchicalHeaderView.cpp \
     src/totaltime/formtotaltime.cpp \
     src/totaltime/modeltotaltime.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     src/database/database.h \
     src/educationwork/formeducationwork.h \
+    src/login/user.h \
     src/misc/HierarchicalHeaderView.h \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
