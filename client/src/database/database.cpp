@@ -1,8 +1,11 @@
 #include "database.h"
 
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QNetworkReply>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
+#include <QCryptographicHash>
+
+Database::Database(){}
 
 Database *Database::instance()
 {
@@ -10,14 +13,16 @@ Database *Database::instance()
     return &base;
 }
 
-void Database::init(QString host, int port)
+void Database::init() // TODO setup
 {
-    m_serverUrl.setScheme("http");
-    m_serverUrl.setHost(host);
-    m_serverUrl.setPort(port);
+    m_base = QSqlDatabase::addDatabase("QMYSQL");
+    m_base.setDatabaseName("ordo_dev");
+    m_base.setHostName("10.0.2.18");
+    m_base.setUserName("ordo");
+    m_base.setPassword("ordo7532159");
 }
 
-QVector<PlanTime *> Database::getTotaTimeList()
+QVector<PlanTime *> Database::getTotaTimeList() // TODO из базы
 {
     QVector<PlanTime *> hours;
     hours.append(new PlanTime(1, "Учебная работа", 0, 0));
@@ -30,35 +35,63 @@ QVector<PlanTime *> Database::getTotaTimeList()
 }
 
 void Database::login(QString login, QString password)
-{
-    QJsonObject params;
-    params.insert("login", login);
-    params.insert("password", password);
+{    
+    QByteArray hashPass = QCryptographicHash::hash(password.toUtf8(),
+                                                   QCryptographicHash::Sha256).toHex();
 
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + "/login");
-    setHeaders(request);
+    int id = 0;
 
-    QNetworkReply *reply = m_manager.post(request, QJsonDocument(params).toJson());
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        if(reply->error() == QNetworkReply::NoError){
+    QString queryStr = "SELECT id FROM user WHERE login = :login AND password = :password";
+    QVariantMap args;
+    args.insert(":login", login);
+    args.insert(":password", hashPass);
 
-        } else {
+    QSqlQuery *query = makeQuery(queryStr, args);
 
-        }
-    });
+    if(query->next())
+        id = query->value("id").toInt();
 
+    emit logged(id);
 
+    delete query;
 }
 
-Database::Database()
+QMap<int, QString> Database::dictionary(Dictionary name)
 {
+    QString tableName;
 
+    switch (name) {
+    case Department: tableName = "department"; break;
+    case Post: tableName = "post"; break;
+    }
+
+    QString queryStr = QString("SELECT id, name FROM %1").arg(tableName);
+    QSqlQuery *query = makeQuery(queryStr);
+
+    QMap<int, QString> dictionary;
+    while (query->next()) {
+        dictionary.insert(query->value("id").toInt(), query->value("name").toString());
+    }
+
+    delete query;
+
+    return dictionary;
 }
 
-void Database::setHeaders(QNetworkRequest &request)
+QSqlQuery *Database::makeQuery(QString queryStr, QVariantMap args)
 {
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
-}
+    m_base.open();
 
+    QSqlQuery *query = new QSqlQuery(m_base);
+    query->prepare(queryStr);
+    for(QVariantMap::iterator it = args.begin(); it != args.end(); ++it)
+        query->bindValue(it.key(), it.value());
+
+    if(query->exec()){
+        qDebug()<<query->lastError().text();
+    }
+
+    m_base.close();
+
+    return query;
+}

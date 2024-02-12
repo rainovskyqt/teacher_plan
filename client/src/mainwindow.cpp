@@ -10,20 +10,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->sw_pages->setCurrentIndex(Pages::Login);
-    ui->w_header->setVisible(false);
 
-    Database::instance()->init("10.0.100.59", 8010);
+    Database::instance()->init();        // TODO setup
 
-    connect(ui->page_login, &LoginForm::enterToSystem, this, &MainWindow::enterToSystem);
+    connect(ui->page_login, &LoginForm::enterToSystem, this, [&](int id){
+        m_userBaseId = id;
+        ui->sw_pages->setCurrentIndex(Pages::TotalTime);
+        ui->w_header->init(m_userBaseId);
+    });
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::enterToSystem()
-{
-     ui->w_header->setVisible(true);
-    ui->sw_pages->setCurrentIndex(Pages::TotalTime);
 }

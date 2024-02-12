@@ -5,35 +5,39 @@
 
 #include "totaltime/plantime.h"
 #include <QVector>
-#include <QNetworkAccessManager>
+#include <QSqlDatabase>
+#include <QVariantMap>
+#include <QMap>
 
 class Database : public QObject
 {
     Q_OBJECT
 
 public:
+
+    enum Dictionary{
+        Department,
+        Post
+    };
+
     static Database *instance();
-    void init(QString host, int port);
+    void init();
     QVector<PlanTime*> getTotaTimeList();
+
     void login(QString login, QString password);
+    QMap<int, QString> dictionary(Dictionary name);
 
 public slots:
 
 signals:
-    void logged(bool, QString);
-
+    void logged(int);
 
 private:
-     explicit Database();
+    explicit Database();
 
-    QNetworkAccessManager m_manager;
-    QUrl m_serverUrl;
+    QSqlDatabase m_base;
 
-    QString m_token;
-    QString m_refreshToken;
-    int baseId;
-
-    void setHeaders(QNetworkRequest &request);
+    QSqlQuery *makeQuery(QString queryStr, QVariantMap args = QVariantMap());
 };
 
 #endif // DATABASE_H

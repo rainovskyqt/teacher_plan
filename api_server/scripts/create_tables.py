@@ -8,6 +8,7 @@ auth = Auth()
 
 def create_tables():
     init_database()
+    dbase.drop_tables([User, Posts, Department, Staff])
     dbase.create_tables([User, Posts, Department, Staff], safe=True)
     close_database()
 
@@ -19,10 +20,13 @@ def fill_first_data():
                 name='Препод',middle_name='Академиков')
 
     Posts.create(name='Преподаватель')
+    Posts.create(name='Доцент')
 
     Department.create(name='Кафедра ТиМ ФК')
+    Department.create(name='Кафедра ТиМ ЦВС')
 
     Staff.create(user_id=2, department_id=1,post_id=1)
+    Staff.create(user_id=2, department_id=2, post_id=2)
 
     close_database()
 

@@ -9,7 +9,6 @@ from models.user import User
 router = APIRouter()
 
 
-
 @router.post('/login')
 async def login(user_details: AuthUser):
     user = await get_user(user_details.login)
@@ -22,4 +21,4 @@ async def login(user_details: AuthUser):
     access_token = authenticator.encode_token(base_id=user['id'], token_type='access')
     refresh_token = authenticator.encode_token(base_id=user['id'], token_type='refresh')
 
-    return {'user_id': user['id'], 'access_token': access_token, 'refresh_token': refresh_token}
+    return {'status_code': 200, 'user_id': user['id'], 'access_token': access_token, 'refresh_token': refresh_token}

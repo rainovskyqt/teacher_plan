@@ -4,7 +4,8 @@
 #define MAX_FULL_RATE_EDUCATIONAL_HOURS 900
 #define ELEMENTS_COUNT 4
 
-PlanTime::PlanTime(int orderNumber,QString name, int firstSemesterHours, int secondSemesterHours, int baseId,QObject *parent)
+PlanTime::PlanTime(int orderNumber,QString name, int firstSemesterHours,
+                   int secondSemesterHours, int baseId,QObject *parent)
     : QObject{parent}
 {
     m_orderNumber = orderNumber;

@@ -97,18 +97,18 @@ QVariant ModelTotalTime::color(const QModelIndex &index) const
 
 void ModelTotalTime::setHeaderModel()
 {
-    QStandardItem* item = new QStandardItem("\t№\nп/п\t");
+    QStandardItem* item = new QStandardItem(tr("№\nп/п"));
     m_horizontalHeaderModel.setItem(0, 0, item);
 
-    item = new QStandardItem("\tНаименование вида работ\t");
+    item = new QStandardItem(tr("Наименование вида работ"));
     m_horizontalHeaderModel.setItem(0, 1, item);
 
     item = new QStandardItem("\tПлановое количество часов\t");
 
-    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tI-е полугодие\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tII-е полугодие\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tВсего за год\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tНорма\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("I-е полугодие")));
+    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem(tr("II-е полугодие")));
+    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem(tr("Всего за год")));
+    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem(tr("Норма")));
 
     m_horizontalHeaderModel.setItem(0, 2, item);
 }
@@ -134,7 +134,7 @@ QVariant ModelTotalTime::currentHours(const QModelIndex &index) const
                         m_hours.at(index.row())->semesterHours(PlanTime::SecondSemestr));
     case Norma:
         if(index.row() == 0)
-            return QVariant(QString("Не более: %1").arg(PlanTime::maxHoursCount(PlanTime::Educational) * m_rate));
+            return QVariant(QString(tr("Не более: %1")).arg(PlanTime::maxHoursCount(PlanTime::Educational) * m_rate));
         return QVariant();
     default:
         return QVariant();
@@ -145,7 +145,7 @@ QVariant ModelTotalTime::totalHours(const QModelIndex &index) const
 {
     switch(index.column()) {
     case Name:
-        return QVariant("Всего за учебный год:");
+        return QVariant(tr("Всего за учебный год:"));
     case FirstSemester:
         return QVariant(hoursCount(2));
     case SecondSemester:
@@ -154,7 +154,7 @@ QVariant ModelTotalTime::totalHours(const QModelIndex &index) const
         return QVariant(hoursCount(2) + hoursCount(3));
     case 5:
         if(index.row() == m_hours.count())
-            return QVariant(QString("Ровно: %1").arg(PlanTime::maxHoursCount(PlanTime::Total) * m_rate));
+            return QVariant(QString(tr("Ровно: %1")).arg(PlanTime::maxHoursCount(PlanTime::Total) * m_rate));
         return QVariant();
     default:
         return QVariant();

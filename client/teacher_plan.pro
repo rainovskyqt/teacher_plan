@@ -1,6 +1,7 @@
-QT       += core gui network
+QT       += core gui sql
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

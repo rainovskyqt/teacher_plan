@@ -28,15 +28,12 @@ private:
 
     ModelTotalTime m_model;
 
-    QVector<QSpinBox*> m_totals;
-    QVector<QSpinBox*> m_years;
-    QVector<QSpinBox*> m_current;
-
     double m_rate;
 
     void setTable();
     void createConnections();
     int getCount();
+
 };
 
 #endif // FORMTOTALTIME_H

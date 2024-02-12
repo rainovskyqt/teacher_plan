@@ -26,7 +26,10 @@ private:
         TotalTime
     };
 
+    int m_userBaseId;
+
     bool authentication(QString login, QString password);
     void enterToSystem();
+
 };
 #endif // MAINWINDOW_H

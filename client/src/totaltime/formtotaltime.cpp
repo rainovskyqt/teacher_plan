@@ -43,10 +43,10 @@ void FormTotalTime::createConnections()
     ui->rb_quaterTime->setProperty("rate", 0.25);
     group->addButton(ui->rb_quaterTime);
 
-    connect(group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, [&](QAbstractButton *btn, bool checked){
+    connect(group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled),
+            this, [&](QAbstractButton *btn, bool checked){
         if(checked){
             m_model.setRate(btn->property("rate").toDouble());
         }
     });
 }
-
