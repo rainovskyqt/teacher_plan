@@ -7,6 +7,7 @@ from jose import JWTError, jwt
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
+
 class Auth:
     hasher = CryptContext(schemes=['bcrypt'], deprecated="auto")
     secrets = config('APP_SECRET_STRING')
@@ -14,9 +15,11 @@ class Auth:
     algorithm = 'HS256'
 
     def encode_password(self, password: str):
+        print('encode_password', password, self.hasher.hash(password))
         return self.hasher.hash(password)
 
     def verify_password(self, password: str, encoded_password: str):
+        print('verify_password', password, encoded_password)
         return self.hasher.verify(password, encoded_password)
 
     def encode_token(self, base_id: int, token_type: str):

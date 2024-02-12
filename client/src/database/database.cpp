@@ -31,6 +31,7 @@ QVector<PlanTime *> Database::getTotaTimeList()
 
 void Database::login(QString login, QString password)
 {
+    qDebug("Попытка логина");
     QJsonObject params;
     params.insert("login", login);
     params.insert("password", password);
@@ -41,14 +42,13 @@ void Database::login(QString login, QString password)
 
     QNetworkReply *reply = m_manager.post(request, QJsonDocument(params).toJson());
     connect(reply, &QNetworkReply::readyRead, this, [=](){
-        if(reply->error() == QNetworkReply::NoError){
+        qDebug(reply->readAll());
+        // if(reply->error() == QNetworkReply::NoError){
 
-        } else {
+        // } else {
 
-        }
+        // }
     });
-
-
 }
 
 Database::Database()
@@ -58,7 +58,7 @@ Database::Database()
 
 void Database::setHeaders(QNetworkRequest &request)
 {
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
+    // request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    // request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
 }
 

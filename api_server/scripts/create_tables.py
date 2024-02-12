@@ -8,6 +8,7 @@ auth = Auth()
 
 def create_tables():
     init_database()
+    dbase.drop_tables([User, Posts, Department, Staff])
     dbase.create_tables([User, Posts, Department, Staff], safe=True)
     close_database()
 
