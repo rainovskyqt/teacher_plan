@@ -1,11 +1,11 @@
 from typing import Optional
 
 from pydantic import BaseModel
+from .general import Dictionary
+from .user import UserInBase
 
 
 class OutStaff(BaseModel):
-    base_id: int
-    surname: str
-    name: str
-    middle_name: Optional[str]
+    user: UserInBase
+    posts: Optional[dict[int, int]]
 

@@ -9,7 +9,15 @@ class AuthUser(BaseModel):
     password: str
 
 
+class OutAuthUser(BaseModel):
+    base_id: Optional[int] = None
+    login: str
+    password: str
+
+
 class UserInBase(BaseModel):
     base_id: int
-    token: str
-    refresh_token: str
+    login: str
+    surname: str
+    name: str
+    middle_name: Optional[str] = None

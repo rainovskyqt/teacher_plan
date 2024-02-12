@@ -13,6 +13,6 @@ class Department(BaseModel):
 
 
 class Staff(BaseModel):
-    user_id = ForeignKeyField(User, backref="posts")
-    department_id = ForeignKeyField(Department, backref="staff")
-    post_id = ForeignKeyField(Department, backref="staff")
+    user = ForeignKeyField(User, backref="staff")
+    department = ForeignKeyField(Department, backref="staff")
+    post = ForeignKeyField(Post, backref="staff")

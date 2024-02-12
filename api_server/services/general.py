@@ -18,8 +18,7 @@ dictionaries = {
 
 async def get_dictionary(name: DictionaryName) -> Union[list[Dictionary] | None]:
     table = dictionaries.get(name)
-    query = table.select(table.id, table.name)
-    dict_rows = query.execute()
+    dict_rows = table.select(table.id, table.name).execute()
     if dict_rows:
         return [Dictionary(base_id=row.id, name=row.name) for row in dict_rows]
     else:
