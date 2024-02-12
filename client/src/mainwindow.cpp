@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, [&](int id, QString token, QString refreshToken){
         User::get()->setData(id, token, refreshToken);
         ui->sw_pages->setCurrentIndex(Pages::TotalTime);
-        ui->w_header->init(m_userBaseId);
+        ui->w_header->init();
     });
 }
 

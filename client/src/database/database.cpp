@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkReply>
+#include <QJsonArray>
 
 Q_GLOBAL_STATIC(Database, globalInst)
 
@@ -32,7 +33,6 @@ QVector<PlanTime *> Database::totaTimeList()
 
 void Database::login(QString login, QString password)
 {
-    qDebug("Попытка логина");
     QJsonObject params;
     params.insert("login", login);
     params.insert("password", password);
@@ -45,16 +45,41 @@ void Database::login(QString login, QString password)
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         if(reply->error() == QNetworkReply::NoError){
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-            emit logged(doc["id"].toInt(), doc["token"].toString(), doc["refresh_token"].toString());
+            emit logged(doc["base_id"].toInt(), doc["token"].toString(), doc["refresh_token"].toString());
         } else {
             emit connectionError(reply->errorString());
         }
     });
 }
 
-QMap<int, QString> Database::dictionary(Dictionary name)
+void Database::requestDictionary(Dictionary name)
 {
-    return QMap<int, QString>();
+    QString endpoint;
+    switch (name) {
+    case Department: endpoint = "/departments"; break;
+    case Post: endpoint = "/posts"; break;
+    default:
+        return;
+    }
+
+    QNetworkRequest request;
+    request.setUrl(m_serverUrl.url() + "/academy" + endpoint);
+    setHeaders(request);
+
+    QNetworkReply *reply = m_manager.get(request);
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        QMap<int, QString> dict;
+        QJsonArray doc = QJsonDocument::fromJson(reply->readAll()).array();
+        for (const QJsonValue &value : doc) {
+            if (!value.isObject())
+                continue;
+
+            QJsonObject obj = value.toObject();
+            dict.insert(obj["base_id"].toInt(), obj["name"].toString());
+        }
+        emit dictionary(name, dict);
+        reply->deleteLater();
+    });
 }
 
 Database::Database()

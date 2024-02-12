@@ -14,7 +14,7 @@ Header::~Header()
     delete ui;
 }
 
-void Header::init(int userId)
+void Header::init()
 {
     this->setVisible(true);
     loadDictionaries();
@@ -34,14 +34,21 @@ void Header::on_btn_toApprove_clicked()
 
 void Header::loadDictionaries()
 {
-    loadDictionary(ui->cb_department, Database::Department);
-    loadDictionary(ui->cb_post, Database::Post);
+    connect(Database::get(), &Database::dictionary, this, &Header::loadDictionary);
+    Database::get()->requestDictionary(Database::Department);
+    Database::get()->requestDictionary(Database::Post);
 }
 
-void Header::loadDictionary(QComboBox *cb, Database::Dictionary dict)
+void Header::loadDictionary(Database::Dictionary dictName, QMap<int, QString> dict)
 {
-    QMap<int, QString> departaments = Database::get()->dictionary(dict);
-    for(QMap<int, QString>::iterator it = departaments.begin(); it != departaments.end(); ++it){
+    QComboBox *cb;
+    switch (dictName) {
+    case Database::Department: cb = ui->cb_department; break;
+    case Database::Post: cb = ui->cb_post; break;
+    }
+
+    for(QMap<int, QString>::iterator it = dict.begin(); it != dict.end(); ++it){
         cb->addItem(it.value(), it.key());
     }
 }
+

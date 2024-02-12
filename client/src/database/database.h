@@ -23,14 +23,14 @@ public:
     void init(QString host, int port);
     QVector<PlanTime*> totaTimeList();
     void login(QString login, QString password);
-    QMap<int, QString> dictionary(Dictionary name);
+    void requestDictionary(Dictionary name);
 
 public slots:
 
 signals:
     void logged(bool, QString, QString);
     void connectionError(QString);
-
+    void dictionary(Dictionary, QMap<int, QString>);
 
 private:
 

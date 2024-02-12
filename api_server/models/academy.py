@@ -4,7 +4,7 @@ from models.basemodel import BaseModel
 from models.user import User
 
 
-class Posts(BaseModel):
+class Post(BaseModel):
     name = CharField(unique=True, null=False)
 
 

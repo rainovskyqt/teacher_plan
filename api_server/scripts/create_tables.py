@@ -1,6 +1,6 @@
 from dependencies.database import dbase, init_database, close_database
 from models.user import User
-from models.academy import Posts, Department, Staff
+from models.academy import Post, Department, Staff
 from services.auth import Auth
 
 auth = Auth()
@@ -8,8 +8,8 @@ auth = Auth()
 
 def create_tables():
     init_database()
-    dbase.drop_tables([User, Posts, Department, Staff])
-    dbase.create_tables([User, Posts, Department, Staff], safe=True)
+    dbase.drop_tables([User, Post, Department, Staff])
+    dbase.create_tables([User, Post, Department, Staff], safe=True)
     close_database()
 
 
@@ -17,13 +17,16 @@ def fill_first_data():
     init_database()
     User.create(login='admin', password=auth.encode_password("admin"), surname="Администратор", name='',middle_name='')
     User.create(login='teacher', password=auth.encode_password("teacher"), surname="Тестов",
-                name='Препод',middle_name='Академиков')
+                name='Препод', middle_name='Академиков')
 
-    Posts.create(name='Преподаватель')
+    Post.create(name='Преподаватель')
+    Post.create(name='Доцент')
 
     Department.create(name='Кафедра ТиМ ФК')
+    Department.create(name='Кафедра ТиМ ЦВС')
 
-    Staff.create(user_id=2, department_id=1,post_id=1)
+    Staff.create(user_id=2, department_id=1,post_id=2)
+    Staff.create(user_id=2, department_id=2, post_id=1)
 
     close_database()
 
