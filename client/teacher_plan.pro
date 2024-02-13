@@ -25,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     src/database/database.h \
+    src/database/datamodels.h \
     src/educationwork/formeducationwork.h \
     src/login/user.h \
     src/misc/HierarchicalHeaderView.h \

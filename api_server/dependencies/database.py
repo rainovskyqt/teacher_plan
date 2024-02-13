@@ -1,8 +1,7 @@
-from peewee import MySQLDatabase
 from decouple import config
+from playhouse.pool import PooledMySQLDatabase
 
-
-dbase = MySQLDatabase(None)
+dbase = PooledMySQLDatabase(None)
 
 
 def init_database():
@@ -11,7 +10,9 @@ def init_database():
         user=config('DATABASE_USER'),
         password=config('DATABASE_PASSWORD'),
         host=config('DATABASE_HOST'),
-        port=int(config('DATABASE_PORT'))
+        port=int(config('DATABASE_PORT')),
+        stale_timeout=300, # Время жизни соединения (в секундах)
+        max_connections=20  # Максимальное количество соединений в пуле
     )
     dbase.connect()
 

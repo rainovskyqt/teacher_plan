@@ -7,6 +7,8 @@
 #include <QVector>
 #include <QNetworkAccessManager>
 
+#include "datamodels.h"
+
 class Database : public QObject
 {
     Q_OBJECT
@@ -24,13 +26,15 @@ public:
     QVector<PlanTime*> totaTimeList();
     void login(QString login, QString password);
     void requestDictionary(Dictionary name);
+    void requestStaff(int userId);
 
 public slots:
 
 signals:
-    void logged(bool, QString, QString);
+    void logged(int, QString, QString);
     void connectionError(QString);
     void dictionary(Dictionary, QMap<int, QString>);
+    void staff(Staff);
 
 private:
 

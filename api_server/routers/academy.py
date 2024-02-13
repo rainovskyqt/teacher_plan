@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from services.auth import oauth2_scheme, authenticator
+from services.auth import oauth2_scheme, authenticator, Auth
 from services.general import get_dictionary, DictionaryName
 from services.academy import get_staff_data
 
@@ -18,11 +18,11 @@ async def get_post():
 
 
 @router.get('/staff/{user_id}')
-async def get_staff(user_id: int, token: str = Depends(oauth2_scheme)):
+async def get_staff(user_id: int, r_user_id = Depends(Auth.decode_token)):
     return await get_staff_data(user_id)
 
 
-@router.get('/pplan/{user_id}')
-async def get_personal_plan(user_id: int, token: str = Depends(oauth2_scheme)):
-    print(authenticator.decode_token(token), user_id)
+@router.get('/pplan/{teacher_id}')
+async def get_personal_plan(teacher_id: int, user_id=Depends(Auth.decode_token)):
+    print(teacher_id)
 

@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
-from fastapi import HTTPException
+from fastapi import HTTPException, status, Depends, Header
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from decouple import config
 from jose import JWTError, jwt
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+access_security = JWTAccessBearer
 
 class Auth:
     hasher = CryptContext(schemes=['bcrypt'], deprecated="auto")
@@ -26,22 +27,27 @@ class Auth:
 
         payload = {
             'activate': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            'expires': (datetime.now() + timedelta(days=0, minutes=180)).strftime("%Y-%m-%d %H:%M:%S"),
+            'expires': (datetime.now() + timedelta(days=0, minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+            .strftime("%Y-%m-%d %H:%M:%S"),
             'scope': token_type,
             'base_id': base_id
         }
 
         return jwt.encode(claims=payload, key=self.secrets, algorithm=self.algorithm)
 
-    def decode_token(self, token):
+    def decode_token(self, token: str = Header(...)):
         try:
             payload = jwt.decode(token=token, key=self.secrets, algorithms=[self.algorithm])
-            if payload['scope'] == 'access':
-                return payload['base_id']
-            elif payload['scope'] == 'refresh':
-                return self.encode_token(payload['base_id'], 'access')
-            raise HTTPException(status_code=401, detail='Неверный токен')
+            user_id = payload['base_id']
+            if user_id is None:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Неверные учетные данные')
         except JWTError:
-            raise HTTPException(status_code=401, detail='Неверные учетные данные')
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Неверные учетные данные')
+        return user_id
+
+    def refresh_token(self, user_id: int = Depends(decode_token)):
+        new_access_token = self.encode_token(base_id=user_id, token_type='access')
+        return {"access_token": new_access_token, "token_type": "bearer"}
+
 
 authenticator = Auth()

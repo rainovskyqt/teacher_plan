@@ -12,8 +12,8 @@ LoginForm::LoginForm(QWidget *parent)
     ui->setupUi(this);
 
 #ifdef QT_DEBUG
-    ui->line_login->setText("admin");
-    ui->line_password->setText("admin");
+    ui->line_login->setText("teacher");
+    ui->line_password->setText("teacher");
 #endif
 
     connect(ui->btn_enter, &QPushButton::clicked, this, [&](){
@@ -21,9 +21,9 @@ LoginForm::LoginForm(QWidget *parent)
     });
 
     connect(Database::get(), &Database::logged,
-            this, [&](int id, QString token, QString refreshToken){
-        if(id){
-            emit enterToSystem(id, token, refreshToken);
+            this, [&](int base_id, QString token, QString refreshToken){
+        if(base_id){
+            emit enterToSystem(base_id, token, refreshToken);
         } else {
             QMessageBox::critical(this, tr("Не верные данные"), tr("Не верные учетные данные"));
             return;

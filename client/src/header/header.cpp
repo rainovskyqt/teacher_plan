@@ -14,9 +14,12 @@ Header::~Header()
     delete ui;
 }
 
-void Header::init()
+void Header::init(int userId)
 {
     this->setVisible(true);
+
+    m_userId = userId;
+
     loadDictionaries();
 }
 
@@ -37,6 +40,7 @@ void Header::loadDictionaries()
     connect(Database::get(), &Database::dictionary, this, &Header::loadDictionary);
     Database::get()->requestDictionary(Database::Department);
     Database::get()->requestDictionary(Database::Post);
+    Database::get()->requestStaff(m_userId);
 }
 
 void Header::loadDictionary(Database::Dictionary dictName, QMap<int, QString> dict)

@@ -82,6 +82,29 @@ void Database::requestDictionary(Dictionary name)
     });
 }
 
+void Database::requestStaff(int userId)
+{
+
+    QNetworkRequest request;
+    request.setUrl(m_serverUrl.url() + QString("/academy/staff/%1").arg(userId));
+    setHeaders(request);
+
+    QNetworkReply *reply = m_manager.get(request);
+    connect(reply, &QNetworkReply::readyRead, this, [=](){
+        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        // for (const QJsonValue &value : doc) {
+        //     if (!value.isObject())
+        //         continue;
+
+        //     QJsonObject obj = value.toObject();
+        //     dict.insert(obj["base_id"].toInt(), obj["name"].toString());
+        // }
+        // emit dictionary(name, dict);
+        qDebug() << doc;
+        reply->deleteLater();
+    });
+}
+
 Database::Database()
 {
 

@@ -11,8 +11,8 @@ class AuthUser(BaseModel):
 
 class OutAuthUser(BaseModel):
     base_id: Optional[int] = None
-    login: str
-    password: str
+    token: str
+    refresh_token: str
 
 
 class UserInBase(BaseModel):
