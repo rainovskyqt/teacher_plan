@@ -1,12 +1,15 @@
 from typing import Union
 
+from fastapi import Security
+
 from schemas.academy import OutStaff
 from schemas.user import UserInBase
 from schemas.general import Dictionary
 from models.academy import Staff, Post, Department
+from .auth import Auth
 
 
-async def get_staff_data(user_id: int) -> Union[OutStaff | None]:
+async def get_staff_data(user_id: int, r_user_id: int) -> Union[OutStaff | None]:
     answer = (Staff
               .select(Staff, Post, Department)
               .join(Post)

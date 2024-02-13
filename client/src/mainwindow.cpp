@@ -15,10 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
     Database::get()->init("10.0.100.59", 8010);
 
     connect(ui->page_login, &LoginForm::enterToSystem,
-            this, [&](int id, QString token, QString refreshToken){
-        User::get()->setData(id, token, refreshToken);
+            this, [&](int id){
+        User::get()->setBaseId(id);
         ui->sw_pages->setCurrentIndex(Pages::TotalTime);
-        ui->w_header->init(User::get()->baseId());
+        ui->w_header->init();
     });
 }
 

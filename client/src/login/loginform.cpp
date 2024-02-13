@@ -23,7 +23,7 @@ LoginForm::LoginForm(QWidget *parent)
     connect(Database::get(), &Database::logged,
             this, [&](int base_id, QString token, QString refreshToken){
         if(base_id){
-            emit enterToSystem(base_id, token, refreshToken);
+            emit enterToSystem(base_id);
         } else {
             QMessageBox::critical(this, tr("Не верные данные"), tr("Не верные учетные данные"));
             return;

@@ -16,7 +16,7 @@ public:
     ~LoginForm();
 
 signals:
-    void enterToSystem(int, QString, QString);
+    void enterToSystem(int);
 
 private slots:
 

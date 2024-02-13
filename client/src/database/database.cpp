@@ -45,6 +45,8 @@ void Database::login(QString login, QString password)
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         if(reply->error() == QNetworkReply::NoError){
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+            m_token = doc["token"].toString();
+            m_refreshToken = doc["refresh_token"].toString();
             emit logged(doc["base_id"].toInt(), doc["token"].toString(), doc["refresh_token"].toString());
         } else {
             emit connectionError(reply->errorString());

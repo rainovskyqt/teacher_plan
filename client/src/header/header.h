@@ -18,7 +18,7 @@ public:
     explicit Header(QWidget *parent = nullptr);
     ~Header();
 
-    void init(int userId);
+    void init();
 
 private slots:
     void on_btn_approvedCancel_clicked();
@@ -26,8 +26,6 @@ private slots:
 
 private:
     Ui::Header *ui;
-
-    int m_userId;
 
     void loadDictionaries();
     void loadDictionary(Database::Dictionary dictName, QMap<int, QString> dict);
