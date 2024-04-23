@@ -4,17 +4,18 @@ from fastapi import Security
 
 from schemas.academy import OutStaff
 from schemas.user import UserInBase
-from schemas.general import Dictionary
 from models.academy import Staff, Post, Department
+from models.user import Rang
 from .auth import Auth
 
 
 async def get_staff_data(user_id: int, r_user_id: int) -> Union[OutStaff | None]:
     answer = (Staff
-              .select(Staff, Post, Department)
+              .select(Staff, Post, Department, Rang)
               .join(Post)
               .switch(Staff)
-              .join(Department)
+              .switch(Department)
+              .switch(Rang)
               .where(Staff.user_id == user_id)
               .execute())
 

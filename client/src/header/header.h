@@ -23,6 +23,7 @@ public:
 private slots:
     void on_btn_approvedCancel_clicked();
     void on_btn_toApprove_clicked();
+    void setStaffData();
 
 private:
     Ui::Header *ui;

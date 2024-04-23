@@ -34,7 +34,7 @@ signals:
     void logged(int, QString, QString);
     void connectionError(QString);
     void dictionary(Dictionary, QMap<int, QString>);
-    void staff(Staff);
+    void userDataLoaded();
 
 private:
 

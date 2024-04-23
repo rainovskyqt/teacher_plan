@@ -35,9 +35,19 @@ void Header::on_btn_toApprove_clicked()
 
 }
 
+void Header::setStaffData()
+{
+    ui->line_fio->setText(QString("%1 %2 %3")
+                              .arg(User::get()->userData()->surname(),
+                                   User::get()->userData()->name(),
+                                   User::get()->userData()->middle_name()));
+}
+
 void Header::loadDictionaries()
 {
     connect(Database::get(), &Database::dictionary, this, &Header::loadDictionary);
+    connect(Database::get(), &Database::userDataLoaded, this, &Header::setStaffData);
+
     Database::get()->requestDictionary(Database::Department);
     Database::get()->requestDictionary(Database::Post);
     Database::get()->requestStaff(User::get()->baseId());

@@ -11,7 +11,7 @@ def init_database():
         password=config('DATABASE_PASSWORD'),
         host=config('DATABASE_HOST'),
         port=int(config('DATABASE_PORT')),
-        stale_timeout=300, # Время жизни соединения (в секундах)
+        stale_timeout=300,  # Время жизни соединения (в секундах)
         max_connections=20  # Максимальное количество соединений в пуле
     )
     dbase.connect()

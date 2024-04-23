@@ -5,6 +5,8 @@
 #include <QNetworkReply>
 #include <QJsonArray>
 
+#include <login/user.h>
+
 Q_GLOBAL_STATIC(Database, globalInst)
 
 Database *Database::get()
@@ -86,7 +88,6 @@ void Database::requestDictionary(Dictionary name)
 
 void Database::requestStaff(int userId)
 {
-
     QNetworkRequest request;
     request.setUrl(m_serverUrl.url() + QString("/academy/staff/%1").arg(userId));
     setHeaders(request);
@@ -94,15 +95,18 @@ void Database::requestStaff(int userId)
     QNetworkReply *reply = m_manager.get(request);
     connect(reply, &QNetworkReply::readyRead, this, [=](){
         QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-        // for (const QJsonValue &value : doc) {
-        //     if (!value.isObject())
-        //         continue;
-
-        //     QJsonObject obj = value.toObject();
-        //     dict.insert(obj["base_id"].toInt(), obj["name"].toString());
-        // }
-        // emit dictionary(name, dict);
-        qDebug() << doc;
+        QJsonObject user = doc["user"].toObject();
+        User::get()->userData()->setData(
+            user["login"].toString(),
+            user["surname"].toString(),
+            user["name"].toString(),
+            user["middle_name"].toString()
+            );
+        QJsonObject posts = doc["posts"].toObject();
+        for(QJsonObject::iterator it = posts.begin(); it != posts.end(); it++){
+            User::get()->addPost(it.key().toInt(), it.value().toInt());
+        }
+        emit userDataLoaded();
         reply->deleteLater();
     });
 }

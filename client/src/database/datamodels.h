@@ -16,13 +16,23 @@ struct UserData
 {
     UserData() {}
 public:
-    int id;
-    QString login;
-    QString surname;
-    QString name;
-    QString middle_name;
-};
+    void setData(QString login, QString surname, QString name, QString middle_name){
+        m_login = login;
+        m_surname = surname;
+        m_name = name;
+        m_middle_name = middle_name;}
 
+    QString login() const {return m_login;}
+    QString surname() const {return m_surname;}
+    QString name() const {return m_name;}
+    QString middle_name() const {return m_middle_name;}
+
+private:
+    QString m_login;
+    QString m_surname;
+    QString m_name;
+    QString m_middle_name;
+};
 
 struct Staff
 {
