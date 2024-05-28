@@ -12,12 +12,15 @@ CONFIG += c++17
 
 SOURCES += \
     src/database/database.cpp \
+    src/database/models/plantime.cpp \
+    src/database/models/teacherplan.cpp \
+    src/database/models/userdata.cpp \
     src/educationwork/formeducationwork.cpp \
+    src/header/headercombobox.cpp \
     src/login/user.cpp \
     src/misc/HierarchicalHeaderView.cpp \
     src/totaltime/formtotaltime.cpp \
     src/totaltime/modeltotaltime.cpp \
-    src/totaltime/plantime.cpp \
     src/header/header.cpp \
     src/login/loginform.cpp \
     src/main.cpp \
@@ -25,13 +28,16 @@ SOURCES += \
 
 HEADERS += \
     src/database/database.h \
-    src/database/datamodels.h \
+    src/database/models/datamodels.h \
+    src/database/models/plantime.h \
+    src/database/models/teacherplan.h \
+    src/database/models/userdata.h \
     src/educationwork/formeducationwork.h \
+    src/header/headercombobox.h \
     src/login/user.h \
     src/misc/HierarchicalHeaderView.h \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
-    src/totaltime/plantime.h \
     src/header/header.h \
     src/login/loginform.h \
     src/mainwindow.h

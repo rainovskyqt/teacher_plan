@@ -15,7 +15,7 @@ async def login(user_details: AuthUser):
 
     if user is None:
         return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Пользователь с таким логином не найден")
-    if not authenticator.verify_password(user_details.password, user.password):
+    if not await authenticator.verify_password(user_details.password, user.password):
         return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверный пароль")
 
     token = await authenticator.encode_token(base_id=user.base_id, token_type='access')

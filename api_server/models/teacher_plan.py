@@ -19,6 +19,7 @@ class TeacherPlan(BaseModel):
     year = ForeignKeyField(EducationalYears, backref="teacher_plan")
     status = ForeignKeyField(TeacherPlanStatus, backref="teacher_plan")
     approved_user = ForeignKeyField(User, backref="teacher_plan", null=True)
+    approved_date = DateField(null=True)
     rate = DecimalField(max_digits=3, decimal_places=2, default=1.00)
     department_boss_sign = ForeignKeyField(User, backref="teacher_plan", null=True)
     protocol_number = CharField(null=True)
@@ -30,16 +31,18 @@ class TeacherPlan(BaseModel):
 
 class TeacherPlanWorksType(BaseModel):
     name = CharField(unique=True, null=False)
+    order = IntegerField()
 
     class Meta:
         table_name = 'teacher_plan_works_type'
 
 
 class TeacherPlanTotalHours(BaseModel):
-    teacher_plan = ForeignKeyField(TeacherPlanWorksType, backref="teacher_plan_total_hours")
+    teacher_plan = ForeignKeyField(TeacherPlan, backref="teacher_plan_total_hours")
     work_type = ForeignKeyField(TeacherPlanWorksType)
     first_semester = IntegerField()
     second_semester = IntegerField()
+    order_place = IntegerField()
 
     class Meta:
         table_name = 'teacher_plan_total_hours'

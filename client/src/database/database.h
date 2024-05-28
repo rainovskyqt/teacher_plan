@@ -3,11 +3,12 @@
 
 #include <QObject>
 
-#include "totaltime/plantime.h"
+#include "database/models/plantime.h"
 #include <QVector>
 #include <QNetworkAccessManager>
 
-#include "datamodels.h"
+#include "models/datamodels.h"
+#include "models/teacherplan.h"
 
 class Database : public QObject
 {
@@ -15,7 +16,7 @@ class Database : public QObject
 
 public:
 
-    enum Dictionary{
+    enum DictName{
         Department,
         Post
     };
@@ -23,18 +24,24 @@ public:
     explicit Database();
     static Database *get();
     void init(QString host, int port);
-    QVector<PlanTime*> totaTimeList();
+    QVector<PlanTime*> totalTimeList();
     void login(QString login, QString password);
-    void requestDictionary(Dictionary name);
+    void requestDictionary(DictName name);
     void requestStaff(int userId);
+    void requestYears();
+    void requestPlans(int userId);
+    void requestPlanValues(int planeId);
+    void updateTeacherPlan(TeacherPlan *plan);
 
 public slots:
 
 signals:
     void logged(int, QString, QString);
     void connectionError(QString);
-    void dictionary(Dictionary, QMap<int, QString>);
+    void dictionary(DictName, QList<Dictionary*>);
     void userDataLoaded();
+    void years(QList<StudyYear*>);
+    void teacherPlans(QList<TeacherPlan*>);
 
 private:
 
@@ -46,6 +53,7 @@ private:
     int baseId;
 
     void setHeaders(QNetworkRequest &request);
+    void inputToServer(QString point, QVariantMap values, bool update);
 };
 
 #endif // DATABASE_H

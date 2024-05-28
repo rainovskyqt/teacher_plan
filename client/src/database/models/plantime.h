@@ -23,7 +23,7 @@ public:
         SecondSemestr
     };
 
-    explicit PlanTime(int orderNumber,
+    explicit PlanTime(int workType,
                       QString name,
                       int firstSemesterHours = 0,
                       int secondSemesterHours = 0,
@@ -35,13 +35,16 @@ public:
     QString name() const;
     int semesterHours(Semester semester) const;
     void setSemesterHours(int semesterHours, Semester semester);
-    QString romanNumeral();
+    QString romanNumeral(int number);
+
+    int workType() const;
+    void setWorkType(int newWorkType);
 
 signals:
 
 private:
     int m_baseId;
-    int m_orderNumber;
+    int m_workType;
     QString m_name;
     int m_firstSemesterHours;
     int m_secondSemesterHours;

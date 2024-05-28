@@ -1,9 +1,10 @@
 #ifndef USER_H
 #define USER_H
 
+#include <QMultiMap>
 #include <QObject>
 
-#include <database/datamodels.h>
+#include "database/models/userdata.h"
 
 class User : public QObject
 {
@@ -11,12 +12,14 @@ class User : public QObject
 
 public:
     explicit User();
+    User(const User &other);
+
     static User *get();
 
     int baseId() const;
     void setBaseId(int baseId);
     UserData *userData();
-    QMap<int, int> posts() const;
+    QMultiMap<int, int> posts() const;
     void addPost(int department, int post);
     void removePost(int department, int post);
 

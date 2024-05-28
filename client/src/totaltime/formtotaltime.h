@@ -5,6 +5,9 @@
 
 #include <QWidget>
 #include<QSpinBox>
+#include <QButtonGroup>
+
+#include <database/models/teacherplan.h>
 
 #include "misc/HierarchicalHeaderView.h"
 
@@ -23,6 +26,12 @@ public:
     explicit FormTotalTime(QWidget *parent = nullptr);
     ~FormTotalTime();
 
+public slots:
+    void setPlaneData(TeacherPlan *plan);
+
+signals:
+    void modelDataChanged();
+
 private:
     Ui::FormTotalTime *ui;
 
@@ -31,9 +40,9 @@ private:
     QVector<QSpinBox*> m_totals;
     QVector<QSpinBox*> m_years;
     QVector<QSpinBox*> m_current;
+    QButtonGroup *m_rateGroup;
 
-    double m_rate;
-
+    void setRate(double rate);
     void setTable();
     void createConnections();
     int getCount();

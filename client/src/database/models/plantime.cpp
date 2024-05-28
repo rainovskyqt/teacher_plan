@@ -4,10 +4,10 @@
 #define MAX_FULL_RATE_EDUCATIONAL_HOURS 900
 #define ELEMENTS_COUNT 4
 
-PlanTime::PlanTime(int orderNumber,QString name, int firstSemesterHours, int secondSemesterHours, int baseId,QObject *parent)
+PlanTime::PlanTime(int workType, QString name, int firstSemesterHours, int secondSemesterHours, int baseId, QObject *parent)
     : QObject{parent}
 {
-    m_orderNumber = orderNumber;
+    m_workType = workType;
     m_name = name;
     m_firstSemesterHours = firstSemesterHours;
     m_secondSemesterHours = secondSemesterHours;
@@ -47,9 +47,19 @@ void PlanTime::setSemesterHours(int semesterHours, Semester semester)
         m_secondSemesterHours = semesterHours;
 }
 
-QString PlanTime::romanNumeral()
+QString PlanTime::romanNumeral(int number)
 {
-    return toRomanNumeral(m_orderNumber);
+    return toRomanNumeral(number);
+}
+
+int PlanTime::workType() const
+{
+    return m_workType;
+}
+
+void PlanTime::setWorkType(int newWorkType)
+{
+    m_workType = newWorkType;
 }
 
 QString PlanTime::toRomanNumeral(int numeral)

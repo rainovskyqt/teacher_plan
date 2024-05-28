@@ -21,3 +21,4 @@ class UserInBase(BaseModel):
     surname: str
     name: str
     middle_name: Optional[str] = None
+    rang: Optional[str] = None
