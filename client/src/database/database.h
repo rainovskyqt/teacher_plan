@@ -9,6 +9,7 @@
 
 #include "models/datamodels.h"
 #include "models/teacherplan.h"
+// #include "login/user.h"
 
 class Database : public QObject
 {
@@ -30,8 +31,9 @@ public:
     void requestStaff(int userId);
     void requestYears();
     void requestPlans(int userId);
-    void requestPlanValues(int planeId);
+    void requestPlanValues(int planId);
     void updateTeacherPlan(TeacherPlan *plan);
+    void updateUser(User *user);
 
 public slots:
 
@@ -41,9 +43,18 @@ signals:
     void dictionary(DictName, QList<Dictionary*>);
     void userDataLoaded();
     void years(QList<StudyYear*>);
-    void teacherPlans(QList<TeacherPlan*>);
+    void teacherPlans(QList<PlansList*>);
+    void planValues(TeacherPlan*);
+    void newPlaneId(int);
+
+private slots:
 
 private:
+
+    enum Marks{
+        Other = 1,
+        PlanId
+    };
 
     QNetworkAccessManager m_manager;
     QUrl m_serverUrl;
@@ -52,8 +63,10 @@ private:
     QString m_refreshToken;
     int baseId;
 
-    void setHeaders(QNetworkRequest &request);
-    void inputToServer(QString point, QVariantMap values, bool update);
+    void setHeaders(QNetworkRequest &request, Marks mark = Other);
+    void inputToServer(QString point, QJsonDocument values, bool update, Marks mark = Other);
+    int getId(QString json);
+
 };
 
 #endif // DATABASE_H

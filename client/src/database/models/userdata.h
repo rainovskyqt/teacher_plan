@@ -11,7 +11,7 @@ public:
     UserData(const UserData &other);
 
     void setData(const QString &login, const QString &surname, const QString &name, const QString &middle_name = "",
-                 const QString &rang = "");
+                 const QString &rang = "", const QString &password = "");
 
     QString login() const;
     QString surname() const;
@@ -19,8 +19,11 @@ public:
     QString middle_name() const;
     QString rang() const;
 
+    QString password() const;
+
 private:
     QString m_login;
+    QString m_password;
     QString m_surname;
     QString m_name;
     QString m_middle_name;

@@ -31,6 +31,8 @@ public slots:
 
 signals:
     void modelDataChanged();
+    void savePlan();
+    void rateChanged(double);
 
 private:
     Ui::FormTotalTime *ui;
@@ -46,6 +48,7 @@ private:
     void setTable();
     void createConnections();
     int getCount();
+
 };
 
 #endif // FORMTOTALTIME_H

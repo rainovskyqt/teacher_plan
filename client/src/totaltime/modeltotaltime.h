@@ -4,6 +4,8 @@
 #include <QAbstractTableModel>
 #include <QStandardItemModel>
 
+#include <database/models/teacherplan.h>
+
 #include "../misc/HierarchicalHeaderView.h"
 #include "database/models/plantime.h"
 
@@ -19,12 +21,10 @@ public:
     Qt::ItemFlags flags(const QModelIndex & index) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     void setRate(double rate);
-    void setHours(QMap<int, PlanTime*> hours);
+    void setHours(TeacherPlan *plan);
 
 public slots:
     void reset();
-
-
 
 private:
     using Rows = PlanTime::WorkType;

@@ -47,10 +47,6 @@ class Staff
 {
 public:
     Staff() {}
-    Staff(const Staff &other) {
-        m_user = other.m_user;
-        m_posts = other.m_posts;
-    }
 
 private:
     UserData m_user;

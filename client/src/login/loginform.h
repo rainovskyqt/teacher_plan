@@ -19,9 +19,11 @@ signals:
     void enterToSystem(int);
 
 private slots:
+    void on_btn_register_clicked();
 
 private:
     Ui::LoginForm *ui;
+
 };
 
 #endif // LOGINFORM_H

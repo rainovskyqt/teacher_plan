@@ -18,6 +18,7 @@ SOURCES += \
     src/educationwork/formeducationwork.cpp \
     src/header/headercombobox.cpp \
     src/login/user.cpp \
+    src/login/userform.cpp \
     src/misc/HierarchicalHeaderView.cpp \
     src/totaltime/formtotaltime.cpp \
     src/totaltime/modeltotaltime.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     src/educationwork/formeducationwork.h \
     src/header/headercombobox.h \
     src/login/user.h \
+    src/login/userform.h \
     src/misc/HierarchicalHeaderView.h \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
@@ -44,6 +46,7 @@ HEADERS += \
 
 FORMS += \
     src/educationwork/formeducationwork.ui \
+    src/login/userform.ui \
     src/totaltime/formtotaltime.ui \
     src/header/header.ui \
     src/login/loginform.ui \

@@ -1,10 +1,14 @@
 #include "plantime.h"
+#include "teacherplan.h"
+#include <QJsonDocument>
+#include <QPair>
 
 #define MAX_FULL_RATE_HOURS 1512
 #define MAX_FULL_RATE_EDUCATIONAL_HOURS 900
 #define ELEMENTS_COUNT 4
 
-PlanTime::PlanTime(int workType, QString name, int firstSemesterHours, int secondSemesterHours, int baseId, QObject *parent)
+PlanTime::PlanTime(int workType, QString name, int firstSemesterHours, int secondSemesterHours,
+                   int baseId, int orderPlace, QObject *parent)
     : QObject{parent}
 {
     m_workType = workType;
@@ -12,6 +16,14 @@ PlanTime::PlanTime(int workType, QString name, int firstSemesterHours, int secon
     m_firstSemesterHours = firstSemesterHours;
     m_secondSemesterHours = secondSemesterHours;
     m_baseId = baseId;
+    m_orderPlace = orderPlace;
+    if(parent){
+        auto teacherPlan = qobject_cast<TeacherPlan*>(parent);
+        if(teacherPlan)
+            m_planId = teacherPlan->baseId();
+    } else {
+        m_planId = 0;
+    }
 }
 
 int PlanTime::maxHoursCount(WorkType type)
@@ -60,6 +72,29 @@ int PlanTime::workType() const
 void PlanTime::setWorkType(int newWorkType)
 {
     m_workType = newWorkType;
+}
+
+int PlanTime::baseId() const
+{
+    return m_baseId;
+}
+
+void PlanTime::setBaseId(int newBaseId)
+{
+    m_baseId = newBaseId;
+}
+
+QString PlanTime::toJson()
+{
+    QJsonObject obj;
+    obj.insert("base_id", m_baseId);
+    obj.insert("plan_id", m_planId);
+    obj.insert("work_type_id", m_workType);
+    obj.insert("first_semester", semesterHours(FirstSemester));
+    obj.insert("second_semester", semesterHours(SecondSemestr));
+    obj.insert("name", m_name);
+    obj.insert("order_place", m_orderPlace);
+    return QJsonDocument(obj).toJson(QJsonDocument::Compact);
 }
 
 QString PlanTime::toRomanNumeral(int numeral)

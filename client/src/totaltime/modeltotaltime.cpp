@@ -107,9 +107,9 @@ void ModelTotalTime::setHeaderModel()
     item = new QStandardItem("\tПлановое количество часов\t");
 
     item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tI-е полугодие\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tII-е полугодие\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tВсего за год\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tНорма\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tII-е полугодие\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tВсего за год\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tНорма\t"));
 
     m_horizontalHeaderModel.setItem(0, 2, item);
 }
@@ -117,29 +117,26 @@ void ModelTotalTime::setHeaderModel()
 void ModelTotalTime::setDefaulFields()
 {
     m_hours.clear();
-    m_hours.append(new PlanTime(1, "Учебная работа", 0, 0, 0, this));
-    m_hours.append(new PlanTime(2, "Учебно-методическая работа", 0, 0, 0, this));
-    m_hours.append(new PlanTime(3, "Научно-исследовательская работа", 0, 0, 0, this));
-    m_hours.append(new PlanTime(4, "Воспитательная и спортивная работа", 0, 0, 0, this));
-    m_hours.append(new PlanTime(5, "Другие виды работ", 0, 0, 0, this));
+    m_hours.append(new PlanTime(1, "Учебная работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(2, "Учебно-методическая работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(3, "Научно-исследовательская работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(4, "Воспитательная и спортивная работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(5, "Другие виды работ", 0, 0, 0, 0, this));
 }
 
-void ModelTotalTime::setHours(QMap<int, PlanTime *> hours)
+void ModelTotalTime::setHours(TeacherPlan *plan)
 {
     m_hours.clear();
-    foreach (auto hour, hours.values()) {
+    foreach (auto hour, plan->hours().values()) {
         m_hours.append(hour);
     }
-
-    if(!m_hours.count())
-        setDefaulFields();
 
     emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
 }
 
 void ModelTotalTime::reset()
 {
-    setDefaulFields();
+    // setDefaulFields();
     emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
 }
 

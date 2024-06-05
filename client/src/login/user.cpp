@@ -38,11 +38,3 @@ void User::removePost(int department, int post)
 }
 
 User::User() {m_baseId = 0;}
-
-
-User::User(const User &other)
-{
-    m_baseId = other.m_baseId;
-    m_userData = other.m_userData;
-    m_posts = other.m_posts;
-}

@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 #include "database/database.h"
+#include "login/userform.h"
 
 LoginForm::LoginForm(QWidget *parent)
     : QWidget(parent)
@@ -39,3 +40,16 @@ LoginForm::~LoginForm()
 {
     delete ui;
 }
+
+void LoginForm::on_btn_register_clicked()
+{
+    UserForm *form = new UserForm(this);
+    if(form->exec() == QDialog::Rejected)
+        return;
+
+    auto user = form->newUser();
+    Database::get()->updateUser(user);
+    \
+    form->deleteLater();
+}
+

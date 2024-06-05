@@ -19,6 +19,8 @@ FormTotalTime::FormTotalTime(QWidget *parent)
         emit modelDataChanged();
         ui->btn_save->setEnabled(true);
     });
+
+    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
 }
 
 FormTotalTime::~FormTotalTime()
@@ -29,7 +31,7 @@ FormTotalTime::~FormTotalTime()
 void FormTotalTime::setPlaneData(TeacherPlan *plan)
 {
     setRate(plan->rate());
-    m_model.setHours(plan->hours());
+    m_model.setHours(plan);
     plan->setChanged(false);
 }
 
@@ -68,8 +70,9 @@ void FormTotalTime::createConnections()
     connect(m_rateGroup, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled),
             this, [&](QAbstractButton *btn, bool checked){
                 if(checked){
-                    m_model.setRate(btn->property("rate").toDouble());
+                    auto rate = btn->property("rate").toDouble();
+                    m_model.setRate(rate);
+                    emit rateChanged(rate);
                 }
             });
 }
-

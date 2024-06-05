@@ -1,11 +1,15 @@
 #include "teacherplan.h"
 
+#include <QJsonDocument>
+
 TeacherPlan::TeacherPlan(QObject *parent):
     QObject(parent),
     m_approveUser{nullptr}
 {
     m_hours = QMap<int, PlanTime*>();
     m_changed = false;
+    m_baseId = 0;
+    m_rate = 1;
 }
 
 bool TeacherPlan::isChanged() const
@@ -136,4 +140,13 @@ QMap<int, PlanTime*> TeacherPlan::hours() const
 void TeacherPlan::setHours(const QMap<int, PlanTime *> &newHours)
 {
     m_hours = newHours;
+}
+
+QString TeacherPlan::getHoursJson()
+{
+    QStringList hoursList;
+    foreach (auto hour, m_hours) {
+        hoursList.append(hour->toJson());
+    }
+    return hoursList.join(",");
 }

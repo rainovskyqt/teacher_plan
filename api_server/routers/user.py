@@ -1,8 +1,8 @@
 from typing import Union
 
 from fastapi import APIRouter, HTTPException, status
-from schemas.user import AuthUser, OutAuthUser
-from services.user import get_user
+from schemas.user import AuthUser, OutAuthUser, UserInBase
+from services.user import get_user, add_update_user
 from services.auth import authenticator
 from models.user import User
 
@@ -22,3 +22,8 @@ async def login(user_details: AuthUser):
     refresh_token = await authenticator.encode_token(base_id=user.base_id, token_type='refresh')
 
     return OutAuthUser(base_id=user.base_id, token=token, refresh_token=refresh_token)
+
+
+@router.post('/user')
+async def update_user(user: UserInBase):
+    return await add_update_user(user)

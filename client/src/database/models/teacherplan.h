@@ -7,6 +7,31 @@
 #include "login/user.h"
 #include "plantime.h"
 
+class PlansList : public QObject
+{
+public:
+    explicit PlansList(int id, int user, int year, int department, int post, QObject *parent = nullptr) : QObject(parent) {
+        m_id = id;
+        m_user = user;
+        m_year = year;
+        m_department = department;
+        m_post = post;
+    }
+
+    int id() const {return m_id;}
+    int user() const {return m_user;}
+    int year() const {return m_year;}
+    int department() const {return m_department;}
+    int post() const {return m_post;}
+
+private:
+    int m_id;
+    int m_user;
+    int m_year;
+    int m_department;
+    int m_post;
+};
+
 class TeacherPlan : public QObject
 {
 
@@ -75,6 +100,7 @@ private:
     User* m_approveUser;
     QDate m_approveDate;
     QMap<int, PlanTime*> m_hours;
+    QString getHoursJson();
 
     // User m_departmentBoss;
 };

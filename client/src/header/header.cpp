@@ -13,7 +13,7 @@ Header::Header(QWidget *parent)
 {
     ui->setupUi(this);
     this->setVisible(false);
-    setDefaultData();
+    // setDefaultData();
     ui->lbl_planNumbers->setVisible(false);
     ui->lbl_planNumbersText->setVisible(false);
 
@@ -57,8 +57,6 @@ void Header::setStaffData()
                                    userData->name(),
                                    userData->middle_name()));
     setUserDepartments();
-    setUserYears();
-    setPlanData();
 }
 
 void Header::loadData()
@@ -69,13 +67,20 @@ void Header::loadData()
     connect(database, &Database::years, this, [=](QList<StudyYear*> years){
         qDeleteAll(m_years);
         m_years = years;
+        setUserYears();
     });
-    connect(database, &Database::teacherPlans, this, [=](QList<TeacherPlan*> plans){
+    connect(database, &Database::teacherPlans, this, [=](QList<PlansList*> plans){
         qDeleteAll(m_plans);
         m_plans = plans;
     });
 
+    connect(database, &Database::planValues, this, &Header::setPlanData);
     connect(database, &Database::userDataLoaded, this, &Header::setStaffData);
+
+    connect(database, &Database::newPlaneId, this, [&](int id){
+        m_currentPlan->setBaseId(id);
+        Database::get()->requestPlanValues(id);
+    });
 
     int userId = User::get()->baseId();
     database->requestStaff(userId);
@@ -85,12 +90,27 @@ void Header::loadData()
     database->requestPlans(userId);
 }
 
-void Header::setDefaultData()
+void Header::setDefaultData(int userId, int yearId, int departmentId, int postId)
 {
     m_currentPlan = new TeacherPlan(this);
-    m_plans.append(m_currentPlan);
     setStatus(TeacherPlan::Development);
+    m_currentPlan->setStatusId(TeacherPlan::Development);
+    m_currentPlan->setUserId(userId);
+    m_currentPlan->setYearId(yearId);
+    m_currentPlan->setDepartmentId(departmentId);
+    m_currentPlan->setPostId(postId);
     ui->w_protocol->setVisible(false);
+
+    QMap<int, PlanTime*> hours;
+    hours.insert(1, new PlanTime(1, "Учебная работа", 0, 0, 0, 0, this));
+    hours.insert(2, new PlanTime(2, "Учебно-методическая работа", 0, 0, 0, 0, this));
+    hours.insert(3, new PlanTime(3, "Научно-исследовательская работа", 0, 0, 0, 0, this));
+    hours.insert(4, new PlanTime(4, "Воспитательная и спортивная работа", 0, 0, 0, 0, this));
+    hours.insert(5, new PlanTime(5, "Другие виды работ", 0, 0, 0, 0, this));
+
+    m_currentPlan->setHours(hours);
+
+    emit currentPlanChanged(m_currentPlan);
 }
 
 void Header::setCurrentIndexes()
@@ -150,7 +170,7 @@ void Header::setUserYears()
     }
 }
 
-void Header::setPlanData()
+void Header::setPlan()
 {
     auto year = ui->cb_years->currentData().toInt();
     auto dep = ui->cb_department->currentData().toInt();
@@ -158,19 +178,25 @@ void Header::setPlanData()
 
     bool load = false;
     foreach (auto plan, m_plans) {
-        if(plan->yearId() == year && plan->departmentId() == dep && plan->postId() == post){
-            m_currentPlan = plan;
-            setStatus(plan->statusId());
-            setProtocol(plan);
-            setApproved(plan);
+        if(plan->year() == year && plan->department() == dep && plan->post() == post){
+            qDebug() << "Загружен план с id: " << plan->id();
+            Database::get()->requestPlanValues(plan->id());
             load = true;
             break;
         }
     }
     if(!load)
-        setDefaultData();
+        setDefaultData( User::get()->baseId(), year, dep, post );
+}
 
-    emit currentPlanChanget(m_currentPlan);
+void Header::setPlanData(TeacherPlan *plan)
+{
+    m_currentPlan = plan;
+    setStatus(m_currentPlan->statusId());
+    setProtocol(m_currentPlan);
+    setApproved(m_currentPlan);
+
+    emit currentPlanChanged(m_currentPlan);
 }
 
 void Header::setStatus(int status)
@@ -229,15 +255,16 @@ bool Header::saveQustion()
     if(answer == QMessageBox::Cancel){
         return false;
     } else if(answer == QMessageBox::Yes) {
-        save();
+        savePlan();
     }
-
+    m_currentPlan->setChanged(false);
     return true;
 }
 
-void Header::save()
+void Header::savePlan()
 {
-
+    Database::get()->updateTeacherPlan(m_currentPlan);
+    m_currentPlan->setChanged(false);
 }
 
 void Header::on_cb_department_currentIndexChanged(int index)
@@ -265,7 +292,7 @@ void Header::on_cb_years_currentIndexChanged(int index)
     if(!changeIndex(ui->cb_years))
         return;
 
-    setPlanData();
+    setPlan();
 }
 
 
@@ -276,11 +303,16 @@ void Header::on_cb_post_currentIndexChanged(int index)
     if(!changeIndex(ui->cb_post))
         return;
 
-    setPlanData();
+    setPlan();
 }
 void Header::modelDataChanged()
 {
     m_currentPlan->setChanged(true);
+}
+
+void Header::setRate(double rate)
+{
+    m_currentPlan->setRate(rate);
 }
 
 void Header::clearDicts()

@@ -12,8 +12,6 @@ class User : public QObject
 
 public:
     explicit User();
-    User(const User &other);
-
     static User *get();
 
     int baseId() const;
