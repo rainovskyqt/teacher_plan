@@ -1,4 +1,4 @@
-QT       += core gui network
+QT       += core gui sql network
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 
@@ -11,6 +11,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/database/adapters/dictionaryadapter.cpp \
     src/database/database.cpp \
     src/database/models/plantime.cpp \
     src/database/models/teacherplan.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     src/mainwindow.cpp
 
 HEADERS += \
+    src/database/adapters/dictionaryadapter.h \
     src/database/database.h \
     src/database/models/datamodels.h \
     src/database/models/plantime.h \

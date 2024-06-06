@@ -3,13 +3,14 @@
 #include <QJsonDocument>
 
 TeacherPlan::TeacherPlan(QObject *parent):
-    QObject(parent),
-    m_approveUser{nullptr}
+    QObject(parent)
 {
+    m_approveUserId = 0;
     m_hours = QMap<int, PlanTime*>();
     m_changed = false;
     m_baseId = 0;
     m_rate = 1;
+    m_statusId = Development;
 }
 
 bool TeacherPlan::isChanged() const
@@ -112,14 +113,14 @@ void TeacherPlan::setProtocolDate(const QDate &newProtocolDate)
     m_protocolDate = newProtocolDate;
 }
 
-User *TeacherPlan::approveUser() const
+int TeacherPlan::approveUserId() const
 {
-    return m_approveUser;
+    return m_approveUserId;
 }
 
-void TeacherPlan::setApproveUser(User *newApproveUser)
+void TeacherPlan::setApproveUserId(int approveUserId)
 {
-    m_approveUser = newApproveUser;
+    m_approveUserId = approveUserId;
 }
 
 QDate TeacherPlan::approveDate() const
@@ -142,11 +143,7 @@ void TeacherPlan::setHours(const QMap<int, PlanTime *> &newHours)
     m_hours = newHours;
 }
 
-QString TeacherPlan::getHoursJson()
+void TeacherPlan::addHour(int orderPlace, PlanTime *time)
 {
-    QStringList hoursList;
-    foreach (auto hour, m_hours) {
-        hoursList.append(hour->toJson());
-    }
-    return hoursList.join(",");
+    m_hours.insert(orderPlace, time);
 }

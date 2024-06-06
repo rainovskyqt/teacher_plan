@@ -77,14 +77,15 @@ public:
     QDate protocolDate() const;
     void setProtocolDate(const QDate &newProtocolDate);
 
-    User *approveUser() const;
-    void setApproveUser(User *newApproveUser);
+    int approveUserId() const;
+    void setApproveUserId(int approveUserId);
 
     QDate approveDate() const;
     void setApproveDate(const QDate &newApproveDate);
 
     QMap<int, PlanTime*> hours() const;
     void setHours(const QMap<int, PlanTime*> &newHours);
+    void addHour(int orderPlace, PlanTime* time);
 
 private:
     bool m_changed;
@@ -97,10 +98,9 @@ private:
     double m_rate;
     QString m_protocolNumber;
     QDate m_protocolDate;
-    User* m_approveUser;
+    int m_approveUserId;
     QDate m_approveDate;
     QMap<int, PlanTime*> m_hours;
-    QString getHoursJson();
 
     // User m_departmentBoss;
 };

@@ -4,6 +4,8 @@
 #include "database/database.h"
 #include "login/user.h"
 
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -12,22 +14,26 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->sw_pages->setCurrentIndex(Pages::Login);
 
-    Database::get()->init("10.0.100.157", 8020);
-    // Database::get()->init("10.0.2.18", 8020);
+    // // Database::get()->init("10.0.100.157", 8020);
+    Database::get()->init("10.0.2.18", 3306);
 
     connect(ui->page_login, &LoginForm::enterToSystem,
-            this, [&](int id){
-                User::get()->setBaseId(id);
-                ui->sw_pages->setCurrentIndex(Pages::TotalTime);
-                ui->w_header->init();
+            this, [&](User *user){
+                if(user->baseId()){
+                    ui->w_header->setUser(user);
+                    ui->sw_pages->setCurrentIndex(Pages::TotalTime);
+                    ui->w_header->init();
+                } else {
+                    QMessageBox::critical(this, "Ошибка аутинтефикации", "Введены неверные логин и пароль");
+                }
             });
 
-    connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
-        ui->tab_totalTime->setPlaneData(plan);
-    });
-    connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
-    connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
-    connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
+    // connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
+    //     ui->tab_totalTime->setPlaneData(plan);
+    // });
+    // connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
+    // connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
+    // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
 
 }
 

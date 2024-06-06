@@ -7,6 +7,8 @@
 
 #include "login/user.h"
 
+#include <database/adapters/dictionaryadapter.h>
+
 Header::Header(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Header)
@@ -22,7 +24,6 @@ Header::Header(QWidget *parent)
 
 Header::~Header()
 {
-    clearDicts();
     delete ui;
 }
 
@@ -33,61 +34,75 @@ void Header::init()
     loadData();
 }
 
-void Header::on_btn_approvedCancel_clicked()
+User *Header::user() const
 {
-    ui->sw_approved->setCurrentIndex(Development);
-    m_currentPlan->setStatusId(TeacherPlan::Development);
-    Database::get()->updateTeacherPlan(m_currentPlan);
+    return m_user;
 }
 
-
-void Header::on_btn_toApprove_clicked()
+void Header::setUser(User *newUser)
 {
-    ui->sw_approved->setCurrentIndex(OnApproved);
-    m_currentPlan->setStatusId(TeacherPlan::OnApproved);
-    Database::get()->updateTeacherPlan(m_currentPlan);
+    m_user = newUser;
 }
+
+// void Header::on_btn_approvedCancel_clicked()
+// {
+//     ui->sw_approved->setCurrentIndex(Development);
+//     m_currentPlan->setStatusId(TeacherPlan::Development);
+//     Database::get()->updateTeacherPlan(m_currentPlan);
+// }
+
+
+// void Header::on_btn_toApprove_clicked()
+// {
+//     ui->sw_approved->setCurrentIndex(OnApproved);
+//     m_currentPlan->setStatusId(TeacherPlan::OnApproved);
+//     Database::get()->updateTeacherPlan(m_currentPlan);
+// }
 
 void Header::setStaffData()
 {
-    auto userData = User::get()->userData();
+    auto d = m_user->userData();
     ui->line_fio->setText(QString("%1 %2 %3 %4")
-                              .arg(userData->rang(),
-                                   userData->surname(),
-                                   userData->name(),
-                                   userData->middle_name()));
+                              .arg(d->rang(),
+                                   d->surname(),
+                                   d->name(),
+                                   d->middle_name()));
     setUserDepartments();
 }
 
 void Header::loadData()
 {
-    auto database = Database::get();
+    DictionaryAdapter::setYears(ui->cb_years);
+    DictionaryAdapter::setDictionary(m_departments, Database::Department);
+    DictionaryAdapter::setDictionary(m_posts, Database::Post);
 
-    connect(database, &Database::dictionary, this, &Header::loadDictionary);
-    connect(database, &Database::years, this, [=](QList<StudyYear*> years){
-        qDeleteAll(m_years);
-        m_years = years;
-        setUserYears();
-    });
-    connect(database, &Database::teacherPlans, this, [=](QList<PlansList*> plans){
-        qDeleteAll(m_plans);
-        m_plans = plans;
-    });
+    setStaffData();
 
-    connect(database, &Database::planValues, this, &Header::setPlanData);
-    connect(database, &Database::userDataLoaded, this, &Header::setStaffData);
+    // connect(database, &Database::dictionary, this, &Header::loadDictionary);
+    // connect(database, &Database::years, this, [=](QList<StudyYear*> years){
+    //     qDeleteAll(m_years);
+    //     m_years = years;
+    //     setUserYears();
+    // });
+    // connect(database, &Database::teacherPlans, this, [=](QList<PlansList*> plans){
+    //     qDeleteAll(m_plans);
+    //     m_plans = plans;
+    // });
 
-    connect(database, &Database::newPlaneId, this, [&](int id){
-        m_currentPlan->setBaseId(id);
-        Database::get()->requestPlanValues(id);
-    });
+    // connect(database, &Database::planValues, this, &Header::setPlanData);
+    // connect(database, &Database::userDataLoaded, this, &Header::setStaffData);
 
-    int userId = User::get()->baseId();
-    database->requestStaff(userId);
-    database->requestDictionary(Database::Department);
-    database->requestDictionary(Database::Post);
-    database->requestYears();
-    database->requestPlans(userId);
+    // connect(database, &Database::newPlaneId, this, [&](int id){
+    //     m_currentPlan->setBaseId(id);
+    //     Database::get()->requestPlanValues(id);
+    // });
+
+    // int userId = User::get()->baseId();
+    // database->requestStaff(userId);
+    // database->requestDictionary(Database::Department);
+    // database->requestDictionary(Database::Post);
+    // database->requestYears();
+    // database->requestPlans(userId);
 }
 
 void Header::setDefaultData(int userId, int yearId, int departmentId, int postId)
@@ -135,38 +150,16 @@ bool Header::changeIndex(QComboBox *box)
     return true;
 }
 
-void Header::loadDictionary(Database::DictName dictName, QList<Dictionary*> dict)
-{
-    switch (dictName) {
-    case Database::Department:
-        qDeleteAll(m_departments);
-        m_departments = dict;
-        break;
-    case Database::Post:
-        qDeleteAll(m_posts);
-        m_posts = dict;
-        break;
-    }
-}
 
 void Header::setUserDepartments()
 {
     ui->cb_department->clear();
 
-    auto userDep = User::get()->posts().keys();
+    auto userDep = m_user->posts().keys();
 
     foreach (auto dep, m_departments) {
-        if(userDep.contains(dep->id()))
-            ui->cb_department->addItem(dep->name(), dep->id());
-    }
-}
-
-void Header::setUserYears()
-{
-    ui->cb_years->clear();
-
-    foreach (auto year, m_years) {
-        ui->cb_years->addItem(QString("%1 - %2").arg(year->begin(), year->end()), year->id());
+        if(userDep.contains(dep.id()))
+            ui->cb_department->addItem(dep.name(), dep.id());
     }
 }
 
@@ -176,17 +169,10 @@ void Header::setPlan()
     auto dep = ui->cb_department->currentData().toInt();
     auto post = ui->cb_post->currentData().toInt();
 
-    bool load = false;
-    foreach (auto plan, m_plans) {
-        if(plan->year() == year && plan->department() == dep && plan->post() == post){
-            qDebug() << "Загружен план с id: " << plan->id();
-            Database::get()->requestPlanValues(plan->id());
-            load = true;
-            break;
-        }
-    }
-    if(!load)
-        setDefaultData( User::get()->baseId(), year, dep, post );
+    setPlanData(Database::get()->requestPlan(m_user->baseId(), year, dep, post));
+
+    // if(!load)
+    // setDefaultData( User::get()->baseId(), year, dep, post );
 }
 
 void Header::setPlanData(TeacherPlan *plan)
@@ -195,6 +181,7 @@ void Header::setPlanData(TeacherPlan *plan)
     setStatus(m_currentPlan->statusId());
     setProtocol(m_currentPlan);
     setApproved(m_currentPlan);
+    qDebug() << "Загружен план с id: " << plan->baseId();
 
     emit currentPlanChanged(m_currentPlan);
 }
@@ -231,17 +218,17 @@ void Header::setProtocol(TeacherPlan *plan)
 void Header::setApproved(TeacherPlan *plan)
 {
     auto date = plan->approveDate();
-    auto user = plan->approveUser();
+    // auto user = plan->approveUserId();
 
     if(date.isValid()){
         ui->lbl_approvedDate->setText(date.toString("dd.MM.yyyy"));
-        if(user)
-            ui->lbl_approvedName->setText(QString("%1 %2 %3.%4.")
-                                              .arg(user->userData()->rang(),
-                                                   user->userData()->surname(),
-                                                   !user->userData()->name().isEmpty() ? user->userData()->name().at(0) : QString(),
-                                                   !user->userData()->middle_name().isEmpty() ? user->userData()->middle_name().at(0) : QString())
-                                          );
+        //     if(user)
+        //         ui->lbl_approvedName->setText(QString("%1 %2 %3.%4.")
+        //                                           .arg(user->userData()->rang(),
+        //                                                user->userData()->surname(),
+        //                                                !user->userData()->name().isEmpty() ? user->userData()->name().at(0) : QString(),
+        //                                                !user->userData()->middle_name().isEmpty() ? user->userData()->middle_name().at(0) : QString())
+        //                                       );
     }
 }
 
@@ -277,11 +264,11 @@ void Header::on_cb_department_currentIndexChanged(int index)
     ui->cb_post->clear();
 
     auto userDep = ui->cb_department->currentData().toInt();
-    auto userPosts = User::get()->posts().values(userDep);
+    auto userPosts = m_user->posts().values(userDep);
 
     foreach (auto post, m_posts) {
-        if(userPosts.contains(post->id()))
-            ui->cb_post->addItem(post->name(), post->id());
+        if(userPosts.contains(post.id()))
+            ui->cb_post->addItem(post.name(), post.id());
     }
 }
 
@@ -305,6 +292,7 @@ void Header::on_cb_post_currentIndexChanged(int index)
 
     setPlan();
 }
+
 void Header::modelDataChanged()
 {
     m_currentPlan->setChanged(true);
@@ -314,12 +302,3 @@ void Header::setRate(double rate)
 {
     m_currentPlan->setRate(rate);
 }
-
-void Header::clearDicts()
-{
-    qDeleteAll(m_departments);
-    qDeleteAll(m_posts);
-    qDeleteAll(m_years);
-    qDeleteAll(m_plans);
-}
-

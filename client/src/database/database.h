@@ -1,11 +1,12 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
 #include <QObject>
 
 #include "database/models/plantime.h"
 #include <QVector>
-#include <QNetworkAccessManager>
 
 #include "models/datamodels.h"
 #include "models/teacherplan.h"
@@ -19,33 +20,35 @@ public:
 
     enum DictName{
         Department,
-        Post
+        Post,
+        Rang
     };
 
     explicit Database();
     static Database *get();
     void init(QString host, int port);
-    QVector<PlanTime*> totalTimeList();
-    void login(QString login, QString password);
-    void requestDictionary(DictName name);
-    void requestStaff(int userId);
-    void requestYears();
-    void requestPlans(int userId);
-    void requestPlanValues(int planId);
+    int addUser(User *user);
+    void addPosts(QMultiMap<int, int> posts, int userId);
+    int addPost(int userId, int departmentId, int postId);
+    User *login(QString login, QString password);
+    QList<Dictionary> getDictionary(DictName name);
+    QList<StudyYear> getYears();
+    TeacherPlan *requestPlan(int userId, int yearId, int departmentId, int postId);
     void updateTeacherPlan(TeacherPlan *plan);
-    void updateUser(User *user);
+
+    QString encodePassword(QString password);
 
 public slots:
 
 signals:
-    void logged(int, QString, QString);
-    void connectionError(QString);
-    void dictionary(DictName, QList<Dictionary*>);
-    void userDataLoaded();
-    void years(QList<StudyYear*>);
-    void teacherPlans(QList<PlansList*>);
-    void planValues(TeacherPlan*);
-    void newPlaneId(int);
+    // void logged(int, QString, QString);
+    // void connectionError(QString);
+    // void dictionary(DictName, QList<Dictionary*>);
+    // void userDataLoaded();
+    // void years(QList<StudyYear*>);
+    // void teacherPlans(QList<PlansList*>);
+    // void planValues(TeacherPlan*);
+    // void newPlaneId(int);
 
 private slots:
 
@@ -56,15 +59,14 @@ private:
         PlanId
     };
 
-    QNetworkAccessManager m_manager;
-    QUrl m_serverUrl;
-
     QString m_token;
     QString m_refreshToken;
     int baseId;
 
+
+    QUrl m_serverUrl;
+    QNetworkAccessManager m_manager;
     void setHeaders(QNetworkRequest &request, Marks mark = Other);
-    void inputToServer(QString point, QJsonDocument values, bool update, Marks mark = Other);
     int getId(QString json);
 
 };

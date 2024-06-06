@@ -1,6 +1,8 @@
 #include "userform.h"
 #include "ui_userform.h"
 
+#include <database/adapters/dictionaryadapter.h>
+
 UserForm::UserForm(QWidget *parent, User* user)
     : QDialog(parent)
     , ui(new Ui::UserForm)
@@ -25,7 +27,8 @@ User *UserForm::newUser()
         ui->line_surname->text(),
         ui->line_name->text(),
         ui->line_middleName->text(),
-        ui->line_rang->text(),
+        ui->cb_rang->currentText(),
+        ui->cb_rang->currentData().toInt(),
         ui->line_password->text()
         );
     user->addPost(ui->cb_department->currentData().toInt(), ui->cb_post->currentData().toInt());
@@ -37,27 +40,11 @@ User *UserForm::newUser()
 
 void UserForm::loadData()
 {
-    auto database = Database::get();
+    DictionaryAdapter::setDictionary(ui->cb_rang, Database::Rang);
+    DictionaryAdapter::setDictionary(ui->cb_department, Database::Department);
+    DictionaryAdapter::setDictionary(ui->cb_post, Database::Post);
 
-    connect(database, &Database::dictionary, this, &UserForm::loadDictionary);
-    database->requestDictionary(Database::Department);
-    database->requestDictionary(Database::Post);
-}
+    DictionaryAdapter::setDictionary(ui->cb_department_2, Database::Department);
+    DictionaryAdapter::setDictionary(ui->cb_post_2, Database::Post);
 
-void UserForm::loadDictionary(Database::DictName dictName, QList<Dictionary *> dict)
-{
-    switch (dictName) {
-    case Database::Department:
-        foreach (auto row, dict) {
-            ui->cb_department->addItem(row->name(), row->id());
-            ui->cb_department_2->addItem(row->name(), row->id());
-        }
-        break;
-    case Database::Post:
-        foreach (auto row, dict) {
-            ui->cb_post->addItem(row->name(), row->id());
-            ui->cb_post_2->addItem(row->name(), row->id());
-        }
-        break;
-    }
 }

@@ -14,26 +14,17 @@ LoginForm::LoginForm(QWidget *parent)
 
 #ifdef QT_DEBUG
     ui->line_login->setText("teacher");
-    ui->line_password->setText("teacher");
+    ui->line_password->setText("myPassword");
 #endif
 
     connect(ui->btn_enter, &QPushButton::clicked, this, [&](){
-        Database::get()->login(ui->line_login->text(), ui->line_password->text());
+        User *user = Database::get()->login(ui->line_login->text(), ui->line_password->text());
+        emit enterToSystem(user);
     });
 
-    connect(Database::get(), &Database::logged,
-            this, [&](int base_id, QString token, QString refreshToken){
-        if(base_id){
-            emit enterToSystem(base_id);
-        } else {
-            QMessageBox::critical(this, tr("Не верные данные"), tr("Не верные учетные данные"));
-            return;
-        }
-    });
-
-    connect(Database::get(), &Database::connectionError, this, [&](QString error){
-        QMessageBox::critical(this, tr("Ошибка подклчючени"), error);
-    });
+    // connect(Database::get(), &Database::connectionError, this, [&](QString error){
+    //     QMessageBox::critical(this, tr("Ошибка подклчючени"), error);
+    // });
 }
 
 LoginForm::~LoginForm()
@@ -48,7 +39,7 @@ void LoginForm::on_btn_register_clicked()
         return;
 
     auto user = form->newUser();
-    Database::get()->updateUser(user);
+    Database::get()->addUser(user);
     \
     form->deleteLater();
 }

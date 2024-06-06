@@ -2,10 +2,13 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QNetworkReply>
 #include <QJsonArray>
 #include <QEventLoop>
 #include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QNetworkReply>
+#include <QSqlError>
 
 #include <login/user.h>
 
@@ -18,303 +21,264 @@ Database *Database::get()
 
 void Database::init(QString host, int port)
 {
-    m_serverUrl.setScheme("http");
-    m_serverUrl.setHost(host);
-    m_serverUrl.setPort(port);
+    QSqlDatabase base = QSqlDatabase::addDatabase("QMYSQL");
+    base.setHostName(host);
+    base.setPort(port);
+    base.setDatabaseName("ordo_dev");
+    base.setUserName("ordo");
+    base.setPassword("ordo7532159");
 }
 
-void Database::login(QString login, QString password)
+int Database::addUser(User *user)
 {
-    QJsonObject params;
-    params.insert("login", login);
-    params.insert("password", password);
+    auto base = QSqlDatabase::database();
+    if(!base.open())
+        base.open();
 
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + "/login");
-    setHeaders(request);
+    QString queryString = "INSERT INTO user(login, password, surname, name, middle_name, rang_id) "
+                          "VALUES (:login, :password, :surname, :name, :middle_name, :rang_id)";
 
-    QNetworkReply *reply = m_manager.post(request, QJsonDocument(params).toJson());
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        if(reply->error() == QNetworkReply::NoError){
-            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-            m_token = doc["token"].toString();
-            m_refreshToken = doc["refresh_token"].toString();
-            emit logged(doc["base_id"].toInt(), doc["token"].toString(), doc["refresh_token"].toString());
-        } else {
-            emit connectionError(reply->errorString());
-        }
-    });
+    QSqlQuery query;
+    query.prepare(queryString);
+    query.bindValue(":login", user->userData()->login());
+    query.bindValue(":password", encodePassword(user->userData()->password()));
+    query.bindValue(":surname", user->userData()->surname());
+    query.bindValue(":name", user->userData()->name());
+    query.bindValue(":middle_name", user->userData()->middle_name());
+    if(user->userData()->rangId())
+        query.bindValue(":rang_id", user->userData()->rangId());
+    query.exec();
+
+    query.next();
+    int id = query.lastInsertId().toInt();
+    addPosts(user->posts(), id);
+
+    base.close();
+    return id;
 }
 
-void Database::requestDictionary(DictName name)
+void Database::addPosts(QMultiMap<int, int> posts, int userId)
 {
-    QString endpoint;
-    switch (name) {
-    case Department: endpoint = "/departments"; break;
-    case Post: endpoint = "/posts"; break;
-    default:
-        return;
+    for(auto post = posts.begin(); post != posts.end(); ++post){
+        addPost(userId, post.key(), post.value());
+    }
+}
+
+int Database::addPost(int userId, int departmentId, int postId)
+{
+    auto base = QSqlDatabase::database();
+    if(!base.open())
+        base.open();
+
+    QString queryString = "INSERT INTO staff(user_id, department_id, post_id) "
+                          "VALUES (:user_id, :department_id, :post_id)";
+
+    QSqlQuery query;
+    query.prepare(queryString);
+
+    query.bindValue(":user_id", userId);
+    query.bindValue(":department_id", departmentId);
+    query.bindValue(":post_id", postId);
+    query.exec();
+
+    qDebug() << query.lastError().text();
+
+    base.close();
+    return query.lastInsertId().toInt();
+}
+
+QList<Dictionary> Database::getDictionary(DictName name)
+{
+    auto base = QSqlDatabase::database();
+    if(!base.open())
+        base.open();
+
+    QString tableName;
+
+    switch(name){
+    case Department:
+        tableName = "department";
+        break;
+    case Post:
+        tableName = "post";
+        break;
+    case Rang:
+        tableName = "rang";
+        break;
     }
 
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + "/academy" + endpoint);
-    setHeaders(request);
+    QString queryString = QString("SELECT id, name FROM %1").arg(tableName);
+    QSqlQuery query;
+    query.prepare(queryString);
+    query.exec();
 
-    QNetworkReply *reply = m_manager.get(request);
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        QList<Dictionary*> dict;
-        QJsonArray doc = QJsonDocument::fromJson(reply->readAll()).array();
-        for (const QJsonValue &value : doc) {
-            if (!value.isObject())
-                continue;
+    QList<Dictionary> list;
+    while(query.next()){
+        list.append(Dictionary(query.value("id").toInt(), query.value("name").toString()));
+    }
 
-            QJsonObject obj = value.toObject();
-            dict.append(new Dictionary(obj["base_id"].toInt(), obj["name"].toString()));
-        }
-        emit dictionary(name, dict);
-        reply->deleteLater();
-    });
+    base.close();
+
+    return list;
 }
 
-void Database::requestStaff(int userId)
+QList<StudyYear> Database::getYears()
 {
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + QString("/academy/staff/%1").arg(userId));
-    // setHeaders(request);
+    auto base = QSqlDatabase::database();
+    if(!base.open())
+        base.open();
 
-    QNetworkReply *reply = m_manager.get(request);
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-        QJsonObject jsonUser = doc["user"].toObject();
+    QString queryString = "SELECT id, begin_year, end_year "
+                          "FROM educational_years ";
 
-        auto user = User::get();
+    QSqlQuery query;
+    query.prepare(queryString);
+    query.exec();
 
+    QList<StudyYear> list;
+    while(query.next()){
+        list.append(StudyYear(query.value("begin_year").toString(),
+                              query.value("end_year").toString(),
+                              query.value("id").toInt()));
+    }
+
+    return list;
+}
+
+User *Database::login(QString login, QString password)
+{
+    auto base = QSqlDatabase::database();
+    if(!base.open())
+        base.open();
+
+    QString queryString = "SELECT U.id AS 'uid', U.login, U.password, U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
+                          "S.department_id, S.post_id "
+                          "FROM user U "
+                          "LEFT JOIN `rang` R ON U.rang_id = R.id "
+                          "INNER JOIN `staff` S ON S.user_id = U.id "
+                          "WHERE `login` = :login AND `password` = :password";
+    QSqlQuery query;
+    query.prepare(queryString);
+    query.bindValue(":login", login);
+    query.bindValue(":password", encodePassword(password));
+    query.exec();
+
+    qDebug() << query.lastError().text();
+
+    User *user = new User();
+    while(query.next()){
+        user->setBaseId(query.value("uid").toInt());
         user->userData()->setData(
-            jsonUser["login"].toString(),
-            jsonUser["surname"].toString(),
-            jsonUser["name"].toString(),
-            jsonUser["middle_name"].toString(),
-            jsonUser["rang"].toString()
+            query.value("login").toString(),
+            query.value("surname").toString(),
+            query.value("name").toString(),
+            query.value("middle_name").toString(),
+            query.value("rname").toString(),
+            query.value("rang_id").toInt()
             );
+        user->addPost(query.value("department_id").toInt(), query.value("post_id").toInt());
+    }
 
-        QJsonObject posts = doc["posts"].toObject();
-        for(auto it = posts.begin(); it != posts.end(); it++){
-            user->addPost(it.key().toInt(), it.value().toInt());
-        }
-        emit userDataLoaded();
-        reply->deleteLater();
-    });
+    return user;
 }
 
-void Database::requestYears()
+QString Database::encodePassword(QString password)
 {
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + QString("/academy/years"));
-
-    QNetworkReply *reply = m_manager.get(request);
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        QList<StudyYear*> yearsList;
-        QJsonArray doc = QJsonDocument::fromJson(reply->readAll()).array();
-        for (const QJsonValue &value : doc) {
-            if (!value.isObject())
-                continue;
-
-            QJsonObject obj = value.toObject();
-            yearsList.append(new StudyYear(obj["start"].toString(), obj["end"].toString(), obj["base_id"].toInt()));
-        }
-        emit years(yearsList);
-        reply->deleteLater();
-    });
+    return QString(QCryptographicHash::hash((password.toUtf8()),QCryptographicHash::Md5).toHex());
 }
 
-void Database::requestPlans(int userId)
+TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)
 {
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + QString("/academy/pplan/teacher/%1").arg(userId));
-    // // setHeaders(request);
+    auto base = QSqlDatabase::database();
+    if(!base.open())
+        base.open();
 
-    QNetworkReply *reply = m_manager.get(request);
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        QJsonArray doc = QJsonDocument::fromJson(reply->readAll()).array();
-        QList<PlansList*> plans;
+    QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
+                          "P.protocol_date, H.id, HT.name AS 'hmame', H.work_type_id, H.first_semester, H.second_semester, H.order_place "
+                          "FROM teacher_plan P "
+                          "LEFT JOIN teacher_plan_total_hours H ON H.teacher_plan_id = P.id "
+                          "LEFT JOIN teacher_plan_works_type HT ON H.work_type_id = HT.id "
+                          "WHERE user_id = :user_id AND department_id = :department_id AND post_id = :post_id AND year_id = :year_id";
 
-        for (const QJsonValue &value : doc) {
-            if (!value.isObject())
-                continue;
+    QSqlQuery query;
+    query.prepare(queryString);
+    query.bindValue(":user_id", userId);
+    query.bindValue(":year_id", yearId);
+    query.bindValue(":department_id", departmentId);
+    query.bindValue(":post_id", postId);
+    query.exec();
 
-            QJsonObject obj = value.toObject();
-            plans.append(new PlansList(obj["base_id"].toInt(), obj["user_id"].toInt(),
-                                       obj["year_id"].toInt(), obj["department_id"].toInt(),
-                                       obj["post_id"].toInt()));
-        }
+    qDebug() << query.lastError().text();
 
-        emit teacherPlans(plans);
-        reply->deleteLater();
-    });
-}
+    TeacherPlan *plan = new TeacherPlan();
+    plan->setUserId(userId);
+    plan->setYearId(yearId);
+    plan->setDepartmentId(departmentId);
+    plan->setPostId(postId);
 
-void Database::requestPlanValues(int planId)
-{
-    QNetworkRequest request;
-    request.setUrl(m_serverUrl.url() + QString("/academy/pplan/plan/%1").arg(planId));
-    // setHeaders(request);
+    while(query.next()){
+        plan->setBaseId(query.value("pid").toInt());
+        plan->setStatusId(query.value("status_id").toInt());
+        plan->setApproveUserId(query.value("approved_user_id").toInt());
+        plan->setApproveDate(query.value("approved_date").toDate());
+        plan->setRate(query.value("approved_user_id").toDouble());
+        plan->setProtocolNumber(query.value("protocol_number").toString());
+        plan->setProtocolDate(query.value("protocol_date").toDate());
+        plan->addHour(query.value("order_place").toInt(),
+                      new PlanTime(query.value("work_type_id").toInt(),
+                                   query.value("hmame").toString(),
+                                   query.value("first_semester").toInt(),
+                                   query.value("second_semester").toInt(),
+                                   query.value("second_semester").toInt(),
+                                   query.value("order_place").toInt()
+                                   ));
+    }
 
-    QNetworkReply *reply = m_manager.get(request);
-    connect(reply, &QNetworkReply::readyRead, this, [=](){
-        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-
-        TeacherPlan* plan = new TeacherPlan();
-        plan->setBaseId(doc["base_id"].toInt());
-        plan->setUserId(doc["user_id"].toInt());
-        plan->setDepartmentId(doc["department_id"].toInt());
-        plan->setPostId(doc["post_id"].toInt());
-        plan->setYearId(doc["year_id"].toInt());
-        plan->setStatusId(doc["status_id"].toInt());
-        plan->setRate(doc["rate"].toDouble());
-        plan->setProtocolNumber(doc["protocol_number"].toString());
-
-        QDate pDate = QDate::fromString(doc["protocol_date"].toString(), "yyyy-MM-dd");
-        if(pDate.isValid())
-            plan->setProtocolDate(pDate);
-
-        QJsonObject appUser = doc["approved_user"].toObject();
-        if(!appUser.isEmpty()){
-            User* user = new User();
-            user->setBaseId(appUser["base_id"].toInt());
-            user->userData()->setData(
-                appUser["login"].toString(),
-                appUser["surname"].toString(),
-                appUser["name"].toString(),
-                appUser["middle_name"].toString(),
-                appUser["rang"].toString()
-                );
-            plan->setApproveUser(user);
-        }
-
-        QDate aDate = QDate::fromString(doc["approved_date"].toString(), "yyyy-MM-dd");
-        if(aDate.isValid())
-            plan->setApproveDate(aDate);
-
-        QMap<int, PlanTime*> planeHours;
-        foreach (auto hour, doc["hours"].toArray()) {
-            planeHours.insert(hour["order_place"].toInt(), new PlanTime(
-                                                               hour["work_type_id"].toInt(),
-                                                               hour["name"].toString(),
-                                                               hour["first_semester"].toInt(),
-                                                               hour["second_semester"].toInt(),
-                                                               hour["base_id"].toInt(),
-                                                               hour["order_place"].toInt(),
-                                                               plan
-                                                               ));
-        }
-        plan->setHours(planeHours);
-
-        emit planValues(plan);
-        reply->deleteLater();
-    });
+    return plan;
 }
 
 void Database::updateTeacherPlan(TeacherPlan *plan)
 {
-    QString point = m_serverUrl.url() + "/academy/pplan/plan";
+    //     QString point = m_serverUrl.url() + "/academy/pplan/plan";
 
-    QVariantMap planeMap;
-    planeMap.insert("base_id", plan->baseId());
-    planeMap.insert("user_id", plan->userId());
-    planeMap.insert("department_id", plan->departmentId());
-    planeMap.insert("post_id", plan->postId());
-    planeMap.insert("year_id", plan->yearId());
-    planeMap.insert("status_id", plan->statusId());
-    if(plan->approveUser()){
-        planeMap.insert("approved_user_id", plan->approveUser()->baseId());
-        planeMap.insert("approved_date", plan->approveDate().toString("yyyy-MM-dd"));
-    }
-    planeMap.insert("rate", plan->rate());
-    if(plan->protocolDate().isValid()){
-        planeMap.insert("protocol_number", plan->protocolNumber());
-        planeMap.insert("protocol_date", plan->protocolDate().toString("yyyy-MM-dd"));
-    }
-    QJsonArray hours;
-    auto planeHours = plan->hours();
-    for (auto hour = planeHours.begin(); hour != planeHours.end(); ++hour) {
-        QVariantMap hourMap;
-        hourMap.insert("base_id", hour.value()->baseId());
-        hourMap.insert("plan_id", plan->baseId());
-        hourMap.insert("work_type_id", hour.value()->workType());
-        hourMap.insert("first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
-        hourMap.insert("second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
-        hourMap.insert("name", hour.value()->name());
-        hourMap.insert("order_place", hour.key());
-        hours.append(QJsonValue(QJsonObject::fromVariantMap(hourMap)));
-    }
-    planeMap.insert("hours", hours);
+    //     QVariantMap planeMap;
+    //     planeMap.insert("base_id", plan->baseId());
+    //     planeMap.insert("user_id", plan->userId());
+    //     planeMap.insert("department_id", plan->departmentId());
+    //     planeMap.insert("post_id", plan->postId());
+    //     planeMap.insert("year_id", plan->yearId());
+    //     planeMap.insert("status_id", plan->statusId());
+    //     if(plan->approveUser()){
+    //         planeMap.insert("approved_user_id", plan->approveUser()->baseId());
+    //         planeMap.insert("approved_date", plan->approveDate().toString("yyyy-MM-dd"));
+    //     }
+    //     planeMap.insert("rate", plan->rate());
+    //     if(plan->protocolDate().isValid()){
+    //         planeMap.insert("protocol_number", plan->protocolNumber());
+    //         planeMap.insert("protocol_date", plan->protocolDate().toString("yyyy-MM-dd"));
+    //     }
+    //     QJsonArray hours;
+    //     auto planeHours = plan->hours();
+    //     for (auto hour = planeHours.begin(); hour != planeHours.end(); ++hour) {
+    //         QVariantMap hourMap;
+    //         hourMap.insert("base_id", hour.value()->baseId());
+    //         hourMap.insert("plan_id", plan->baseId());
+    //         hourMap.insert("work_type_id", hour.value()->workType());
+    //         hourMap.insert("first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
+    //         hourMap.insert("second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
+    //         hourMap.insert("name", hour.value()->name());
+    //         hourMap.insert("order_place", hour.key());
+    //         hours.append(QJsonValue(QJsonObject::fromVariantMap(hourMap)));
+    //     }
+    //     planeMap.insert("hours", hours);
 
-    inputToServer(point, QJsonDocument::fromVariant(planeMap), true, PlanId);
-}
-
-void Database::updateUser(User *user)
-{
-    QString point = m_serverUrl.url() + "/user";
-    QVariantMap userMap;
-    userMap.insert("base_id", user->baseId());
-    userMap.insert("login", user->userData()->login());
-    userMap.insert("password", user->userData()->password());
-    userMap.insert("surname", user->userData()->surname());
-    userMap.insert("name", user->userData()->name());
-    userMap.insert("middle_name", user->userData()->middle_name());
-    userMap.insert("rang", user->userData()->rang());
-
-    QJsonArray posts;
-    auto userPosts = user->posts();
-    for (auto post = userPosts.begin(); post != userPosts.end(); ++post) {
-        QVariantMap postMap;
-        postMap.insert("base_id", 0);
-        postMap.insert("department_id", post.key());
-        postMap.insert("post_id", post.value());
-        posts.append(QJsonValue(QJsonObject::fromVariantMap(postMap)));
-    }
-
-    userMap.insert("posts", posts);
-    inputToServer(point, QJsonDocument::fromVariant(userMap), false);
+    //     inputToServer(point, QJsonDocument::fromVariant(planeMap), true, PlanId);
 }
 
 void Database::setHeaders(QNetworkRequest &request, Marks mark)
 {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
-}
-
-void Database::inputToServer(QString point, QJsonDocument values, bool update, Marks mark)
-{
-    QNetworkRequest request;
-    setHeaders(request, mark);
-    request.setUrl(point);
-
-    QNetworkReply* reply;
-
-    if(update)
-        reply = m_manager.put(request, values.toJson());
-    else
-        reply = m_manager.post(request, values.toJson());
-
-    QEventLoop eventLoop;
-    connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-    eventLoop.exec();
-
-    auto json = reply->readAll();
-
-    switch(mark){
-    case PlanId:
-        emit newPlaneId(json.toInt());
-        break;
-    case Other:
-        break;
-    }
-
-    if (reply->error() != QNetworkReply::NoError)
-        qDebug() << "Network error: " << reply->error();
-    qDebug() << "Добавление завершено";
-
 }
 
 Database::Database(){}

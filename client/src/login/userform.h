@@ -3,6 +3,7 @@
 
 #include "user.h"
 
+#include <QComboBox>
 #include <QDialog>
 
 #include <database/database.h>
@@ -25,7 +26,6 @@ public:
 private:
     Ui::UserForm *ui;
     void loadData();
-    void loadDictionary(Database::DictName dictName, QList<Dictionary*> dict);
 };
 
 #endif // USERFORM_H

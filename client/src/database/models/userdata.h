@@ -8,16 +8,16 @@ class UserData
 
 public:
     explicit UserData();
-    UserData(const UserData &other);
 
     void setData(const QString &login, const QString &surname, const QString &name, const QString &middle_name = "",
-                 const QString &rang = "", const QString &password = "");
+                 const QString &rang = "", int rangId = 0, const QString &password = "");
 
     QString login() const;
     QString surname() const;
     QString name() const;
     QString middle_name() const;
     QString rang() const;
+    int rangId() const;
 
     QString password() const;
 
@@ -28,6 +28,7 @@ private:
     QString m_name;
     QString m_middle_name;
     QString m_rang;
+    int m_rangId;
 };
 
 #endif // USERDATA_H
