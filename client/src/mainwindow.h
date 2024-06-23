@@ -27,8 +27,10 @@ private:
     };
 
     int m_userBaseId;
+    int m_currentPlanId;
 
     bool authentication(QString login, QString password);
     void enterToSystem();
+
 };
 #endif // MAINWINDOW_H

@@ -12,10 +12,10 @@
 Header::Header(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Header)
+    ,m_currentPlan{nullptr}
 {
     ui->setupUi(this);
     this->setVisible(false);
-    // setDefaultData();
     ui->lbl_planNumbers->setVisible(false);
     ui->lbl_planNumbersText->setVisible(false);
 
@@ -77,32 +77,6 @@ void Header::loadData()
     DictionaryAdapter::setDictionary(m_posts, Database::Post);
 
     setStaffData();
-
-    // connect(database, &Database::dictionary, this, &Header::loadDictionary);
-    // connect(database, &Database::years, this, [=](QList<StudyYear*> years){
-    //     qDeleteAll(m_years);
-    //     m_years = years;
-    //     setUserYears();
-    // });
-    // connect(database, &Database::teacherPlans, this, [=](QList<PlansList*> plans){
-    //     qDeleteAll(m_plans);
-    //     m_plans = plans;
-    // });
-
-    // connect(database, &Database::planValues, this, &Header::setPlanData);
-    // connect(database, &Database::userDataLoaded, this, &Header::setStaffData);
-
-    // connect(database, &Database::newPlaneId, this, [&](int id){
-    //     m_currentPlan->setBaseId(id);
-    //     Database::get()->requestPlanValues(id);
-    // });
-
-    // int userId = User::get()->baseId();
-    // database->requestStaff(userId);
-    // database->requestDictionary(Database::Department);
-    // database->requestDictionary(Database::Post);
-    // database->requestYears();
-    // database->requestPlans(userId);
 }
 
 void Header::setDefaultData(int userId, int yearId, int departmentId, int postId)
@@ -170,9 +144,6 @@ void Header::setPlan()
     auto post = ui->cb_post->currentData().toInt();
 
     setPlanData(Database::get()->requestPlan(m_user->baseId(), year, dep, post));
-
-    // if(!load)
-    // setDefaultData( User::get()->baseId(), year, dep, post );
 }
 
 void Header::setPlanData(TeacherPlan *plan)

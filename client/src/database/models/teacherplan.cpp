@@ -140,6 +140,9 @@ QMap<int, PlanTime*> TeacherPlan::hours() const
 
 void TeacherPlan::setHours(const QMap<int, PlanTime *> &newHours)
 {
+    auto times = m_hours.values();
+    qDeleteAll(times);
+    m_hours.clear();
     m_hours = newHours;
 }
 

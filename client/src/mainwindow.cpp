@@ -9,6 +9,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_userBaseId{0}
+    ,m_currentPlanId{0}
 {
     ui->setupUi(this);
 
@@ -28,12 +30,12 @@ MainWindow::MainWindow(QWidget *parent)
                 }
             });
 
-    // connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
-    //     ui->tab_totalTime->setPlaneData(plan);
-    // });
-    // connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
-    // connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
-    // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
+    connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
+        ui->tab_totalTime->setPlaneData(plan);
+    });
+    connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
+    connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
+    connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
 
 }
 

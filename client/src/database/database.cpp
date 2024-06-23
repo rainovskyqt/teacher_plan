@@ -6,7 +6,6 @@
 #include <QEventLoop>
 #include <QDebug>
 #include <QSqlDatabase>
-#include <QSqlQuery>
 #include <QNetworkReply>
 #include <QSqlError>
 
@@ -31,29 +30,25 @@ void Database::init(QString host, int port)
 
 int Database::addUser(User *user)
 {
-    auto base = QSqlDatabase::database();
-    if(!base.open())
-        base.open();
-
     QString queryString = "INSERT INTO user(login, password, surname, name, middle_name, rang_id) "
                           "VALUES (:login, :password, :surname, :name, :middle_name, :rang_id)";
 
-    QSqlQuery query;
-    query.prepare(queryString);
-    query.bindValue(":login", user->userData()->login());
-    query.bindValue(":password", encodePassword(user->userData()->password()));
-    query.bindValue(":surname", user->userData()->surname());
-    query.bindValue(":name", user->userData()->name());
-    query.bindValue(":middle_name", user->userData()->middle_name());
+    Values vals;
+    vals.insert(":login", user->userData()->login());
+    vals.insert(":password", encodePassword(user->userData()->password()));
+    vals.insert(":surname", user->userData()->surname());
+    vals.insert(":name", user->userData()->name());
+    vals.insert(":middle_name", user->userData()->middle_name());
     if(user->userData()->rangId())
-        query.bindValue(":rang_id", user->userData()->rangId());
-    query.exec();
+        vals.insert(":rang_id", user->userData()->rangId());
 
-    query.next();
-    int id = query.lastInsertId().toInt();
+    auto query = executeQuery(queryString, vals);
+    query->next();
+
+    int id = query->lastInsertId().toInt();
     addPosts(user->posts(), id);
 
-    base.close();
+    delete query;
     return id;
 }
 
@@ -66,33 +61,23 @@ void Database::addPosts(QMultiMap<int, int> posts, int userId)
 
 int Database::addPost(int userId, int departmentId, int postId)
 {
-    auto base = QSqlDatabase::database();
-    if(!base.open())
-        base.open();
 
     QString queryString = "INSERT INTO staff(user_id, department_id, post_id) "
                           "VALUES (:user_id, :department_id, :post_id)";
 
-    QSqlQuery query;
-    query.prepare(queryString);
+    Values vals;
+    vals.insert(":user_id", userId);
+    vals.insert(":department_id", departmentId);
+    vals.insert(":post_id", postId);
 
-    query.bindValue(":user_id", userId);
-    query.bindValue(":department_id", departmentId);
-    query.bindValue(":post_id", postId);
-    query.exec();
-
-    qDebug() << query.lastError().text();
-
-    base.close();
-    return query.lastInsertId().toInt();
+    auto query = executeQuery(queryString, vals);
+    int id = query->lastInsertId().toInt();
+    delete query;
+    return id;
 }
 
 QList<Dictionary> Database::getDictionary(DictName name)
 {
-    auto base = QSqlDatabase::database();
-    if(!base.open())
-        base.open();
-
     QString tableName;
 
     switch(name){
@@ -108,48 +93,38 @@ QList<Dictionary> Database::getDictionary(DictName name)
     }
 
     QString queryString = QString("SELECT id, name FROM %1").arg(tableName);
-    QSqlQuery query;
-    query.prepare(queryString);
-    query.exec();
+
+    auto query = executeQuery(queryString);
 
     QList<Dictionary> list;
-    while(query.next()){
-        list.append(Dictionary(query.value("id").toInt(), query.value("name").toString()));
+    while(query->next()){
+        list.append(Dictionary(query->value("id").toInt(), query->value("name").toString()));
     }
 
-    base.close();
-
+    delete query;
     return list;
 }
 
 QList<StudyYear> Database::getYears()
 {
-    auto base = QSqlDatabase::database();
-    if(!base.open())
-        base.open();
-
     QString queryString = "SELECT id, begin_year, end_year "
                           "FROM educational_years ";
 
-    QSqlQuery query;
-    query.prepare(queryString);
-    query.exec();
+    auto query = executeQuery(queryString);
 
     QList<StudyYear> list;
-    while(query.next()){
-        list.append(StudyYear(query.value("begin_year").toString(),
-                              query.value("end_year").toString(),
-                              query.value("id").toInt()));
+    while(query->next()){
+        list.append(StudyYear(query->value("begin_year").toString(),
+                              query->value("end_year").toString(),
+                              query->value("id").toInt()));
     }
 
+    delete query;
     return list;
 }
 
 User *Database::login(QString login, QString password)
 {
-    auto base = QSqlDatabase::database();
-    if(!base.open())
-        base.open();
 
     QString queryString = "SELECT U.id AS 'uid', U.login, U.password, U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
                           "S.department_id, S.post_id "
@@ -157,28 +132,26 @@ User *Database::login(QString login, QString password)
                           "LEFT JOIN `rang` R ON U.rang_id = R.id "
                           "INNER JOIN `staff` S ON S.user_id = U.id "
                           "WHERE `login` = :login AND `password` = :password";
-    QSqlQuery query;
-    query.prepare(queryString);
-    query.bindValue(":login", login);
-    query.bindValue(":password", encodePassword(password));
-    query.exec();
+    Values vals;
+    vals.insert(":login", login);
+    vals.insert(":password", encodePassword(password));
 
-    qDebug() << query.lastError().text();
+    auto query = executeQuery(queryString, vals);
 
     User *user = new User();
-    while(query.next()){
-        user->setBaseId(query.value("uid").toInt());
+    while(query->next()){
+        user->setBaseId(query->value("uid").toInt());
         user->userData()->setData(
-            query.value("login").toString(),
-            query.value("surname").toString(),
-            query.value("name").toString(),
-            query.value("middle_name").toString(),
-            query.value("rname").toString(),
-            query.value("rang_id").toInt()
+            query->value("login").toString(),
+            query->value("surname").toString(),
+            query->value("name").toString(),
+            query->value("middle_name").toString(),
+            query->value("rname").toString(),
+            query->value("rang_id").toInt()
             );
-        user->addPost(query.value("department_id").toInt(), query.value("post_id").toInt());
+        user->addPost(query->value("department_id").toInt(), query->value("post_id").toInt());
     }
-
+    delete query;
     return user;
 }
 
@@ -187,12 +160,40 @@ QString Database::encodePassword(QString password)
     return QString(QCryptographicHash::hash((password.toUtf8()),QCryptographicHash::Md5).toHex());
 }
 
-TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)
+QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 {
     auto base = QSqlDatabase::database();
     if(!base.open())
         base.open();
 
+    QSqlQuery *query = new QSqlQuery(base);
+    query->prepare(queryString);
+    for(auto val = vals.begin(); val != vals.end(); ++val){
+        query->bindValue(val.key(), val.value());
+    }
+    query->exec();
+
+    if(query->lastError().isValid())
+        qDebug() << query->lastError().text();
+
+    return query;
+}
+
+Hours Database::getDefaultHours()
+{
+    QString queryString = "SELECT id, `name`, `order` FROM teacher_plan_works_type WHERE `enable` = 1 ORDER BY `order`";
+
+    Hours hours;
+    auto q = executeQuery(queryString);
+    while (q->next()) {
+        hours.insert(q->value("order").toInt(),
+                     new PlanTime(q->value("id").toInt(), q->value("name").toString(), 0, 0, 0, q->value("order").toInt()));
+    }
+    return hours;
+}
+
+TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)
+{
     QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
                           "P.protocol_date, H.id, HT.name AS 'hmame', H.work_type_id, H.first_semester, H.second_semester, H.order_place "
                           "FROM teacher_plan P "
@@ -200,15 +201,13 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
                           "LEFT JOIN teacher_plan_works_type HT ON H.work_type_id = HT.id "
                           "WHERE user_id = :user_id AND department_id = :department_id AND post_id = :post_id AND year_id = :year_id";
 
-    QSqlQuery query;
-    query.prepare(queryString);
-    query.bindValue(":user_id", userId);
-    query.bindValue(":year_id", yearId);
-    query.bindValue(":department_id", departmentId);
-    query.bindValue(":post_id", postId);
-    query.exec();
+    Values vals;
+    vals.insert(":user_id", userId);
+    vals.insert(":year_id", yearId);
+    vals.insert(":department_id", departmentId);
+    vals.insert(":post_id", postId);
 
-    qDebug() << query.lastError().text();
+    auto query = executeQuery(queryString, vals);
 
     TeacherPlan *plan = new TeacherPlan();
     plan->setUserId(userId);
@@ -216,69 +215,90 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
     plan->setDepartmentId(departmentId);
     plan->setPostId(postId);
 
-    while(query.next()){
-        plan->setBaseId(query.value("pid").toInt());
-        plan->setStatusId(query.value("status_id").toInt());
-        plan->setApproveUserId(query.value("approved_user_id").toInt());
-        plan->setApproveDate(query.value("approved_date").toDate());
-        plan->setRate(query.value("approved_user_id").toDouble());
-        plan->setProtocolNumber(query.value("protocol_number").toString());
-        plan->setProtocolDate(query.value("protocol_date").toDate());
-        plan->addHour(query.value("order_place").toInt(),
-                      new PlanTime(query.value("work_type_id").toInt(),
-                                   query.value("hmame").toString(),
-                                   query.value("first_semester").toInt(),
-                                   query.value("second_semester").toInt(),
-                                   query.value("second_semester").toInt(),
-                                   query.value("order_place").toInt()
+    while(query->next()){
+        plan->setBaseId(query->value("pid").toInt());
+        plan->setStatusId(query->value("status_id").toInt());
+        plan->setApproveUserId(query->value("approved_user_id").toInt());
+        plan->setApproveDate(query->value("approved_date").toDate());
+        plan->setRate(query->value("rate").toDouble());
+        plan->setProtocolNumber(query->value("protocol_number").toString());
+        plan->setProtocolDate(query->value("protocol_date").toDate());
+        plan->addHour(query->value("order_place").toInt(),
+                      new PlanTime(query->value("work_type_id").toInt(),
+                                   query->value("hmame").toString(),
+                                   query->value("first_semester").toInt(),
+                                   query->value("second_semester").toInt(),
+                                   query->value("second_semester").toInt(),
+                                   query->value("order_place").toInt()
                                    ));
     }
+
+    if(plan->hours().isEmpty())
+        plan->setHours(getDefaultHours());
 
     return plan;
 }
 
 void Database::updateTeacherPlan(TeacherPlan *plan)
 {
-    //     QString point = m_serverUrl.url() + "/academy/pplan/plan";
+    Values vals;
+    vals.insert(":base_id", plan->baseId());
+    vals.insert(":user_id", plan->userId());
+    vals.insert(":department_id", plan->departmentId());
+    vals.insert(":post_id", plan->postId());
+    vals.insert(":year_id", plan->yearId());
+    vals.insert(":status_id", plan->statusId());
+    vals.insert(":rate", plan->rate());
 
-    //     QVariantMap planeMap;
-    //     planeMap.insert("base_id", plan->baseId());
-    //     planeMap.insert("user_id", plan->userId());
-    //     planeMap.insert("department_id", plan->departmentId());
-    //     planeMap.insert("post_id", plan->postId());
-    //     planeMap.insert("year_id", plan->yearId());
-    //     planeMap.insert("status_id", plan->statusId());
-    //     if(plan->approveUser()){
-    //         planeMap.insert("approved_user_id", plan->approveUser()->baseId());
-    //         planeMap.insert("approved_date", plan->approveDate().toString("yyyy-MM-dd"));
-    //     }
-    //     planeMap.insert("rate", plan->rate());
-    //     if(plan->protocolDate().isValid()){
-    //         planeMap.insert("protocol_number", plan->protocolNumber());
-    //         planeMap.insert("protocol_date", plan->protocolDate().toString("yyyy-MM-dd"));
-    //     }
-    //     QJsonArray hours;
-    //     auto planeHours = plan->hours();
-    //     for (auto hour = planeHours.begin(); hour != planeHours.end(); ++hour) {
-    //         QVariantMap hourMap;
-    //         hourMap.insert("base_id", hour.value()->baseId());
-    //         hourMap.insert("plan_id", plan->baseId());
-    //         hourMap.insert("work_type_id", hour.value()->workType());
-    //         hourMap.insert("first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
-    //         hourMap.insert("second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
-    //         hourMap.insert("name", hour.value()->name());
-    //         hourMap.insert("order_place", hour.key());
-    //         hours.append(QJsonValue(QJsonObject::fromVariantMap(hourMap)));
-    //     }
-    //     planeMap.insert("hours", hours);
+    QString queryString;
+    if(plan->baseId()){
+        queryString = "UPDATE teacher_plan SET status_id = :status_id, rate = :rate WHERE id = :base_id";
+        delete executeQuery(queryString, vals);
+    } else {
+        queryString = "INSERT INTO teacher_plan(user_id, department_id, post_id, year_id, status_id, rate) "
+                      "VALUES(:user_id, :department_id, :post_id, :year_id, :status_id, :rate) ";
+        auto query = executeQuery(queryString, vals);
+        query->next();
+        plan->setBaseId(query->lastInsertId().toInt());
+        delete query;
+    }
 
-    //     inputToServer(point, QJsonDocument::fromVariant(planeMap), true, PlanId);
+    updateHours(plan->hours(), plan->baseId());
 }
 
 void Database::setHeaders(QNetworkRequest &request, Marks mark)
 {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
+}
+
+void Database::updateHours(Hours hours, int planId)
+{
+    QString updateString = "UPDATE teacher_plan_total_hours SET "
+                          "first_semester = :first_semester, second_semester = :second_semester "
+                          "WHERE id = :base_id";
+    QString insertString = "INSERT INTO teacher_plan_total_hours(teacher_plan_id, work_type_id, first_semester, "
+                           "second_semester, order_place) "
+                           "VALUES (:teacher_plan_id, :work_type_id, :first_semester, "
+                           ":second_semester, :order_place)";
+
+    Values vals;
+    for (auto hour = hours.begin(); hour != hours.end(); ++hour) {
+        vals.insert(":base_id", hour.value()->baseId());
+        vals.insert(":teacher_plan_id", planId);
+        vals.insert(":work_type_id", hour.value()->workType());
+        vals.insert(":first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
+        vals.insert(":second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
+        vals.insert(":order_place", hour.key());
+        if(hour.value()->baseId()){
+            delete executeQuery(updateString, vals);
+        } else {
+            auto query = executeQuery(insertString, vals);
+            query->next();
+            hour.value()->setBaseId(query->lastInsertId().toInt());
+            delete query;
+        }
+    }
 }
 
 Database::Database(){}

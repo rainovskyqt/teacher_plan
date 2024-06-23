@@ -116,6 +116,7 @@ void ModelTotalTime::setHeaderModel()
 
 void ModelTotalTime::setDefaulFields()
 {
+    //Оставлю это тут, что бы при старте программы не падало, но все данные тянутся из базы
     m_hours.clear();
     m_hours.append(new PlanTime(1, "Учебная работа", 0, 0, 0, 0, this));
     m_hours.append(new PlanTime(2, "Учебно-методическая работа", 0, 0, 0, 0, this));
@@ -136,7 +137,6 @@ void ModelTotalTime::setHours(TeacherPlan *plan)
 
 void ModelTotalTime::reset()
 {
-    // setDefaulFields();
     emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
 }
 

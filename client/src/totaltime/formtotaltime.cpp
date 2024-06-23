@@ -9,6 +9,8 @@ FormTotalTime::FormTotalTime(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->btn_reset->setVisible(false);
+
     setTable();
     createConnections();
     ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);

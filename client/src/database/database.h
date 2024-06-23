@@ -10,7 +10,11 @@
 
 #include "models/datamodels.h"
 #include "models/teacherplan.h"
-// #include "login/user.h"
+#include <QSqlQuery>
+
+using Values = QMap<QString, QVariant>;
+using Hours = QMap<int, PlanTime*>;
+
 
 class Database : public QObject
 {
@@ -63,12 +67,12 @@ private:
     QString m_refreshToken;
     int baseId;
 
+    QSqlQuery *executeQuery(QString queryString, Values vals = {});
+    Hours getDefaultHours();
 
-    QUrl m_serverUrl;
-    QNetworkAccessManager m_manager;
     void setHeaders(QNetworkRequest &request, Marks mark = Other);
     int getId(QString json);
-
+    void updateHours(Hours hours, int planId);
 };
 
 #endif // DATABASE_H
