@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::FormEducationWork *ui;
+
+    void setTable();
 };
 
 #endif // FORMEDUCATIONWORK_H

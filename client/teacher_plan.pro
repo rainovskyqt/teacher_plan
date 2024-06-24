@@ -17,6 +17,7 @@ SOURCES += \
     src/database/models/teacherplan.cpp \
     src/database/models/userdata.cpp \
     src/educationwork/formeducationwork.cpp \
+    src/educationwork/modeleducationwork.cpp \
     src/header/headercombobox.cpp \
     src/login/user.cpp \
     src/login/userform.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     src/database/models/teacherplan.h \
     src/database/models/userdata.h \
     src/educationwork/formeducationwork.h \
+    src/educationwork/modeleducationwork.h \
     src/header/headercombobox.h \
     src/login/user.h \
     src/login/userform.h \

@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->sw_pages->setCurrentIndex(Pages::Login);
 
-    // // Database::get()->init("10.0.100.157", 8020);
     Database::get()->init("10.0.2.18", 3306);
 
     connect(ui->page_login, &LoginForm::enterToSystem,
