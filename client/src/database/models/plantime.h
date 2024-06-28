@@ -45,8 +45,6 @@ public:
     int baseId() const;
     void setBaseId(int newBaseId);
 
-    QString toJson();
-
 signals:
 
 private:

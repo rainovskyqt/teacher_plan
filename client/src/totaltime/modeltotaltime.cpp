@@ -144,7 +144,7 @@ QVariant ModelTotalTime::currentHours(const QModelIndex &index) const
 {
     switch (index.column()) {
     case RomanNumber:
-        return QVariant(m_hours.at(index.row())->romanNumeral(index.row()));
+        return QVariant(m_hours.at(index.row())->romanNumeral(index.row() + 1));
     case Name:
         return QVariant(m_hours.at(index.row())->name());
     case FirstSemester:

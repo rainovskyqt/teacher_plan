@@ -84,19 +84,6 @@ void PlanTime::setBaseId(int newBaseId)
     m_baseId = newBaseId;
 }
 
-QString PlanTime::toJson()
-{
-    QJsonObject obj;
-    obj.insert("base_id", m_baseId);
-    obj.insert("plan_id", m_planId);
-    obj.insert("work_type_id", m_workType);
-    obj.insert("first_semester", semesterHours(FirstSemester));
-    obj.insert("second_semester", semesterHours(SecondSemestr));
-    obj.insert("name", m_name);
-    obj.insert("order_place", m_orderPlace);
-    return QJsonDocument(obj).toJson(QJsonDocument::Compact);
-}
-
 QString PlanTime::toRomanNumeral(int numeral)
 {
     switch (numeral) {
