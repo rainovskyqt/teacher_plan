@@ -3,11 +3,28 @@
 
 #include <QMessageBox>
 
+#include "database/database.h"
+#include "login/userform.h"
+
 LoginForm::LoginForm(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::LoginForm)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
+    ui->line_login->setText("teacher");
+    ui->line_password->setText("myPassword");
+#endif
+
+    connect(ui->btn_enter, &QPushButton::clicked, this, [&](){
+        User *user = Database::get()->login(ui->line_login->text(), ui->line_password->text());
+        emit enterToSystem(user);
+    });
+
+    // connect(Database::get(), &Database::connectionError, this, [&](QString error){
+    //     QMessageBox::critical(this, tr("Ошибка подклчючени"), error);
+    // });
 }
 
 LoginForm::~LoginForm()
@@ -15,16 +32,15 @@ LoginForm::~LoginForm()
     delete ui;
 }
 
-void LoginForm::on_btn_enter_clicked()
+void LoginForm::on_btn_register_clicked()
 {
-    while(!authentication(ui->line_login->text(), ui->line_password->text())){
-        QMessageBox::critical(this, tr("неверный логин"), tr("Не верный логин или пароль, проверте учетные данные!"));
-    }
+    UserForm *form = new UserForm(this);
+    if(form->exec() == QDialog::Rejected)
+        return;
 
-    emit enterToSystem();
+    auto user = form->newUser();
+    Database::get()->addUser(user);
+    \
+    form->deleteLater();
 }
 
-bool LoginForm::authentication(QString login, QString password)
-{
-    return true;
-}

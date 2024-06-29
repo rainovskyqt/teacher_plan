@@ -8,8 +8,7 @@ ModelTotalTime::ModelTotalTime(QObject *parent)
     , m_rate{1}
 {
     setHeaderModel();
-    loadData();
-
+    setDefaulFields();
 }
 
 int ModelTotalTime::rowCount(const QModelIndex &) const
@@ -65,9 +64,11 @@ bool ModelTotalTime::setData(const QModelIndex &index, const QVariant &value, in
         switch (index.column()) {
         case FirstSemester:
             m_hours.at(index.row())->setSemesterHours(value.toInt(), PlanTime::FirstSemester);
+            emit dataChanged(index, index);
             return true;
         case SecondSemester:
             m_hours.at(index.row())->setSemesterHours(value.toInt(), PlanTime::SecondSemestr);
+            emit dataChanged(index, index);
             return true;
         }
     }
@@ -106,23 +107,44 @@ void ModelTotalTime::setHeaderModel()
     item = new QStandardItem("\tПлановое количество часов\t");
 
     item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tI-е полугодие\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tII-е полугодие\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tВсего за год\t"));
-    item->appendColumn(QList<QStandardItem*>()<< new QStandardItem("\tНорма\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tII-е полугодие\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tВсего за год\t"));
+    item->appendColumn(QList<QStandardItem*>() << new QStandardItem("\tНорма\t"));
 
     m_horizontalHeaderModel.setItem(0, 2, item);
 }
 
-void ModelTotalTime::loadData()
+void ModelTotalTime::setDefaulFields()
 {
-    m_hours = Database::instance().getTotaTimeList();
+    //Оставлю это тут, что бы при старте программы не падало, но все данные тянутся из базы
+    m_hours.clear();
+    m_hours.append(new PlanTime(1, "Учебная работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(2, "Учебно-методическая работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(3, "Научно-исследовательская работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(4, "Воспитательная и спортивная работа", 0, 0, 0, 0, this));
+    m_hours.append(new PlanTime(5, "Другие виды работ", 0, 0, 0, 0, this));
+}
+
+void ModelTotalTime::setHours(TeacherPlan *plan)
+{
+    m_hours.clear();
+    foreach (auto hour, plan->hours().values()) {
+        m_hours.append(hour);
+    }
+
+    emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
+}
+
+void ModelTotalTime::reset()
+{
+    emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
 }
 
 QVariant ModelTotalTime::currentHours(const QModelIndex &index) const
 {
     switch (index.column()) {
     case RomanNumber:
-        return QVariant(m_hours.at(index.row())->romanNumeral());
+        return QVariant(m_hours.at(index.row())->romanNumeral(index.row() + 1));
     case Name:
         return QVariant(m_hours.at(index.row())->name());
     case FirstSemester:
@@ -147,9 +169,9 @@ QVariant ModelTotalTime::totalHours(const QModelIndex &index) const
     case Name:
         return QVariant("Всего за учебный год:");
     case FirstSemester:
-        return QVariant(hoursCount(2));
+        return QVariant(hoursCount(FirstSemester));
     case SecondSemester:
-        return QVariant(hoursCount(3));
+        return QVariant(hoursCount(SecondSemester));
     case Year:
         return QVariant(hoursCount(2) + hoursCount(3));
     case 5:
@@ -164,7 +186,7 @@ QVariant ModelTotalTime::totalHours(const QModelIndex &index) const
 int ModelTotalTime::hoursCount(int column) const
 {
     int count = 0;
-    for(QVector<PlanTime*>::const_iterator it = m_hours.begin(); it != m_hours.end(); ++it){
+    for(auto it = m_hours.begin(); it != m_hours.end(); ++it){
         if(column == FirstSemester)
             count += (*it)->semesterHours(PlanTime::FirstSemester);
         else if (column == SecondSemester)

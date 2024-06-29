@@ -1,17 +1,29 @@
 #include "plantime.h"
+#include "teacherplan.h"
+#include <QJsonDocument>
+#include <QPair>
 
 #define MAX_FULL_RATE_HOURS 1512
 #define MAX_FULL_RATE_EDUCATIONAL_HOURS 900
 #define ELEMENTS_COUNT 4
 
-PlanTime::PlanTime(int orderNumber,QString name, int firstSemesterHours, int secondSemesterHours, int baseId,QObject *parent)
+PlanTime::PlanTime(int workType, QString name, int firstSemesterHours, int secondSemesterHours,
+                   int baseId, int orderPlace, QObject *parent)
     : QObject{parent}
 {
-    m_orderNumber = orderNumber;
+    m_workType = workType;
     m_name = name;
     m_firstSemesterHours = firstSemesterHours;
     m_secondSemesterHours = secondSemesterHours;
     m_baseId = baseId;
+    m_orderPlace = orderPlace;
+    if(parent){
+        auto teacherPlan = qobject_cast<TeacherPlan*>(parent);
+        if(teacherPlan)
+            m_planId = teacherPlan->baseId();
+    } else {
+        m_planId = 0;
+    }
 }
 
 int PlanTime::maxHoursCount(WorkType type)
@@ -47,9 +59,29 @@ void PlanTime::setSemesterHours(int semesterHours, Semester semester)
         m_secondSemesterHours = semesterHours;
 }
 
-QString PlanTime::romanNumeral()
+QString PlanTime::romanNumeral(int number)
 {
-    return toRomanNumeral(m_orderNumber);
+    return toRomanNumeral(number);
+}
+
+int PlanTime::workType() const
+{
+    return m_workType;
+}
+
+void PlanTime::setWorkType(int newWorkType)
+{
+    m_workType = newWorkType;
+}
+
+int PlanTime::baseId() const
+{
+    return m_baseId;
+}
+
+void PlanTime::setBaseId(int newBaseId)
+{
+    m_baseId = newBaseId;
 }
 
 QString PlanTime::toRomanNumeral(int numeral)

@@ -17,8 +17,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_label_2_linkActivated(const QString &link);
 
 private:
     Ui::MainWindow *ui;
@@ -28,7 +26,11 @@ private:
         TotalTime
     };
 
+    int m_userBaseId;
+    int m_currentPlanId;
+
     bool authentication(QString login, QString password);
     void enterToSystem();
+
 };
 #endif // MAINWINDOW_H

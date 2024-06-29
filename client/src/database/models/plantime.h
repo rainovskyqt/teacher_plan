@@ -1,6 +1,7 @@
 #ifndef PLANTIME_H
 #define PLANTIME_H
 
+#include <QJsonObject>
 #include <QObject>
 
 class PlanTime : public QObject
@@ -23,11 +24,12 @@ public:
         SecondSemestr
     };
 
-    explicit PlanTime(int orderNumber,
+    explicit PlanTime(int workType,
                       QString name,
                       int firstSemesterHours = 0,
                       int secondSemesterHours = 0,
                       int baseId = 0,
+                      int orderPlace = 0,
                       QObject *parent = nullptr);
 
     static int maxHoursCount(WorkType type);
@@ -35,16 +37,25 @@ public:
     QString name() const;
     int semesterHours(Semester semester) const;
     void setSemesterHours(int semesterHours, Semester semester);
-    QString romanNumeral();
+    QString romanNumeral(int number);
+
+    int workType() const;
+    void setWorkType(int newWorkType);
+
+    int baseId() const;
+    void setBaseId(int newBaseId);
 
 signals:
 
 private:
     int m_baseId;
-    int m_orderNumber;
+    int m_planId;
+    int m_workType;
     QString m_name;
     int m_firstSemesterHours;
     int m_secondSemesterHours;
+    int m_orderPlace;
+
     QString toRomanNumeral(int numeral);
 };
 

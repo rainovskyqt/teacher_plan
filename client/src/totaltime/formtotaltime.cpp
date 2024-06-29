@@ -2,8 +2,6 @@
 #include "ui_formtotaltime.h"
 
 #include "database/database.h"
-#include <QButtonGroup>
-
 
 FormTotalTime::FormTotalTime(QWidget *parent)
     : QWidget(parent)
@@ -11,14 +9,42 @@ FormTotalTime::FormTotalTime(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->btn_reset->setVisible(false);
+
     setTable();
     createConnections();
     ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    ui->btn_save->setEnabled(false);
+
+    connect(ui->btn_reset, &QPushButton::clicked, &m_model, &ModelTotalTime::reset);
+    connect(&m_model, &ModelTotalTime::dataChanged, this, [this]{
+        emit modelDataChanged();
+        ui->btn_save->setEnabled(true);
+    });
+
+    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
 }
 
 FormTotalTime::~FormTotalTime()
 {
     delete ui;
+}
+
+void FormTotalTime::setPlaneData(TeacherPlan *plan)
+{
+    setRate(plan->rate());
+    m_model.setHours(plan);
+    plan->setChanged(false);
+}
+
+void FormTotalTime::setRate(double rate)
+{
+    foreach (auto btn, m_rateGroup->buttons()) {
+        if(btn->property("rate").toDouble() == rate){
+            btn->setChecked(true);
+            return;
+        }
+    }
 }
 
 void FormTotalTime::setTable()
@@ -30,23 +56,25 @@ void FormTotalTime::setTable()
 
 void FormTotalTime::createConnections()
 {
-    QButtonGroup *group = new QButtonGroup(this);
+    m_rateGroup = new QButtonGroup(this);
     ui->rb_fullTime->setProperty("rate", 1);
-    group->addButton(ui->rb_fullTime);
+    m_rateGroup->addButton(ui->rb_fullTime);
 
     ui->rb_threeQuaters->setProperty("rate", 0.75);
-    group->addButton(ui->rb_threeQuaters);
+    m_rateGroup->addButton(ui->rb_threeQuaters);
 
     ui->rb_halfTime->setProperty("rate", 0.5);
-    group->addButton(ui->rb_halfTime);
+    m_rateGroup->addButton(ui->rb_halfTime);
 
     ui->rb_quaterTime->setProperty("rate", 0.25);
-    group->addButton(ui->rb_quaterTime);
+    m_rateGroup->addButton(ui->rb_quaterTime);
 
-    connect(group, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled), this, [&](QAbstractButton *btn, bool checked){
-        if(checked){
-            m_model.setRate(btn->property("rate").toDouble());
-        }
-    });
+    connect(m_rateGroup, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled),
+            this, [&](QAbstractButton *btn, bool checked){
+                if(checked){
+                    auto rate = btn->property("rate").toDouble();
+                    m_model.setRate(rate);
+                    emit rateChanged(rate);
+                }
+            });
 }
-

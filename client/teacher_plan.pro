@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql network
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 
@@ -11,30 +11,46 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/database/adapters/dictionaryadapter.cpp \
     src/database/database.cpp \
+    src/database/models/plantime.cpp \
+    src/database/models/teacherplan.cpp \
+    src/database/models/userdata.cpp \
     src/educationwork/formeducationwork.cpp \
+    src/educationwork/modeleducationwork.cpp \
+    src/header/headercombobox.cpp \
+    src/login/user.cpp \
+    src/login/userform.cpp \
     src/misc/HierarchicalHeaderView.cpp \
     src/totaltime/formtotaltime.cpp \
     src/totaltime/modeltotaltime.cpp \
-    src/totaltime/plantime.cpp \
     src/header/header.cpp \
     src/login/loginform.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
+    src/database/adapters/dictionaryadapter.h \
     src/database/database.h \
+    src/database/models/datamodels.h \
+    src/database/models/plantime.h \
+    src/database/models/teacherplan.h \
+    src/database/models/userdata.h \
     src/educationwork/formeducationwork.h \
+    src/educationwork/modeleducationwork.h \
+    src/header/headercombobox.h \
+    src/login/user.h \
+    src/login/userform.h \
     src/misc/HierarchicalHeaderView.h \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
-    src/totaltime/plantime.h \
     src/header/header.h \
     src/login/loginform.h \
     src/mainwindow.h
 
 FORMS += \
     src/educationwork/formeducationwork.ui \
+    src/login/userform.ui \
     src/totaltime/formtotaltime.ui \
     src/header/header.ui \
     src/login/loginform.ui \

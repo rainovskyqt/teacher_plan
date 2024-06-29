@@ -1,6 +1,8 @@
 #ifndef LOGINFORM_H
 #define LOGINFORM_H
 
+#include "user.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -16,15 +18,14 @@ public:
     ~LoginForm();
 
 signals:
-    void enterToSystem();
+    void enterToSystem(User*);
 
 private slots:
-    void on_btn_enter_clicked();
+    void on_btn_register_clicked();
 
 private:
     Ui::LoginForm *ui;
 
-    bool authentication(QString login, QString password);
 };
 
 #endif // LOGINFORM_H
