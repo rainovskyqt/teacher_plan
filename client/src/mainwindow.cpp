@@ -6,7 +6,7 @@
 
 #include <QMessageBox>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(User *user, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_userBaseId{0}
@@ -14,26 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->sw_pages->setCurrentIndex(Pages::Login);
+    ui->w_header->setUser(user);
+    ui->w_header->init();
 
-    Database::get()->init("10.0.2.18", 3306);
 
-    connect(ui->page_login, &LoginForm::enterToSystem,
-            this, [&](User *user){
-                if(user->baseId()){
-                    ui->w_header->setUser(user);
-                    ui->sw_pages->setCurrentIndex(Pages::TotalTime);
-                    ui->w_header->init();
-                } else {
-                    QMessageBox::critical(this, "Ошибка аутинтефикации", "Введены неверные логин и пароль");
-                }
-            });
-
-    connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
-        ui->tab_totalTime->setPlaneData(plan);
-    });
-    connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
-    connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
+//    connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
+//        ui->tab_totalTime->setPlaneData(plan);
+//    });
+//    connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
+//    connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
     connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
 
 }
@@ -41,10 +30,4 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::enterToSystem()
-{
-    ui->w_header->setVisible(true);
-    ui->sw_pages->setCurrentIndex(Pages::TotalTime);
 }

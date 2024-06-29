@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/img/main">
+        <file>img/Vgafk.png</file>
+    </qresource>
+</RCC>

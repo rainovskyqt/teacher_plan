@@ -30,7 +30,7 @@ public:
 
     explicit Database();
     static Database *get();
-    void init(QString host, int port);
+    bool init(QString host, int port);
     int addUser(User *user);
     void addPosts(QMultiMap<int, int> posts, int userId);
     int addPost(int userId, int departmentId, int postId);
@@ -41,6 +41,8 @@ public:
     void updateTeacherPlan(TeacherPlan *plan);
 
     QString encodePassword(QString password);
+
+    const QString &lastError() const;
 
 public slots:
 
@@ -66,6 +68,7 @@ private:
     QString m_token;
     QString m_refreshToken;
     int baseId;
+    QString m_lastError;
 
     QSqlQuery *executeQuery(QString queryString, Values vals = {});
     Hours getDefaultHours();

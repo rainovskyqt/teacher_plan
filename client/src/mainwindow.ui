@@ -15,64 +15,34 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
-    <property name="spacing">
-     <number>0</number>
-    </property>
     <item>
      <widget class="Header" name="w_header" native="true"/>
     </item>
     <item>
-     <widget class="QStackedWidget" name="sw_pages">
-      <property name="currentIndex">
-       <number>1</number>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
       </property>
-      <widget class="LoginForm" name="page_login"/>
-      <widget class="QWidget" name="page_mainPage">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QTabWidget" name="tabWidget">
-          <property name="tabPosition">
-           <enum>QTabWidget::North</enum>
-          </property>
-          <property name="tabShape">
-           <enum>QTabWidget::Rounded</enum>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="FormTotalTime" name="tab_totalTime">
-           <attribute name="title">
-            <string>Сводка</string>
-           </attribute>
-          </widget>
-          <widget class="FormEducationWork" name="tab_educationWork">
-           <attribute name="title">
-            <string>I. Учебная работа</string>
-           </attribute>
-          </widget>
-          <widget class="QWidget" name="tab_3">
-           <attribute name="title">
-            <string>II. Учебная нагрузка</string>
-           </attribute>
-          </widget>
-         </widget>
-        </item>
-       </layout>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="FormTotalTime" name="tab_totalTime">
+       <attribute name="title">
+        <string>Сводка</string>
+       </attribute>
+      </widget>
+      <widget class="FormEducationWork" name="tab_educationWork">
+       <attribute name="title">
+        <string>I. Учебная работа</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>II. Учебная нагрузка</string>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -80,12 +50,6 @@
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>LoginForm</class>
-   <extends>QWidget</extends>
-   <header>login/loginform.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>Header</class>
    <extends>QWidget</extends>

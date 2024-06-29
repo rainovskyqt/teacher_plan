@@ -1,11 +1,20 @@
-#include "mainwindow.h"
-
 #include <QApplication>
+#include <QMessageBox>
+
+#include "login/login.h"
+#include "database/database.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+
+    if(!Database::get()->init("127.0.0.1", 3306)){
+        QMessageBox::critical(nullptr, "Ошибка базы", "При открытии базы данных произошла ошибка:\n" +
+                              Database::get()->lastError());
+        return 0;
+    }
+
+    Login l;
+    l.show();
     return a.exec();
 }

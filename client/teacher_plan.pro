@@ -19,13 +19,13 @@ SOURCES += \
     src/educationwork/formeducationwork.cpp \
     src/educationwork/modeleducationwork.cpp \
     src/header/headercombobox.cpp \
+    src/login/login.cpp \
     src/login/user.cpp \
     src/login/userform.cpp \
     src/misc/HierarchicalHeaderView.cpp \
     src/totaltime/formtotaltime.cpp \
     src/totaltime/modeltotaltime.cpp \
     src/header/header.cpp \
-    src/login/loginform.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
@@ -39,21 +39,21 @@ HEADERS += \
     src/educationwork/formeducationwork.h \
     src/educationwork/modeleducationwork.h \
     src/header/headercombobox.h \
+    src/login/login.h \
     src/login/user.h \
     src/login/userform.h \
     src/misc/HierarchicalHeaderView.h \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
     src/header/header.h \
-    src/login/loginform.h \
     src/mainwindow.h
 
 FORMS += \
     src/educationwork/formeducationwork.ui \
+    src/login/login.ui \
     src/login/userform.ui \
     src/totaltime/formtotaltime.ui \
     src/header/header.ui \
-    src/login/loginform.ui \
     src/mainwindow.ui
 
 INCLUDEPATH += src
@@ -62,3 +62,6 @@ INCLUDEPATH += src
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    res.qrc

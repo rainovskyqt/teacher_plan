@@ -18,7 +18,7 @@ Database *Database::get()
     return globalInst();
 }
 
-void Database::init(QString host, int port)
+bool Database::init(QString host, int port)
 {
     QSqlDatabase base = QSqlDatabase::addDatabase("QMYSQL");
     base.setHostName(host);
@@ -26,6 +26,11 @@ void Database::init(QString host, int port)
     base.setDatabaseName("ordo_dev");
     base.setUserName("ordo");
     base.setPassword("ordo7532159");
+    if(!base.open()){
+        m_lastError = base.lastError().text();
+        return false;
+    }
+    return true;
 }
 
 int Database::addUser(User *user)
@@ -158,6 +163,11 @@ User *Database::login(QString login, QString password)
 QString Database::encodePassword(QString password)
 {
     return QString(QCryptographicHash::hash((password.toUtf8()),QCryptographicHash::Md5).toHex());
+}
+
+const QString &Database::lastError() const
+{
+    return m_lastError;
 }
 
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)
