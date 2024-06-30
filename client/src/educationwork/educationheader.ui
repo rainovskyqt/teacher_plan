@@ -164,7 +164,7 @@
           <enum>QFrame::Box</enum>
          </property>
          <property name="text">
-          <string>Курс</string>
+          <string>группа</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -226,7 +226,7 @@
           <enum>QFrame::Box</enum>
          </property>
          <property name="text">
-          <string>Тип</string>
+          <string/>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

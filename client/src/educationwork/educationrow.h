@@ -7,13 +7,16 @@ namespace Ui {
 class EducationRow;
 }
 
+class EducationalWork;
+
 class EducationRow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit EducationRow(QWidget *parent = nullptr);
+    explicit EducationRow(int row, EducationalWork *work, QWidget *parent = nullptr);
     ~EducationRow();
+    void setData(EducationalWork *work);
 
 private:
     Ui::EducationRow *ui;

@@ -60,13 +60,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="btn_save_2">
-       <property name="text">
-        <string>Сброс</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -83,13 +76,6 @@
       <widget class="QPushButton" name="btn_add">
        <property name="text">
         <string>Добавить</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_save">
-       <property name="text">
-        <string>Сохранить</string>
        </property>
       </widget>
      </item>

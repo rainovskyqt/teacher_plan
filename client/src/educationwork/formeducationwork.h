@@ -9,6 +9,8 @@ namespace Ui {
 class FormEducationWork;
 }
 
+class EducationalWork;
+
 class FormEducationWork : public QWidget
 {
     Q_OBJECT
@@ -20,10 +22,16 @@ public:
 public slots:
     void setPlanData(TeacherPlan *plan);
 
+private slots:
+    void on_btn_add_clicked();
+
 private:
     Ui::FormEducationWork *ui;
 
+    TeacherPlan *m_plan;
+
     void setTable();
+    void addRow(EducationalWork *work);
 };
 
 #endif // FORMEDUCATIONWORK_H

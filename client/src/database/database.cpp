@@ -10,6 +10,7 @@
 #include <QSqlError>
 
 #include <login/user.h>
+#include "database/models/educationalwork.h"
 
 Q_GLOBAL_STATIC(Database, globalInst)
 
@@ -147,13 +148,13 @@ User *Database::login(QString login, QString password)
     while(query->next()){
         user->setBaseId(query->value("uid").toInt());
         user->userData()->setData(
-            query->value("login").toString(),
-            query->value("surname").toString(),
-            query->value("name").toString(),
-            query->value("middle_name").toString(),
-            query->value("rname").toString(),
-            query->value("rang_id").toInt()
-            );
+                    query->value("login").toString(),
+                    query->value("surname").toString(),
+                    query->value("name").toString(),
+                    query->value("middle_name").toString(),
+                    query->value("rname").toString(),
+                    query->value("rang_id").toInt()
+                    );
         user->addPost(query->value("department_id").toInt(), query->value("post_id").toInt());
     }
     delete query;
@@ -168,6 +169,30 @@ QString Database::encodePassword(QString password)
 const QString &Database::lastError() const
 {
     return m_lastError;
+}
+
+QVector<EducationalWork*> Database::educationWork(int planId)
+{
+    QVector<EducationalWork*> works;
+
+    QString queryString = "SELECT id, discipline_id, work_form_id, group_id, comments "
+                          "FROM educational_work "
+                          "WHERE teacher_plan_id = :teacher_plan_id";
+    Values vals;
+    vals.insert(":teacher_plan_id", planId);
+
+    auto query = executeQuery(queryString, vals);
+    while (query->next()) {
+        auto work = new EducationalWork();
+        work->setBaseId(query->value("id").toInt());
+        work->setDisciplineId(query->value("discipline_id").toInt());
+        work->setWorkFormId(query->value("work_form_id").toInt());
+        work->setGroupId(query->value("group_id").toInt());
+        work->setComments(query->value("comments").toString());
+        works.append(work);
+    }
+
+    return works;
 }
 
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)
@@ -186,26 +211,14 @@ QSqlQuery* Database::executeQuery(QString queryString, Values vals)
     if(query->lastError().isValid())
         qDebug() << query->lastError().text();
 
+    base.close();
     return query;
-}
-
-Hours Database::getDefaultHours()
-{
-    QString queryString = "SELECT id, `name`, `order` FROM teacher_plan_works_type WHERE `enable` = 1 ORDER BY `order`";
-
-    Hours hours;
-    auto q = executeQuery(queryString);
-    while (q->next()) {
-        hours.insert(q->value("order").toInt(),
-                     new PlanTime(q->value("id").toInt(), q->value("name").toString(), 0, 0, 0, q->value("order").toInt()));
-    }
-    return hours;
 }
 
 TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)
 {
     QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
-                          "P.protocol_date, H.id, HT.name AS 'hmame', H.work_type_id, H.first_semester, H.second_semester, H.order_place "
+                          "P.protocol_date "
                           "FROM teacher_plan P "
                           "WHERE user_id = :user_id AND department_id = :department_id AND post_id = :post_id AND year_id = :year_id";
 
@@ -223,7 +236,7 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
     plan->setDepartmentId(departmentId);
     plan->setPostId(postId);
 
-    while(query->next()){
+    if(query->next()){
         plan->setBaseId(query->value("pid").toInt());
         plan->setStatusId(query->value("status_id").toInt());
         plan->setApproveUserId(query->value("approved_user_id").toInt());
@@ -232,8 +245,6 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
         plan->setProtocolNumber(query->value("protocol_number").toString());
         plan->setProtocolDate(query->value("protocol_date").toDate());
     }
-
-
 
     return plan;
 }
@@ -261,37 +272,7 @@ void Database::updateTeacherPlan(TeacherPlan *plan)
         plan->setBaseId(query->lastInsertId().toInt());
         delete query;
     }
-
-//    updateHours(plan->hours(), plan->baseId());
 }
 
-//void Database::updateHours(Hours hours, int planId)
-//{
-//    QString updateString = "UPDATE teacher_plan_total_hours SET "
-//                          "first_semester = :first_semester, second_semester = :second_semester "
-//                          "WHERE id = :base_id";
-//    QString insertString = "INSERT INTO teacher_plan_total_hours(teacher_plan_id, work_type_id, first_semester, "
-//                           "second_semester, order_place) "
-//                           "VALUES (:teacher_plan_id, :work_type_id, :first_semester, "
-//                           ":second_semester, :order_place)";
-
-//    Values vals;
-//    for (auto hour = hours.begin(); hour != hours.end(); ++hour) {
-//        vals.insert(":base_id", hour.value()->baseId());
-//        vals.insert(":teacher_plan_id", planId);
-//        vals.insert(":work_type_id", hour.value()->workType());
-//        vals.insert(":first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
-//        vals.insert(":second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
-//        vals.insert(":order_place", hour.key());
-//        if(hour.value()->baseId()){
-//            delete executeQuery(updateString, vals);
-//        } else {
-//            auto query = executeQuery(insertString, vals);
-//            query->next();
-//            hour.value()->setBaseId(query->lastInsertId().toInt());
-//            delete query;
-//        }
-//    }
-//}
 
 Database::Database(){}

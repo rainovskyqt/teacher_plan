@@ -133,6 +133,21 @@ void TeacherPlan::setApproveDate(const QDate &newApproveDate)
     m_approveDate = newApproveDate;
 }
 
+void TeacherPlan::addEducationaWork(EducationalWork *work)
+{
+    m_educationWork.append(work);
+}
+
+void TeacherPlan::removeEducationaWork(EducationalWork *work)
+{
+    m_educationWork.removeOne(work);
+}
+
+QVector<EducationalWork *> TeacherPlan::educationWork()
+{
+    return m_educationWork;
+}
+
 //QMap<int, PlanTime*> TeacherPlan::hours() const
 //{
 //    return m_hours;

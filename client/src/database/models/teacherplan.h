@@ -4,8 +4,11 @@
 #include <QObject>
 #include <QDate>
 #include <QString>
+#include <QVector>
 #include "login/user.h"
 #include "plantime.h"
+
+class EducationalWork;
 
 class PlansList : public QObject
 {
@@ -83,9 +86,9 @@ public:
     QDate approveDate() const;
     void setApproveDate(const QDate &newApproveDate);
 
-//    QMap<int, PlanTime*> hours() const;
-//    void setHours(const QMap<int, PlanTime*> &newHours);
-//    void addHour(int orderPlace, PlanTime* time);
+    void addEducationaWork(EducationalWork* work);
+    void removeEducationaWork(EducationalWork* work);
+    QVector<EducationalWork*> educationWork();
 
 private:
     bool m_changed;
@@ -100,7 +103,7 @@ private:
     QDate m_protocolDate;
     int m_approveUserId;
     QDate m_approveDate;
-//    QMap<int, PlanTime*> m_hours;
+    QVector<EducationalWork*> m_educationWork;
 
     // User m_departmentBoss;
 };
