@@ -1,3 +1,4 @@
+#include "educationheader.h"
 #include "formeducationwork.h"
 #include "ui_formeducationwork.h"
 
@@ -16,7 +17,15 @@ FormEducationWork::~FormEducationWork()
     delete ui;
 }
 
+void FormEducationWork::setPlanData(TeacherPlan *plan)
+{
+}
+
 void FormEducationWork::setTable()
 {
-    ui->tv_educationWork->setHorizontalHeader(new HierarchicalHeaderView(Qt::Horizontal, ui->tv_educationWork));
+    auto item = new QListWidgetItem();
+    auto header = new EducationHeader();
+    ui->lw_educationWork->addItem(item);
+    item->setSizeHint(header->sizeHint());
+    ui->lw_educationWork->setItemWidget(item, header);
 }

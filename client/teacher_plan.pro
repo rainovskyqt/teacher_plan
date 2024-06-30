@@ -17,8 +17,8 @@ SOURCES += \
     src/database/models/plantime.cpp \
     src/database/models/teacherplan.cpp \
     src/database/models/userdata.cpp \
+    src/educationwork/educationheader.cpp \
     src/educationwork/formeducationwork.cpp \
-    src/educationwork/modeleducationwork.cpp \
     src/header/headercombobox.cpp \
     src/login/login.cpp \
     src/login/user.cpp \
@@ -38,8 +38,8 @@ HEADERS += \
     src/database/models/plantime.h \
     src/database/models/teacherplan.h \
     src/database/models/userdata.h \
+    src/educationwork/educationheader.h \
     src/educationwork/formeducationwork.h \
-    src/educationwork/modeleducationwork.h \
     src/header/headercombobox.h \
     src/login/login.h \
     src/login/user.h \
@@ -52,6 +52,7 @@ HEADERS += \
     src/totaltime/status.h
 
 FORMS += \
+    src/educationwork/educationheader.ui \
     src/educationwork/formeducationwork.ui \
     src/login/login.ui \
     src/login/userform.ui \

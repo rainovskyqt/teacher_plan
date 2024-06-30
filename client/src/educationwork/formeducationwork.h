@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <database/models/teacherplan.h>
+
 namespace Ui {
 class FormEducationWork;
 }
@@ -14,6 +16,9 @@ class FormEducationWork : public QWidget
 public:
     explicit FormEducationWork(QWidget *parent = nullptr);
     ~FormEducationWork();
+
+public slots:
+    void setPlanData(TeacherPlan *plan);
 
 private:
     Ui::FormEducationWork *ui;

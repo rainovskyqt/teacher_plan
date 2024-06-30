@@ -15,8 +15,7 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->w_header, &Header::currentPlanChanged, ui->tab_totalTime, &FormTotalTime::setPlanData);
-//    connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
-//    connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
+    connect(ui->w_header, &Header::currentPlanChanged, ui->tab_educationWork, &FormEducationWork::setPlanData);
     connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
 
     ui->w_header->setUser(user);

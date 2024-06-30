@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1222</width>
-    <height>142</height>
+    <height>120</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>120</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -101,7 +107,7 @@
        <number>7</number>
       </property>
       <property name="verticalSpacing">
-       <number>5</number>
+       <number>0</number>
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label_4">
@@ -256,10 +262,16 @@
    <item>
     <widget class="QStackedWidget" name="sw_approved">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_development">
       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QPushButton" name="btn_toApprove">
          <property name="text">
@@ -271,6 +283,12 @@
      </widget>
      <widget class="QWidget" name="page_onApproved">
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
@@ -289,6 +307,12 @@
      </widget>
      <widget class="QWidget" name="page_approved">
       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="lbl_approvedStatus">
          <property name="font">

@@ -13,12 +13,12 @@ Login::Login(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &Login::login);
+    connect(ui->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &Login::close);
 #ifdef QT_DEBUG
     ui->line_login->setText("teacher");
     ui->line_password->setText("myPassword");
 #endif
-    connect(ui->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &Login::login);
-    connect(ui->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &Login::close);
 }
 
 Login::~Login()
