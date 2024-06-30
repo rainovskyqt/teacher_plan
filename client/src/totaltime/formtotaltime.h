@@ -27,27 +27,27 @@ public:
     ~FormTotalTime();
 
 public slots:
-    void setPlaneData(TeacherPlan *plan);
+    void setPlanData(TeacherPlan *plan);
 
 signals:
-    void modelDataChanged();
-    void savePlan();
+//    void modelDataChanged();
+//    void savePlan();
     void rateChanged(double);
 
 private:
     Ui::FormTotalTime *ui;
 
-    ModelTotalTime m_model;
+//    ModelTotalTime m_model;
 
-    QVector<QSpinBox*> m_totals;
-    QVector<QSpinBox*> m_years;
-    QVector<QSpinBox*> m_current;
+//    QVector<QSpinBox*> m_totals;
+//    QVector<QSpinBox*> m_years;
+//    QVector<QSpinBox*> m_current;
     QButtonGroup *m_rateGroup;
 
     void setRate(double rate);
-    void setTable();
+//    void setTable();
     void createConnections();
-    int getCount();
+//    int getCount();
 
 };
 

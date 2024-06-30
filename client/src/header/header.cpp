@@ -32,6 +32,7 @@ void Header::init()
     this->setVisible(true);
 
     loadData();
+    setStaffData();
 }
 
 User *Header::user() const
@@ -75,8 +76,6 @@ void Header::loadData()
     DictionaryAdapter::setYears(ui->cb_years);
     DictionaryAdapter::setDictionary(m_departments, Database::Department);
     DictionaryAdapter::setDictionary(m_posts, Database::Post);
-
-    setStaffData();
 }
 
 void Header::setDefaultData(int userId, int yearId, int departmentId, int postId)
@@ -89,15 +88,6 @@ void Header::setDefaultData(int userId, int yearId, int departmentId, int postId
     m_currentPlan->setDepartmentId(departmentId);
     m_currentPlan->setPostId(postId);
     ui->w_protocol->setVisible(false);
-
-    QMap<int, PlanTime*> hours;
-    hours.insert(1, new PlanTime(1, "Учебная работа", 0, 0, 0, 0, this));
-    hours.insert(2, new PlanTime(2, "Учебно-методическая работа", 0, 0, 0, 0, this));
-    hours.insert(3, new PlanTime(3, "Научно-исследовательская работа", 0, 0, 0, 0, this));
-    hours.insert(4, new PlanTime(4, "Воспитательная и спортивная работа", 0, 0, 0, 0, this));
-    hours.insert(5, new PlanTime(5, "Другие виды работ", 0, 0, 0, 0, this));
-
-    m_currentPlan->setHours(hours);
 
     emit currentPlanChanged(m_currentPlan);
 }
@@ -114,10 +104,10 @@ bool Header::changeIndex(QComboBox *box)
     if(box->currentIndex() == m_currentIndex.value(box))
         return false;
 
-    if(!saveQustion()){
-        box->setCurrentIndex(m_currentIndex.value(box));
-        return false;
-    }
+//    if(!saveQustion()){
+//        box->setCurrentIndex(m_currentIndex.value(box));
+//        return false;
+//    }
 
     m_currentIndex.insert(box, box->currentIndex());
 
@@ -203,27 +193,27 @@ void Header::setApproved(TeacherPlan *plan)
     }
 }
 
-bool Header::saveQustion()
-{
-    if(!m_currentPlan || !m_currentPlan->isChanged())
-        return true;
+//bool Header::saveQustion()
+//{
+//    if(!m_currentPlan || !m_currentPlan->isChanged())
+//        return true;
 
-    int answer = QMessageBox::question(this, "Сохрание индивидуального плана", "Индивидуальный план был изменен, сохранить изменения?",
-                                       QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
-    if(answer == QMessageBox::Cancel){
-        return false;
-    } else if(answer == QMessageBox::Yes) {
-        savePlan();
-    }
-    m_currentPlan->setChanged(false);
-    return true;
-}
+//    int answer = QMessageBox::question(this, "Сохрание индивидуального плана", "Индивидуальный план был изменен, сохранить изменения?",
+//                                       QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+//    if(answer == QMessageBox::Cancel){
+//        return false;
+//    } else if(answer == QMessageBox::Yes) {
+//        savePlan();
+//    }
+//    m_currentPlan->setChanged(false);
+//    return true;
+//}
 
-void Header::savePlan()
-{
-    Database::get()->updateTeacherPlan(m_currentPlan);
-    m_currentPlan->setChanged(false);
-}
+//void Header::savePlan()
+//{
+//    Database::get()->updateTeacherPlan(m_currentPlan);
+//    m_currentPlan->setChanged(false);
+//}
 
 void Header::on_cb_department_currentIndexChanged(int index)
 {
@@ -264,10 +254,10 @@ void Header::on_cb_post_currentIndexChanged(int index)
     setPlan();
 }
 
-void Header::modelDataChanged()
-{
-    m_currentPlan->setChanged(true);
-}
+//void Header::modelDataChanged()
+//{
+//    m_currentPlan->setChanged(true);
+//}
 
 void Header::setRate(double rate)
 {

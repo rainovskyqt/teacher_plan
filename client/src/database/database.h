@@ -75,7 +75,7 @@ private:
 
     void setHeaders(QNetworkRequest &request, Marks mark = Other);
     int getId(QString json);
-    void updateHours(Hours hours, int planId);
+//    void updateHours(Hours hours, int planId);
 };
 
 #endif // DATABASE_H

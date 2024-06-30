@@ -127,12 +127,12 @@ void ModelTotalTime::setDefaulFields()
 
 void ModelTotalTime::setHours(TeacherPlan *plan)
 {
-    m_hours.clear();
-    foreach (auto hour, plan->hours().values()) {
-        m_hours.append(hour);
-    }
+//    m_hours.clear();
+//    foreach (auto hour, plan->hours().values()) {
+//        m_hours.append(hour);
+//    }
 
-    emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
+//    emit dataChanged(this->index(Rows::Educational, Columns::FirstSemester), this->index(Rows::Total, Columns::SecondSemester));
 }
 
 void ModelTotalTime::reset()

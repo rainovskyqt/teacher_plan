@@ -6,7 +6,7 @@ TeacherPlan::TeacherPlan(QObject *parent):
     QObject(parent)
 {
     m_approveUserId = 0;
-    m_hours = QMap<int, PlanTime*>();
+//    m_hours = QMap<int, PlanTime*>();
     m_changed = false;
     m_baseId = 0;
     m_rate = 1;
@@ -133,20 +133,20 @@ void TeacherPlan::setApproveDate(const QDate &newApproveDate)
     m_approveDate = newApproveDate;
 }
 
-QMap<int, PlanTime*> TeacherPlan::hours() const
-{
-    return m_hours;
-}
+//QMap<int, PlanTime*> TeacherPlan::hours() const
+//{
+//    return m_hours;
+//}
 
-void TeacherPlan::setHours(const QMap<int, PlanTime *> &newHours)
-{
-    auto times = m_hours.values();
-    qDeleteAll(times);
-    m_hours.clear();
-    m_hours = newHours;
-}
+//void TeacherPlan::setHours(const QMap<int, PlanTime *> &newHours)
+//{
+//    auto times = m_hours.values();
+//    qDeleteAll(times);
+//    m_hours.clear();
+//    m_hours = newHours;
+//}
 
-void TeacherPlan::addHour(int orderPlace, PlanTime *time)
-{
-    m_hours.insert(orderPlace, time);
-}
+//void TeacherPlan::addHour(int orderPlace, PlanTime *time)
+//{
+//    m_hours.insert(orderPlace, time);
+//}

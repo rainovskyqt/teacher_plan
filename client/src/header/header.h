@@ -24,9 +24,9 @@ public:
     void setUser(User *newUser);
 
 public slots:
-    void modelDataChanged();
+//    void modelDataChanged();
     void setRate(double rate);
-    void savePlan();
+//    void savePlan();
 
 private slots:
     // void on_btn_approvedCancel_clicked();
@@ -70,7 +70,7 @@ private:
     void setStatus(int status);
     void setProtocol(TeacherPlan* plan);
     void setApproved(TeacherPlan* plan);
-    bool saveQustion();
+//    bool saveQustion();
 };
 
 #endif // HEADER_H

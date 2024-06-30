@@ -3,26 +3,29 @@
 
 #include "database/database.h"
 
+#define MAX_FULL_RATE_HOURS 1512
+#define MAX_FULL_RATE_EDUCATIONAL_HOURS 900
+
 FormTotalTime::FormTotalTime(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::FormTotalTime)
 {
     ui->setupUi(this);
-
-    ui->btn_reset->setVisible(false);
-
-    setTable();
     createConnections();
-    ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-    ui->btn_save->setEnabled(false);
 
-    connect(ui->btn_reset, &QPushButton::clicked, &m_model, &ModelTotalTime::reset);
-    connect(&m_model, &ModelTotalTime::dataChanged, this, [this]{
-        emit modelDataChanged();
-        ui->btn_save->setEnabled(true);
-    });
+//    ui->btn_reset->setVisible(false);
 
-    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
+//    setTable();
+//    ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+//    ui->btn_save->setEnabled(false);
+
+//    connect(ui->btn_reset, &QPushButton::clicked, &m_model, &ModelTotalTime::reset);
+//    connect(&m_model, &ModelTotalTime::dataChanged, this, [this]{
+//        emit modelDataChanged();
+//        ui->btn_save->setEnabled(true);
+//    });
+
+//    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
 }
 
 FormTotalTime::~FormTotalTime()
@@ -30,10 +33,10 @@ FormTotalTime::~FormTotalTime()
     delete ui;
 }
 
-void FormTotalTime::setPlaneData(TeacherPlan *plan)
+void FormTotalTime::setPlanData(TeacherPlan *plan)
 {
     setRate(plan->rate());
-    m_model.setHours(plan);
+//    m_model.setHours(plan);
     plan->setChanged(false);
 }
 
@@ -42,17 +45,19 @@ void FormTotalTime::setRate(double rate)
     foreach (auto btn, m_rateGroup->buttons()) {
         if(btn->property("rate").toDouble() == rate){
             btn->setChecked(true);
+            ui->lbl_eduMaxHours->setText(QString("<= %1 часов").arg(MAX_FULL_RATE_EDUCATIONAL_HOURS * rate));
+            ui->lbl_totalMaxHours->setText(QString("= %1 часов").arg(MAX_FULL_RATE_HOURS * rate));
             return;
         }
     }
 }
 
-void FormTotalTime::setTable()
-{
-    ui->tv_totalHours->setHorizontalHeader(new HierarchicalHeaderView(Qt::Horizontal, ui->tv_totalHours));
-    ui->tv_totalHours->setModel(&m_model);
-    ui->tv_totalHours->resizeColumnsToContents();
-}
+//void FormTotalTime::setTable()
+//{
+//    ui->tv_totalHours->setHorizontalHeader(new HierarchicalHeaderView(Qt::Horizontal, ui->tv_totalHours));
+//    ui->tv_totalHours->setModel(&m_model);
+//    ui->tv_totalHours->resizeColumnsToContents();
+//}
 
 void FormTotalTime::createConnections()
 {
@@ -73,7 +78,7 @@ void FormTotalTime::createConnections()
             this, [&](QAbstractButton *btn, bool checked){
                 if(checked){
                     auto rate = btn->property("rate").toDouble();
-                    m_model.setRate(rate);
+                    setRate(rate);
                     emit rateChanged(rate);
                 }
             });

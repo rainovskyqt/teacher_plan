@@ -83,9 +83,9 @@ public:
     QDate approveDate() const;
     void setApproveDate(const QDate &newApproveDate);
 
-    QMap<int, PlanTime*> hours() const;
-    void setHours(const QMap<int, PlanTime*> &newHours);
-    void addHour(int orderPlace, PlanTime* time);
+//    QMap<int, PlanTime*> hours() const;
+//    void setHours(const QMap<int, PlanTime*> &newHours);
+//    void addHour(int orderPlace, PlanTime* time);
 
 private:
     bool m_changed;
@@ -100,7 +100,7 @@ private:
     QDate m_protocolDate;
     int m_approveUserId;
     QDate m_approveDate;
-    QMap<int, PlanTime*> m_hours;
+//    QMap<int, PlanTime*> m_hours;
 
     // User m_departmentBoss;
 };

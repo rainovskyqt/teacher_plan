@@ -14,17 +14,13 @@ MainWindow::MainWindow(User *user, QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->w_header->setUser(user);
-    ui->w_header->init();
-
-
-//    connect(ui->w_header, &Header::currentPlanChanged, this, [&](TeacherPlan *plan){
-//        ui->tab_totalTime->setPlaneData(plan);
-//    });
+    connect(ui->w_header, &Header::currentPlanChanged, ui->tab_totalTime, &FormTotalTime::setPlanData);
 //    connect(ui->tab_totalTime, &FormTotalTime::modelDataChanged, ui->w_header, &Header::modelDataChanged);
 //    connect(ui->tab_totalTime, &FormTotalTime::savePlan, ui->w_header, &Header::savePlan);
     connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
 
+    ui->w_header->setUser(user);
+    ui->w_header->init();
 }
 
 MainWindow::~MainWindow()

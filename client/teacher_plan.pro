@@ -13,6 +13,7 @@ CONFIG += c++17
 SOURCES += \
     src/database/adapters/dictionaryadapter.cpp \
     src/database/database.cpp \
+    src/database/models/educationalwork.cpp \
     src/database/models/plantime.cpp \
     src/database/models/teacherplan.cpp \
     src/database/models/userdata.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     src/database/adapters/dictionaryadapter.h \
     src/database/database.h \
     src/database/models/datamodels.h \
+    src/database/models/educationalwork.h \
     src/database/models/plantime.h \
     src/database/models/teacherplan.h \
     src/database/models/userdata.h \

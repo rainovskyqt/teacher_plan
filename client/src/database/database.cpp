@@ -233,18 +233,18 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
         plan->setRate(query->value("rate").toDouble());
         plan->setProtocolNumber(query->value("protocol_number").toString());
         plan->setProtocolDate(query->value("protocol_date").toDate());
-        plan->addHour(query->value("order_place").toInt(),
-                      new PlanTime(query->value("work_type_id").toInt(),
-                                   query->value("hmame").toString(),
-                                   query->value("first_semester").toInt(),
-                                   query->value("second_semester").toInt(),
-                                   query->value("second_semester").toInt(),
-                                   query->value("order_place").toInt()
-                                   ));
+//        plan->addHour(query->value("order_place").toInt(),
+//                      new PlanTime(query->value("work_type_id").toInt(),
+//                                   query->value("hmame").toString(),
+//                                   query->value("first_semester").toInt(),
+//                                   query->value("second_semester").toInt(),
+//                                   query->value("second_semester").toInt(),
+//                                   query->value("order_place").toInt()
+//                                   ));
     }
 
-    if(plan->hours().isEmpty())
-        plan->setHours(getDefaultHours());
+//    if(plan->hours().isEmpty())
+//        plan->setHours(getDefaultHours());
 
     return plan;
 }
@@ -273,42 +273,36 @@ void Database::updateTeacherPlan(TeacherPlan *plan)
         delete query;
     }
 
-    updateHours(plan->hours(), plan->baseId());
+//    updateHours(plan->hours(), plan->baseId());
 }
 
-void Database::setHeaders(QNetworkRequest &request, Marks mark)
-{
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader(QByteArray("Authorization"), QString("Bearer " + m_token).toLatin1());
-}
+//void Database::updateHours(Hours hours, int planId)
+//{
+//    QString updateString = "UPDATE teacher_plan_total_hours SET "
+//                          "first_semester = :first_semester, second_semester = :second_semester "
+//                          "WHERE id = :base_id";
+//    QString insertString = "INSERT INTO teacher_plan_total_hours(teacher_plan_id, work_type_id, first_semester, "
+//                           "second_semester, order_place) "
+//                           "VALUES (:teacher_plan_id, :work_type_id, :first_semester, "
+//                           ":second_semester, :order_place)";
 
-void Database::updateHours(Hours hours, int planId)
-{
-    QString updateString = "UPDATE teacher_plan_total_hours SET "
-                          "first_semester = :first_semester, second_semester = :second_semester "
-                          "WHERE id = :base_id";
-    QString insertString = "INSERT INTO teacher_plan_total_hours(teacher_plan_id, work_type_id, first_semester, "
-                           "second_semester, order_place) "
-                           "VALUES (:teacher_plan_id, :work_type_id, :first_semester, "
-                           ":second_semester, :order_place)";
-
-    Values vals;
-    for (auto hour = hours.begin(); hour != hours.end(); ++hour) {
-        vals.insert(":base_id", hour.value()->baseId());
-        vals.insert(":teacher_plan_id", planId);
-        vals.insert(":work_type_id", hour.value()->workType());
-        vals.insert(":first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
-        vals.insert(":second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
-        vals.insert(":order_place", hour.key());
-        if(hour.value()->baseId()){
-            delete executeQuery(updateString, vals);
-        } else {
-            auto query = executeQuery(insertString, vals);
-            query->next();
-            hour.value()->setBaseId(query->lastInsertId().toInt());
-            delete query;
-        }
-    }
-}
+//    Values vals;
+//    for (auto hour = hours.begin(); hour != hours.end(); ++hour) {
+//        vals.insert(":base_id", hour.value()->baseId());
+//        vals.insert(":teacher_plan_id", planId);
+//        vals.insert(":work_type_id", hour.value()->workType());
+//        vals.insert(":first_semester", hour.value()->semesterHours(PlanTime::FirstSemester));
+//        vals.insert(":second_semester", hour.value()->semesterHours(PlanTime::SecondSemestr));
+//        vals.insert(":order_place", hour.key());
+//        if(hour.value()->baseId()){
+//            delete executeQuery(updateString, vals);
+//        } else {
+//            auto query = executeQuery(insertString, vals);
+//            query->next();
+//            hour.value()->setBaseId(query->lastInsertId().toInt());
+//            delete query;
+//        }
+//    }
+//}
 
 Database::Database(){}
