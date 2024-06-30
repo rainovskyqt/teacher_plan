@@ -15,6 +15,9 @@ public:
     explicit EducationHeader(QWidget *parent = nullptr);
     ~EducationHeader();
 
+public slots:
+    void setPosition(int val);
+
 private:
     Ui::EducationHeader *ui;
 };

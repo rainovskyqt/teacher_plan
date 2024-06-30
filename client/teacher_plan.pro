@@ -18,6 +18,7 @@ SOURCES += \
     src/database/models/teacherplan.cpp \
     src/database/models/userdata.cpp \
     src/educationwork/educationheader.cpp \
+    src/educationwork/educationrow.cpp \
     src/educationwork/formeducationwork.cpp \
     src/header/headercombobox.cpp \
     src/login/login.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     src/database/models/teacherplan.h \
     src/database/models/userdata.h \
     src/educationwork/educationheader.h \
+    src/educationwork/educationrow.h \
     src/educationwork/formeducationwork.h \
     src/header/headercombobox.h \
     src/login/login.h \
@@ -53,6 +55,7 @@ HEADERS += \
 
 FORMS += \
     src/educationwork/educationheader.ui \
+    src/educationwork/educationrow.ui \
     src/educationwork/formeducationwork.ui \
     src/login/login.ui \
     src/login/userform.ui \

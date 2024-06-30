@@ -207,8 +207,6 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
     QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
                           "P.protocol_date, H.id, HT.name AS 'hmame', H.work_type_id, H.first_semester, H.second_semester, H.order_place "
                           "FROM teacher_plan P "
-                          "LEFT JOIN teacher_plan_total_hours H ON H.teacher_plan_id = P.id "
-                          "LEFT JOIN teacher_plan_works_type HT ON H.work_type_id = HT.id "
                           "WHERE user_id = :user_id AND department_id = :department_id AND post_id = :post_id AND year_id = :year_id";
 
     Values vals;
@@ -233,18 +231,9 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
         plan->setRate(query->value("rate").toDouble());
         plan->setProtocolNumber(query->value("protocol_number").toString());
         plan->setProtocolDate(query->value("protocol_date").toDate());
-//        plan->addHour(query->value("order_place").toInt(),
-//                      new PlanTime(query->value("work_type_id").toInt(),
-//                                   query->value("hmame").toString(),
-//                                   query->value("first_semester").toInt(),
-//                                   query->value("second_semester").toInt(),
-//                                   query->value("second_semester").toInt(),
-//                                   query->value("order_place").toInt()
-//                                   ));
     }
 
-//    if(plan->hours().isEmpty())
-//        plan->setHours(getDefaultHours());
+
 
     return plan;
 }
