@@ -6,6 +6,7 @@
 #include <QWidget>
 #include<QSpinBox>
 #include <QButtonGroup>
+#include <QLabel>
 
 #include <database/models/teacherplan.h>
 
@@ -34,6 +35,11 @@ signals:
 //    void savePlan();
     void rateChanged(double);
 
+private slots:
+    void on_sb_eduYear_valueChanged(int arg1);
+    void on_sb_totalYear_valueChanged(int arg1);
+    void countYearTime();
+
 private:
     Ui::FormTotalTime *ui;
 
@@ -43,10 +49,15 @@ private:
 //    QVector<QSpinBox*> m_years;
 //    QVector<QSpinBox*> m_current;
     QButtonGroup *m_rateGroup;
+    QMap<QPair<QSpinBox*,QSpinBox*>, QSpinBox*> m_hours;
 
     void setRate(double rate);
-//    void setTable();
     void createConnections();
+    void colorHours(QLabel *lbl, QSpinBox *sBox);
+    void makeTimeConnections();
+    void countFirstSemester();
+    void countSecondSemester();
+
 //    int getCount();
 
 };

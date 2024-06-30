@@ -1,4 +1,5 @@
 #include "formtotaltime.h"
+#include "status.h"
 #include "ui_formtotaltime.h"
 
 #include "database/database.h"
@@ -12,20 +13,21 @@ FormTotalTime::FormTotalTime(QWidget *parent)
 {
     ui->setupUi(this);
     createConnections();
+    makeTimeConnections();
 
-//    ui->btn_reset->setVisible(false);
+    //    ui->btn_reset->setVisible(false);
 
-//    setTable();
-//    ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-//    ui->btn_save->setEnabled(false);
+    //    setTable();
+    //    ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    //    ui->btn_save->setEnabled(false);
 
-//    connect(ui->btn_reset, &QPushButton::clicked, &m_model, &ModelTotalTime::reset);
-//    connect(&m_model, &ModelTotalTime::dataChanged, this, [this]{
-//        emit modelDataChanged();
-//        ui->btn_save->setEnabled(true);
-//    });
+    //    connect(ui->btn_reset, &QPushButton::clicked, &m_model, &ModelTotalTime::reset);
+    //    connect(&m_model, &ModelTotalTime::dataChanged, this, [this]{
+    //        emit modelDataChanged();
+    //        ui->btn_save->setEnabled(true);
+    //    });
 
-//    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
+    //    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
 }
 
 FormTotalTime::~FormTotalTime()
@@ -36,7 +38,6 @@ FormTotalTime::~FormTotalTime()
 void FormTotalTime::setPlanData(TeacherPlan *plan)
 {
     setRate(plan->rate());
-//    m_model.setHours(plan);
     plan->setChanged(false);
 }
 
@@ -45,19 +46,20 @@ void FormTotalTime::setRate(double rate)
     foreach (auto btn, m_rateGroup->buttons()) {
         if(btn->property("rate").toDouble() == rate){
             btn->setChecked(true);
-            ui->lbl_eduMaxHours->setText(QString("<= %1 часов").arg(MAX_FULL_RATE_EDUCATIONAL_HOURS * rate));
-            ui->lbl_totalMaxHours->setText(QString("= %1 часов").arg(MAX_FULL_RATE_HOURS * rate));
-            return;
+
+            int edHours = MAX_FULL_RATE_EDUCATIONAL_HOURS * rate;
+            ui->lbl_eduMaxHours->setProperty("hours", edHours);
+            ui->lbl_eduMaxHours->setText(QString("<= %1 часов").arg(edHours));
+
+            int total = MAX_FULL_RATE_HOURS * rate;
+            ui->lbl_totalMaxHours->setProperty("hours", total);
+            ui->lbl_totalMaxHours->setText(QString("= %1 часов").arg(total));
+            break;
         }
     }
+    colorHours(ui->lbl_eduMaxHours, ui->sb_eduYear);
+    colorHours(ui->lbl_totalMaxHours, ui->sb_totalYear);
 }
-
-//void FormTotalTime::setTable()
-//{
-//    ui->tv_totalHours->setHorizontalHeader(new HierarchicalHeaderView(Qt::Horizontal, ui->tv_totalHours));
-//    ui->tv_totalHours->setModel(&m_model);
-//    ui->tv_totalHours->resizeColumnsToContents();
-//}
 
 void FormTotalTime::createConnections()
 {
@@ -76,10 +78,101 @@ void FormTotalTime::createConnections()
 
     connect(m_rateGroup, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled),
             this, [&](QAbstractButton *btn, bool checked){
-                if(checked){
-                    auto rate = btn->property("rate").toDouble();
-                    setRate(rate);
-                    emit rateChanged(rate);
-                }
-            });
+        if(checked){
+            auto rate = btn->property("rate").toDouble();
+            setRate(rate);
+            emit rateChanged(rate);
+        }
+    });
 }
+
+void FormTotalTime::colorHours(QLabel *lbl, QSpinBox *sBox)
+{
+    int max = lbl->property("hours").toInt();
+    if(sBox->value() < max)
+        sBox->setStyleSheet(Status::less());
+    else if(sBox->value() > max)
+        sBox->setStyleSheet(Status::more());
+    else
+        sBox->setStyleSheet(Status::equal());
+}
+
+void FormTotalTime::makeTimeConnections()
+{
+    connect(ui->sb_eduFirstSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_eduSecondSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_metodFirstSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_metodSecondSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_otherFirstSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_otherSecondSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_reseachFirstSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_reseachSecondSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_sportFirstSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_sportSecondSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_totalFirstSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+    connect(ui->sb_totalSecondSemester, qOverload<int>(&QSpinBox::valueChanged), this, &FormTotalTime::countYearTime);
+}
+
+void FormTotalTime::countFirstSemester()
+{
+    ui->sb_totalFirstSemester->setValue(
+                ui->sb_eduFirstSemester->value() +
+                ui->sb_metodFirstSemester->value() +
+                ui->sb_otherFirstSemester->value() +
+                ui->sb_reseachFirstSemester->value() +
+                ui->sb_sportFirstSemester->value()
+                );
+}
+
+void FormTotalTime::countSecondSemester()
+{
+    ui->sb_totalSecondSemester->setValue(
+                ui->sb_eduSecondSemester->value() +
+                ui->sb_metodSecondSemester->value() +
+                ui->sb_otherSecondSemester->value() +
+                ui->sb_reseachSecondSemester->value() +
+                ui->sb_sportSecondSemester->value()
+                );
+}
+
+void FormTotalTime::on_sb_eduYear_valueChanged(int arg1)
+{
+    Q_UNUSED(arg1)
+    colorHours(ui->lbl_eduMaxHours, ui->sb_eduYear);
+}
+
+
+void FormTotalTime::on_sb_totalYear_valueChanged(int arg1)
+{
+    Q_UNUSED(arg1)
+    colorHours(ui->lbl_totalMaxHours, ui->sb_totalYear);
+}
+
+void FormTotalTime::countYearTime()
+{
+    auto name = sender()->objectName();
+    if(name.contains("sb_edu")){
+        ui->sb_eduYear->setValue(ui->sb_eduFirstSemester->value() + ui->sb_eduSecondSemester->value());
+        countFirstSemester();
+        countSecondSemester();
+    } else if(name.contains("sb_metod")){
+        ui->sb_metodYear->setValue(ui->sb_metodFirstSemester->value() + ui->sb_metodSecondSemester->value());
+        countFirstSemester();
+        countSecondSemester();
+    }else if(name.contains("sb_other")){
+        ui->sb_otherYear->setValue(ui->sb_otherFirstSemester->value() + ui->sb_otherSecondSemester->value());
+        countFirstSemester();
+        countSecondSemester();
+    }else if(name.contains("sb_reseach")){
+        ui->sb_reseachYear->setValue(ui->sb_reseachFirstSemester->value() + ui->sb_reseachSecondSemester->value());
+        countFirstSemester();
+        countSecondSemester();
+    }else if(name.contains("sb_sport")){
+        ui->sb_sportYear->setValue(ui->sb_sportFirstSemester->value() + ui->sb_sportSecondSemester->value());
+        countFirstSemester();
+        countSecondSemester();
+    }else if(name.contains("sb_total")){
+        ui->sb_totalYear->setValue(ui->sb_totalFirstSemester->value() + ui->sb_totalSecondSemester->value());
+    }
+}
+

@@ -48,7 +48,8 @@ HEADERS += \
     src/totaltime/formtotaltime.h \
     src/totaltime/modeltotaltime.h \
     src/header/header.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/totaltime/status.h
 
 FORMS += \
     src/educationwork/formeducationwork.ui \
