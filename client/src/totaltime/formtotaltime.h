@@ -12,9 +12,6 @@
 
 #include "misc/HierarchicalHeaderView.h"
 
-#include "modeltotaltime.h"
-
-
 namespace Ui {
 class FormTotalTime;
 }

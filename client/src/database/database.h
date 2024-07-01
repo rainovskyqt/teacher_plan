@@ -12,6 +12,8 @@
 
 #include <database/models/teacherwork.h>
 
+#include <educationwork/educationalhour.h>
+
 using Values = QMap<QString, QVariant>;
 
 class EducationalWork;
@@ -47,6 +49,8 @@ public:
     QVector<EducationalWork *> educationWork(int planId);
     void saveWork(TeacherWork *work);
     void deleteWork(TeacherWork *work);
+    QList<EducationalHour*> getEdcationalHours(int workId);
+    int saveEdcationalHour(EducationalHour* hour);
 
 public slots:
 

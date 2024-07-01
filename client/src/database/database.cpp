@@ -240,6 +240,59 @@ void Database::deleteWork(TeacherWork *work)
     delete executeQuery(queryString, vals);
 }
 
+QList<EducationalHour *> Database::getEdcationalHours(int workId)
+{
+    QString queryString = "SELECT id, `month`, `week`, `value`, `type` FROM educational_work_hours "
+                          "WHERE plan_work_id = :plan_work_id";
+    Values vals;
+    vals.insert(":plan_work_id", workId);
+    auto query = executeQuery(queryString, vals);
+
+    QList<EducationalHour *> hList;
+
+    while (query->next()) {
+        hList.append(
+            new EducationalHour(
+                query->value("id").toInt(),
+                workId,
+                query->value("month").toInt(),
+                query->value("week").toInt(),
+                query->value("value").toInt(),
+                static_cast<EducationalHour::HourType>(query->value("type").toInt()))
+            );
+    }
+
+    return hList;
+}
+
+int Database::saveEdcationalHour(EducationalHour *hour)
+{
+    Values vals;
+    vals.insert(":id", hour->baseId());
+    vals.insert(":month", hour->month());
+    vals.insert(":week", hour->week());
+    vals.insert(":value", hour->value());
+    vals.insert(":type", hour->type());
+    vals.insert(":plan_work_id", hour->planeWorkId());
+
+    QString updateString = "UPDATE educational_work_hours "
+                           "SET value = :value "
+                           "WHERE id = :id";
+
+    QString insertString = "INSERT INTO educational_work_hours(month, week, value, type, plan_work_id)"
+                           "VALUES(:month, :week, :value, :type, :plan_work_id) ";
+    if(hour->baseId()){
+        delete executeQuery(updateString, vals);
+        return hour->baseId();
+    } else {
+        auto answer = executeQuery(insertString, vals);
+        answer->next();
+        int id = answer->lastInsertId().toInt();
+        delete answer;
+        return id;
+    }
+}
+
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 {
     auto base = QSqlDatabase::database();

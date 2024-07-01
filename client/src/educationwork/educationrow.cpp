@@ -19,6 +19,8 @@ EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
     setData(work);
     makeConnections();
     makeHoursConnections();
+    loadHours();
+    makeSaveConnection();
 }
 
 EducationRow::~EducationRow()
@@ -103,6 +105,64 @@ void EducationRow::countYearFactical()
     ui->lbl_yearFact->setText(QString::number(ui->lbl_firstFact->text().toInt() + ui->lbl_secondFact->text().toInt()));
 }
 
+void EducationRow::makeSaveConnection()
+{
+    foreach (QLineEdit* line, this->findChildren<QLineEdit*>()) {
+        connect(line, &QLineEdit::textEdited, this, [=]{
+            Database::get()->saveEdcationalHour(new EducationalHour(
+                line->property("id").toInt(),
+                work()->baseId(),
+                getMonth(line->objectName()),
+                getWeek(line->objectName()),
+                line->text().toInt(),
+                line->objectName().right(1) == "f" ? EducationalHour::Factical : EducationalHour::Plane
+                ));
+            emit valueChanget(line->objectName());
+        });
+    }
+}
+
+void EducationRow::loadHours()
+{
+    auto hours = Database::get()->getEdcationalHours(m_work->baseId());
+    auto plane = this->findChildren<QLineEdit*>(QRegExp("\\b\\w*p\\w*\\b"));
+    auto fact = this->findChildren<QLineEdit*>(QRegExp("\\b\\w*f\\w*\\b"));
+    QList<QLineEdit*> current;
+
+    for(auto h: hours){
+        QString name = QString("m%1w%2").arg(h->month()).arg(h->week());
+        if(h->type() == EducationalHour::Plane)
+            current = plane;
+        else
+            current = fact;
+
+        foreach(auto l, current){
+            if(l->objectName().contains(name)){
+                l->setText(QString::number(h->value()));
+                l->setProperty("id", h->baseId());
+                break;
+            }
+        }
+    }
+}
+
+int EducationRow::getMonth(QString name)
+{
+    // Полнейшая дичь, переделать, сейчас мутить с регулярками времени нет
+    int start = name.indexOf("m") + 1;
+    int end = name.indexOf("w");
+    QString month = name.mid(start, end - start);
+    return month.toInt();
+}
+
+int EducationRow::getWeek(QString name)
+{
+    // Полнейшая дичь, переделать, сейчас мутить с регулярками времени нет
+    int start = name.indexOf("w") + 1;
+    QString week = name.mid(start, 1);
+    return week.toInt();
+}
+
 void EducationRow::loadDictionaries()
 {
     DictionaryAdapter::setDictionary(ui->cb_discipline, Database::Discipline);
@@ -114,28 +174,29 @@ void EducationRow::makeConnections()
 {
     connect(ui->cb_discipline, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         work()->setDisciplineId(ui->cb_discipline->currentData().toInt());
-        emit saveWork(m_work);
+        Database::get()->saveWork(m_work);
     });
 
     connect(ui->cb_group, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         work()->setGroupId(ui->cb_group->currentData().toInt());
-         emit saveWork(m_work);
+        Database::get()->saveWork(m_work);
     });
 
     connect(ui->cb_workForm, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         work()->setWorkFormId(ui->cb_workForm->currentData().toInt());
-         emit saveWork(m_work);
+        Database::get()->saveWork(m_work);
     });
 
     connect(ui->text_comments, &QPlainTextEdit::textChanged, this, [&]{
         work()->setComments(ui->text_comments->toPlainText());
-        emit saveWork(m_work);
+        Database::get()->saveWork(m_work);
     });
 }
 
 void EducationRow::makeHoursConnections()
 {
-    foreach (auto c, this->findChildren<QLineEdit*>()) {
-        connect(c, &QLineEdit::textChanged, this, &EducationRow::countHours);
+    foreach (QLineEdit* line, this->findChildren<QLineEdit*>()) {
+        line->setProperty("id", 0);
+        connect(line, &QLineEdit::textChanged, this, &EducationRow::countHours);
     }
 }

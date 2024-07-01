@@ -30,6 +30,8 @@ void FormEducationWork::setTable()
 {
     connect(ui->lw_educationWork->horizontalScrollBar(), &QScrollBar::valueChanged,
             ui->w_edHeader, &EducationHeader::setPosition);
+    connect(ui->lw_educationWork->horizontalScrollBar(), &QScrollBar::valueChanged,
+            ui->w_footer, &EducationalFooter::setPosition);
 }
 
 void FormEducationWork::fillTable()
@@ -49,10 +51,11 @@ void FormEducationWork::addRow(EducationalWork *work)
     item->setSizeHint(row->sizeHint());
     ui->lw_educationWork->setItemWidget(item, row);
     connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
-    connect(row, &EducationRow::saveWork, this, [](TeacherWork *work){
-        Database::get()->saveWork(work);
-    });
     Database::get()->saveWork(work);
+
+    connect(row, &EducationRow::valueChanget, this, [this]{
+        auto list = ui->lw_educationWork->item
+    });
 }
 
 void FormEducationWork::on_btn_add_clicked()

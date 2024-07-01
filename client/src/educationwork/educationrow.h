@@ -14,7 +14,7 @@ class EducationRow : public QWidget
     Q_OBJECT
 
 public:
-    explicit EducationRow(int row, EducationalWork *work, QWidget *parent = nullptr);
+    explicit EducationRow(int row, EducationalWork *work = nullptr, QWidget *parent = nullptr);
     ~EducationRow();
     void setData(EducationalWork *work);
 
@@ -29,6 +29,7 @@ private slots:
 signals:
     void deleteWork();
     void saveWork(EducationalWork*);
+    void valueChanget(QString);
 
 private:
     Ui::EducationRow *ui;
@@ -42,6 +43,10 @@ private:
     void countFacticalHours();
     void countYearPlan();
     void countYearFactical();
+    void makeSaveConnection();
+    void loadHours();
+    int getMonth(QString name);
+    int getWeek(QString name);
 };
 
 #endif // EDUCATIONROW_H

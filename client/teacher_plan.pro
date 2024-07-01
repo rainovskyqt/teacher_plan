@@ -18,6 +18,8 @@ SOURCES += \
     src/database/models/teacherplan.cpp \
     src/database/models/teacherwork.cpp \
     src/database/models/userdata.cpp \
+    src/educationwork/educationalfooter.cpp \
+    src/educationwork/educationalhour.cpp \
     src/educationwork/educationheader.cpp \
     src/educationwork/educationrow.cpp \
     src/educationwork/formeducationwork.cpp \
@@ -27,7 +29,6 @@ SOURCES += \
     src/login/userform.cpp \
     src/misc/HierarchicalHeaderView.cpp \
     src/totaltime/formtotaltime.cpp \
-    src/totaltime/modeltotaltime.cpp \
     src/header/header.cpp \
     src/main.cpp \
     src/mainwindow.cpp
@@ -41,6 +42,8 @@ HEADERS += \
     src/database/models/teacherplan.h \
     src/database/models/teacherwork.h \
     src/database/models/userdata.h \
+    src/educationwork/educationalfooter.h \
+    src/educationwork/educationalhour.h \
     src/educationwork/educationheader.h \
     src/educationwork/educationrow.h \
     src/educationwork/formeducationwork.h \
@@ -50,12 +53,12 @@ HEADERS += \
     src/login/userform.h \
     src/misc/HierarchicalHeaderView.h \
     src/totaltime/formtotaltime.h \
-    src/totaltime/modeltotaltime.h \
     src/header/header.h \
     src/mainwindow.h \
     src/totaltime/status.h
 
 FORMS += \
+    src/educationwork/educationalfooter.ui \
     src/educationwork/educationheader.ui \
     src/educationwork/educationrow.ui \
     src/educationwork/formeducationwork.ui \

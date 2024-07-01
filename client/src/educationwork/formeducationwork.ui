@@ -55,6 +55,9 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="EducationalFooter" name="w_footer" native="true"/>
+     </item>
     </layout>
    </item>
    <item>
@@ -88,6 +91,12 @@
    <class>EducationHeader</class>
    <extends>QWidget</extends>
    <header>educationwork/educationheader.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EducationalFooter</class>
+   <extends>QWidget</extends>
+   <header>educationwork/educationalfooter.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
