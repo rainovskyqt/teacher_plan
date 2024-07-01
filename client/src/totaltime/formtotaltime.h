@@ -27,9 +27,10 @@ public:
 public slots:
     void setPlanData(TeacherPlan *plan);
 
+    void setFirstSemester(int val);
+    void setSecondSemester(int val);
+
 signals:
-//    void modelDataChanged();
-//    void savePlan();
     void rateChanged(double);
 
 private slots:
@@ -40,11 +41,6 @@ private slots:
 private:
     Ui::FormTotalTime *ui;
 
-//    ModelTotalTime m_model;
-
-//    QVector<QSpinBox*> m_totals;
-//    QVector<QSpinBox*> m_years;
-//    QVector<QSpinBox*> m_current;
     QButtonGroup *m_rateGroup;
     QMap<QPair<QSpinBox*,QSpinBox*>, QSpinBox*> m_hours;
 
@@ -54,9 +50,6 @@ private:
     void makeTimeConnections();
     void countFirstSemester();
     void countSecondSemester();
-
-//    int getCount();
-
 };
 
 #endif // FORMTOTALTIME_H

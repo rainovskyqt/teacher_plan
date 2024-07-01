@@ -21,6 +21,8 @@ public:
     QString toString();
 
     EducationalWork *work() const;
+    int getValue(QString name);
+    int getTotalValue(QString name);
 
 private slots:
     void on_btn_deleteRow_clicked();
@@ -30,6 +32,7 @@ signals:
     void deleteWork();
     void saveWork(EducationalWork*);
     void valueChanget(QString);
+    void totalValueChanget(QString);
 
 private:
     Ui::EducationRow *ui;

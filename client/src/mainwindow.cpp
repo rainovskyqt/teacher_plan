@@ -18,6 +18,10 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     connect(ui->w_header, &Header::currentPlanChanged, ui->tab_educationWork, &FormEducationWork::setPlanData);
     connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
 
+    connect(ui->tab_educationWork, &FormEducationWork::firstPlaneChanget, ui->tab_totalTime, &FormTotalTime::setFirstSemester);
+    connect(ui->tab_educationWork, &FormEducationWork::secondPlaneChanget, ui->tab_totalTime, &FormTotalTime::setSecondSemester);
+
+
     ui->w_header->setUser(user);
     ui->w_header->init();
 }

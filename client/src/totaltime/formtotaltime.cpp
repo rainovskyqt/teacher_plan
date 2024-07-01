@@ -14,20 +14,6 @@ FormTotalTime::FormTotalTime(QWidget *parent)
     ui->setupUi(this);
     createConnections();
     makeTimeConnections();
-
-    //    ui->btn_reset->setVisible(false);
-
-    //    setTable();
-    //    ui->tv_totalHours->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-    //    ui->btn_save->setEnabled(false);
-
-    //    connect(ui->btn_reset, &QPushButton::clicked, &m_model, &ModelTotalTime::reset);
-    //    connect(&m_model, &ModelTotalTime::dataChanged, this, [this]{
-    //        emit modelDataChanged();
-    //        ui->btn_save->setEnabled(true);
-    //    });
-
-    //    connect(ui->btn_save, &QPushButton::clicked, this, &FormTotalTime::savePlan);
 }
 
 FormTotalTime::~FormTotalTime()
@@ -39,6 +25,16 @@ void FormTotalTime::setPlanData(TeacherPlan *plan)
 {
     setRate(plan->rate());
     plan->setChanged(false);
+}
+
+void FormTotalTime::setFirstSemester(int val)
+{
+    ui->sb_eduFirstSemester->setValue(val);
+}
+
+void FormTotalTime::setSecondSemester(int val)
+{
+    ui->sb_eduSecondSemester->setValue(val);
 }
 
 void FormTotalTime::setRate(double rate)

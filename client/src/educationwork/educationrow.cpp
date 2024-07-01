@@ -47,6 +47,20 @@ EducationalWork *EducationRow::work() const
     return m_work;
 }
 
+int EducationRow::getValue(QString name)
+{
+    QLineEdit* line = this->findChildren<QLineEdit*>(name).at(0);
+    return line->text().toInt();
+}
+
+int EducationRow::getTotalValue(QString name)
+{
+    QList<QLabel*> lbl = this->findChildren<QLabel*>(name);
+    if(lbl.count())
+        return lbl.at(0)->text().toInt();
+    return 0;
+}
+
 void EducationRow::on_btn_deleteRow_clicked()
 {
     emit deleteWork();
@@ -74,7 +88,9 @@ void EducationRow::countPlanHours()
             secondValue += c->text().toInt();
     }
     ui->lbl_firstPlan->setText(QString::number(firstValue));
+    emit totalValueChanget(ui->lbl_firstPlan->objectName());
     ui->lbl_secondPlan->setText(QString::number(secondValue));
+    emit totalValueChanget(ui->lbl_secondPlan->objectName());
     countYearPlan();
 }
 
@@ -91,18 +107,22 @@ void EducationRow::countFacticalHours()
             secondValue += c->text().toInt();
     }
     ui->lbl_firstFact->setText(QString::number(firstValue));
+    emit totalValueChanget(ui->lbl_firstFact->objectName());
     ui->lbl_secondFact->setText(QString::number(secondValue));
+    emit totalValueChanget(ui->lbl_secondFact->objectName());
     countYearFactical();
 }
 
 void EducationRow::countYearPlan()
 {
     ui->lbl_yearPlan->setText(QString::number(ui->lbl_firstPlan->text().toInt() + ui->lbl_secondPlan->text().toInt()));
+    emit totalValueChanget(ui->lbl_yearPlan->objectName());
 }
 
 void EducationRow::countYearFactical()
 {
     ui->lbl_yearFact->setText(QString::number(ui->lbl_firstFact->text().toInt() + ui->lbl_secondFact->text().toInt()));
+    emit totalValueChanget(ui->lbl_yearFact->objectName());
 }
 
 void EducationRow::makeSaveConnection()
@@ -138,7 +158,7 @@ void EducationRow::loadHours()
 
         foreach(auto l, current){
             if(l->objectName().contains(name)){
-                l->setText(QString::number(h->value()));
+                l->setText(h->value() ? QString::number(h->value()) : "");
                 l->setProperty("id", h->baseId());
                 break;
             }

@@ -26,6 +26,12 @@ private slots:
     void on_btn_add_clicked();
     void deleteRow();
 
+signals:
+    void firstPlaneChanget(int);
+    void secondPlaneChanget(int);
+    void firstFacticalChanget(int);
+    void secondFacticalChanget(int);
+
 private:
     Ui::FormEducationWork *ui;
 
@@ -34,6 +40,10 @@ private:
     void setTable();
     void fillTable();
     void addRow(EducationalWork *work);
+    int countHours(QString name);
+    int countTotalHours(QString name);
+    void countAllValues();
+
 };
 
 #endif // FORMEDUCATIONWORK_H

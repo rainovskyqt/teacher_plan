@@ -32,6 +32,11 @@ void FormEducationWork::setTable()
             ui->w_edHeader, &EducationHeader::setPosition);
     connect(ui->lw_educationWork->horizontalScrollBar(), &QScrollBar::valueChanged,
             ui->w_footer, &EducationalFooter::setPosition);
+
+    connect(ui->w_footer, &EducationalFooter::firstPlaneChanget, this, &FormEducationWork::firstPlaneChanget);
+    connect(ui->w_footer, &EducationalFooter::secondPlaneChanget, this, &FormEducationWork::secondPlaneChanget);
+    connect(ui->w_footer, &EducationalFooter::firstFacticalChanget, this, &FormEducationWork::firstFacticalChanget);
+    connect(ui->w_footer, &EducationalFooter::secondFacticalChanget, this, &FormEducationWork::secondFacticalChanget);
 }
 
 void FormEducationWork::fillTable()
@@ -42,6 +47,8 @@ void FormEducationWork::fillTable()
     foreach(auto work, eWork){
         addRow(work);
     }
+
+    countAllValues();
 }
 
 void FormEducationWork::addRow(EducationalWork *work)
@@ -53,9 +60,46 @@ void FormEducationWork::addRow(EducationalWork *work)
     connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
     Database::get()->saveWork(work);
 
-    connect(row, &EducationRow::valueChanget, this, [this]{
-        auto list = ui->lw_educationWork->item
+    connect(row, &EducationRow::valueChanget, this, [this](QString line){
+        ui->w_footer->setValue(countHours(line), line);
     });
+
+    connect(row, &EducationRow::totalValueChanget, this, [this](QString lbl){
+        ui->w_footer->setTotalValue(countTotalHours(lbl), lbl);
+    });
+}
+
+int FormEducationWork::countHours(QString name)
+{
+    int count = 0;
+    for(int i = 0; i < ui->lw_educationWork->count(); ++i){
+        EducationRow *row = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(
+            ui->lw_educationWork->item(i)));
+        count += row->getValue(name);
+    }
+    return count;
+}
+
+int FormEducationWork::countTotalHours(QString name)
+{
+    int count = 0;
+    for(int i = 0; i < ui->lw_educationWork->count(); ++i){
+        EducationRow *row = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(
+            ui->lw_educationWork->item(i)));
+        count += row->getTotalValue(name);
+    }
+    return count;
+}
+
+void FormEducationWork::countAllValues()
+{
+    auto hours = ui->w_footer->hourFields();
+    foreach(auto h, hours)
+        ui->w_footer->setValue(countHours(h), h);
+
+    auto totals = ui->w_footer->totalFields();
+    foreach(auto t, totals)
+        ui->w_footer->setTotalValue(countTotalHours(t), t);
 }
 
 void FormEducationWork::on_btn_add_clicked()
