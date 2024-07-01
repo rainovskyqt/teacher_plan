@@ -16,6 +16,7 @@ SOURCES += \
     src/database/models/educationalwork.cpp \
     src/database/models/plantime.cpp \
     src/database/models/teacherplan.cpp \
+    src/database/models/teacherwork.cpp \
     src/database/models/userdata.cpp \
     src/educationwork/educationheader.cpp \
     src/educationwork/educationrow.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     src/database/models/educationalwork.h \
     src/database/models/plantime.h \
     src/database/models/teacherplan.h \
+    src/database/models/teacherwork.h \
     src/database/models/userdata.h \
     src/educationwork/educationheader.h \
     src/educationwork/educationrow.h \

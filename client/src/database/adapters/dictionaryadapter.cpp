@@ -7,7 +7,6 @@ DictionaryAdapter::DictionaryAdapter(QObject *parent)
 void DictionaryAdapter::setDictionary(QComboBox *box, Database::DictName name)
 {
     box->clear();
-    box->addItem("-");
 
     auto database = Database::get();
 
@@ -23,7 +22,6 @@ void DictionaryAdapter::setDictionary(QList<Dictionary> &dict, Database::DictNam
     dict.clear();
 
     auto database = Database::get();
-
     auto dictBase = database->getDictionary(name);
 
     foreach (auto row, dictBase) {

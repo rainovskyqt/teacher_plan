@@ -5,6 +5,7 @@
 #include "database/models/educationalwork.h"
 #include "database/database.h"
 #include <QScrollBar>
+#include <QMessageBox>
 
 FormEducationWork::FormEducationWork(QWidget *parent)
     : QWidget(parent)
@@ -21,12 +22,8 @@ FormEducationWork::~FormEducationWork()
 
 void FormEducationWork::setPlanData(TeacherPlan *plan)
 {
-    ui->lw_educationWork->clear();
-
-    auto eWork = Database::get()->educationWork(plan->baseId());
-    foreach(auto work, eWork){
-        addRow(work);
-    }
+    m_plan = plan;
+    fillTable();
 }
 
 void FormEducationWork::setTable()
@@ -35,18 +32,45 @@ void FormEducationWork::setTable()
             ui->w_edHeader, &EducationHeader::setPosition);
 }
 
+void FormEducationWork::fillTable()
+{
+    ui->lw_educationWork->clear();
+
+    auto eWork = Database::get()->educationWork(m_plan->baseId());
+    foreach(auto work, eWork){
+        addRow(work);
+    }
+}
+
 void FormEducationWork::addRow(EducationalWork *work)
 {
     auto item = new QListWidgetItem(ui->lw_educationWork);
     auto row = new EducationRow(ui->lw_educationWork->count(), work);
     item->setSizeHint(row->sizeHint());
     ui->lw_educationWork->setItemWidget(item, row);
+    connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
+    connect(row, &EducationRow::saveWork, this, [](TeacherWork *work){
+        Database::get()->saveWork(work);
+    });
+    Database::get()->saveWork(work);
 }
 
 void FormEducationWork::on_btn_add_clicked()
 {
-    auto work = new EducationalWork();
+    auto work = new EducationalWork(m_plan->baseId());
     m_plan->addEducationaWork(work);
     addRow(work);
+}
+
+void FormEducationWork::deleteRow()
+{
+    auto workRow = dynamic_cast<EducationRow*>(sender());
+    if(QMessageBox::question(this,
+                              "Удаление",
+                              QString("Удалить %1 из списка?").arg(workRow->toString()))
+        == QMessageBox::No)
+        return;
+    Database::get()->deleteWork(workRow->work());
+    fillTable();
 }
 

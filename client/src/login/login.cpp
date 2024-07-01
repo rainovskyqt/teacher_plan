@@ -32,9 +32,11 @@ void Login::login()
 
     if(!user->baseId()){
         QMessageBox::critical(this, "Ошибка аутинтефикации", "Введены неверные логин и пароль");
+        delete user;
     } else {
         MainWindow *w = new MainWindow(user);
         w->show();
+        delete user;
         close();
     }
 }

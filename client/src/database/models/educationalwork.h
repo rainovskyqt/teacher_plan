@@ -1,16 +1,15 @@
 #ifndef EDUCATIONALWORK_H
 #define EDUCATIONALWORK_H
 
+#include "teacherwork.h"
+
 #include <QObject>
 
-class EducationalWork : public QObject
+class EducationalWork : public TeacherWork
 {
-    Q_OBJECT
 public:
-    explicit EducationalWork(QObject *parent = nullptr);
+    explicit EducationalWork(int planId, QObject *parent = nullptr);
 
-    int baseId() const;
-    void setBaseId(int newBaseId);
     int disciplineId() const;
     void setDisciplineId(int newDisciplineId);
     int workFormId() const;
@@ -23,7 +22,6 @@ public:
 signals:
 
 private:
-    int m_baseId;
     int m_disciplineId;
     int m_workFormId;
     int m_groupId;

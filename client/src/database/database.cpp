@@ -96,6 +96,15 @@ QList<Dictionary> Database::getDictionary(DictName name)
     case Rang:
         tableName = "rang";
         break;
+    case Discipline:
+        tableName = "discipline";
+        break;
+    case Group:
+        tableName = "`group`";
+        break;
+    case WorkForm:
+        tableName = "work_form";
+        break;
     }
 
     QString queryString = QString("SELECT id, name FROM %1").arg(tableName);
@@ -148,13 +157,13 @@ User *Database::login(QString login, QString password)
     while(query->next()){
         user->setBaseId(query->value("uid").toInt());
         user->userData()->setData(
-                    query->value("login").toString(),
-                    query->value("surname").toString(),
-                    query->value("name").toString(),
-                    query->value("middle_name").toString(),
-                    query->value("rname").toString(),
-                    query->value("rang_id").toInt()
-                    );
+            query->value("login").toString(),
+            query->value("surname").toString(),
+            query->value("name").toString(),
+            query->value("middle_name").toString(),
+            query->value("rname").toString(),
+            query->value("rang_id").toInt()
+            );
         user->addPost(query->value("department_id").toInt(), query->value("post_id").toInt());
     }
     delete query;
@@ -175,15 +184,16 @@ QVector<EducationalWork*> Database::educationWork(int planId)
 {
     QVector<EducationalWork*> works;
 
-    QString queryString = "SELECT id, discipline_id, work_form_id, group_id, comments "
+    QString queryString = "SELECT id, discipline_id, work_form_id, group_id, comments, order_place "
                           "FROM educational_work "
-                          "WHERE teacher_plan_id = :teacher_plan_id";
+                          "WHERE teacher_plan_id = :teacher_plan_id "
+                          "ORDER BY order_place";
     Values vals;
     vals.insert(":teacher_plan_id", planId);
 
     auto query = executeQuery(queryString, vals);
     while (query->next()) {
-        auto work = new EducationalWork();
+        auto work = new EducationalWork(planId);
         work->setBaseId(query->value("id").toInt());
         work->setDisciplineId(query->value("discipline_id").toInt());
         work->setWorkFormId(query->value("work_form_id").toInt());
@@ -193,6 +203,41 @@ QVector<EducationalWork*> Database::educationWork(int planId)
     }
 
     return works;
+}
+
+void Database::saveWork(TeacherWork *work)
+{
+    TeacherWork::WorkType type = work->workType();
+    switch (type) {
+    case TeacherWork::Educational:
+        saveEducationalWork(work);
+        break;
+    case TeacherWork::MethodicWork:
+    case TeacherWork::SearchingWork:
+    case TeacherWork::SportWork:
+    case TeacherWork::OtherWork:
+        saveGenericWork(work);
+    }
+}
+
+void Database::deleteWork(TeacherWork *work)
+{
+    QString table;
+    TeacherWork::WorkType type = work->workType();
+    switch (type) {
+    case TeacherWork::Educational:
+        table = "educational_work";
+        break;
+    case TeacherWork::MethodicWork:
+    case TeacherWork::SearchingWork:
+    case TeacherWork::SportWork:
+    case TeacherWork::OtherWork:
+        table = "teacher_work";
+    }
+    QString queryString = QString("DELETE FROM %1 WHERE id = :id").arg(table);
+    Values vals;
+    vals.insert(":id", work->baseId());
+    delete executeQuery(queryString, vals);
 }
 
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)
@@ -213,6 +258,42 @@ QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 
     base.close();
     return query;
+}
+
+void Database::saveEducationalWork(TeacherWork *work)
+{
+    auto w = dynamic_cast<EducationalWork*>(work);
+    Values vals;
+    vals.insert(":id", w->baseId());
+    vals.insert(":teacher_plan_id", w->planId());
+    vals.insert(":discipline_id", w->disciplineId());
+    vals.insert(":work_form_id", w->workFormId());
+    vals.insert(":group_id", w->groupId());
+    vals.insert(":comments", w->comments());
+    vals.insert(":order_place", 0);
+
+    QString updateString = "UPDATE educational_work "
+                           "SET teacher_plan_id = :teacher_plan_id, discipline_id = :discipline_id, "
+                           "work_form_id = :work_form_id, group_id = :group_id, "
+                           "comments = :comments, order_place = :order_place "
+                           "WHERE id = :id";
+
+    QString insertString = "INSERT INTO educational_work(teacher_plan_id, discipline_id, work_form_id, group_id, "
+                           "comments, order_place)"
+                           "VALUES(:teacher_plan_id, :discipline_id, :work_form_id, :group_id,"
+                           ":comments, :order_place) ";
+    if(w->baseId()){
+        delete executeQuery(updateString, vals);
+    } else {
+        auto answer = executeQuery(insertString, vals);
+        answer->next();
+        work->setBaseId(answer->lastInsertId().toInt());
+    }
+}
+
+void Database::saveGenericWork(TeacherWork *work)
+{
+
 }
 
 TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)

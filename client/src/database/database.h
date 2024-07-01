@@ -10,6 +10,8 @@
 #include "models/teacherplan.h"
 #include <QSqlQuery>
 
+#include <database/models/teacherwork.h>
+
 using Values = QMap<QString, QVariant>;
 
 class EducationalWork;
@@ -23,7 +25,10 @@ public:
     enum DictName{
         Department,
         Post,
-        Rang
+        Rang,
+        Discipline,
+        Group,
+        WorkForm
     };
 
     explicit Database();
@@ -40,6 +45,8 @@ public:
     QString encodePassword(QString password);
     const QString &lastError() const;
     QVector<EducationalWork *> educationWork(int planId);
+    void saveWork(TeacherWork *work);
+    void deleteWork(TeacherWork *work);
 
 public slots:
 
@@ -52,7 +59,8 @@ private:
     QString m_lastError;
     QSqlQuery *executeQuery(QString queryString, Values vals = {});
     int getId(QString json);
-
+    void saveEducationalWork(TeacherWork *work);
+    void saveGenericWork(TeacherWork *work);
 };
 
 #endif // DATABASE_H

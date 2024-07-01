@@ -1,21 +1,12 @@
 #include "educationalwork.h"
 
-EducationalWork::EducationalWork(QObject *parent) : QObject(parent)
+EducationalWork::EducationalWork(int planId, QObject *parent) : TeacherWork(planId, parent)
 {
-    m_disciplineId = 0;
-    m_workFormId = 0;
-    m_groupId = 0;
+    m_disciplineId = 1;
+    m_workFormId = 1;
+    m_groupId = 1;
     m_comments = QString();
-}
-
-int EducationalWork::baseId() const
-{
-    return m_baseId;
-}
-
-void EducationalWork::setBaseId(int newBaseId)
-{
-    m_baseId = newBaseId;
+    m_workType = Educational;
 }
 
 int EducationalWork::disciplineId() const

@@ -24,6 +24,7 @@ public slots:
 
 private slots:
     void on_btn_add_clicked();
+    void deleteRow();
 
 private:
     Ui::FormEducationWork *ui;
@@ -31,6 +32,7 @@ private:
     TeacherPlan *m_plan;
 
     void setTable();
+    void fillTable();
     void addRow(EducationalWork *work);
 };
 
