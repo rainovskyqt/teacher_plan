@@ -59,6 +59,8 @@ QStringList EducationalFooter::totalFields()
     QStringList lbl;
     auto current = this->findChildren<QLabel*>();
     foreach(auto l, current){
+        if(l->objectName().contains("label"))
+            continue;
         lbl.append(l->objectName());
     }
     return lbl;

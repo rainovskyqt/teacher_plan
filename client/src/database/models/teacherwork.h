@@ -2,20 +2,13 @@
 #define TEACHERWORK_H
 
 #include <QObject>
+#include "datamodels.h"
 
 class TeacherWork : public QObject
 {
     Q_OBJECT
 public:
     explicit TeacherWork(int planId, QObject *parent = nullptr);
-
-    enum WorkType{
-        Educational,
-        MethodicWork,
-        SearchingWork,
-        SportWork,
-        OtherWork
-    };
 
     int baseId() const;
     void setBaseId(int newBaseId);

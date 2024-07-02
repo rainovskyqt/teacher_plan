@@ -254,12 +254,9 @@ void Header::on_cb_post_currentIndexChanged(int index)
     setPlan();
 }
 
-//void Header::modelDataChanged()
-//{
-//    m_currentPlan->setChanged(true);
-//}
 
 void Header::setRate(double rate)
 {
     m_currentPlan->setRate(rate);
+    Database::get()->updateTeacherPlan(m_currentPlan);
 }

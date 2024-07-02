@@ -14,6 +14,8 @@ SOURCES += \
     src/database/adapters/dictionaryadapter.cpp \
     src/database/database.cpp \
     src/database/models/educationalwork.cpp \
+    src/database/models/genericwork.cpp \
+    src/database/models/genericworkform.cpp \
     src/database/models/plantime.cpp \
     src/database/models/teacherplan.cpp \
     src/database/models/teacherwork.cpp \
@@ -23,6 +25,9 @@ SOURCES += \
     src/educationwork/educationheader.cpp \
     src/educationwork/educationrow.cpp \
     src/educationwork/formeducationwork.cpp \
+    src/generic/formgenerikwork.cpp \
+    src/generic/genericfooter.cpp \
+    src/generic/generikworkrow.cpp \
     src/header/headercombobox.cpp \
     src/login/login.cpp \
     src/login/user.cpp \
@@ -38,6 +43,8 @@ HEADERS += \
     src/database/database.h \
     src/database/models/datamodels.h \
     src/database/models/educationalwork.h \
+    src/database/models/genericwork.h \
+    src/database/models/genericworkform.h \
     src/database/models/plantime.h \
     src/database/models/teacherplan.h \
     src/database/models/teacherwork.h \
@@ -47,6 +54,9 @@ HEADERS += \
     src/educationwork/educationheader.h \
     src/educationwork/educationrow.h \
     src/educationwork/formeducationwork.h \
+    src/generic/formgenerikwork.h \
+    src/generic/genericfooter.h \
+    src/generic/generikworkrow.h \
     src/header/headercombobox.h \
     src/login/login.h \
     src/login/user.h \
@@ -62,6 +72,9 @@ FORMS += \
     src/educationwork/educationheader.ui \
     src/educationwork/educationrow.ui \
     src/educationwork/formeducationwork.ui \
+    src/generic/formgenerikwork.ui \
+    src/generic/genericfooter.ui \
+    src/generic/generikworkrow.ui \
     src/login/login.ui \
     src/login/userform.ui \
     src/totaltime/formtotaltime.ui \

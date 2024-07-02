@@ -17,7 +17,7 @@ void TeacherWork::setBaseId(int newBaseId)
     m_baseId = newBaseId;
 }
 
-TeacherWork::WorkType TeacherWork::workType() const
+WorkType TeacherWork::workType() const
 {
     return m_workType;
 }

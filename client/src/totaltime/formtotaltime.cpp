@@ -24,7 +24,6 @@ FormTotalTime::~FormTotalTime()
 void FormTotalTime::setPlanData(TeacherPlan *plan)
 {
     setRate(plan->rate());
-    plan->setChanged(false);
 }
 
 void FormTotalTime::setFirstSemester(int val)

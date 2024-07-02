@@ -27,11 +27,16 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="FormTotalTime" name="tab_totalTime">
        <attribute name="title">
         <string>Сводка</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_educationFactical">
+       <attribute name="title">
+        <string>Выполнение учебной нагрузки</string>
        </attribute>
       </widget>
       <widget class="FormEducationWork" name="tab_educationWork">
@@ -39,9 +44,24 @@
         <string>I. Учебная работа</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="FormGenerikWork" name="tab_metod">
        <attribute name="title">
-        <string>II. Учебная нагрузка</string>
+        <string>II. Учебно-методическая работа</string>
+       </attribute>
+      </widget>
+      <widget class="FormGenerikWork" name="tab_research">
+       <attribute name="title">
+        <string>III. Научно-исследовательская работа</string>
+       </attribute>
+      </widget>
+      <widget class="FormGenerikWork" name="tab_sport">
+       <attribute name="title">
+        <string>IV. Воспитательная и спортивная работа</string>
+       </attribute>
+      </widget>
+      <widget class="FormGenerikWork" name="tab_other">
+       <attribute name="title">
+        <string>V. Другие виды работ</string>
        </attribute>
       </widget>
      </widget>
@@ -66,6 +86,12 @@
    <class>FormEducationWork</class>
    <extends>QWidget</extends>
    <header>educationwork/formeducationwork.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FormGenerikWork</class>
+   <extends>QWidget</extends>
+   <header>generic/formgenerikwork.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

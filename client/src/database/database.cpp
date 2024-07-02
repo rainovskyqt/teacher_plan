@@ -12,6 +12,8 @@
 #include <login/user.h>
 #include "database/models/educationalwork.h"
 
+#include <database/models/genericworkform.h>
+
 Q_GLOBAL_STATIC(Database, globalInst)
 
 Database *Database::get()
@@ -201,21 +203,21 @@ QVector<EducationalWork*> Database::educationWork(int planId)
         work->setComments(query->value("comments").toString());
         works.append(work);
     }
-
+    delete query;
     return works;
 }
 
 void Database::saveWork(TeacherWork *work)
 {
-    TeacherWork::WorkType type = work->workType();
+    WorkType type = work->workType();
     switch (type) {
-    case TeacherWork::Educational:
+    case Educational:
         saveEducationalWork(work);
         break;
-    case TeacherWork::MethodicWork:
-    case TeacherWork::SearchingWork:
-    case TeacherWork::SportWork:
-    case TeacherWork::OtherWork:
+    case MethodicWork:
+    case SearchingWork:
+    case SportWork:
+    case OtherWork:
         saveGenericWork(work);
     }
 }
@@ -223,15 +225,15 @@ void Database::saveWork(TeacherWork *work)
 void Database::deleteWork(TeacherWork *work)
 {
     QString table;
-    TeacherWork::WorkType type = work->workType();
+    WorkType type = work->workType();
     switch (type) {
-    case TeacherWork::Educational:
+    case Educational:
         table = "educational_work";
         break;
-    case TeacherWork::MethodicWork:
-    case TeacherWork::SearchingWork:
-    case TeacherWork::SportWork:
-    case TeacherWork::OtherWork:
+    case MethodicWork:
+    case SearchingWork:
+    case SportWork:
+    case OtherWork:
         table = "teacher_work";
     }
     QString queryString = QString("DELETE FROM %1 WHERE id = :id").arg(table);
@@ -261,7 +263,7 @@ QList<EducationalHour *> Database::getEdcationalHours(int workId)
                 static_cast<EducationalHour::HourType>(query->value("type").toInt()))
             );
     }
-
+    delete query;
     return hList;
 }
 
@@ -291,6 +293,29 @@ int Database::saveEdcationalHour(EducationalHour *hour)
         delete answer;
         return id;
     }
+}
+
+QList<GenericWorkForm*> Database::getWorks(WorkType type)
+{
+    QString queryString = "SELECT id, chapter, `name`, max_count "
+                          "FROM generic_work_form "
+                          "WHERE work_type = :type";
+    Values vals;
+    vals.insert(":type", static_cast<int>(type));
+    auto query = executeQuery(queryString, vals);
+
+    QList<GenericWorkForm *> wList;
+
+    while (query->next()) {
+        wList.append(new GenericWorkForm(
+            query->value("id").toInt(),
+            query->value("chapter").toString(),
+            query->value("name").toString(),
+            query->value("max_count").toInt()
+            ));
+    }
+    delete query;
+    return wList;
 }
 
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)

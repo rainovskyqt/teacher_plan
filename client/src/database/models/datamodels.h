@@ -53,4 +53,12 @@ private:
     QMap<Dictionary, Dictionary> m_posts;
 };
 
+enum WorkType{
+    Educational = 1,
+    MethodicWork,
+    SearchingWork,
+    SportWork,
+    OtherWork
+};
+
 #endif // DATAMODELS_H

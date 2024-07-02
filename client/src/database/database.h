@@ -11,12 +11,14 @@
 #include <QSqlQuery>
 
 #include <database/models/teacherwork.h>
-
 #include <educationwork/educationalhour.h>
+#include "database/models/datamodels.h"
+
 
 using Values = QMap<QString, QVariant>;
 
 class EducationalWork;
+class GenericWorkForm;
 
 class Database : public QObject
 {
@@ -51,6 +53,7 @@ public:
     void deleteWork(TeacherWork *work);
     QList<EducationalHour*> getEdcationalHours(int workId);
     int saveEdcationalHour(EducationalHour* hour);
+    QList<GenericWorkForm *> getWorks(WorkType type);
 
 public slots:
 

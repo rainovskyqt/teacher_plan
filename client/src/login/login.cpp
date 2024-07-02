@@ -36,7 +36,6 @@ void Login::login()
     } else {
         MainWindow *w = new MainWindow(user);
         w->show();
-        delete user;
         close();
     }
 }
