@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `disciline_department` (
   CONSTRAINT `FK_disciline_department_discipline` FOREIGN KEY (`discipline_id`) REFERENCES `discipline` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.disciline_department: ~2 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.disciline_department: ~0 rows (приблизительно)
 
 -- Дамп структуры для таблица ordo_dev.discipline
 CREATE TABLE IF NOT EXISTS `discipline` (
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `discipline` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.discipline: ~2 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.discipline: ~3 rows (приблизительно)
 INSERT INTO `discipline` (`id`, `name`) VALUES
 	(1, '-'),
 	(2, 'Социология'),
@@ -79,9 +79,11 @@ CREATE TABLE IF NOT EXISTS `educational_work` (
   CONSTRAINT `FK_educational_work_group` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_educational_work_teacher_plan` FOREIGN KEY (`teacher_plan_id`) REFERENCES `teacher_plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_educational_work_work_form` FOREIGN KEY (`work_form_id`) REFERENCES `work_form` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.educational_work: ~0 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.educational_work: ~1 rows (приблизительно)
+INSERT INTO `educational_work` (`id`, `teacher_plan_id`, `discipline_id`, `work_form_id`, `group_id`, `comments`, `order_place`) VALUES
+	(45, 65, 3, 3, 2, NULL, 0);
 
 -- Дамп структуры для таблица ordo_dev.educational_work_hours
 CREATE TABLE IF NOT EXISTS `educational_work_hours` (
@@ -94,9 +96,28 @@ CREATE TABLE IF NOT EXISTS `educational_work_hours` (
   PRIMARY KEY (`id`),
   KEY `FK_educational_work_hours_educational_work` (`plan_work_id`),
   CONSTRAINT `FK_educational_work_hours_educational_work` FOREIGN KEY (`plan_work_id`) REFERENCES `educational_work` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=229 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.educational_work_hours: ~0 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.educational_work_hours: ~18 rows (приблизительно)
+INSERT INTO `educational_work_hours` (`id`, `month`, `week`, `value`, `type`, `plan_work_id`) VALUES
+	(211, 4, 4, 1, 1, 45),
+	(212, 4, 1, 4, 1, 45),
+	(213, 4, 1, 44, 1, 45),
+	(214, 5, 4, 4, 1, 45),
+	(215, 5, 4, 44, 1, 45),
+	(216, 2, 4, 2, 1, 45),
+	(217, 2, 4, 23, 1, 45),
+	(218, 1, 2, 6, 1, 45),
+	(219, 1, 2, 65, 1, 45),
+	(220, 6, 3, 2, 1, 45),
+	(221, 6, 3, 22, 1, 45),
+	(222, 6, 3, 223, 1, 45),
+	(223, 3, 2, 6, 1, 45),
+	(224, 3, 2, 68, 1, 45),
+	(225, 12, 1, 2, 1, 45),
+	(226, 12, 1, 22, 1, 45),
+	(227, 9, 4, 1, 1, 45),
+	(228, 10, 1, 1, 1, 45);
 
 -- Дамп структуры для таблица ordo_dev.educational_years
 CREATE TABLE IF NOT EXISTS `educational_years` (
@@ -113,6 +134,83 @@ INSERT INTO `educational_years` (`id`, `begin_year`, `end_year`) VALUES
 	(1, '2024', '2025'),
 	(2, '2023', '2024');
 
+-- Дамп структуры для таблица ordo_dev.generic_work
+CREATE TABLE IF NOT EXISTS `generic_work` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `work_type` int NOT NULL,
+  `assigned_user_id` int DEFAULT NULL,
+  `assigned_date` date DEFAULT NULL,
+  `first_complite_user_id` int DEFAULT NULL,
+  `first_complite_date` date DEFAULT NULL,
+  `second_complite_user_id` int DEFAULT NULL,
+  `second_complite_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_generic_work_teacher_plan_works_type` (`work_type`),
+  KEY `FK_generic_work_user` (`assigned_user_id`),
+  KEY `FK_generic_work_user_2` (`first_complite_user_id`),
+  KEY `FK_generic_work_user_3` (`second_complite_user_id`),
+  CONSTRAINT `FK_generic_work_teacher_plan_works_type` FOREIGN KEY (`work_type`) REFERENCES `teacher_plan_works_type` (`id`),
+  CONSTRAINT `FK_generic_work_user` FOREIGN KEY (`assigned_user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_generic_work_user_2` FOREIGN KEY (`first_complite_user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_generic_work_user_3` FOREIGN KEY (`second_complite_user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Дамп данных таблицы ordo_dev.generic_work: ~0 rows (приблизительно)
+
+-- Дамп структуры для таблица ordo_dev.generic_work_form
+CREATE TABLE IF NOT EXISTS `generic_work_form` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `work_type` int NOT NULL DEFAULT '0',
+  `chapter` varchar(10) NOT NULL DEFAULT '0',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
+  `max_count` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `FK__teacher_plan_works_type` (`work_type`),
+  CONSTRAINT `FK__teacher_plan_works_type` FOREIGN KEY (`work_type`) REFERENCES `teacher_plan_works_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Дамп данных таблицы ordo_dev.generic_work_form: ~0 rows (приблизительно)
+INSERT INTO `generic_work_form` (`id`, `work_type`, `chapter`, `name`, `max_count`) VALUES
+	(1, 2, '2.1.1', 'Разработка рабочих программ учебных дисциплин, подготовка фондов оценочных средств по дисциплинам учебного плана', 50),
+	(2, 2, '2.1.2', 'Переработка рабочей программы учебной дисциплины, фондов оценочных средств по дисциплинам учебного плана', 20),
+	(3, 2, '2.1.3', 'Внесение изменений в рабочую программу учебной дисциплины', 3),
+	(4, 2, '2.2.1', 'Разработка тезисов или конспекта лекции: По вновь вводимой теме', 8),
+	(5, 2, '2.2.2', 'Разработка тезисов или конспекта лекции: По ранее читавшейся теме', 3),
+	(6, 2, '2.3.1', 'Разработка тестов по дисциплинам:Разработка новых', 30),
+	(7, 2, '2.3.2', 'Разработка тестов по дисциплинам:Корректировка имеющихся', 6),
+	(8, 2, '2.4.1', 'Составление заданий и подбор различных документов при подготовке: К учебным занятиям (для курсовых работ, домашних заданий, лабораторных работ, РГР, заданий на практику и др.)', 20),
+	(9, 2, '2.4.2', 'Составление заданий и подбор различных документов при подготовке: К открытым занятиям (показательным (мастер-классам), проверочным)', 6),
+	(10, 2, '2.5.1', 'Выпускные квалификационные работы:Разработка тематики (перечня тем)', 12),
+	(11, 2, '2.5.2', 'Выпускные квалификационные работы:Разработка методических рекомендаций для обучающихся по подготовке и защите ВКР', 20),
+	(12, 2, '2.6.1', 'Курсовые работы:Разработка тематики (перечня тем)', 6),
+	(13, 2, '2.6.2', 'Курсовые работы:Разработка методических рекомендаций для обучающихся по подготовке и защите курсовых работ', 10),
+	(14, 2, '2.6.3', 'Курсовые работы:Участие в публичной защите курсовой работы', 4),
+	(15, 2, '2.7.1', 'Разработка материалов для проведения зачетов:Разработка новых', 8),
+	(16, 2, '2.7.2', 'Разработка материалов для проведения зачетов:Корректировка имеющихся', 4),
+	(17, 2, '2.8.1', 'Составление экзаменационных билетов:Разработка новых', 12),
+	(18, 2, '2.8.2', 'Составление экзаменационных билетов:Корректировка имеющихся', 4),
+	(19, 2, '2.9.1', 'Составление примерного перечня вопросов для формирования билетов для государственных экзаменов:Разработка нового перечня', 18),
+	(20, 2, '2.9.2', 'Составление примерного перечня вопросов для формирования билетов для государственных экзаменов:Корректировка имеющегося', 6),
+	(21, 2, '2.10.1', 'Обучение с применением дистанционных образовательных технологий: Групповые консультации с использованием видео-конференц-связи', 20),
+	(22, 2, '2.10.2', 'Обучение с применением дистанционных образовательных технологий: Индивидуальное консультационно-методическое сопровождение обучающихся при изучении образовательного контента с применением ДОТ', 20),
+	(23, 2, '2.10.3', 'Обучение с применением дистанционных образовательных технологий: Проверка и рецензирование контрольной работы (практического задания) по теме (разделу, модулю) (с использованием ДОТ)', 20),
+	(24, 2, '2.11.1', 'Разработка, обновление программы вступительных испытаний', 10),
+	(25, 2, '2.11.2', 'Разработка материалов (слайдов) для мультиме-дийного сопровождения занятия в электронной версии', 4),
+	(26, 2, '2.11.3', 'Рецензирование реферата у аспирантов, соискателей и материалов диссертационного исследования докторантов', 0),
+	(27, 2, '2.11.4', 'Руководство соискателем ', 25),
+	(28, 2, '2.11.5', 'Изучение, анализ и внедрение в учебный процесс современной учебной и научно-методической литературы по преподаваемым дисциплинам', 30),
+	(29, 2, '2.11.6', 'Написание учебника', 150),
+	(30, 2, '2.11.7', 'Переиздание учебника ', 50),
+	(31, 2, '2.11.8', 'Написание пособия, курса лекций, практикума, справочника, сборника задач, методических рекомендаций', 80),
+	(32, 2, '2.11.9', 'Переиздание пособия, курса лекций, практикума, справочника, сборника задач, методических рекомендаций', 40),
+	(33, 2, '2.11.10', 'Рецензирование учебников и учебных пособий', 6),
+	(34, 2, '2.11.11.1', 'Организация и проведение учебно-методических конференций: Внутривузовских', 20),
+	(35, 2, '2.11.11.2', 'Организация и проведение учебно-методических конференций: Кафедральных', 4),
+	(36, 2, '2.11.12', 'Разработка, освоение и методическое обеспечение новых технологий и технологических приемов обучения (деловые и ситуационные игры, тренажеры, автоматизированные системы обучения и др.)', 20),
+	(37, 2, '2.11.13', 'Индивидуальное консультационно-методическое сопровождение обучающихся при изучении образовательного контента по очной форме обучения', 0),
+	(38, 2, '2.11.14', 'Организация учебной и учебно-методической работы на кафедре', 50),
+	(39, 2, '2.11.15', 'Заполнение контрольных листов текущей аттестации', 2);
+
 -- Дамп структуры для таблица ordo_dev.group
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -120,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.group: ~2 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.group: ~3 rows (приблизительно)
 INSERT INTO `group` (`id`, `name`) VALUES
 	(1, '-'),
 	(2, '101-А'),
@@ -206,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `teacher_plan` (
 
 -- Дамп данных таблицы ordo_dev.teacher_plan: ~0 rows (приблизительно)
 INSERT INTO `teacher_plan` (`id`, `user_id`, `department_id`, `post_id`, `year_id`, `rate`, `status_id`, `approved_user_id`, `approved_date`, `department_boss_sign_id`, `protocol_number`, `protocol_date`) VALUES
-	(65, 27, 3, 2, 1, 0.50, 1, NULL, NULL, NULL, NULL, NULL);
+	(65, 27, 3, 2, 1, 1.00, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_status
 CREATE TABLE IF NOT EXISTS `teacher_plan_status` (
@@ -283,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `work_form` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.work_form: ~13 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.work_form: ~14 rows (приблизительно)
 INSERT INTO `work_form` (`id`, `name`) VALUES
 	(1, '-'),
 	(2, 'Лекции'),
