@@ -18,6 +18,9 @@ public:
     explicit FormGenerikWork(QWidget *parent = nullptr);
     ~FormGenerikWork();
 
+    WorkType type() const;
+    void setType(WorkType newType);
+
 private slots:
     void on_btn_add_clicked();
 

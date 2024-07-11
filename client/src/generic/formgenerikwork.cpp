@@ -30,6 +30,16 @@ void FormGenerikWork::setConnections()
             ui->w_footerSecond, &GenericFooter::setPosition);
 }
 
+WorkType FormGenerikWork::type() const
+{
+    return m_type;
+}
+
+void FormGenerikWork::setType(WorkType newType)
+{
+    m_type = newType;
+}
+
 void FormGenerikWork::addRow(GenericWork *work)
 {
     auto list = currentList();
@@ -59,6 +69,6 @@ QListWidget *FormGenerikWork::currentList()
 
 void FormGenerikWork::on_btn_add_clicked()
 {
-    addRow(new GenericWork(WorkType::MethodicWork));
+    addRow(new GenericWork(m_type));
 }
 

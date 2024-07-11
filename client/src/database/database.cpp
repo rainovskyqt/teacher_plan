@@ -105,7 +105,7 @@ QList<Dictionary> Database::getDictionary(DictName name)
         tableName = "`group`";
         break;
     case WorkForm:
-        tableName = "work_form";
+        tableName = "educational_work_form";
         break;
     }
 
@@ -215,7 +215,7 @@ void Database::saveWork(TeacherWork *work)
         saveEducationalWork(work);
         break;
     case MethodicWork:
-    case SearchingWork:
+    case ResearchingWork:
     case SportWork:
     case OtherWork:
         saveGenericWork(work);
@@ -231,7 +231,7 @@ void Database::deleteWork(TeacherWork *work)
         table = "educational_work";
         break;
     case MethodicWork:
-    case SearchingWork:
+    case ResearchingWork:
     case SportWork:
     case OtherWork:
         table = "teacher_work";
@@ -297,7 +297,7 @@ int Database::saveEdcationalHour(EducationalHour *hour)
 
 QList<GenericWorkForm*> Database::getWorks(WorkType type)
 {
-    QString queryString = "SELECT id, chapter, `name`, max_count "
+    QString queryString = "SELECT id, chapter, `name`, max_year_count, max_unit_count "
                           "FROM generic_work_form "
                           "WHERE work_type = :type";
     Values vals;
@@ -311,7 +311,8 @@ QList<GenericWorkForm*> Database::getWorks(WorkType type)
             query->value("id").toInt(),
             query->value("chapter").toString(),
             query->value("name").toString(),
-            query->value("max_count").toInt()
+            query->value("max_year_count").toInt(),
+            query->value("max_unit_count").toInt()
             ));
     }
     delete query;

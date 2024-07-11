@@ -24,9 +24,19 @@ MainWindow::MainWindow(User *user, QWidget *parent)
 
     ui->w_header->setUser(user);
     ui->w_header->init();
+
+    setTypes();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setTypes()
+{
+    ui->tab_metod->setType(WorkType::MethodicWork);
+    ui->tab_research->setType(WorkType::ResearchingWork);
+    ui->tab_sport->setType(WorkType::SportWork);
+    ui->tab_other->setType(WorkType::OtherWork);
 }

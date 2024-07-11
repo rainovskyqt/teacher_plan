@@ -56,7 +56,7 @@ private:
 enum WorkType{
     Educational = 1,
     MethodicWork,
-    SearchingWork,
+    ResearchingWork,
     SportWork,
     OtherWork
 };

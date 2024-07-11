@@ -33,6 +33,7 @@ private:
 
     bool authentication(QString login, QString password);
     void enterToSystem();
+    void setTypes();
 
 };
 #endif // MAINWINDOW_H
