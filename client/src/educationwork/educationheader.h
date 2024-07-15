@@ -1,6 +1,7 @@
 #ifndef EDUCATIONHEADER_H
 #define EDUCATIONHEADER_H
 
+#include <QMap>
 #include <QWidget>
 
 namespace Ui {
@@ -12,6 +13,7 @@ class EducationHeader : public QWidget
     Q_OBJECT
 
 public:
+
     explicit EducationHeader(QWidget *parent = nullptr);
     ~EducationHeader();
 
@@ -20,6 +22,8 @@ public slots:
 
 private:
     Ui::EducationHeader *ui;
+
+    void addMonths();
 };
 
 #endif // EDUCATIONHEADER_H

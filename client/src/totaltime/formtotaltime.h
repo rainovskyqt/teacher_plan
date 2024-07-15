@@ -10,8 +10,6 @@
 
 #include <database/models/teacherplan.h>
 
-#include "misc/HierarchicalHeaderView.h"
-
 namespace Ui {
 class FormTotalTime;
 }

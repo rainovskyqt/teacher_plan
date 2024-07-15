@@ -129,7 +129,7 @@ void EducationRow::makeSaveConnection()
 {
     foreach (QLineEdit* line, this->findChildren<QLineEdit*>()) {
         connect(line, &QLineEdit::textEdited, this, [=]{
-            Database::get()->saveEdcationalHour(new EducationalHour(
+            Database::get()->saveEdcationalHour(new     EducationalHour(
                 line->property("id").toInt(),
                 work()->baseId(),
                 getMonth(line->objectName()),

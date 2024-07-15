@@ -23,7 +23,9 @@ SOURCES += \
     src/educationwork/educationalfooter.cpp \
     src/educationwork/educationalhour.cpp \
     src/educationwork/educationheader.cpp \
+    src/educationwork/educationmonth.cpp \
     src/educationwork/educationrow.cpp \
+    src/educationwork/educationweek.cpp \
     src/educationwork/formeducationwork.cpp \
     src/generic/formgenerikwork.cpp \
     src/generic/genericfooter.cpp \
@@ -32,12 +34,12 @@ SOURCES += \
     src/login/login.cpp \
     src/login/user.cpp \
     src/login/userform.cpp \
-    src/misc/HierarchicalHeaderView.cpp \
+    src/misc/month.cpp \
     src/settings.cpp \
-    src/totaltime/formtotaltime.cpp \
     src/header/header.cpp \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/totaltime/formtotaltime.cpp
 
 HEADERS += \
     src/database/adapters/dictionaryadapter.h \
@@ -53,7 +55,9 @@ HEADERS += \
     src/educationwork/educationalfooter.h \
     src/educationwork/educationalhour.h \
     src/educationwork/educationheader.h \
+    src/educationwork/educationmonth.h \
     src/educationwork/educationrow.h \
+    src/educationwork/educationweek.h \
     src/educationwork/formeducationwork.h \
     src/generic/formgenerikwork.h \
     src/generic/genericfooter.h \
@@ -62,26 +66,28 @@ HEADERS += \
     src/login/login.h \
     src/login/user.h \
     src/login/userform.h \
-    src/misc/HierarchicalHeaderView.h \
+    src/misc/month.h \
     src/settings.h \
-    src/totaltime/formtotaltime.h \
     src/header/header.h \
     src/mainwindow.h \
+    src/totaltime/formtotaltime.h \
     src/totaltime/status.h
 
 FORMS += \
     src/educationwork/educationalfooter.ui \
     src/educationwork/educationheader.ui \
+    src/educationwork/educationmonth.ui \
     src/educationwork/educationrow.ui \
+    src/educationwork/educationweek.ui \
     src/educationwork/formeducationwork.ui \
     src/generic/formgenerikwork.ui \
     src/generic/genericfooter.ui \
     src/generic/generikworkrow.ui \
     src/login/login.ui \
     src/login/userform.ui \
-    src/totaltime/formtotaltime.ui \
     src/header/header.ui \
-    src/mainwindow.ui
+    src/mainwindow.ui \
+    src/totaltime/formtotaltime.ui
 
 INCLUDEPATH += src
 

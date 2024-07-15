@@ -44,10 +44,12 @@ void FormTotalTime::setRate(double rate)
 
             int edHours = MAX_FULL_RATE_EDUCATIONAL_HOURS * rate;
             ui->lbl_eduMaxHours->setProperty("hours", edHours);
+            ui->lbl_eduMaxHours->setProperty("exactly", false);
             ui->lbl_eduMaxHours->setText(QString("<= %1 часов").arg(edHours));
 
             int total = MAX_FULL_RATE_HOURS * rate;
             ui->lbl_totalMaxHours->setProperty("hours", total);
+            ui->lbl_totalMaxHours->setProperty("exactly", true);
             ui->lbl_totalMaxHours->setText(QString("= %1 часов").arg(total));
             break;
         }
@@ -84,8 +86,26 @@ void FormTotalTime::createConnections()
 void FormTotalTime::colorHours(QLabel *lbl, QSpinBox *sBox)
 {
     int max = lbl->property("hours").toInt();
-    if(sBox->value() < max)
-        sBox->setStyleSheet(Status::less());
+    int value = sBox->value();
+    bool exactly =  lbl->property("exactly").toBool();
+
+
+    if(value > max){
+        sBox->setStyleSheet(Status::more());
+     } else if (sBox->value() < max) {
+        if(exactly || (value < max * 0.85))
+            sBox->setStyleSheet(Status::less());
+        else {
+            sBox->setStyleSheet(Status::equal());
+        }
+    } else {
+        sBox->setStyleSheet(Status::equal());
+    }
+
+    if(sBox->value() < max){
+
+
+    }
     else if(sBox->value() > max)
         sBox->setStyleSheet(Status::more());
     else
