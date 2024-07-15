@@ -26,6 +26,10 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     ui->w_header->init();
 
     setTypes();
+
+#ifndef QT_DEBUG
+    ui->tabWidget->setCurrentIndex(0);
+#endif
 }
 
 MainWindow::~MainWindow()

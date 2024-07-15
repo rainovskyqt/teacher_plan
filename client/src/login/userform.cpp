@@ -3,7 +3,7 @@
 
 #include <database/adapters/dictionaryadapter.h>
 
-UserForm::UserForm(QWidget *parent, User* user)
+UserForm::UserForm(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::UserForm)
 {

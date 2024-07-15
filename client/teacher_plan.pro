@@ -33,6 +33,7 @@ SOURCES += \
     src/login/user.cpp \
     src/login/userform.cpp \
     src/misc/HierarchicalHeaderView.cpp \
+    src/settings.cpp \
     src/totaltime/formtotaltime.cpp \
     src/header/header.cpp \
     src/main.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
     src/login/user.h \
     src/login/userform.h \
     src/misc/HierarchicalHeaderView.h \
+    src/settings.h \
     src/totaltime/formtotaltime.h \
     src/header/header.h \
     src/mainwindow.h \

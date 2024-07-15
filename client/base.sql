@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- Хост:                         10.0.2.18
--- Версия сервера:               8.0.37-0ubuntu0.20.04.3 - (Ubuntu)
--- Операционная система:         Linux
--- HeidiSQL Версия:              12.1.0.6537
+-- Хост:                         127.0.0.1
+-- Версия сервера:               8.4.0 - MySQL Community Server - GPL
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              12.7.0.6850
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,6 +20,7 @@ CREATE DATABASE IF NOT EXISTS `ordo_dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 
 USE `ordo_dev`;
 
 -- Дамп структуры для таблица ordo_dev.department
+DROP TABLE IF EXISTS `department`;
 CREATE TABLE IF NOT EXISTS `department` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -34,6 +35,7 @@ INSERT INTO `department` (`id`, `name`) VALUES
 	(2, 'Кафедра ТиМ ЦВС');
 
 -- Дамп структуры для таблица ordo_dev.disciline_department
+DROP TABLE IF EXISTS `disciline_department`;
 CREATE TABLE IF NOT EXISTS `disciline_department` (
   `id` int NOT NULL AUTO_INCREMENT,
   `discipline_id` int DEFAULT NULL,
@@ -48,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `disciline_department` (
 -- Дамп данных таблицы ordo_dev.disciline_department: ~0 rows (приблизительно)
 
 -- Дамп структуры для таблица ordo_dev.discipline
+DROP TABLE IF EXISTS `discipline`;
 CREATE TABLE IF NOT EXISTS `discipline` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -62,6 +65,7 @@ INSERT INTO `discipline` (`id`, `name`) VALUES
 	(3, 'Философия');
 
 -- Дамп структуры для таблица ordo_dev.educational_work
+DROP TABLE IF EXISTS `educational_work`;
 CREATE TABLE IF NOT EXISTS `educational_work` (
   `id` int NOT NULL AUTO_INCREMENT,
   `teacher_plan_id` int DEFAULT NULL,
@@ -87,6 +91,7 @@ INSERT INTO `educational_work` (`id`, `teacher_plan_id`, `discipline_id`, `work_
 	(46, 65, 1, 1, 1, NULL, 0);
 
 -- Дамп структуры для таблица ordo_dev.educational_work_form
+DROP TABLE IF EXISTS `educational_work_form`;
 CREATE TABLE IF NOT EXISTS `educational_work_form` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -111,6 +116,7 @@ INSERT INTO `educational_work_form` (`id`, `name`) VALUES
 	(14, 'Руков. кафедрой');
 
 -- Дамп структуры для таблица ordo_dev.educational_work_hours
+DROP TABLE IF EXISTS `educational_work_hours`;
 CREATE TABLE IF NOT EXISTS `educational_work_hours` (
   `id` int NOT NULL AUTO_INCREMENT,
   `month` int DEFAULT NULL,
@@ -149,6 +155,7 @@ INSERT INTO `educational_work_hours` (`id`, `month`, `week`, `value`, `type`, `p
 	(232, 6, 2, 7, 1, 46);
 
 -- Дамп структуры для таблица ordo_dev.educational_years
+DROP TABLE IF EXISTS `educational_years`;
 CREATE TABLE IF NOT EXISTS `educational_years` (
   `id` int NOT NULL AUTO_INCREMENT,
   `begin_year` varchar(255) NOT NULL,
@@ -164,6 +171,7 @@ INSERT INTO `educational_years` (`id`, `begin_year`, `end_year`) VALUES
 	(2, '2023', '2024');
 
 -- Дамп структуры для таблица ordo_dev.generic_work
+DROP TABLE IF EXISTS `generic_work`;
 CREATE TABLE IF NOT EXISTS `generic_work` (
   `id` int NOT NULL AUTO_INCREMENT,
   `work_type` int NOT NULL,
@@ -187,6 +195,7 @@ CREATE TABLE IF NOT EXISTS `generic_work` (
 -- Дамп данных таблицы ordo_dev.generic_work: ~0 rows (приблизительно)
 
 -- Дамп структуры для таблица ordo_dev.generic_work_form
+DROP TABLE IF EXISTS `generic_work_form`;
 CREATE TABLE IF NOT EXISTS `generic_work_form` (
   `id` int NOT NULL AUTO_INCREMENT,
   `work_type` int NOT NULL DEFAULT '0',
@@ -242,6 +251,7 @@ INSERT INTO `generic_work_form` (`id`, `work_type`, `chapter`, `name`, `max_year
 	(39, 2, '2.11.15', 'Заполнение контрольных листов текущей аттестации', 2, NULL);
 
 -- Дамп структуры для таблица ordo_dev.group
+DROP TABLE IF EXISTS `group`;
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -255,6 +265,7 @@ INSERT INTO `group` (`id`, `name`) VALUES
 	(3, '101-СП');
 
 -- Дамп структуры для таблица ordo_dev.post
+DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -262,13 +273,14 @@ CREATE TABLE IF NOT EXISTS `post` (
   UNIQUE KEY `post_name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.post: ~2 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.post: ~3 rows (приблизительно)
 INSERT INTO `post` (`id`, `name`) VALUES
 	(2, 'Доцент'),
 	(1, 'Преподаватель'),
 	(3, 'Профессор');
 
 -- Дамп структуры для таблица ordo_dev.rang
+DROP TABLE IF EXISTS `rang`;
 CREATE TABLE IF NOT EXISTS `rang` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -282,6 +294,7 @@ INSERT INTO `rang` (`id`, `name`) VALUES
 	(1, 'К.п.н.');
 
 -- Дамп структуры для таблица ordo_dev.staff
+DROP TABLE IF EXISTS `staff`;
 CREATE TABLE IF NOT EXISTS `staff` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -302,6 +315,7 @@ INSERT INTO `staff` (`id`, `user_id`, `department_id`, `post_id`) VALUES
 	(23, 27, 3, 2);
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan
+DROP TABLE IF EXISTS `teacher_plan`;
 CREATE TABLE IF NOT EXISTS `teacher_plan` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -337,6 +351,7 @@ INSERT INTO `teacher_plan` (`id`, `user_id`, `department_id`, `post_id`, `year_i
 	(65, 27, 3, 2, 1, 0.25, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_status
+DROP TABLE IF EXISTS `teacher_plan_status`;
 CREATE TABLE IF NOT EXISTS `teacher_plan_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -351,6 +366,7 @@ INSERT INTO `teacher_plan_status` (`id`, `name`) VALUES
 	(3, 'Утвержден');
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_total_hours
+DROP TABLE IF EXISTS `teacher_plan_total_hours`;
 CREATE TABLE IF NOT EXISTS `teacher_plan_total_hours` (
   `id` int NOT NULL AUTO_INCREMENT,
   `teacher_plan_id` int NOT NULL,
@@ -368,6 +384,7 @@ CREATE TABLE IF NOT EXISTS `teacher_plan_total_hours` (
 -- Дамп данных таблицы ordo_dev.teacher_plan_total_hours: ~0 rows (приблизительно)
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_works_type
+DROP TABLE IF EXISTS `teacher_plan_works_type`;
 CREATE TABLE IF NOT EXISTS `teacher_plan_works_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -386,6 +403,7 @@ INSERT INTO `teacher_plan_works_type` (`id`, `name`, `order`, `enable`) VALUES
 	(5, 'Другие виды работ', 5, 1);
 
 -- Дамп структуры для таблица ordo_dev.user
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `login` varchar(255) NOT NULL,
@@ -400,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`rang_id`) REFERENCES `rang` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.user: ~0 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.user: ~1 rows (приблизительно)
 INSERT INTO `user` (`id`, `login`, `password`, `surname`, `name`, `middle_name`, `rang_id`) VALUES
 	(27, 'teacher', 'deb1536f480475f7d593219aa1afd74c', 'Иванов', 'Перт', 'Сергеевич', 1);
 

@@ -6,6 +6,7 @@
 #include <QButtonGroup>
 #include <QMessageBox>
 #include <mainwindow.h>
+#include "settings.h"
 
 Login::Login(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +19,8 @@ Login::Login(QWidget *parent) :
 #ifdef QT_DEBUG
     ui->line_login->setText("teacher");
     ui->line_password->setText("myPassword");
+#else
+    ui->line_login->setText(Settings::get().lastName());
 #endif
 }
 
@@ -34,6 +37,7 @@ void Login::login()
         QMessageBox::critical(this, "Ошибка аутинтефикации", "Введены неверные логин и пароль");
         delete user;
     } else {
+        Settings::get().setLastName(ui->line_login->text());
         MainWindow *w = new MainWindow(user);
         w->show();
         close();

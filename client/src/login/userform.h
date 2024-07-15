@@ -18,7 +18,7 @@ class UserForm : public QDialog
     Q_OBJECT
 
 public:
-    explicit UserForm(QWidget *parent = nullptr, User* user = nullptr);
+    explicit UserForm(QWidget *parent = nullptr);
     ~UserForm();
 
     User *newUser();
