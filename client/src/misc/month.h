@@ -10,7 +10,7 @@ class Month : public QObject
 public:
 
     enum Months{
-        January,
+        January = 1,
         February,
         March,
         April,
@@ -18,7 +18,7 @@ public:
         June,
         July,
         August,
-        September,
+        September = 9,
         October,
         November,
         December,
@@ -33,7 +33,6 @@ signals:
 
 private:
     QMap<Months, QString> m_months;
-
 
 };
 

@@ -24,8 +24,10 @@ SOURCES += \
     src/educationwork/educationalhour.cpp \
     src/educationwork/educationheader.cpp \
     src/educationwork/educationmonth.cpp \
+    src/educationwork/educationmonthheader.cpp \
     src/educationwork/educationrow.cpp \
     src/educationwork/educationweek.cpp \
+    src/educationwork/educationweekheader.cpp \
     src/educationwork/formeducationwork.cpp \
     src/generic/formgenerikwork.cpp \
     src/generic/genericfooter.cpp \
@@ -56,8 +58,10 @@ HEADERS += \
     src/educationwork/educationalhour.h \
     src/educationwork/educationheader.h \
     src/educationwork/educationmonth.h \
+    src/educationwork/educationmonthheader.h \
     src/educationwork/educationrow.h \
     src/educationwork/educationweek.h \
+    src/educationwork/educationweekheader.h \
     src/educationwork/formeducationwork.h \
     src/generic/formgenerikwork.h \
     src/generic/genericfooter.h \
@@ -77,8 +81,10 @@ FORMS += \
     src/educationwork/educationalfooter.ui \
     src/educationwork/educationheader.ui \
     src/educationwork/educationmonth.ui \
+    src/educationwork/educationmonthheader.ui \
     src/educationwork/educationrow.ui \
     src/educationwork/educationweek.ui \
+    src/educationwork/educationweekheader.ui \
     src/educationwork/formeducationwork.ui \
     src/generic/formgenerikwork.ui \
     src/generic/genericfooter.ui \

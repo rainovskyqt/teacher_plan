@@ -4,7 +4,7 @@ EducationalWork::EducationalWork(int planId, QObject *parent) : TeacherWork(plan
 {
     m_disciplineId = 1;
     m_workFormId = 1;
-    m_groupId = 1;
+    m_courseId = 1;
     m_comments = QString();
     m_workType = Educational;
 }
@@ -29,14 +29,14 @@ void EducationalWork::setWorkFormId(int newWorkFormId)
     m_workFormId = newWorkFormId;
 }
 
-int EducationalWork::groupId() const
+int EducationalWork::courseId() const
 {
-    return m_groupId;
+    return m_courseId;
 }
 
-void EducationalWork::setGroupId(int newGroupId)
+void EducationalWork::setCourseId(int newCourseId)
 {
-    m_groupId = newGroupId;
+    m_courseId = newCourseId;
 }
 
 const QString &EducationalWork::comments() const

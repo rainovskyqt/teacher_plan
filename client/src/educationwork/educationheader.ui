@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>3290</width>
+    <width>3354</width>
     <height>120</height>
    </rect>
   </property>
@@ -18,14 +18,14 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1000000</width>
+    <width>16777215</width>
     <height>120</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -57,23 +57,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>3260</width>
+        <width>3352</width>
         <height>118</height>
        </rect>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>3260</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>3260</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,1,0,0,0,0">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -164,7 +152,7 @@
           <enum>QFrame::Box</enum>
          </property>
          <property name="text">
-          <string>группа</string>
+          <string>Курс</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -237,7 +225,11 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="hl_months"/>
+        <layout class="QHBoxLayout" name="hl_months">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+        </layout>
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">

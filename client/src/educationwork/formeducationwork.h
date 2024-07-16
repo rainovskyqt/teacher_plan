@@ -1,6 +1,8 @@
 #ifndef FORMEDUCATIONWORK_H
 #define FORMEDUCATIONWORK_H
 
+#include "educationalhour.h"
+
 #include <QWidget>
 
 #include <database/models/teacherplan.h>
@@ -40,9 +42,9 @@ private:
     void setTable();
     void fillTable();
     void addRow(EducationalWork *work);
-    int countHours(QString name);
-    int countTotalHours(QString name);
-    void countAllValues();
+    int countHours(EducationalHour::HourType type, int week);
+//    int countTotalHours(QString name);
+//    void countAllValues();
 
 };
 

@@ -101,8 +101,8 @@ QList<Dictionary> Database::getDictionary(DictName name)
     case Discipline:
         tableName = "discipline";
         break;
-    case Group:
-        tableName = "`group`";
+    case Course:
+        tableName = "`course`";
         break;
     case WorkForm:
         tableName = "educational_work_form";
@@ -186,7 +186,7 @@ QVector<EducationalWork*> Database::educationWork(int planId)
 {
     QVector<EducationalWork*> works;
 
-    QString queryString = "SELECT id, discipline_id, work_form_id, group_id, comments, order_place "
+    QString queryString = "SELECT id, discipline_id, work_form_id, course_id, comments, order_place "
                           "FROM educational_work "
                           "WHERE teacher_plan_id = :teacher_plan_id "
                           "ORDER BY order_place";
@@ -199,7 +199,7 @@ QVector<EducationalWork*> Database::educationWork(int planId)
         work->setBaseId(query->value("id").toInt());
         work->setDisciplineId(query->value("discipline_id").toInt());
         work->setWorkFormId(query->value("work_form_id").toInt());
-        work->setGroupId(query->value("group_id").toInt());
+        work->setCourseId(query->value("course_id").toInt());
         work->setComments(query->value("comments").toString());
         works.append(work);
     }
@@ -244,7 +244,7 @@ void Database::deleteWork(TeacherWork *work)
 
 QList<EducationalHour *> Database::getEdcationalHours(int workId)
 {
-    QString queryString = "SELECT id, `month`, `week`, `value`, `type` FROM educational_work_hours "
+    QString queryString = "SELECT id, `week`, `value`, `type` FROM educational_work_hours "
                           "WHERE plan_work_id = :plan_work_id";
     Values vals;
     vals.insert(":plan_work_id", workId);
@@ -257,7 +257,6 @@ QList<EducationalHour *> Database::getEdcationalHours(int workId)
             new EducationalHour(
                 query->value("id").toInt(),
                 workId,
-                query->value("month").toInt(),
                 query->value("week").toInt(),
                 query->value("value").toInt(),
                 static_cast<EducationalHour::HourType>(query->value("type").toInt()))
@@ -271,7 +270,6 @@ int Database::saveEdcationalHour(EducationalHour *hour)
 {
     Values vals;
     vals.insert(":id", hour->baseId());
-    vals.insert(":month", hour->month());
     vals.insert(":week", hour->week());
     vals.insert(":value", hour->value());
     vals.insert(":type", hour->type());
@@ -347,19 +345,19 @@ void Database::saveEducationalWork(TeacherWork *work)
     vals.insert(":teacher_plan_id", w->planId());
     vals.insert(":discipline_id", w->disciplineId());
     vals.insert(":work_form_id", w->workFormId());
-    vals.insert(":group_id", w->groupId());
+    vals.insert(":course_id", w->courseId());
     vals.insert(":comments", w->comments());
     vals.insert(":order_place", 0);
 
     QString updateString = "UPDATE educational_work "
                            "SET teacher_plan_id = :teacher_plan_id, discipline_id = :discipline_id, "
-                           "work_form_id = :work_form_id, group_id = :group_id, "
+                           "work_form_id = :work_form_id, course_id = :course_id, "
                            "comments = :comments, order_place = :order_place "
                            "WHERE id = :id";
 
-    QString insertString = "INSERT INTO educational_work(teacher_plan_id, discipline_id, work_form_id, group_id, "
+    QString insertString = "INSERT INTO educational_work(teacher_plan_id, discipline_id, work_form_id, course_id, "
                            "comments, order_place)"
-                           "VALUES(:teacher_plan_id, :discipline_id, :work_form_id, :group_id,"
+                           "VALUES(:teacher_plan_id, :discipline_id, :work_form_id, :course_id,"
                            ":comments, :order_place) ";
     if(w->baseId()){
         delete executeQuery(updateString, vals);

@@ -1,6 +1,8 @@
 #ifndef EDUCATIONALFOOTER_H
 #define EDUCATIONALFOOTER_H
 
+#include "educationalhour.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -16,10 +18,10 @@ public:
     ~EducationalFooter();
 
     void setPosition(int val);
-    void setValue(int value, QString name);
+    void setValue(EducationalHour::HourType type, int week, int value);
+
+
     void setTotalValue(int value, QString name);
-    QStringList hourFields();
-    QStringList totalFields();
 
 signals:
     void firstPlaneChanget(int);
@@ -29,7 +31,9 @@ signals:
 
 private:
     Ui::EducationalFooter *ui;
-    void sendSignal(QString name, int val);
+
+    void addMonths();
+    void countHours(EducationalHour::HourType type);
 };
 
 #endif // EDUCATIONALFOOTER_H

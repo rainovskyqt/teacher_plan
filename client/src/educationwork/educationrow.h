@@ -2,6 +2,7 @@
 #define EDUCATIONROW_H
 
 #include <QWidget>
+#include "educationalhour.h"
 
 namespace Ui {
 class EducationRow;
@@ -17,39 +18,31 @@ public:
     explicit EducationRow(int row, EducationalWork *work = nullptr, QWidget *parent = nullptr);
     ~EducationRow();
     void setData(EducationalWork *work);
-
     QString toString();
 
     EducationalWork *work() const;
-    int getValue(QString name);
-    int getTotalValue(QString name);
+    int getTime(EducationalHour::HourType type, int week);
+    void loadHours();
 
 private slots:
     void on_btn_deleteRow_clicked();
-    void countHours();
+    void countHours(EducationalHour::HourType type);
 
 signals:
     void deleteWork();
     void saveWork(EducationalWork*);
-    void valueChanget(QString);
-    void totalValueChanget(QString);
+    void valueChanget(EducationalHour::HourType, int);
 
 private:
     Ui::EducationRow *ui;
 
     EducationalWork *m_work;
 
+    void addMonths();
+
     void loadDictionaries();
     void makeConnections();
-    void makeHoursConnections();
-    void countPlanHours();
-    void countFacticalHours();
-    void countYearPlan();
-    void countYearFactical();
-    void makeSaveConnection();
-    void loadHours();
-    int getMonth(QString name);
-    int getWeek(QString name);
+
 };
 
 #endif // EDUCATIONROW_H

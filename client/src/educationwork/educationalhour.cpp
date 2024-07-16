@@ -1,12 +1,11 @@
 #include "educationalhour.h"
 
-EducationalHour::EducationalHour(int baseId, int planeWorkId, int month, int week,
+EducationalHour::EducationalHour(int baseId, int planeWorkId, int week,
                                  int value, EducationalHour::HourType type, QObject *parent)
     : QObject{parent}
 {
     m_baseId = baseId;
     m_planeWorkId = planeWorkId;
-    m_month = month;
     m_week = week;
     m_value = value;
     m_type = type;
@@ -20,11 +19,6 @@ int EducationalHour::baseId() const
 int EducationalHour::planeWorkId() const
 {
     return m_planeWorkId;
-}
-
-int EducationalHour::month() const
-{
-    return m_month;
 }
 
 int EducationalHour::week() const

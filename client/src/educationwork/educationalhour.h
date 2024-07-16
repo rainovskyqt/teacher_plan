@@ -13,13 +13,12 @@ public:
         Factical
     };
 
-    explicit EducationalHour(int baseId, int planeWorkId, int month, int week,
+    explicit EducationalHour(int baseId, int planeWorkId, int week,
                              int value, HourType type, QObject *parent = nullptr);
 
 
     int baseId() const;
     int planeWorkId() const;
-    int month() const;
     int week() const;
     int value() const;
     void setValue(int newValue);
@@ -30,7 +29,7 @@ signals:
 private:
     int m_baseId;
     int m_planeWorkId;
-    int m_month;
+//    int m_month;
     int m_week;
     int m_value;
     HourType m_type;

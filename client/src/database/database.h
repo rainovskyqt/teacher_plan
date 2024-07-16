@@ -31,7 +31,7 @@ public:
         Post,
         Rang,
         Discipline,
-        Group,
+        Course,
         WorkForm
     };
 

@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EducationWeek</class>
- <widget class="QWidget" name="EducationWeek">
+ <class>EducationMonthHeader</class>
+ <widget class="QWidget" name="EducationMonthHeader">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>40</width>
-    <height>50</height>
+    <width>287</width>
+    <height>153</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>40</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>40</width>
-    <height>16777215</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -44,13 +32,10 @@
    <item>
     <widget class="QFrame" name="frame">
      <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
+      <enum>QFrame::Box</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
-     </property>
-     <property name="lineWidth">
-      <number>0</number>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
@@ -69,18 +54,45 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLineEdit" name="line_plan">
+       <widget class="QLabel" name="lbl_name">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>29</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>29</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>Месяц</string>
+        </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="line_fact">
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+       <layout class="QHBoxLayout" name="hl_weeks">
+        <property name="spacing">
+         <number>0</number>
         </property>
-       </widget>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+       </layout>
       </item>
      </layout>
     </widget>

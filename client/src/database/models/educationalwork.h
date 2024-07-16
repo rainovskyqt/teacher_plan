@@ -14,8 +14,8 @@ public:
     void setDisciplineId(int newDisciplineId);
     int workFormId() const;
     void setWorkFormId(int newWorkFormId);
-    int groupId() const;
-    void setGroupId(int newGroupId);
+    int courseId() const;
+    void setCourseId(int newCourseId);
     const QString &comments() const;
     void setComments(const QString &newComments);
 
@@ -24,7 +24,7 @@ signals:
 private:
     int m_disciplineId;
     int m_workFormId;
-    int m_groupId;
+    int m_courseId;
     QString m_comments;
 };
 

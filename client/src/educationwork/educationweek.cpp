@@ -1,12 +1,18 @@
 #include "educationweek.h"
 #include "ui_educationweek.h"
 
-EducationWeek::EducationWeek(int number, QWidget *parent) :
+#include <QIntValidator>
+
+EducationWeek::EducationWeek(int number, bool readOnly, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::EducationWeek)
+    ui(new Ui::EducationWeek),
+    m_number(number)
 {
     ui->setupUi(this);
-    ui->lbl_number->setText(QString::number(number));
+    ui->line_plan->setValidator(new QIntValidator(0, 1000, this));
+    ui->line_fact->setValidator(new QIntValidator(0, 1000, this));
+    ui->line_fact->setReadOnly(readOnly);
+    ui->line_plan->setReadOnly(readOnly);
 }
 
 EducationWeek::~EducationWeek()
@@ -14,32 +20,38 @@ EducationWeek::~EducationWeek()
     delete ui;
 }
 
-int EducationWeek::startDay()
+int EducationWeek::number() const
 {
-    return ui->lbl_start->text().toInt();
+    return m_number;
 }
 
-void EducationWeek::setStartDay(int start)
+int EducationWeek::getTime(EducationalHour::HourType type)
 {
-    ui->lbl_start->setText(QString::number(start));
+    if(type == EducationalHour::Plane)
+        return ui->line_plan->text().toInt();
+    else
+        return ui->line_fact->text().toInt();
 }
 
-int EducationWeek::endDay()
+void EducationWeek::setTime(EducationalHour::HourType type, int value)
 {
-    return ui->lbl_end->text().toInt();
+    auto val = QString::number(value);
+    if(type == EducationalHour::Plane){
+        ui->line_plan->setText(val);
+        on_line_plan_textEdited(val);
+    } else {
+        ui->line_fact->setText(val);
+        on_line_fact_textEdited(val);
+    }
 }
 
-void EducationWeek::setEndDay(int end)
+void EducationWeek::on_line_plan_textEdited(const QString &arg1)
 {
-    ui->lbl_end->setText(QString::number(end));
+    emit hoursChanged(EducationalHour::Plane, m_number, arg1.toInt());
 }
 
-int EducationWeek::weekNumber()
+void EducationWeek::on_line_fact_textEdited(const QString &arg1)
 {
-    return ui->lbl_number->text().toInt();
+    emit hoursChanged(EducationalHour::Factical, m_number, arg1.toInt());
 }
 
-void EducationWeek::setWeekNumber(int number)
-{
-    ui->lbl_number->setText(QString::number(number));
-}

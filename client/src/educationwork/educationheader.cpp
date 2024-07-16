@@ -3,7 +3,8 @@
 #include "misc/month.h"
 
 #include "QScrollBar"
-#include "educationmonth.h"
+#include "educationmonthheader.h"
+#include "settings.h"
 
 EducationHeader::EducationHeader(QWidget *parent) :
     QWidget(parent),
@@ -29,8 +30,8 @@ void EducationHeader::addMonths()
     for(int i = Month::September; i != Month::July; ++i){        //Старт с 9 месяца, так проще
         if(i == Month::Other)
             i = Month::January;                //Если перешли за декабрь, ставим январь
-        int weekCount = 4;
-        ui->hl_months->addWidget(new EducationMonth((Month::Months)i, startWeek, weekCount, this));
+        int weekCount = Settings::get().weekCount(static_cast<Month::Months>(i));
+        ui->hl_months->addWidget(new EducationMonthHeader(static_cast<Month::Months>(i), startWeek, weekCount, this));
         startWeek += weekCount;
     }
 }

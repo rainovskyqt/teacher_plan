@@ -47,8 +47,6 @@ void FormEducationWork::fillTable()
     foreach(auto work, eWork){
         addRow(work);
     }
-
-    countAllValues();
 }
 
 void FormEducationWork::addRow(EducationalWork *work)
@@ -57,49 +55,23 @@ void FormEducationWork::addRow(EducationalWork *work)
     auto row = new EducationRow(ui->lw_educationWork->count(), work);
     item->setSizeHint(row->sizeHint());
     ui->lw_educationWork->setItemWidget(item, row);
+
     connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
-    Database::get()->saveWork(work);
-
-    connect(row, &EducationRow::valueChanget, this, [this](QString line){
-        ui->w_footer->setValue(countHours(line), line);
+    connect(row, &EducationRow::valueChanget, this, [this](EducationalHour::HourType type, int week){
+        ui->w_footer->setValue(type, week, countHours(type, week));
     });
 
-    connect(row, &EducationRow::totalValueChanget, this, [this](QString lbl){
-        ui->w_footer->setTotalValue(countTotalHours(lbl), lbl);
-    });
+    row->loadHours();           //Часы устанасливаются после подключения сигнала к футеру, что бы сработал посчет часов
 }
 
-int FormEducationWork::countHours(QString name)
+int FormEducationWork::countHours(EducationalHour::HourType type, int week)
 {
     int count = 0;
-    for(int i = 0; i < ui->lw_educationWork->count(); ++i){
-        EducationRow *row = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(
-            ui->lw_educationWork->item(i)));
-        count += row->getValue(name);
+    auto month = this->findChildren<EducationRow*>();
+    for(auto m: month){
+        count += m->getTime(type, week);
     }
     return count;
-}
-
-int FormEducationWork::countTotalHours(QString name)
-{
-    int count = 0;
-    for(int i = 0; i < ui->lw_educationWork->count(); ++i){
-        EducationRow *row = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(
-            ui->lw_educationWork->item(i)));
-        count += row->getTotalValue(name);
-    }
-    return count;
-}
-
-void FormEducationWork::countAllValues()
-{
-    auto hours = ui->w_footer->hourFields();
-    foreach(auto h, hours)
-        ui->w_footer->setValue(countHours(h), h);
-
-    auto totals = ui->w_footer->totalFields();
-    foreach(auto t, totals)
-        ui->w_footer->setTotalValue(countTotalHours(t), t);
 }
 
 void FormEducationWork::on_btn_add_clicked()

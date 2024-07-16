@@ -4,6 +4,8 @@
 #include <QSettings>
 #include <QObject>
 
+#include <misc/month.h>
+
 class Settings : public QSettings
 {
     Q_OBJECT
@@ -21,6 +23,11 @@ public:
     QString lastName();
     void setLastName(QString lastName);
 
+    int weekCount(Month::Months month);
+    QPair<int, int> weekDate(int week);
+
+    int secondSemesterWeek();
+
 private:
     Settings();
 
@@ -37,6 +44,11 @@ private:
         s.setValue(key, val);
     };
 
+    void loadWeeksCount();
+    void loadWeeks();
+
+    QMap<Month::Months, int> m_weekCount;
+    QMap<int, QPair<int, int>> m_weeks;
 };
 
 
