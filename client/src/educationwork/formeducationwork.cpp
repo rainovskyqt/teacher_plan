@@ -44,7 +44,7 @@ void FormEducationWork::fillTable()
     ui->lw_educationWork->clear();
 
     auto eWork = Database::get()->educationWork(m_plan->baseId());
-    foreach(auto work, eWork){
+    for(auto work: eWork){
         addRow(work);
     }
 }
@@ -57,8 +57,10 @@ void FormEducationWork::addRow(EducationalWork *work)
     ui->lw_educationWork->setItemWidget(item, row);
 
     connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
-    connect(row, &EducationRow::valueChanget, this, [this](EducationalHour::HourType type, int week){
-        ui->w_footer->setValue(type, week, countHours(type, week));
+    connect(row, &EducationRow::valueChanget, this, [this](EducationalHour *hour){
+        auto h = new EducationalHour(-1, -1, hour->week(), countHours(hour->type(), hour->week()),
+                                     hour->type(), ui->w_footer);
+        ui->w_footer->setValue(h);
     });
 
     row->loadHours();           //Часы устанасливаются после подключения сигнала к футеру, что бы сработал посчет часов

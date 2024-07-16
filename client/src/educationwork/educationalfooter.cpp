@@ -23,14 +23,14 @@ void EducationalFooter::setPosition(int val)
     ui->scrollArea->horizontalScrollBar()->setValue(val);
 }
 
-void EducationalFooter::setValue(EducationalHour::HourType type, int week, int value)
+void EducationalFooter::setValue(EducationalHour *hour)
 {
     auto months = this->findChildren<EducationMonth*>();
 
     for(auto m: months){
-        m->setValue(type, week, value);
+        m->setValue(hour);
     }
-    countHours(type);
+    countHours(hour->type());
 }
 
 
@@ -41,7 +41,7 @@ void EducationalFooter::addMonths()
         if(i == Month::Other)
             i = Month::January;                //Если перешли за декабрь, ставим январь
         int weekCount = Settings::get().weekCount((Month::Months)i);
-        auto month = new EducationMonth(startWeek, weekCount, true, this);
+        auto month = new EducationMonth(startWeek, weekCount, 0, true, this);
         ui->hl_months->addWidget(month);
         startWeek += weekCount;
     }

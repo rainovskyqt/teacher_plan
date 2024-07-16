@@ -18,7 +18,7 @@ public:
     ~EducationalFooter();
 
     void setPosition(int val);
-    void setValue(EducationalHour::HourType type, int week, int value);
+    void setValue(EducationalHour *hour);
 
 
     void setTotalValue(int value, QString name);

@@ -15,6 +15,7 @@ public:
 
     explicit EducationalHour(int baseId, int planeWorkId, int week,
                              int value, HourType type, QObject *parent = nullptr);
+    EducationalHour(HourType type, QObject *parent = nullptr);
 
 
     int baseId() const;

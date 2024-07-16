@@ -154,6 +154,7 @@ void FormTotalTime::on_sb_eduYear_valueChanged(int arg1)
 {
     Q_UNUSED(arg1)
     colorHours(ui->lbl_eduMaxHours, ui->sb_eduYear);
+    emit educationYearHours(arg1);
 }
 
 

@@ -22,6 +22,7 @@ SOURCES += \
     src/database/models/userdata.cpp \
     src/educationwork/educationalfooter.cpp \
     src/educationwork/educationalhour.cpp \
+    src/educationwork/educationalworkcomplite.cpp \
     src/educationwork/educationheader.cpp \
     src/educationwork/educationmonth.cpp \
     src/educationwork/educationmonthheader.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     src/database/models/userdata.h \
     src/educationwork/educationalfooter.h \
     src/educationwork/educationalhour.h \
+    src/educationwork/educationalworkcomplite.h \
     src/educationwork/educationheader.h \
     src/educationwork/educationmonth.h \
     src/educationwork/educationmonthheader.h \
@@ -79,6 +81,7 @@ HEADERS += \
 
 FORMS += \
     src/educationwork/educationalfooter.ui \
+    src/educationwork/educationalworkcomplite.ui \
     src/educationwork/educationheader.ui \
     src/educationwork/educationmonth.ui \
     src/educationwork/educationmonthheader.ui \

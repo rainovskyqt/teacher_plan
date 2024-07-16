@@ -31,7 +31,7 @@ private slots:
 signals:
     void deleteWork();
     void saveWork(EducationalWork*);
-    void valueChanget(EducationalHour::HourType, int);
+    void valueChanget(EducationalHour*);
 
 private:
     Ui::EducationRow *ui;
@@ -43,6 +43,8 @@ private:
     void loadDictionaries();
     void makeConnections();
 
+    void saveHour(EducationalHour *hour);
+    bool readySave;
 };
 
 #endif // EDUCATIONROW_H

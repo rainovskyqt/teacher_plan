@@ -17,15 +17,15 @@
 EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EducationRow)
+  ,m_work(nullptr)
 {
+    readySave = false;
     ui->setupUi(this);
     ui->lbl_number->setText(QString::number(row));
-    addMonths();
     loadDictionaries();
     setData(work);
+    addMonths();
     makeConnections();
-//    loadHours();
-
 }
 
 EducationRow::~EducationRow()
@@ -40,10 +40,16 @@ void EducationRow::addMonths()
         if(i == Month::Other)
             i = Month::January;                //Если перешли за декабрь, ставим январь
         int weekCount = Settings::get().weekCount((Month::Months)i);
-        auto month = new EducationMonth(startWeek, weekCount, false, this);
-        connect(month, &EducationMonth::hoursChanged, this, [&](EducationalHour::HourType type, int week){
-            countHours(type);
-            emit valueChanget(type, week);
+
+        auto workId = 0;
+        if(m_work)
+            workId = m_work->baseId();
+
+        auto month = new EducationMonth(startWeek, weekCount, workId, false, this);
+        connect(month, &EducationMonth::hoursChanged, this, [&](EducationalHour *hour){
+            countHours(hour->type());
+            saveHour(hour);
+            emit valueChanget(hour);
         });
         ui->hl_months->addWidget(month);
         startWeek += weekCount;
@@ -116,8 +122,10 @@ void EducationRow::loadHours()
 
     for(auto m: month){
         for(auto h: hours)
-            m->setValue(h->type(), h->week(), h->value());
+            m->setValue(h);
     }
+
+    readySave = true;
 }
 
 
@@ -149,4 +157,10 @@ void EducationRow::makeConnections()
         m_work->setComments(ui->text_comments->toPlainText());
         Database::get()->saveWork(m_work);
     });
+}
+
+void EducationRow::saveHour(EducationalHour *hour)
+{
+    if(readySave)
+        Database::get()->saveEdcationalHour(hour);
 }

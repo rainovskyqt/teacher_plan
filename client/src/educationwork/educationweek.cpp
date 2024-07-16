@@ -3,10 +3,12 @@
 
 #include <QIntValidator>
 
-EducationWeek::EducationWeek(int number, bool readOnly, QWidget *parent) :
+EducationWeek::EducationWeek(EducationalHour *planHour, EducationalHour *factHour, bool readOnly, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::EducationWeek),
-    m_number(number)
+    ui(new Ui::EducationWeek)
+  ,m_number(planHour->week())
+  ,m_planHour(planHour)
+  ,m_factHour(factHour)
 {
     ui->setupUi(this);
     ui->line_plan->setValidator(new QIntValidator(0, 1000, this));
@@ -33,25 +35,29 @@ int EducationWeek::getTime(EducationalHour::HourType type)
         return ui->line_fact->text().toInt();
 }
 
-void EducationWeek::setTime(EducationalHour::HourType type, int value)
+void EducationWeek::setTime(EducationalHour *hour)
 {
-    auto val = QString::number(value);
-    if(type == EducationalHour::Plane){
+    auto val = QString::number(hour->value());
+    if(hour->type() == EducationalHour::Plane){
         ui->line_plan->setText(val);
+        m_planHour = hour;
         on_line_plan_textEdited(val);
     } else {
         ui->line_fact->setText(val);
+        m_factHour = hour;
         on_line_fact_textEdited(val);
     }
 }
 
 void EducationWeek::on_line_plan_textEdited(const QString &arg1)
 {
-    emit hoursChanged(EducationalHour::Plane, m_number, arg1.toInt());
+    m_planHour->setValue(arg1.toInt());
+    emit hoursChanged(m_planHour);
 }
 
 void EducationWeek::on_line_fact_textEdited(const QString &arg1)
 {
-    emit hoursChanged(EducationalHour::Factical, m_number, arg1.toInt());
+    m_factHour->setValue(arg1.toInt());
+    emit hoursChanged(m_factHour);
 }
 

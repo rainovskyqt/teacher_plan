@@ -30,6 +30,7 @@ public slots:
 
 signals:
     void rateChanged(double);
+    void educationYearHours(int);
 
 private slots:
     void on_sb_eduYear_valueChanged(int arg1);

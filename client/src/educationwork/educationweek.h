@@ -14,15 +14,16 @@ class EducationWeek : public QWidget
     Q_OBJECT
 
 public:
-    explicit EducationWeek(int number, bool readOnly = false, QWidget *parent = nullptr);
+    explicit EducationWeek(EducationalHour *planHour, EducationalHour *factHour, bool readOnly = false,
+                           QWidget *parent = nullptr);
     ~EducationWeek();
 
     int number() const;
     int getTime(EducationalHour::HourType type);
-    void setTime(EducationalHour::HourType type, int value);
+    void setTime(EducationalHour *hour);
 
 signals:
-    void hoursChanged(EducationalHour::HourType, int, int);
+    void hoursChanged(EducationalHour *hour);
 
 private slots:
     void on_line_plan_textEdited(const QString &arg1);
@@ -30,7 +31,10 @@ private slots:
 
 private:
     Ui::EducationWeek *ui;
+
     const int m_number;
+    EducationalHour *m_planHour;
+    EducationalHour *m_factHour;
 };
 
 #endif // EDUCATIONWEEK_H

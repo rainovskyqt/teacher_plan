@@ -11,6 +11,15 @@ EducationalHour::EducationalHour(int baseId, int planeWorkId, int week,
     m_type = type;
 }
 
+EducationalHour::EducationalHour(EducationalHour::HourType type, QObject *parent) : QObject{parent}
+{
+    m_type = type;
+    m_baseId = 0;
+    m_planeWorkId = 0;
+    m_week = 0;
+    m_value = 0;
+}
+
 int EducationalHour::baseId() const
 {
     return m_baseId;

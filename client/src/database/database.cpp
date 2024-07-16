@@ -279,8 +279,8 @@ int Database::saveEdcationalHour(EducationalHour *hour)
                            "SET value = :value "
                            "WHERE id = :id";
 
-    QString insertString = "INSERT INTO educational_work_hours(month, week, value, type, plan_work_id)"
-                           "VALUES(:month, :week, :value, :type, :plan_work_id) ";
+    QString insertString = "INSERT INTO educational_work_hours(week, value, type, plan_work_id)"
+                           "VALUES(:week, :value, :type, :plan_work_id) ";
     if(hour->baseId()){
         delete executeQuery(updateString, vals);
         return hour->baseId();

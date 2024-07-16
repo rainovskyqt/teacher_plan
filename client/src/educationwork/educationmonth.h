@@ -16,21 +16,21 @@ class EducationMonth : public QWidget
     Q_OBJECT
 
 public:
-    explicit EducationMonth(int start, int count, bool readOnly = false, QWidget *parent = nullptr);
+    explicit EducationMonth(int start, int count, int workId, bool readOnly = false, QWidget *parent = nullptr);
     ~EducationMonth();
 
     int getTime(EducationalHour::HourType type, int week = 0);
 
     bool isFirstSemester() const;
-    void setValue(EducationalHour::HourType type, int week, int value);
+    void setValue(EducationalHour *hour);
     bool haveCurrentWeek(int week);
 
 signals:
-    void hoursChanged(EducationalHour::HourType, int, int);
+    void hoursChanged(EducationalHour *hour);
 
 private:
     Ui::EducationMonth *ui;
-    void addWeeks(int start, int count, bool readOnly);
+    void addWeeks(int start, int count, int workId, bool readOnly);
     bool m_isFirstSemester;
     int m_startWeek;
     int m_endWeek;

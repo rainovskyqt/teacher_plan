@@ -27,14 +27,14 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="FormTotalTime" name="tab_totalTime">
        <attribute name="title">
         <string>Сводка</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_educationFactical">
+      <widget class="EducationalWorkComplite" name="tab_educationFactical">
        <attribute name="title">
         <string>Выполнение учебной нагрузки</string>
        </attribute>
@@ -92,6 +92,12 @@
    <class>FormGenerikWork</class>
    <extends>QWidget</extends>
    <header>generic/formgenerikwork.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EducationalWorkComplite</class>
+   <extends>QWidget</extends>
+   <header>educationwork/educationalworkcomplite.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

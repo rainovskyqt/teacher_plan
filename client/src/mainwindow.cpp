@@ -21,6 +21,8 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     connect(ui->tab_educationWork, &FormEducationWork::firstPlaneChanget, ui->tab_totalTime, &FormTotalTime::setFirstSemester);
     connect(ui->tab_educationWork, &FormEducationWork::secondPlaneChanget, ui->tab_totalTime, &FormTotalTime::setSecondSemester);
 
+    connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
+            ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
     ui->w_header->setUser(user);
     ui->w_header->init();
