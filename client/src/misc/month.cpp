@@ -17,6 +17,7 @@ Month::Month(QObject *parent) : QObject(parent)
         {December," Декабрь"},
         {Other, "Перебор"}
     };
+
 }
 
 QString Month::name(Months month)

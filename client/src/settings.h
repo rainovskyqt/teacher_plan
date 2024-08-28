@@ -48,7 +48,8 @@ private:
     void loadWeeks();
 
     QMap<Month::Months, int> m_weekCount;
-    QMap<int, QPair<int, int>> m_weeks;
+    QMap<int, QPair<int, int>> m_weeksDays;
+    QMap<int, Month::Months> m_weeks;
 };
 
 

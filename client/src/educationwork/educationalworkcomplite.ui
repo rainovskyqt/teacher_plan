@@ -76,7 +76,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableWidget" name="tw_hours"/>
+    <widget class="QTableWidget" name="tw_hours">
+     <property name="editTriggers">
+      <set>QAbstractItemView::DoubleClicked</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">

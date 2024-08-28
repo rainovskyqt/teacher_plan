@@ -26,6 +26,13 @@ void FormTotalTime::setPlanData(TeacherPlan *plan)
     setRate(plan->rate());
 }
 
+void FormTotalTime::clearHours()
+{
+    auto hours = this->findChildren<QSpinBox*>();
+    for(auto h: hours)
+        h->setValue(0);
+}
+
 void FormTotalTime::setFirstSemester(int val)
 {
     ui->sb_eduFirstSemester->setValue(val);

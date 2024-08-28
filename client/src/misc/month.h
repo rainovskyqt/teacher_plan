@@ -33,7 +33,6 @@ signals:
 
 private:
     QMap<Months, QString> m_months;
-
 };
 
 #endif // MONTH_H

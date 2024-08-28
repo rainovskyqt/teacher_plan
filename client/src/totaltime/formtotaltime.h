@@ -24,7 +24,7 @@ public:
 
 public slots:
     void setPlanData(TeacherPlan *plan);
-
+    void clearHours();
     void setFirstSemester(int val);
     void setSecondSemester(int val);
 

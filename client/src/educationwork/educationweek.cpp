@@ -49,6 +49,14 @@ void EducationWeek::setTime(EducationalHour *hour)
     }
 }
 
+void EducationWeek::clear()
+{
+    ui->line_plan->setText(0);
+    on_line_plan_textEdited(0);
+    ui->line_fact->setText(0);
+    on_line_fact_textEdited(0);
+}
+
 void EducationWeek::on_line_plan_textEdited(const QString &arg1)
 {
     m_planHour->setValue(arg1.toInt());

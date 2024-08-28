@@ -35,13 +35,13 @@ void FormEducationWork::setTable()
 
     connect(ui->w_footer, &EducationalFooter::firstPlaneChanget, this, &FormEducationWork::firstPlaneChanget);
     connect(ui->w_footer, &EducationalFooter::secondPlaneChanget, this, &FormEducationWork::secondPlaneChanget);
-    connect(ui->w_footer, &EducationalFooter::firstFacticalChanget, this, &FormEducationWork::firstFacticalChanget);
-    connect(ui->w_footer, &EducationalFooter::secondFacticalChanget, this, &FormEducationWork::secondFacticalChanget);
+//    connect(ui->w_footer, &EducationalFooter::firstFacticalChanget, this, &FormEducationWork::firstFacticalChanget);
+//    connect(ui->w_footer, &EducationalFooter::secondFacticalChanget, this, &FormEducationWork::secondFacticalChanget);
 }
 
 void FormEducationWork::fillTable()
 {
-    ui->lw_educationWork->clear();
+    clearData();
 
     auto eWork = Database::get()->educationWork(m_plan->baseId());
     for(auto work: eWork){
@@ -87,11 +87,18 @@ void FormEducationWork::deleteRow()
 {
     auto workRow = dynamic_cast<EducationRow*>(sender());
     if(QMessageBox::question(this,
-                              "Удаление",
-                              QString("Удалить %1 из списка?").arg(workRow->toString()))
-        == QMessageBox::No)
+                             "Удаление",
+                             QString("Удалить %1 из списка?").arg(workRow->toString()))
+            == QMessageBox::No)
         return;
     Database::get()->deleteWork(workRow->work());
     fillTable();
+}
+
+void FormEducationWork::clearData()
+{
+    ui->lw_educationWork->clear();
+    ui->w_footer->clear();
+    emit clear();
 }
 

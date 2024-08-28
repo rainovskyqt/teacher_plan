@@ -24,6 +24,7 @@ public:
     bool isFirstSemester() const;
     void setValue(EducationalHour *hour);
     bool haveCurrentWeek(int week);
+    void clear();
 
 signals:
     void hoursChanged(EducationalHour *hour);

@@ -69,3 +69,10 @@ bool EducationMonth::haveCurrentWeek(int week)
 {
     return (week >= m_startWeek && week <= m_endWeek);
 }
+
+void EducationMonth::clear()
+{
+    auto weeks = this->findChildren<EducationWeek*>();
+    for(auto w: weeks)
+        w->clear();
+}

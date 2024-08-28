@@ -23,11 +23,58 @@ void Settings::loadWeeksCount()
         {Month::Months::December, 5},
         {Month::Months::Other, 4}
     };
+
+    m_weeks = {
+        {1, Month::Months::September},
+        {2, Month::Months::September},
+        {3, Month::Months::September},
+        {4, Month::Months::September},
+        {5, Month::Months::October},
+        {6, Month::Months::October},
+        {7, Month::Months::October},
+        {8, Month::Months::October},
+        {9, Month::Months::October},
+        {10, Month::Months::November},
+        {11, Month::Months::November},
+        {12, Month::Months::November},
+        {13, Month::Months::November},
+        {14, Month::Months::December},
+        {15, Month::Months::December},
+        {16, Month::Months::December},
+        {17, Month::Months::December},
+        {18, Month::Months::December},
+        {19, Month::Months::January},
+        {20, Month::Months::January},
+        {21, Month::Months::January},
+        {22, Month::Months::January},
+        {23, Month::Months::February},
+        {24, Month::Months::February},
+        {25, Month::Months::February},
+        {26, Month::Months::February},
+        {27, Month::Months::March},
+        {28, Month::Months::March},
+        {29, Month::Months::March},
+        {30, Month::Months::March},
+        {31, Month::Months::April},
+        {32, Month::Months::April},
+        {33, Month::Months::April},
+        {34, Month::Months::April},
+        {35, Month::Months::April},
+        {36, Month::Months::May},
+        {37, Month::Months::May},
+        {38, Month::Months::May},
+        {39, Month::Months::May},
+        {40, Month::Months::June},
+        {41, Month::Months::June},
+        {42, Month::Months::June},
+        {43, Month::Months::June},
+        {44, Month::Months::June}
+    };
 }
 
 void Settings::loadWeeks()
 {
-    m_weeks = {
+    m_weeksDays = {
         {1, qMakePair(2, 8)},
         {2, qMakePair(9, 15)},
         {3, qMakePair(16, 22)},
@@ -117,7 +164,7 @@ int Settings::weekCount(Month::Months month)
 
 QPair<int, int> Settings::weekDate(int week)
 {
-    return m_weeks.value(week);
+    return m_weeksDays.value(week);
 }
 
 int Settings::secondSemesterWeek()

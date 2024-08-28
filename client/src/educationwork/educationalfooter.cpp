@@ -33,6 +33,13 @@ void EducationalFooter::setValue(EducationalHour *hour)
     countHours(hour->type());
 }
 
+void EducationalFooter::clear()
+{
+    auto month = this->findChildren<EducationMonth*>();
+    for(auto m: month)
+        m->clear();
+}
+
 
 void EducationalFooter::addMonths()
 {

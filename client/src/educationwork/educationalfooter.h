@@ -19,9 +19,8 @@ public:
 
     void setPosition(int val);
     void setValue(EducationalHour *hour);
-
-
     void setTotalValue(int value, QString name);
+    void clear();
 
 signals:
     void firstPlaneChanget(int);

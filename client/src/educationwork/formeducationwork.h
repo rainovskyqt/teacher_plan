@@ -33,19 +33,18 @@ signals:
     void secondPlaneChanget(int);
     void firstFacticalChanget(int);
     void secondFacticalChanget(int);
+    void clear();
 
 private:
     Ui::FormEducationWork *ui;
 
     TeacherPlan *m_plan;
 
+    void clearData();
     void setTable();
     void fillTable();
     void addRow(EducationalWork *work);
     int countHours(EducationalHour::HourType type, int week);
-//    int countTotalHours(QString name);
-//    void countAllValues();
-
 };
 
 #endif // FORMEDUCATIONWORK_H

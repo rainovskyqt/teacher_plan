@@ -21,6 +21,7 @@ public:
     int number() const;
     int getTime(EducationalHour::HourType type);
     void setTime(EducationalHour *hour);
+    void clear();
 
 signals:
     void hoursChanged(EducationalHour *hour);
