@@ -96,7 +96,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lbl_first">
+        <widget class="QLabel" name="lbl_plan">
          <property name="minimumSize">
           <size>
            <width>25</width>
@@ -128,7 +128,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lbl_second">
+        <widget class="QLabel" name="lbl_fact">
          <property name="minimumSize">
           <size>
            <width>25</width>

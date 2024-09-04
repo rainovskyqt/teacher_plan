@@ -6,7 +6,7 @@ Settings::Settings()
     loadWeeks();
 }
 
-void Settings::loadWeeksCount()
+void Settings::loadWeeksCount()     //NOTE Побездать динамическое создние недель ТУТ
 {
     m_weekCount = {
         {Month::Months::January, 4},

@@ -1,6 +1,7 @@
 #include "login.h"
 #include "ui_login.h"
 #include "user.h"
+#include "userform.h"
 #include "database/database.h"
 
 #include <QButtonGroup>
@@ -43,3 +44,10 @@ void Login::login()
         close();
     }
 }
+
+void Login::on_btn_register_clicked()
+{
+    UserForm *user = new UserForm(this);
+    user->show();
+}
+

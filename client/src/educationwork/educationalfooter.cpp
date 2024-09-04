@@ -68,15 +68,15 @@ void EducationalFooter::countHours(EducationalHour::HourType type)
 
     if(type == EducationalHour::Plane){
         ui->lbl_firstPlan->setText(QString::number(firstCount));
-        emit firstPlaneChanget(firstCount);
+        emit firstPlaneChanged(firstCount);
         ui->lbl_secondPlan->setText(QString::number(secontCount));
-        emit secondPlaneChanget(secontCount);
+        emit secondPlaneChanged(secontCount);
         ui->lbl_yearPlan->setText(QString::number(firstCount + secontCount));
     } else {
         ui->lbl_firstFact->setText(QString::number(firstCount));
-        emit firstFacticalChanget(firstCount);
+        emit firstFacticalChanged(firstCount);
         ui->lbl_secondFact->setText(QString::number(secontCount));
-        emit secondFacticalChanget(secontCount);
+        emit secondFacticalChanged(secontCount);
         ui->lbl_yearFact->setText(QString::number(firstCount + secontCount));
     }
 }

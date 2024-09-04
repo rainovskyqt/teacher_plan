@@ -33,10 +33,10 @@ void FormEducationWork::setTable()
     connect(ui->lw_educationWork->horizontalScrollBar(), &QScrollBar::valueChanged,
             ui->w_footer, &EducationalFooter::setPosition);
 
-    connect(ui->w_footer, &EducationalFooter::firstPlaneChanget, this, &FormEducationWork::firstPlaneChanget);
-    connect(ui->w_footer, &EducationalFooter::secondPlaneChanget, this, &FormEducationWork::secondPlaneChanget);
-//    connect(ui->w_footer, &EducationalFooter::firstFacticalChanget, this, &FormEducationWork::firstFacticalChanget);
-//    connect(ui->w_footer, &EducationalFooter::secondFacticalChanget, this, &FormEducationWork::secondFacticalChanget);
+    connect(ui->w_footer, &EducationalFooter::firstPlaneChanged, this, &FormEducationWork::firstPlaneChanged);
+    connect(ui->w_footer, &EducationalFooter::secondPlaneChanged, this, &FormEducationWork::secondPlaneChanged);
+//    connect(ui->w_footer, &EducationalFooter::firstFacticalChanged, this, &FormEducationWork::firstFacticalChanged);
+//    connect(ui->w_footer, &EducationalFooter::secondFacticalChanged, this, &FormEducationWork::secondFacticalChanged);
 }
 
 void FormEducationWork::fillTable()
@@ -57,7 +57,7 @@ void FormEducationWork::addRow(EducationalWork *work)
     ui->lw_educationWork->setItemWidget(item, row);
 
     connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
-    connect(row, &EducationRow::valueChanget, this, [this](EducationalHour *hour){
+    connect(row, &EducationRow::valueChanged, this, [this](EducationalHour *hour){
         auto h = new EducationalHour(-1, -1, hour->week(), countHours(hour->type(), hour->week()),
                                      hour->type(), ui->w_footer);
         ui->w_footer->setValue(h);

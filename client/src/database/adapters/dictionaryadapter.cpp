@@ -12,6 +12,7 @@ void DictionaryAdapter::setDictionary(QComboBox *box, Database::DictName name)
 
     auto dict = database->getDictionary(name);
 
+    box->addItem("-", 0);
     foreach (auto row, dict) {
         box->addItem(row.name(), row.id());
     }

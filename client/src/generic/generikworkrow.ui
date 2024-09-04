@@ -97,7 +97,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="line_plan">
         <property name="minimumSize">
          <size>
           <width>35</width>
@@ -126,7 +126,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="line_fact">
         <property name="minimumSize">
          <size>
           <width>35</width>

@@ -136,6 +136,21 @@ void Header::setPlan()
     setPlanData(Database::get()->requestPlan(m_user->baseId(), year, dep, post));
 }
 
+QString Header::currentTecher()
+{
+    return ui->line_fio->text();
+}
+
+QString Header::currentDepartment()
+{
+    return ui->cb_department->currentText();
+}
+
+QString Header::currentYear()
+{
+    ui->cb_years->currentText();
+}
+
 void Header::setPlanData(TeacherPlan *plan)
 {
     m_currentPlan = plan;

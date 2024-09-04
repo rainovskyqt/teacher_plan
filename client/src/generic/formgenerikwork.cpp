@@ -1,10 +1,13 @@
 #include "formgenerikwork.h"
 #include "ui_formgenerikwork.h"
 
+#include <QMessageBox>
 #include <QScrollBar>
 
 #include <database/models/genericwork.h>
 #include "generic/generikworkrow.h"
+
+#include <database/database.h>
 
 FormGenerikWork::FormGenerikWork(QWidget *parent)
     : QWidget(parent)
@@ -40,6 +43,11 @@ void FormGenerikWork::setType(WorkType newType)
     m_type = newType;
 }
 
+void FormGenerikWork::setPlanData(TeacherPlan *plan)
+{
+    m_plan = plan;
+}
+
 void FormGenerikWork::addRow(GenericWork *work)
 {
     auto list = currentList();
@@ -47,16 +55,15 @@ void FormGenerikWork::addRow(GenericWork *work)
     auto row = new GenerikWorkRow(work);
     item->setSizeHint(row->sizeHint());
     list->setItemWidget(item, row);
-    // connect(row, &EducationRow::deleteWork, this, &FormEducationWork::deleteRow);
-    // Database::get()->saveWork(work);
 
-    // connect(row, &EducationRow::valueChanget, this, [this](QString line){
-    //     ui->w_footer->setValue(countHours(line), line);
-    // });
+    connect(row, &GenerikWorkRow::deleteWork, this, &FormGenerikWork::deleteRow);
+    Database::get()->saveWork(work);
 
-    // connect(row, &EducationRow::totalValueChanget, this, [this](QString lbl){
-    //     ui->w_footer->setTotalValue(countTotalHours(lbl), lbl);
-    // });
+    connect(row, &GenerikWorkRow::valueChanged, this, [&]{
+        auto hours = countHours();
+        auto footer = currentFooter();
+        footer->setValues(hours.first, hours.second);
+    });
 }
 
 QListWidget *FormGenerikWork::currentList()
@@ -67,8 +74,57 @@ QListWidget *FormGenerikWork::currentList()
         return ui->lw_second;
 }
 
+QPair<int, int> FormGenerikWork::countHours()
+{
+    int planCount = 0;
+    int factCount = 0;
+    auto rows = this->findChildren<GenerikWorkRow*>();
+    for(auto r: rows){
+        planCount += r->planeHours();
+        factCount += r->factHours();
+    }
+    return qMakePair(planCount, factCount);
+}
+
+GenericFooter *FormGenerikWork::currentFooter()
+{
+    if(ui->tabWidget->currentIndex() == 0)
+        return ui->w_footerFirst;
+    else
+        return ui->w_footerSecond;
+}
+
+void FormGenerikWork::fillTable()
+{
+    clearData();
+
+    auto eWork = Database::get()->genericWork(m_plan->baseId());
+    for(auto work: eWork){
+        addRow(work);
+    }
+}
+
+void FormGenerikWork::clearData()
+{
+    auto list = currentList();
+    list->clear();
+    emit clear();
+}
+
 void FormGenerikWork::on_btn_add_clicked()
 {
-    addRow(new GenericWork(m_type));
+    addRow(new GenericWork(m_type, m_plan->baseId()));
+}
+
+void FormGenerikWork::deleteRow()
+{
+    auto workRow = dynamic_cast<GenerikWorkRow*>(sender());
+    if(QMessageBox::question(this,
+                              "Удаление",
+                              QString("Удалить %1 из списка?").arg(workRow->toString()))
+        == QMessageBox::No)
+        return;
+    Database::get()->deleteWork(workRow->work());
+    fillTable();
 }
 

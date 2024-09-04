@@ -29,10 +29,10 @@ private slots:
     void deleteRow();
 
 signals:
-    void firstPlaneChanget(int);
-    void secondPlaneChanget(int);
-    void firstFacticalChanget(int);
-    void secondFacticalChanget(int);
+    void firstPlaneChanged(int);
+    void secondPlaneChanged(int);
+    void firstFacticalChanged(int);
+    void secondFacticalChanged(int);
     void clear();
 
 private:

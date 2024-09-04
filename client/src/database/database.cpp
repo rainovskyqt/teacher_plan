@@ -207,6 +207,31 @@ QVector<EducationalWork*> Database::educationWork(int planId)
     return works;
 }
 
+QVector<GenericWork *> Database::genericWork(int planId)
+{
+    // QVector<GenericWork*> works;
+
+    // QString queryString = "SELECT id, discipline_id, work_form_id, course_id, comments, order_place "
+    //                       "FROM educational_work "
+    //                       "WHERE teacher_plan_id = :teacher_plan_id "
+    //                       "ORDER BY order_place";
+    // Values vals;
+    // vals.insert(":teacher_plan_id", planId);
+
+    // auto query = executeQuery(queryString, vals);
+    // while (query->next()) {
+    //     auto work = new EducationalWork(planId);
+    //     work->setBaseId(query->value("id").toInt());
+    //     work->setDisciplineId(query->value("discipline_id").toInt());
+    //     work->setWorkFormId(query->value("work_form_id").toInt());
+    //     work->setCourseId(query->value("course_id").toInt());
+    //     work->setComments(query->value("comments").toString());
+    //     works.append(work);
+    // }
+    // delete query;
+    // return works;
+}
+
 void Database::saveWork(TeacherWork *work)
 {
     WorkType type = work->workType();
@@ -407,7 +432,7 @@ TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, in
     return plan;
 }
 
-void Database::updateTeacherPlan(TeacherPlan *plan)
+int Database::updateTeacherPlan(TeacherPlan *plan)
 {
     Values vals;
     vals.insert(":base_id", plan->baseId());
@@ -422,13 +447,15 @@ void Database::updateTeacherPlan(TeacherPlan *plan)
     if(plan->baseId()){
         queryString = "UPDATE teacher_plan SET status_id = :status_id, rate = :rate WHERE id = :base_id";
         delete executeQuery(queryString, vals);
+        return plan->baseId();
     } else {
         queryString = "INSERT INTO teacher_plan(user_id, department_id, post_id, year_id, status_id, rate) "
                       "VALUES(:user_id, :department_id, :post_id, :year_id, :status_id, :rate) ";
         auto query = executeQuery(queryString, vals);
         query->next();
-        plan->setBaseId(query->lastInsertId().toInt());
+        int id = query->lastInsertId().toInt();
         delete query;
+        return id;
     }
 }
 

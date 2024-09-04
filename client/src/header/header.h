@@ -22,6 +22,11 @@ public:
 
     User *user() const;
     void setUser(User *newUser);
+    void setPlan();
+
+    QString currentTecher();
+    QString currentDepartment();
+    QString currentYear();
 
 public slots:
 //    void modelDataChanged();
@@ -65,7 +70,6 @@ private:
     void setCurrentIndexes();
     bool changeIndex(QComboBox *box);
     void setUserDepartments();
-    void setPlan();
     void setPlanData(TeacherPlan *plan);
     void setStatus(int status);
     void setProtocol(TeacherPlan* plan);

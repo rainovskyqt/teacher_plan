@@ -18,6 +18,8 @@ public:
 public slots:
     void setPosition(int val);
 
+    void setValues(int plan, int fact);
+
 private:
     Ui::GenericFooter *ui;
 };

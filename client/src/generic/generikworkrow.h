@@ -16,6 +16,15 @@ public:
     explicit GenerikWorkRow(GenericWork *work, QWidget *parent = nullptr);
     ~GenerikWorkRow();
 
+    int planeHours();
+    int factHours();
+    QString toString();
+
+    GenericWork *work() const;
+
+signals:
+    void valueChanged();
+    void deleteWork();
 
 private:
     Ui::GenerikWorkRow *ui;

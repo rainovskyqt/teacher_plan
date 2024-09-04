@@ -25,13 +25,12 @@ public:
     void loadHours();
 
 private slots:
-    void on_btn_deleteRow_clicked();
     void countHours(EducationalHour::HourType type);
 
 signals:
     void deleteWork();
     void saveWork(EducationalWork*);
-    void valueChanget(EducationalHour*);
+    void valueChanged(EducationalHour*);
 
 private:
     Ui::EducationRow *ui;

@@ -14,6 +14,8 @@
 #include <educationwork/educationalhour.h>
 #include "database/models/datamodels.h"
 
+#include <database/models/genericwork.h>
+
 
 using Values = QMap<QString, QVariant>;
 
@@ -45,10 +47,11 @@ public:
     QList<Dictionary> getDictionary(DictName name);
     QList<StudyYear> getYears();
     TeacherPlan *requestPlan(int userId, int yearId, int departmentId, int postId);
-    void updateTeacherPlan(TeacherPlan *plan);
+    int updateTeacherPlan(TeacherPlan *plan);
     QString encodePassword(QString password);
     const QString &lastError() const;
     QVector<EducationalWork *> educationWork(int planId);
+    QVector<GenericWork *> genericWork(int planId);
     void saveWork(TeacherWork *work);
     void deleteWork(TeacherWork *work);
     QList<EducationalHour*> getEdcationalHours(int workId);

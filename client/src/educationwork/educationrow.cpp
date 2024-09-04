@@ -4,6 +4,7 @@
 #include "ui_educationrow.h"
 
 #include <QDebug>
+#include <QPushButton>
 
 #include "database/models/educationalwork.h"
 #include <database/database.h>
@@ -49,7 +50,7 @@ void EducationRow::addMonths()
         connect(month, &EducationMonth::hoursChanged, this, [&](EducationalHour *hour){
             countHours(hour->type());
             saveHour(hour);
-            emit valueChanget(hour);
+            emit valueChanged(hour);
         });
         ui->hl_months->addWidget(month);
         startWeek += weekCount;
@@ -110,11 +111,6 @@ int EducationRow::getTime(EducationalHour::HourType type, int week)
     return count;
 }
 
-void EducationRow::on_btn_deleteRow_clicked()
-{
-    emit deleteWork();
-}
-
 void EducationRow::loadHours()
 {
     auto hours = Database::get()->getEdcationalHours(m_work->baseId());
@@ -157,6 +153,9 @@ void EducationRow::makeConnections()
         m_work->setComments(ui->text_comments->toPlainText());
         Database::get()->saveWork(m_work);
     });
+
+    connect(ui->btn_deleteRow, &QPushButton::clicked, this, &EducationRow::deleteWork);
+
 }
 
 void EducationRow::saveHour(EducationalHour *hour)

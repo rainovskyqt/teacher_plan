@@ -51,7 +51,7 @@ public:
     explicit TeacherPlan(QObject *parent = nullptr);
 
     bool isChanged() const;
-    void setChanged(bool newChanget);
+    void setChanged(bool newChanged);
 
     int baseId() const;
     void setBaseId(int newBaseId);

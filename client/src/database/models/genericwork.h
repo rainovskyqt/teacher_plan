@@ -3,12 +3,13 @@
 
 #include <QObject>
 #include "database/models/datamodels.h"
+#include "teacherwork.h"
 
-class GenericWork : public QObject
+class GenericWork : public TeacherWork
 {
     Q_OBJECT
 public:
-    explicit GenericWork(WorkType work, QObject *parent = nullptr);
+    explicit GenericWork(WorkType work, int planId, QObject *parent = nullptr);
 
     int baseId() const;
     void setBaseId(int newBaseId);
@@ -17,7 +18,6 @@ public:
 signals:
 
 private:
-    int m_baseId;
     WorkType m_type;
 };
 

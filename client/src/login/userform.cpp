@@ -10,8 +10,14 @@ UserForm::UserForm(QWidget *parent)
     ui->setupUi(this);
     loadData();
 
-    connect(ui->btn_register, &QPushButton::clicked, this, &UserForm::accept);
+    connect(ui->btn_register, &QPushButton::clicked, this, [this] {
+        Database::get()->addUser(newUser());
+        this->close();
+    });
     connect(ui->btn_cancel, &QPushButton::clicked, this, &UserForm::reject);
+
+    ui->label_8->setVisible(false);
+    ui->cb_rang->setVisible(false);
 }
 
 UserForm::~UserForm()

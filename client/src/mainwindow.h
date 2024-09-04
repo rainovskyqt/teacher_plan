@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include <database/models/teacherplan.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -20,20 +22,22 @@ public:
     ~MainWindow();
 
 
+private slots:
+    void setPlanData(TeacherPlan *plan);
+
+    void on_btn_create_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     enum Pages{
-        Login,
+        Message,
         TotalTime
     };
 
-    int m_userBaseId;
-    int m_currentPlanId;
-
-    bool authentication(QString login, QString password);
-    void enterToSystem();
     void setTypes();
+
+    TeacherPlan *m_currentPlan;
 
 };
 #endif // MAINWINDOW_H

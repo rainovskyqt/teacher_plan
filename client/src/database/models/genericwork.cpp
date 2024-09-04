@@ -1,10 +1,18 @@
 #include "genericwork.h"
 
-GenericWork::GenericWork(WorkType work, QObject *parent)
-    : QObject{parent}
+GenericWork::GenericWork(WorkType work, int planId, QObject *parent)
+    : TeacherWork(planId, parent)
 {
     m_type = work;
-    m_baseId = 0;
+
+
+
+    `work_form_id` INT NULL DEFAULT NULL,
+    `semester` INT NOT NULL,
+    `complite` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+    `order_place` INT NULL DEFAULT NULL,
+    `plan_hours` INT NULL DEFAULT NULL,
+    `fact_hours` INT NULL DEFAULT NULL,
 }
 
 int GenericWork::baseId() const
