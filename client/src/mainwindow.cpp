@@ -12,6 +12,7 @@ MainWindow::MainWindow(User *user, QWidget *parent)
 
 {
     ui->setupUi(this);
+    setTypes();
 
     connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
     connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
@@ -19,6 +20,8 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
     connect(ui->tab_educationWork, &FormEducationWork::firstPlaneChanged, ui->tab_totalTime, &FormTotalTime::setFirstSemester);
     connect(ui->tab_educationWork, &FormEducationWork::secondPlaneChanged, ui->tab_totalTime, &FormTotalTime::setSecondSemester);
+
+    // connect(ui->tab_educationWork, &FormEducationWork::firstFacticalChanged, ui->tab_educationFactical, &EducationalWorkComplite::setSecondSemester);
 
     connect(ui->tab_educationWork, &FormEducationWork::clear,
             ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
@@ -29,7 +32,6 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     ui->w_header->setUser(user);
     ui->w_header->init();
 
-    setTypes();
 
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);

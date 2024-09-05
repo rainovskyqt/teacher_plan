@@ -35,8 +35,7 @@ void FormEducationWork::setTable()
 
     connect(ui->w_footer, &EducationalFooter::firstPlaneChanged, this, &FormEducationWork::firstPlaneChanged);
     connect(ui->w_footer, &EducationalFooter::secondPlaneChanged, this, &FormEducationWork::secondPlaneChanged);
-//    connect(ui->w_footer, &EducationalFooter::firstFacticalChanged, this, &FormEducationWork::firstFacticalChanged);
-//    connect(ui->w_footer, &EducationalFooter::secondFacticalChanged, this, &FormEducationWork::secondFacticalChanged);
+
 }
 
 void FormEducationWork::fillTable()

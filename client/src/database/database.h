@@ -51,7 +51,7 @@ public:
     QString encodePassword(QString password);
     const QString &lastError() const;
     QVector<EducationalWork *> educationWork(int planId);
-    QVector<GenericWork *> genericWork(int planId);
+    QVector<GenericWork *> genericWork(int planId, WorkType type);
     void saveWork(TeacherWork *work);
     void deleteWork(TeacherWork *work);
     QList<EducationalHour*> getEdcationalHours(int workId);

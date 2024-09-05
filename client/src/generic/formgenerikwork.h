@@ -37,16 +37,23 @@ private slots:
 private:
     Ui::FormGenerikWork *ui;
 
+    enum Semester{
+        First,
+        Second
+    };
+
     WorkType m_type;
     TeacherPlan *m_plan;
 
+    int currentSemester();
+    bool isFirstSemester();
     void setConnections();
     void addRow(GenericWork *work);
     QListWidget *currentList();
-    QPair<int, int> countHours();
+    QPair<int, int> countHours(QWidget *list);
     GenericFooter *currentFooter();
-    void fillTable();
     void clearData();
+    void fillTable();
 
 };
 

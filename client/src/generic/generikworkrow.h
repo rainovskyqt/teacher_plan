@@ -22,14 +22,19 @@ public:
 
     GenericWork *work() const;
 
+    void init();
+
 signals:
     void valueChanged();
     void deleteWork();
 
 private:
     Ui::GenerikWorkRow *ui;
-    void loadWorks();
     GenericWork *m_work;
+
+    void loadWorkTypes();
+    void setWorkData(GenericWork *work);
+    void makeConnections();
 };
 
 #endif // GENERIKWORKROW_H

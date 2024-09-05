@@ -207,29 +207,33 @@ QVector<EducationalWork*> Database::educationWork(int planId)
     return works;
 }
 
-QVector<GenericWork *> Database::genericWork(int planId)
+QVector<GenericWork *> Database::genericWork(int planId, WorkType type)
 {
-    // QVector<GenericWork*> works;
+    QVector<GenericWork*> works;
 
-    // QString queryString = "SELECT id, discipline_id, work_form_id, course_id, comments, order_place "
-    //                       "FROM educational_work "
-    //                       "WHERE teacher_plan_id = :teacher_plan_id "
-    //                       "ORDER BY order_place";
-    // Values vals;
-    // vals.insert(":teacher_plan_id", planId);
+    QString queryString = "SELECT W.id, work_form_id, semester, complite, order_place, plan_hours, fact_hours "
+                          "FROM generic_work W "
+                          "INNER JOIN generic_work_form F ON W.work_form_id = F.id "
+                          "WHERE W.teacher_plan_id = :teacher_plan_id AND F.work_type = :work_type "
+                          "ORDER BY semester, order_place";
+    Values vals;
+    vals.insert(":teacher_plan_id", planId);
+    vals.insert(":work_type", static_cast<int>(type));
 
-    // auto query = executeQuery(queryString, vals);
-    // while (query->next()) {
-    //     auto work = new EducationalWork(planId);
-    //     work->setBaseId(query->value("id").toInt());
-    //     work->setDisciplineId(query->value("discipline_id").toInt());
-    //     work->setWorkFormId(query->value("work_form_id").toInt());
-    //     work->setCourseId(query->value("course_id").toInt());
-    //     work->setComments(query->value("comments").toString());
-    //     works.append(work);
-    // }
-    // delete query;
-    // return works;
+    auto query = executeQuery(queryString, vals);
+    while (query->next()) {
+        auto work = new GenericWork(type, planId);
+        work->setBaseId(query->value("id").toInt());
+        work->setWorkFormId(query->value("work_form_id").toInt());
+        work->setSemester(query->value("semester").toInt());
+        work->setComplite(query->value("complite").toString());
+        work->setOrderplace(query->value("order_place").toInt());
+        work->setPlanHours(query->value("plan_hours").toInt());
+        work->setFactHours(query->value("fact_hours").toInt());
+        works.append(work);
+    }
+    delete query;
+    return works;
 }
 
 void Database::saveWork(TeacherWork *work)
@@ -395,7 +399,33 @@ void Database::saveEducationalWork(TeacherWork *work)
 
 void Database::saveGenericWork(TeacherWork *work)
 {
+    auto w = dynamic_cast<GenericWork*>(work);
+    Values vals;
+    vals.insert(":id", w->baseId());
+    vals.insert(":teacher_plan_id", w->planId());
+    vals.insert(":work_form_id", w->workFormId());
+    vals.insert(":semester", w->semester());
+    vals.insert(":complite", w->complite());
+    vals.insert(":plan_hours", w->planHours());
+    vals.insert(":fact_hours", w->factHours());
+    vals.insert(":order_place", w->orderplace());
 
+    QString updateString = "UPDATE generic_work "
+                           "SET work_form_id = :work_form_id, semester = :semester, "
+                           "complite = :complite, plan_hours = :plan_hours, fact_hours = :fact_hours, order_place = :order_place "
+                           "WHERE id = :id";
+
+    QString insertString = "INSERT INTO generic_work(teacher_plan_id, work_form_id, semester, complite, "
+                           "plan_hours, fact_hours, order_place) "
+                           "VALUES(:teacher_plan_id, :work_form_id, :semester, :complite, "
+                           ":plan_hours, :fact_hours, :order_place) ";
+    if(w->baseId()){
+        delete executeQuery(updateString, vals);
+    } else {
+        auto answer = executeQuery(insertString, vals);
+        answer->next();
+        work->setBaseId(answer->lastInsertId().toInt());
+    }
 }
 
 TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)

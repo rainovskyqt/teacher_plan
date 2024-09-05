@@ -11,14 +11,34 @@ class GenericWork : public TeacherWork
 public:
     explicit GenericWork(WorkType work, int planId, QObject *parent = nullptr);
 
-    int baseId() const;
-    void setBaseId(int newBaseId);
-    WorkType type() const;
+    int workFormId() const;
+    void setWorkFormId(int newWorkFormId);
+
+    int semester() const;
+    void setSemester(int newSemester);
+
+    QString complite() const;
+    void setComplite(const QString &newComplite);
+
+    int orderplace() const;
+    void setOrderplace(int newOrderplace);
+
+    int planHours() const;
+    void setPlanHours(int newPlanHours);
+
+    int factHours() const;
+    void setFactHours(int newFactHours);
+
 
 signals:
 
 private:
-    WorkType m_type;
+    int m_workFormId;
+    int m_semester;
+    QString m_complite;
+    int m_orderplace;
+    int m_planHours;
+    int m_factHours;
 };
 
 #endif // GENERICWORK_H
