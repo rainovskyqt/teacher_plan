@@ -7,6 +7,8 @@
 
 #include <database/models/teacherplan.h>
 
+#include <misc/month.h>
+
 namespace Ui {
 class FormEducationWork;
 }
@@ -31,8 +33,8 @@ private slots:
 signals:
     void firstPlaneChanged(int);
     void secondPlaneChanged(int);
-    void firstFacticalChanged(int);
-    void secondFacticalChanged(int);
+    void factValueChanged(Month::Months, int, int);
+
     void clear();
 
 private:

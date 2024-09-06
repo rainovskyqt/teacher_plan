@@ -48,7 +48,7 @@ void EducationalFooter::addMonths()
         if(i == Month::Other)
             i = Month::January;                //Если перешли за декабрь, ставим январь
         int weekCount = Settings::get().weekCount((Month::Months)i);
-        auto month = new EducationMonth(startWeek, weekCount, 0, true, this);
+        auto month = new EducationMonth((Month::Months)i, startWeek, weekCount, 0, true, this);
         ui->hl_months->addWidget(month);
         startWeek += weekCount;
     }

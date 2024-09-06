@@ -4,6 +4,8 @@
 #include <QHeaderView>
 #include <QWidget>
 
+#include <misc/month.h>
+
 
 class CustomHeader : public QHeaderView {
 public:
@@ -32,6 +34,11 @@ public slots:
     void setYearHours(int hours);
     void clearHours();
 
+    void setFactValue(Month::Months month, int workForm, int value);
+
+private slots:
+    void on_tw_hours_cellChanged(int row, int column);
+
 private:
     Ui::EducationalWorkComplite *ui;
 
@@ -41,6 +48,11 @@ private:
     void setRows();
     void addRow(QString text, int id = 0);
     void fillTable();
+    int getRowNumber(int month);
+    int getColumnNumber(int workForm);
+    void setRowCount(int row);
+    void setColunmCount(int column);
+    void checkTotalTime();
 };
 
 #endif // EDUCATIONALWORKCOMPLITE_H

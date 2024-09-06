@@ -2,6 +2,7 @@
 #define EDUCATIONROW_H
 
 #include <QWidget>
+#include <misc/month.h>
 #include "educationalhour.h"
 
 namespace Ui {
@@ -31,6 +32,7 @@ signals:
     void deleteWork();
     void saveWork(EducationalWork*);
     void valueChanged(EducationalHour*);
+    void factValueChanged(Month::Months, int, int);
 
 private:
     Ui::EducationRow *ui;

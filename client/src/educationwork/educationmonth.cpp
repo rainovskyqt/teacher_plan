@@ -3,12 +3,13 @@
 #include "ui_educationmonth.h"
 #include "settings.h"
 
-EducationMonth::EducationMonth(int start, int count, int workId, bool readOnly, QWidget *parent) :
+EducationMonth::EducationMonth(Month::Months month, int start, int count, int workId, bool readOnly, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EducationMonth),
     m_isFirstSemester(true)
 {
     ui->setupUi(this);
+    m_month = month;
     addWeeks(start, count, workId, readOnly);
 
     if(start >= Settings::get().secondSemesterWeek())
@@ -75,4 +76,9 @@ void EducationMonth::clear()
     auto weeks = this->findChildren<EducationWeek*>();
     for(auto w: weeks)
         w->clear();
+}
+
+Month::Months EducationMonth::month() const
+{
+    return m_month;
 }

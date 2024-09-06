@@ -46,11 +46,17 @@ void EducationRow::addMonths()
         if(m_work)
             workId = m_work->baseId();
 
-        auto month = new EducationMonth(startWeek, weekCount, workId, false, this);
+        auto month = new EducationMonth((Month::Months)i, startWeek, weekCount, workId, false, this);
         connect(month, &EducationMonth::hoursChanged, this, [&](EducationalHour *hour){
             countHours(hour->type());
             saveHour(hour);
             emit valueChanged(hour);
+
+            if(hour->type() == EducationalHour::Factical){
+                auto month = static_cast<EducationMonth*>(sender());
+                int factCount = month->getTime(EducationalHour::Factical);
+                emit factValueChanged(month->month(), m_work->workFormId(), factCount);
+            }
         });
         ui->hl_months->addWidget(month);
         startWeek += weekCount;

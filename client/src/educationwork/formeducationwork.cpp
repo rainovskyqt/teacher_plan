@@ -62,6 +62,8 @@ void FormEducationWork::addRow(EducationalWork *work)
         ui->w_footer->setValue(h);
     });
 
+    connect(row, &EducationRow::factValueChanged, this, &FormEducationWork::factValueChanged);
+
     row->loadHours();           //Часы устанасливаются после подключения сигнала к футеру, что бы сработал посчет часов
 }
 

@@ -37,7 +37,7 @@ int EducationWeek::getTime(EducationalHour::HourType type)
 
 void EducationWeek::setTime(EducationalHour *hour)
 {
-    auto val = QString::number(hour->value());
+    auto val = hour->value() ? QString::number(hour->value()) : "";
     if(hour->type() == EducationalHour::Plane){
         ui->line_plan->setText(val);
         m_planHour = hour;
