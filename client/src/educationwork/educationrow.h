@@ -38,6 +38,7 @@ private:
     Ui::EducationRow *ui;
 
     EducationalWork *m_work;
+    bool readySave;
 
     void addMonths();
 
@@ -45,7 +46,7 @@ private:
     void makeConnections();
 
     void saveHour(EducationalHour *hour);
-    bool readySave;
+    void setNewWorkId(int id);
 };
 
 #endif // EDUCATIONROW_H

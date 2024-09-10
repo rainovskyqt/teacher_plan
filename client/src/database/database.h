@@ -52,7 +52,7 @@ public:
     const QString &lastError() const;
     QVector<EducationalWork *> educationWork(int planId);
     QVector<GenericWork *> genericWork(int planId, WorkType type);
-    void saveWork(TeacherWork *work);
+    int saveWork(TeacherWork *work);
     void deleteWork(TeacherWork *work);
     QList<EducationalHour*> getEdcationalHours(int workId);
     int saveEdcationalHour(EducationalHour* hour);
@@ -69,8 +69,8 @@ private:
     QString m_lastError;
     QSqlQuery *executeQuery(QString queryString, Values vals = {});
     int getId(QString json);
-    void saveEducationalWork(TeacherWork *work);
-    void saveGenericWork(TeacherWork *work);
+    int saveEducationalWork(TeacherWork *work);
+    int saveGenericWork(TeacherWork *work);
 };
 
 #endif // DATABASE_H

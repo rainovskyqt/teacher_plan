@@ -18,8 +18,8 @@ Login::Login(QWidget *parent) :
     connect(ui->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &Login::login);
     connect(ui->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &Login::close);
 #ifdef QT_DEBUG
-    ui->line_login->setText("teacher");
-    ui->line_password->setText("myPassword");
+    ui->line_login->setText("temp");
+    ui->line_password->setText("temp");
 #else
     ui->line_login->setText(Settings::get().lastName());
 #endif

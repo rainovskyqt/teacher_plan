@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
--- Хост:                         127.0.0.1
--- Версия сервера:               8.4.0 - MySQL Community Server - GPL
--- Операционная система:         Win64
--- HeidiSQL Версия:              12.7.0.6850
+-- Хост:                         10.0.2.18
+-- Версия сервера:               8.0.39-0ubuntu0.20.04.1 - (Ubuntu)
+-- Операционная система:         Linux
+-- HeidiSQL Версия:              12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -15,21 +15,18 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Дамп структуры для таблица ordo_dev.course
-DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.course: ~3 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.course: ~1 rows (приблизительно)
 INSERT INTO `course` (`id`, `name`) VALUES
-	(1, '-'),
 	(2, '1 АФК'),
 	(3, '1 ФКб');
 
 -- Дамп структуры для таблица ordo_dev.department
-DROP TABLE IF EXISTS `department`;
 CREATE TABLE IF NOT EXISTS `department` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -37,14 +34,13 @@ CREATE TABLE IF NOT EXISTS `department` (
   UNIQUE KEY `department_name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.department: ~3 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.department: ~2 rows (приблизительно)
 INSERT INTO `department` (`id`, `name`) VALUES
 	(3, 'Кафедра ТиМ СЕиТА'),
 	(1, 'Кафедра ТиМ ФК'),
 	(2, 'Кафедра ТиМ ЦВС');
 
 -- Дамп структуры для таблица ordo_dev.disciline_department
-DROP TABLE IF EXISTS `disciline_department`;
 CREATE TABLE IF NOT EXISTS `disciline_department` (
   `id` int NOT NULL AUTO_INCREMENT,
   `discipline_id` int DEFAULT NULL,
@@ -59,22 +55,309 @@ CREATE TABLE IF NOT EXISTS `disciline_department` (
 -- Дамп данных таблицы ordo_dev.disciline_department: ~0 rows (приблизительно)
 
 -- Дамп структуры для таблица ordo_dev.discipline
-DROP TABLE IF EXISTS `discipline`;
 CREATE TABLE IF NOT EXISTS `discipline` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=294 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.discipline: ~3 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.discipline: ~292 rows (приблизительно)
 INSERT INTO `discipline` (`id`, `name`) VALUES
-	(1, '-'),
-	(2, 'Социология'),
-	(3, 'Философия');
+	(185, 'Адаптивная двигательная рекреация'),
+	(202, 'Адаптивная физическая культура'),
+	(270, 'Адаптивная физическая культура в центрах социальной реабилитации инвалидов'),
+	(271, 'Адаптивное физическое воспитание в школах-интернатах и детских домах'),
+	(186, 'Адаптивное физическое воспитание взрослого населения'),
+	(275, 'Адаптивное физическое воспитание детей до трех лет'),
+	(165, 'Адаптивное физическое воспитание лиц в дошкольных и общеобразовательных организациях'),
+	(180, 'Адаптивное физическое воспитание лиц с нарушением интеллектуального развития'),
+	(179, 'Адаптивное физическое воспитание лиц с поражением опорно-двигательного аппарата'),
+	(178, 'Адаптивное физическое воспитание лиц с сенсорными нарушениями'),
+	(181, 'Адаптивное физическое воспитание школьников в специальных (коррекционных) образовательных учреждениях для глухих и слабослышащих'),
+	(167, 'Адаптивный спорт'),
+	(7, 'Актуальные проблемы в системе научных знаний о спорте'),
+	(21, 'Анатомия и возрастная физиология'),
+	(82, 'Анатомия человека'),
+	(151, 'Анимационная деятельность в физической культуре'),
+	(137, 'Атлетизм'),
+	(192, 'баскетбол'),
+	(28, 'Безопасность жизнедеятельности'),
+	(134, 'Бизнес-планирование в спортивных организациях'),
+	(106, 'биология и химия'),
+	(90, 'Биомеханика двигательной деятельности'),
+	(91, 'Биохимия человека'),
+	(49, 'Введение в профессиональную деятельность (с практикумом)'),
+	(103, 'Введение в профессию'),
+	(148, 'Внеурочные формы физического воспитания школьников и студентов'),
+	(175, 'Возрастная психопатология и психоконсультирование'),
+	(191, 'волейбол'),
+	(163, 'Врачебный контроль в адаптивной физической культуре'),
+	(96, 'Гигиенические основы физкультурно-спортивной деятельности'),
+	(161, 'Гигиенические основы физкультурно-спортивной деятельности в адаптивной физической культуре'),
+	(182, 'Гидрореабилитация'),
+	(84, 'гимнастика'),
+	(116, 'Государственное и муниципальное управление в сфере физической культуры и спорта'),
+	(187, 'Двигательная активность женщин в период беременности и после родов'),
+	(218, 'Двигательная рекреация'),
+	(53, 'Деятельность специалиста органа опеки и попечительства в отношении несовершеннолетних'),
+	(68, 'Деятельность школьной социально-психологической службы'),
+	(39, 'Диагностика социальной и школьной дезадаптации'),
+	(256, 'Документационное обеспечение деятельности спортивных организаций'),
+	(127, 'Документообеспечение спортивных организаций'),
+	(266, 'Инклюзивное физическое воспитание в образовательных организациях'),
+	(5, 'Иностранный язык'),
+	(259, 'Иностранный язык в профессиональной деятельности'),
+	(157, 'Информационные технологии в адаптивной физической культуре'),
+	(230, 'Информационные технологии в науке и образовании в области физической культуры и спорта'),
+	(279, 'Информационные технологии в науке и спортивной практике'),
+	(19, 'Информационные технологии в профессиональной деятельности'),
+	(95, 'Информационные технологии в физической культуре и спорте'),
+	(156, 'История адаптивной физической культуры'),
+	(229, 'История и методология науки в области физической культуры и спорта'),
+	(258, 'История и методология научных исследований в области физической культуры и спорта'),
+	(4, 'История и философия науки'),
+	(16, 'История России'),
+	(80, 'История физической культуры и спорта'),
+	(112, 'Кадровая политика организаций сферы физической культуры и спорта'),
+	(3, 'Кандидатский экзамен по иностранному языку'),
+	(2, 'Кандидатский экзамен по истории и философии науки'),
+	(176, 'Комплексная реабилитация больных и инвалидов'),
+	(123, 'Конституционно-правовые основы физической культуры и спорта'),
+	(46, 'Консультирование семей, находящихся в конфликтном и кризисном состоянии'),
+	(45, 'Коррекция агрессивного и виктимного поведения детей и молодежи (с практикумом)'),
+	(122, 'Краеведение'),
+	(108, 'Культурология'),
+	(85, 'легкая атлетика'),
+	(143, 'Лечебная физическая культура'),
+	(183, 'Лечебный массаж'),
+	(236, 'Логика'),
+	(255, 'Маркетинг услуг в сфере физической культуры и спорта'),
+	(119, 'Маркетинговая деятельность спортивных организаций'),
+	(140, 'Массаж'),
+	(105, 'математика и физика'),
+	(177, 'Математическая статистика в физической культуре и спорте'),
+	(174, 'Материально-техническое обеспечение в адаптивной физической культуры'),
+	(111, 'Материально-техническое обеспечение спортивных организаций'),
+	(291, 'Медико-биологические проблемы перенапряжений в спорте'),
+	(54, 'Межведомственное взаимодействие специалистов системы социальной защиты детства'),
+	(130, 'Менеджмент спортивно-массовой работы'),
+	(252, 'Менеджмент спортивной организации'),
+	(98, 'Менеджмент физической культуры и спорта'),
+	(12, 'Методика научного эксперимента'),
+	(77, 'Методика организации волонтерской деятельности'),
+	(37, 'Методика организации культурно-досуговой деятельности'),
+	(11, 'Методика подготовки и оформления диссертации'),
+	(205, 'Методика преподавания дисциплины "Физическая культура" в образовательных организациях'),
+	(211, 'Методика применения тренажерных устройств для развития физических качеств'),
+	(40, 'Методика профилактики социальных девиаций'),
+	(52, 'Методика работы вожатого в детско-юношеской организации'),
+	(197, 'Методика реализации программ дополнительного образования в области физической культуры и спорта'),
+	(228, 'Методика судейства и организация соревнований по волейболу, баскетболу и  гандболу'),
+	(207, 'Методика судейства и организация соревнований по волейболу, баскетболу и гандболу'),
+	(42, 'Методика формирования ответственного родительства'),
+	(60, 'Методика формирования социальной зрелости'),
+	(154, 'Методики раннего развития детей'),
+	(142, 'Методические основы дополнительного образования в сфере физической культуры'),
+	(209, 'Методические основы обучения и тренировки в адаптивном плавании'),
+	(240, 'Методическое сопровождение работы преподавателя физической культуры'),
+	(22, 'Методология и методы научного исследования'),
+	(6, 'Методология научного исследования'),
+	(9, 'Метрологические основы сбора и обработки результатов научных исследований'),
+	(289, 'Морфологические критерии спортивного отбора'),
+	(216, 'Настольный теннис'),
+	(99, 'Научно-методическая деятельность'),
+	(238, 'Научно-методические основы образовательного процесса в образовательных организациях высшего образования'),
+	(214, 'Научно-методическое обеспечение сборных команд'),
+	(13, 'Научно-педагогическая практика'),
+	(272, 'Нормативно-правовое обеспечение адаптивной физической культуры'),
+	(264, 'Обучение двигательным действиям'),
+	(166, 'Общая патология и тератология'),
+	(281, 'Общая теория спорта и технология подготовки спортсменов'),
+	(246, 'Оздоровительная физическая культура различных возрастных категорий населения'),
+	(221, 'Оздоровительное плавание'),
+	(132, 'Организационно-методические основы физического воспитания в школе'),
+	(146, 'Организационно-методическое обеспечение деятельности инструктора-методиста'),
+	(131, 'Организационно-методическое сопровождение работы учителя физической культуры'),
+	(262, 'Организационно-управленческая деятельность в адаптивной физической культуре'),
+	(276, 'Организация деятельности ДЮСАШ'),
+	(257, 'Организация документооборота в спортивной организации'),
+	(243, 'Организация и проведение массовых физкультурно-спортивных мероприятий'),
+	(210, 'Организация и проведение спортивно-массовых мероприятий по легкой атлетике'),
+	(274, 'Организация реабилитационной помощи для лиц с ограниченными возможностями здоровья в центрах геронтологии'),
+	(212, 'Организация учебно-тренировочного процесса в мини-футболе'),
+	(153, 'Основы акмеологии физической культуры и спорта'),
+	(198, 'Основы антидопингового обеспечения'),
+	(25, 'Основы валеологии'),
+	(194, 'Основы дефектологии'),
+	(118, 'Основы маркетинга в сфере физической культуры и спорта'),
+	(33, 'Основы медицинских знаний'),
+	(193, 'Основы медицинских знаний и спортивная медицина'),
+	(195, 'Основы научно-методической деятельности в сфере физической культуры и спорта'),
+	(222, 'Основы оздоровительной тренировки в легкой атлетике'),
+	(237, 'Основы профессионально-педагогического мастерства'),
+	(121, 'Основы профессиональной работы в Microsoft Office'),
+	(283, 'Основы профессиональной этики тренера'),
+	(18, 'Основы российской государственности'),
+	(220, 'Основы спортивных единоборств'),
+	(251, 'Основы экономики управленческой деятельности спортивной организации'),
+	(125, 'Основы экономики физической культуры и спорта'),
+	(79, 'Педагогика и психология'),
+	(41, 'Педагогика и психология отклоняющегося поведения'),
+	(59, 'Педагогика лидерства'),
+	(97, 'Педагогика физической культуры'),
+	(86, 'плавание'),
+	(213, 'Планирование тренировочной работы с квалифицированными спортсменами'),
+	(190, 'подвижные игры'),
+	(215, 'Подготовка к сдаче норм ГТО'),
+	(44, 'Поликультурное образование'),
+	(23, 'Правоведение с основами семейного права и прав инвалидов'),
+	(189, 'Правовые и экономические основы профессиональной деятельности'),
+	(83, 'Правовые основы профессиональной деятельности'),
+	(133, 'Предпринимательство в спортивной индустрии'),
+	(78, 'Применение в образовательной деятельности проблематики геноцида советского народа в годы Великой Отечественной войны на основе проекта «Без срока давности»'),
+	(36, 'Проектирование индивидуального образовательного маршрута'),
+	(35, 'Проектирование основных и дополнительных образовательных программ'),
+	(126, 'Проектная деятельность в физической культуре и спорте'),
+	(244, 'Проектная деятельность в физическом воспитании'),
+	(75, 'Производственная практика (научно-исследовательская работа)'),
+	(249, 'Производственная практика (научно-педагогическая)'),
+	(135, 'Производственная практика (организационная)'),
+	(72, 'Производственная практика (педагогическая практика в детских оздоровительных лагерях)'),
+	(74, 'Производственная практика (педагогическая)'),
+	(76, 'Производственная практика (преддипломная)'),
+	(136, 'Производственная практика (профессионально-ориентированная)'),
+	(73, 'Производственная практика (технологическая (проектно-технологическая))'),
+	(225, 'Производственная практика (тренерская)'),
+	(242, 'Пропаганда и связи с общественностью'),
+	(287, 'Пропаганда и связи с общественностью в спорте высших достижений'),
+	(102, 'Пропаганда и связи с общественностью в сфере физической культуры и спорта'),
+	(201, 'Профессионально-спортивное совершенствование'),
+	(31, 'Профессиональное самоопределение детей и молодежи (с практикумом)'),
+	(64, 'Профилактика интернет-зависимости среди детей и молодежи'),
+	(63, 'Профилактика молодежного экстремизма'),
+	(158, 'Профилактика негативных социальных явлений'),
+	(101, 'Профилактика применения допинга'),
+	(61, 'Профилактика социального сиротства'),
+	(293, 'Психические состояния в учебно-тренировочной и соревновательной деятельности'),
+	(149, 'Психологические аспекты урока физической культуры'),
+	(24, 'Психология'),
+	(173, 'Психология болезни и инвалидности'),
+	(114, 'Психология менеджмента'),
+	(164, 'Психология развития'),
+	(278, 'Психология семьи ребенка с ограниченными возможностями здоровья'),
+	(93, 'Психология физической культуры и спорта'),
+	(10, 'Психолого-педагогические аспекты профессионального мастерства преподавателя  ОО ВО'),
+	(284, 'Психолого-педагогические основы спортивной подготовки'),
+	(247, 'Психолого-педагогические особенности воспитательной среды учреждений среднего профессионального образования и высшего образования'),
+	(277, 'Психолого-педагогическое сопровождение в инклюзивном образовании'),
+	(292, 'Психолого-педагогическое сопровождение соревновательной деятельности'),
+	(273, 'Реабилитация лиц с ограниченными возможностями здоровья и инвалидов в системе коррекционного образования'),
+	(184, 'Реабилитация спинальных больных'),
+	(128, 'Реклама и медиапланирование в спортивной организации'),
+	(250, 'Реферирование и перевод литературных источников на иностранном языке'),
+	(17, 'Русский язык и культура речи'),
+	(227, 'Самооборона без оружия'),
+	(62, 'Семейные формы устройства детей-сирот и детей, оставшихся без попечения родителей'),
+	(38, 'Семьеведение'),
+	(219, 'Силовой атлетизм'),
+	(208, 'Современные двигательные системы'),
+	(152, 'Современные дидактические технологии в физической культуре и спорте'),
+	(144, 'Современные подходы к воспитанию в системе образования'),
+	(261, 'Современные проблемы адаптивной физической культуры и ее видов'),
+	(232, 'Современные проблемы науки о физической культуре и спорте'),
+	(235, 'Современные технологии физкультурно-оздоровительной деятельности'),
+	(217, 'Современные фитнес-технологии'),
+	(288, 'Современные экспериментальные методы исследования в физиологии спорта'),
+	(67, 'Сопровождение семей с детьми в центре психолого-педагогической помощи населению'),
+	(47, 'Сопровождение семей, воспитывающих детей-инвалидов'),
+	(248, 'Социализация обучающихся в воспитательной среде учреждений среднего профессионального образования и высшего образования'),
+	(160, 'Социальная защита инвалидов'),
+	(32, 'Социальная педагогика'),
+	(50, 'Социальная экология'),
+	(30, 'Социально-педагогическое проектирование'),
+	(43, 'Социально-психологическая диагностика и коррекция стиля семейного воспитания'),
+	(55, 'Социально-психологическая и трудовая реабилитация несовершеннолетних'),
+	(48, 'Социальный менеджмент'),
+	(267, 'Социокультурные аспекты адаптивной физической культуры'),
+	(89, 'Социология физической культуры'),
+	(159, 'Специальная педагогика'),
+	(34, 'Специальная педагогика и психология'),
+	(170, 'Специальная психология'),
+	(263, 'Специальная психология в адаптивной физической культуре'),
+	(204, 'Спортивная биохимия'),
+	(139, 'Спортивная медицина'),
+	(107, 'Спортивная метрология'),
+	(203, 'Спортивная морфология'),
+	(290, 'Спортивная фармакология и антидопинговый контроль'),
+	(196, 'Спортивная физиология'),
+	(147, 'Спортивно-оздоровительный мониторинг'),
+	(245, 'Спортивно-оздоровительный туризм'),
+	(87, 'спортивные и подвижные игры'),
+	(100, 'Спортивные сооружения'),
+	(113, 'Стратегический менеджмент в спортивных организациях'),
+	(254, 'Стратегическое управление в спортивной организации'),
+	(51, 'Тайм-менеджмент'),
+	(120, 'Телекоммуникационные технологии в спорте'),
+	(15, 'Теоретические и методические аспекты оздоровительной и адаптивной физической культуры'),
+	(8, 'Теоретические и прикладные аспекты подготовки спортсменов'),
+	(81, 'Теория и методика избранного вида спорта'),
+	(206, 'Теория и методика подготовки специалистов по спортивно-массовым видам гимнастики'),
+	(104, 'Теория и методика управления спортивными организациями различных форм собственности'),
+	(94, 'Теория и методика физической культуры'),
+	(162, 'Теория и организация адаптивной физической культуры'),
+	(65, 'Теория и практика тьюторского сопровождения'),
+	(199, 'Теория спорта'),
+	(260, 'Технологии научных исследований в адаптивной физической культуре'),
+	(26, 'Технологии по связям с общественностью'),
+	(56, 'Технологии социально-педагогической и социокультурной реабилитации'),
+	(66, 'Технологии социальной инклюзии детей-инвалидов'),
+	(200, 'Технологии спортивной тренировки в избранном виде спорта'),
+	(57, 'Технологии творчества в работе с детьми с ограниченными возможностями здоровья'),
+	(265, 'Технологии физкультурно-оздоровительной деятельности в адаптивной физической культуре'),
+	(14, 'Технологии физкультурно-оздоровительной деятельности в сфере адаптивной физической культуры'),
+	(169, 'Технологии физкультурно-спортивной деятельности'),
+	(280, 'Технология научных исследований в спорте высших достижений'),
+	(233, 'Технология научных исследований в физической культуре'),
+	(285, 'Технология построения и управления подготовкой спортсменов в избранном виде спорта'),
+	(27, 'Тренинг коммуникативной компетентности'),
+	(124, 'Управление конфликтными ситуациями'),
+	(115, 'Управление кризисными ситуациями в организациях сферы физической культуры и спорта'),
+	(110, 'Управление персоналом'),
+	(129, 'Управление спортивными клубами'),
+	(253, 'Управление человеческими ресурсами в сфере физической культуры и спорта'),
+	(282, 'Управленческая деятельность в спорте (в том числе управление проектами)'),
+	(234, 'Управленческая деятельность в физической культуре и спорте (в том числе управление проектами)'),
+	(70, 'Учебная практика (научно-исследовательская работа (получение первичных навыков научно-исследовательской работы))'),
+	(69, 'Учебная практика (ознакомительная)'),
+	(223, 'Учебная практика (педагогическая)'),
+	(71, 'Учебная практика (технологическая (проектно-технологическая))'),
+	(224, 'Учебная практика (тренерская)'),
+	(241, 'Физиологические основы физкультурно-оздоровительных занятий и массового спорта'),
+	(286, 'Физиологические основы функциональной подготовки спортсменов'),
+	(141, 'Физиология мышечной деятельности'),
+	(92, 'Физиология человека'),
+	(20, 'Физическая культура'),
+	(188, 'Физическая культура и спорт'),
+	(155, 'Физическая культура лиц старшего и пожилого возраста'),
+	(268, 'Физическая культура обучающихся специальных медицинских групп в СПО и ВО'),
+	(269, 'Физическая культура по адаптированным программам в общеобразовательных организациях'),
+	(172, 'Физическая реабилитация'),
+	(150, 'Физическая рекреация'),
+	(239, 'Физическое воспитание в образовательных организациях высшего образования'),
+	(145, 'Физическое воспитание в образовательных организациях среднего профессионального образования'),
+	(138, 'Физкультурно-оздоровительные технологии'),
+	(29, 'Философия'),
+	(231, 'Философские и социальные проблемы физической культуры'),
+	(109, 'Финансово-хозяйственная деятельность спортивных организаций'),
+	(88, 'футбол'),
+	(171, 'Частная патология'),
+	(168, 'Частные методики адаптивной физической культуры'),
+	(58, 'Элективные дисциплины по физической культуре и спорту'),
+	(117, 'Элективные курсы по физической культуре и спорту'),
+	(226, 'Электронная информационно- образовательная среда вуза');
 
 -- Дамп структуры для таблица ordo_dev.educational_work
-DROP TABLE IF EXISTS `educational_work`;
 CREATE TABLE IF NOT EXISTS `educational_work` (
   `id` int NOT NULL AUTO_INCREMENT,
   `teacher_plan_id` int DEFAULT NULL,
@@ -92,26 +375,21 @@ CREATE TABLE IF NOT EXISTS `educational_work` (
   CONSTRAINT `FK_educational_work_group` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_educational_work_teacher_plan` FOREIGN KEY (`teacher_plan_id`) REFERENCES `teacher_plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_educational_work_work_form` FOREIGN KEY (`work_form_id`) REFERENCES `educational_work_form` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.educational_work: ~4 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.educational_work: ~0 rows (приблизительно)
 INSERT INTO `educational_work` (`id`, `teacher_plan_id`, `discipline_id`, `work_form_id`, `course_id`, `comments`, `order_place`) VALUES
-	(45, 65, 3, 7, 2, NULL, 0),
-	(47, 65, 3, 3, 3, NULL, 0),
-	(48, 65, 2, 2, 3, NULL, 0),
-	(49, 65, 2, 3, 3, NULL, 0);
+	(68, 86, 192, 4, 2, NULL, 0);
 
 -- Дамп структуры для таблица ordo_dev.educational_work_form
-DROP TABLE IF EXISTS `educational_work_form`;
 CREATE TABLE IF NOT EXISTS `educational_work_form` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.educational_work_form: ~15 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.educational_work_form: ~14 rows (приблизительно)
 INSERT INTO `educational_work_form` (`id`, `name`) VALUES
-	(1, '-'),
 	(2, 'Лекции'),
 	(3, 'Сем./практ.'),
 	(4, 'Рук. КР и ВКР(б)'),
@@ -128,7 +406,6 @@ INSERT INTO `educational_work_form` (`id`, `name`) VALUES
 	(15, 'Руков. кафедрой');
 
 -- Дамп структуры для таблица ordo_dev.educational_work_hours
-DROP TABLE IF EXISTS `educational_work_hours`;
 CREATE TABLE IF NOT EXISTS `educational_work_hours` (
   `id` int NOT NULL AUTO_INCREMENT,
   `week` int DEFAULT NULL,
@@ -138,45 +415,22 @@ CREATE TABLE IF NOT EXISTS `educational_work_hours` (
   PRIMARY KEY (`id`),
   KEY `FK_educational_work_hours_educational_work` (`plan_work_id`),
   CONSTRAINT `FK_educational_work_hours_educational_work` FOREIGN KEY (`plan_work_id`) REFERENCES `educational_work` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=688 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.educational_work_hours: ~29 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.educational_work_hours: ~10 rows (приблизительно)
 INSERT INTO `educational_work_hours` (`id`, `week`, `value`, `type`, `plan_work_id`) VALUES
-	(211, 1, 1, 1, 45),
-	(212, 2, 2, 2, 45),
-	(213, 3, 3, 1, 45),
-	(214, 4, 4, 2, 45),
-	(215, 5, 5, 1, 45),
-	(216, 6, 6, 2, 45),
-	(217, 7, 7, 1, 45),
-	(218, 8, 8, 2, 45),
-	(219, 9, 9, 1, 45),
-	(220, 10, 10, 2, 45),
-	(221, 11, 11, 1, 45),
-	(222, 12, 12, 2, 45),
-	(223, 13, 13, 1, 45),
-	(224, 14, 14, 2, 45),
-	(225, 15, 15, 1, 45),
-	(226, 16, 16, 2, 45),
-	(227, 17, 17, 1, 45),
-	(228, 18, 18, 2, 45),
-	(229, 19, 19, 1, 45),
-	(230, 20, 20, 2, 45),
-	(231, 21, 21, 1, 45),
-	(240, 1, 2, 2, 45),
-	(241, 3, 1, 1, 48),
-	(242, 3, 12, 1, 48),
-	(243, 2, 1, 1, 45),
-	(244, 6, 1, 1, 45),
-	(245, 5, 1, 2, 45),
-	(246, 3, 1, 2, 45),
-	(247, 4, 1, 1, 45),
-	(248, 8, 3, 1, 45),
-	(249, 10, 1, 1, 45),
-	(250, 1, 1, 1, 48);
+	(678, 1, 8, 1, 68),
+	(679, 1, 85, 1, 68),
+	(680, 1, 850, 1, 68),
+	(681, 2, 8, 1, 68),
+	(682, 2, 85, 1, 68),
+	(683, 2, 850, 1, 68),
+	(684, 2, 0, 1, 68),
+	(685, 19, 1, 1, 68),
+	(686, 23, 1, 1, 68),
+	(687, 14, 1, 2, 68);
 
 -- Дамп структуры для таблица ordo_dev.educational_years
-DROP TABLE IF EXISTS `educational_years`;
 CREATE TABLE IF NOT EXISTS `educational_years` (
   `id` int NOT NULL AUTO_INCREMENT,
   `begin_year` varchar(255) NOT NULL,
@@ -186,37 +440,36 @@ CREATE TABLE IF NOT EXISTS `educational_years` (
   UNIQUE KEY `educationalyears_end_year` (`end_year`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.educational_years: ~2 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.educational_years: ~1 rows (приблизительно)
 INSERT INTO `educational_years` (`id`, `begin_year`, `end_year`) VALUES
-	(1, '2024', '2025'),
-	(2, '2023', '2024');
+	(1, '2024', '2025');
 
 -- Дамп структуры для таблица ordo_dev.generic_work
-DROP TABLE IF EXISTS `generic_work`;
 CREATE TABLE IF NOT EXISTS `generic_work` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `work_type` int NOT NULL,
-  `assigned_user_id` int DEFAULT NULL,
-  `assigned_date` date DEFAULT NULL,
-  `first_complite_user_id` int DEFAULT NULL,
-  `first_complite_date` date DEFAULT NULL,
-  `second_complite_user_id` int DEFAULT NULL,
-  `second_complite_date` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_generic_work_teacher_plan_works_type` (`work_type`),
-  KEY `FK_generic_work_user` (`assigned_user_id`),
-  KEY `FK_generic_work_user_2` (`first_complite_user_id`),
-  KEY `FK_generic_work_user_3` (`second_complite_user_id`),
-  CONSTRAINT `FK_generic_work_teacher_plan_works_type` FOREIGN KEY (`work_type`) REFERENCES `teacher_plan_works_type` (`id`),
-  CONSTRAINT `FK_generic_work_user` FOREIGN KEY (`assigned_user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_generic_work_user_2` FOREIGN KEY (`first_complite_user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_generic_work_user_3` FOREIGN KEY (`second_complite_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `teacher_plan_id` int DEFAULT NULL,
+  `work_form_id` int DEFAULT NULL,
+  `semester` int NOT NULL,
+  `complite` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `order_place` int DEFAULT NULL,
+  `plan_hours` int DEFAULT NULL,
+  `fact_hours` int DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `FK_generic_work_work_form` (`work_form_id`) USING BTREE,
+  KEY `FK_generic_work_teacher_plan` (`teacher_plan_id`) USING BTREE,
+  CONSTRAINT `FK_generic_work_teacher_plan` FOREIGN KEY (`teacher_plan_id`) REFERENCES `teacher_plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_generic_work_work_form` FOREIGN KEY (`work_form_id`) REFERENCES `generic_work_form` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.generic_work: ~0 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.generic_work: ~8 rows (приблизительно)
+INSERT INTO `generic_work` (`id`, `teacher_plan_id`, `work_form_id`, `semester`, `complite`, `order_place`, `plan_hours`, `fact_hours`) VALUES
+	(16, 86, 21, 1, '', 0, 1, 0),
+	(18, 86, 9, 2, NULL, 0, 5, 0),
+	(20, 86, 29, 2, NULL, 0, 7, 0),
+	(22, 86, 3, 1, '', 0, 3, 0),
+	(25, 86, 12, 2, NULL, 0, 9, 0);
 
 -- Дамп структуры для таблица ordo_dev.generic_work_form
-DROP TABLE IF EXISTS `generic_work_form`;
 CREATE TABLE IF NOT EXISTS `generic_work_form` (
   `id` int NOT NULL AUTO_INCREMENT,
   `work_type` int NOT NULL DEFAULT '0',
@@ -271,23 +524,64 @@ INSERT INTO `generic_work_form` (`id`, `work_type`, `chapter`, `name`, `max_year
 	(38, 2, '2.11.14', 'Организация учебной и учебно-методической работы на кафедре', 50, NULL),
 	(39, 2, '2.11.15', 'Заполнение контрольных листов текущей аттестации', 2, NULL);
 
+-- Дамп структуры для таблица ordo_dev.generic_work_old
+CREATE TABLE IF NOT EXISTS `generic_work_old` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `work_type` int NOT NULL,
+  `assigned_user_id` int DEFAULT NULL,
+  `assigned_date` date DEFAULT NULL,
+  `first_complite_user_id` int DEFAULT NULL,
+  `first_complite_date` date DEFAULT NULL,
+  `second_complite_user_id` int DEFAULT NULL,
+  `second_complite_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_generic_work_teacher_plan_works_type` (`work_type`),
+  KEY `FK_generic_work_user` (`assigned_user_id`),
+  KEY `FK_generic_work_user_2` (`first_complite_user_id`),
+  KEY `FK_generic_work_user_3` (`second_complite_user_id`),
+  CONSTRAINT `FK_generic_work_teacher_plan_works_type` FOREIGN KEY (`work_type`) REFERENCES `teacher_plan_works_type` (`id`),
+  CONSTRAINT `FK_generic_work_user` FOREIGN KEY (`assigned_user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_generic_work_user_2` FOREIGN KEY (`first_complite_user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_generic_work_user_3` FOREIGN KEY (`second_complite_user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Удалить';
+
+-- Дамп данных таблицы ordo_dev.generic_work_old: ~0 rows (приблизительно)
+
+-- Дамп структуры для таблица ordo_dev.group
+CREATE TABLE IF NOT EXISTS `group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Дамп данных таблицы ordo_dev.group: ~2 rows (приблизительно)
+INSERT INTO `group` (`id`, `name`) VALUES
+	(2, '101-А'),
+	(3, '101-СП');
+
 -- Дамп структуры для таблица ordo_dev.post
-DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `post_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.post: ~3 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.post: ~11 rows (приблизительно)
 INSERT INTO `post` (`id`, `name`) VALUES
-	(2, 'Доцент'),
-	(1, 'Преподаватель'),
-	(3, 'Профессор');
+	(3, 'ассистент'),
+	(9, 'декан'),
+	(6, 'доцент'),
+	(8, 'завкафедрой'),
+	(1, 'лаборант'),
+	(4, 'преподаватель'),
+	(10, 'проректор'),
+	(7, 'профессор'),
+	(11, 'ректор'),
+	(2, 'старший лаборант'),
+	(5, 'старший преподаватель');
 
 -- Дамп структуры для таблица ordo_dev.rang
-DROP TABLE IF EXISTS `rang`;
 CREATE TABLE IF NOT EXISTS `rang` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -301,7 +595,6 @@ INSERT INTO `rang` (`id`, `name`) VALUES
 	(1, 'К.п.н.');
 
 -- Дамп структуры для таблица ordo_dev.staff
-DROP TABLE IF EXISTS `staff`;
 CREATE TABLE IF NOT EXISTS `staff` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -314,15 +607,13 @@ CREATE TABLE IF NOT EXISTS `staff` (
   CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `staff_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`),
   CONSTRAINT `staff_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Дамп данных таблицы ordo_dev.staff: ~2 rows (приблизительно)
+-- Дамп данных таблицы ordo_dev.staff: ~1 rows (приблизительно)
 INSERT INTO `staff` (`id`, `user_id`, `department_id`, `post_id`) VALUES
-	(22, 27, 1, 1),
-	(23, 27, 3, 2);
+	(25, 1, 3, 3);
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan
-DROP TABLE IF EXISTS `teacher_plan`;
 CREATE TABLE IF NOT EXISTS `teacher_plan` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -336,6 +627,7 @@ CREATE TABLE IF NOT EXISTS `teacher_plan` (
   `department_boss_sign_id` int DEFAULT NULL,
   `protocol_number` varchar(255) DEFAULT NULL,
   `protocol_date` date DEFAULT NULL,
+  `comments` text,
   PRIMARY KEY (`id`),
   KEY `teacherplan_user_id` (`user_id`),
   KEY `teacherplan_department_id` (`department_id`),
@@ -351,14 +643,13 @@ CREATE TABLE IF NOT EXISTS `teacher_plan` (
   CONSTRAINT `teacher_plan_ibfk_5` FOREIGN KEY (`status_id`) REFERENCES `teacher_plan_status` (`id`),
   CONSTRAINT `teacher_plan_ibfk_6` FOREIGN KEY (`approved_user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `teacher_plan_ibfk_7` FOREIGN KEY (`department_boss_sign_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы ordo_dev.teacher_plan: ~1 rows (приблизительно)
-INSERT INTO `teacher_plan` (`id`, `user_id`, `department_id`, `post_id`, `year_id`, `rate`, `status_id`, `approved_user_id`, `approved_date`, `department_boss_sign_id`, `protocol_number`, `protocol_date`) VALUES
-	(65, 27, 3, 2, 1, 0.50, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `teacher_plan` (`id`, `user_id`, `department_id`, `post_id`, `year_id`, `rate`, `status_id`, `approved_user_id`, `approved_date`, `department_boss_sign_id`, `protocol_number`, `protocol_date`, `comments`) VALUES
+	(86, 1, 3, 3, 1, 1.00, 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_status
-DROP TABLE IF EXISTS `teacher_plan_status`;
 CREATE TABLE IF NOT EXISTS `teacher_plan_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -373,7 +664,6 @@ INSERT INTO `teacher_plan_status` (`id`, `name`) VALUES
 	(3, 'Утвержден');
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_total_hours
-DROP TABLE IF EXISTS `teacher_plan_total_hours`;
 CREATE TABLE IF NOT EXISTS `teacher_plan_total_hours` (
   `id` int NOT NULL AUTO_INCREMENT,
   `teacher_plan_id` int NOT NULL,
@@ -386,12 +676,11 @@ CREATE TABLE IF NOT EXISTS `teacher_plan_total_hours` (
   KEY `teacherplantotalhours_work_type_id` (`work_type_id`),
   CONSTRAINT `FK_teacher_plan_total_hours_teacher_plan` FOREIGN KEY (`teacher_plan_id`) REFERENCES `teacher_plan` (`id`),
   CONSTRAINT `teacher_plan_total_hours_ibfk_2` FOREIGN KEY (`work_type_id`) REFERENCES `teacher_plan_works_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=187 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Удалить\r\n';
 
 -- Дамп данных таблицы ordo_dev.teacher_plan_total_hours: ~0 rows (приблизительно)
 
 -- Дамп структуры для таблица ordo_dev.teacher_plan_works_type
-DROP TABLE IF EXISTS `teacher_plan_works_type`;
 CREATE TABLE IF NOT EXISTS `teacher_plan_works_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -410,7 +699,6 @@ INSERT INTO `teacher_plan_works_type` (`id`, `name`, `order`, `enable`) VALUES
 	(5, 'Другие виды работ', 5, 1);
 
 -- Дамп структуры для таблица ordo_dev.user
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `login` varchar(255) NOT NULL,
@@ -423,11 +711,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `user_login` (`login`),
   KEY `user_rang_id` (`rang_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`rang_id`) REFERENCES `rang` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Дамп данных таблицы ordo_dev.user: ~0 rows (приблизительно)
 INSERT INTO `user` (`id`, `login`, `password`, `surname`, `name`, `middle_name`, `rang_id`) VALUES
-	(27, 'teacher', 'deb1536f480475f7d593219aa1afd74c', 'Иванов', 'Перт', 'Сергеевич', 1);
+	(1, 'teacher', 'deb1536f480475f7d593219aa1afd74c', 'Ф', 'И', 'О', NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

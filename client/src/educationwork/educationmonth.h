@@ -25,6 +25,7 @@ public:
     void setValue(EducationalHour *hour);
     bool haveCurrentWeek(int week);
     void clear();
+    void setNewWorkId(int id);
 
     Month::Months month() const;
 

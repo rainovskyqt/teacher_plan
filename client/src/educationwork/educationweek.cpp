@@ -57,6 +57,12 @@ void EducationWeek::clear()
     on_line_fact_textEdited(0);
 }
 
+void EducationWeek::setNewWorkId(int id)
+{
+    m_planHour->setPlaneWorkId(id);
+    m_factHour->setPlaneWorkId(id);
+}
+
 void EducationWeek::on_line_plan_textEdited(const QString &arg1)
 {
     m_planHour->setValue(arg1.toInt());

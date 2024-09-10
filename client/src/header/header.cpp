@@ -148,7 +148,7 @@ QString Header::currentDepartment()
 
 QString Header::currentYear()
 {
-    ui->cb_years->currentText();
+    return ui->cb_years->currentText();
 }
 
 void Header::setPlanData(TeacherPlan *plan)

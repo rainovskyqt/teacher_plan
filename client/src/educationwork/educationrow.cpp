@@ -18,7 +18,7 @@
 EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EducationRow)
-  ,m_work(nullptr)
+    ,m_work(nullptr)
 {
     readySave = false;
     ui->setupUi(this);
@@ -75,9 +75,9 @@ void EducationRow::setData(EducationalWork *work)
 QString EducationRow::toString()
 {
     return QString("%1(%2)").arg(
-                ui->cb_discipline->currentText(),
-                ui->cb_workForm->currentText()
-                );
+        ui->cb_discipline->currentText(),
+        ui->cb_workForm->currentText()
+        );
 }
 
 void EducationRow::countHours(EducationalHour::HourType type)
@@ -141,18 +141,27 @@ void EducationRow::loadDictionaries()
 void EducationRow::makeConnections()
 {
     connect(ui->cb_discipline, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
+        int oldId = m_work->baseId();
         m_work->setDisciplineId(ui->cb_discipline->currentData().toInt());
         Database::get()->saveWork(m_work);
+        if(oldId != m_work->baseId())
+            setNewWorkId(m_work->baseId());
     });
 
     connect(ui->cb_course, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
+        int oldId = m_work->baseId();
         m_work->setCourseId(ui->cb_course->currentData().toInt());
         Database::get()->saveWork(m_work);
+        if(oldId != m_work->baseId())
+            setNewWorkId(m_work->baseId());
     });
 
     connect(ui->cb_workForm, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
+        int oldId = m_work->baseId();
         m_work->setWorkFormId(ui->cb_workForm->currentData().toInt());
         Database::get()->saveWork(m_work);
+        if(oldId != m_work->baseId())
+            setNewWorkId(m_work->baseId());
     });
 
     connect(ui->text_comments, &QPlainTextEdit::textChanged, this, [&]{
@@ -168,4 +177,13 @@ void EducationRow::saveHour(EducationalHour *hour)
 {
     if(readySave)
         Database::get()->saveEdcationalHour(hour);
+}
+
+void EducationRow::setNewWorkId(int id)
+{
+    auto month = this->findChildren<EducationMonth*>();
+
+    for(auto m: month){
+        m->setNewWorkId(id);
+    }
 }

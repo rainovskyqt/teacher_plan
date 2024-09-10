@@ -6,10 +6,10 @@
 #include <QPainter>
 #include <misc/month.h>
 
-#define FIRST_SEMESTER_ROW 4
+#define FIRST_SEMESTER_ROW 5
 #define SECOND_SEMESTER_ROW 11
 #define TOTAL_ROW 12
-#define TOTAL_COLUMN 13
+#define TOTAL_COLUMN 14
 
 void CustomHeader::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const {
     painter->save();
@@ -104,8 +104,8 @@ void EducationalWorkComplite::setHeader()
 void EducationalWorkComplite::setColumns()
 {
     auto workTypes = Database::get()->getDictionary(Database::WorkForm);
-    for(int column = 0; column < workTypes.count() - 1; ++column){
-        addColumn(workTypes.at(column + 1).name(), workTypes.at(column + 1).id());
+    for(int column = 0; column < workTypes.count(); ++column){
+        addColumn(workTypes.at(column).name(), workTypes.at(column).id());
     }
     ui->tw_hours->resizeRowsToContents();
 
@@ -125,10 +125,12 @@ void EducationalWorkComplite::setRows()
 {
     for(int i = Month::September; i != Month::July; ++i){        //Старт с 9 месяца, так проще
         if(i == Month::Other){
-            addRow("Итого за\nсеместр");
             i = Month::January;                //Если перешли за декабрь, ставим январь
         }
         addRow(Month().name((Month::Months)i), i);
+        if(i == Month::January){
+            addRow("Итого за\nсеместр");
+        }
     }
     addRow("Итого за\nсеместр");
     addRow("ВСЕГО:");
@@ -145,18 +147,18 @@ void EducationalWorkComplite::addRow(QString text, int id)
 
 void EducationalWorkComplite::fillTable()
 {
-    for(int col = 0; col <= ui->tw_hours->columnCount(); ++col){
-        for(int row = 0; row <= ui->tw_hours->rowCount(); ++row){
+    for(int col = 0; col <= TOTAL_COLUMN; ++col){
+        for(int row = 0; row <= TOTAL_ROW; ++row){
             auto item = new QTableWidgetItem("");
             item->setTextAlignment(Qt::AlignCenter);
-            if((col == TOTAL_COLUMN) || (row == FIRST_SEMESTER_ROW) || (row == SECOND_SEMESTER_ROW)){
-                item->setBackground(Qt::lightGray);
-            } if (row == TOTAL_ROW) {
-                item->setBackground(Qt::gray);
-            } if ((col == TOTAL_COLUMN && row == FIRST_SEMESTER_ROW) ||
-                (col == TOTAL_COLUMN && row == SECOND_SEMESTER_ROW) ||
-                (col == TOTAL_COLUMN && row == TOTAL_ROW))
+
+            if (col == TOTAL_COLUMN && (row == FIRST_SEMESTER_ROW || row == SECOND_SEMESTER_ROW || row == TOTAL_ROW)){
                 item->setBackground(Qt::darkGray);
+            } else if(col == TOTAL_COLUMN || row == FIRST_SEMESTER_ROW || row == SECOND_SEMESTER_ROW){
+                item->setBackground(Qt::lightGray);
+            } else if (row == TOTAL_ROW) {
+                item->setBackground(Qt::gray);
+            }
             ui->tw_hours->setItem(row, col, item);
         }
     }
@@ -244,7 +246,7 @@ void EducationalWorkComplite::checkTotalTime()
 
 void EducationalWorkComplite::on_tw_hours_cellChanged(int row, int column)
 {
-    if(column == TOTAL_COLUMN)
+    if(column == TOTAL_COLUMN || (column == TOTAL_COLUMN && row == TOTAL_ROW))
         return;
 
     setColunmCount(column);

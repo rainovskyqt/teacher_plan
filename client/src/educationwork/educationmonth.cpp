@@ -78,6 +78,13 @@ void EducationMonth::clear()
         w->clear();
 }
 
+void EducationMonth::setNewWorkId(int id)
+{
+    auto weeks = this->findChildren<EducationWeek*>();
+    for(auto w: weeks)
+        w->setNewWorkId(id);
+}
+
 Month::Months EducationMonth::month() const
 {
     return m_month;

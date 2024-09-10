@@ -20,10 +20,12 @@ public:
 
     int baseId() const;
     int planeWorkId() const;
+    void setPlaneWorkId(int newPlaneWorkId);
     int week() const;
     int value() const;
     void setValue(int newValue);
     HourType type() const;
+
 
 signals:
 

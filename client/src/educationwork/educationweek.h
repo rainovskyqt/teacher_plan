@@ -22,6 +22,7 @@ public:
     int getTime(EducationalHour::HourType type);
     void setTime(EducationalHour *hour);
     void clear();
+    void setNewWorkId(int id);
 
 signals:
     void hoursChanged(EducationalHour *hour);

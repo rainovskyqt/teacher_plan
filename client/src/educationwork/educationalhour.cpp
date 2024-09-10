@@ -49,3 +49,8 @@ EducationalHour::HourType EducationalHour::type() const
 {
     return m_type;
 }
+
+void EducationalHour::setPlaneWorkId(int newPlaneWorkId)
+{
+    m_planeWorkId = newPlaneWorkId;
+}

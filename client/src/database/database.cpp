@@ -26,7 +26,8 @@ bool Database::init(QString host, int port)
     QSqlDatabase base = QSqlDatabase::addDatabase("QMYSQL");
     base.setHostName(host);
     base.setPort(port);
-    base.setDatabaseName("ordo_dev");
+    // base.setDatabaseName("corusant");
+        base.setDatabaseName("ordo_dev");
     base.setUserName("ordo");
     base.setPassword("ordo7532159");
     if(!base.open()){
@@ -236,18 +237,17 @@ QVector<GenericWork *> Database::genericWork(int planId, WorkType type)
     return works;
 }
 
-void Database::saveWork(TeacherWork *work)
+int Database::saveWork(TeacherWork *work)
 {
     WorkType type = work->workType();
     switch (type) {
     case Educational:
-        saveEducationalWork(work);
-        break;
+        return saveEducationalWork(work);
     case MethodicWork:
     case ResearchingWork:
     case SportWork:
     case OtherWork:
-        saveGenericWork(work);
+        return saveGenericWork(work);
     }
 }
 
@@ -366,7 +366,7 @@ QSqlQuery* Database::executeQuery(QString queryString, Values vals)
     return query;
 }
 
-void Database::saveEducationalWork(TeacherWork *work)
+int Database::saveEducationalWork(TeacherWork *work)
 {
     auto w = dynamic_cast<EducationalWork*>(work);
     Values vals;
@@ -390,14 +390,16 @@ void Database::saveEducationalWork(TeacherWork *work)
                            ":comments, :order_place) ";
     if(w->baseId()){
         delete executeQuery(updateString, vals);
+        return w->baseId();
     } else {
         auto answer = executeQuery(insertString, vals);
         answer->next();
         work->setBaseId(answer->lastInsertId().toInt());
+        return answer->lastInsertId().toInt();
     }
 }
 
-void Database::saveGenericWork(TeacherWork *work)
+int Database::saveGenericWork(TeacherWork *work)
 {
     auto w = dynamic_cast<GenericWork*>(work);
     Values vals;
@@ -421,10 +423,12 @@ void Database::saveGenericWork(TeacherWork *work)
                            ":plan_hours, :fact_hours, :order_place) ";
     if(w->baseId()){
         delete executeQuery(updateString, vals);
+        return w->baseId();
     } else {
         auto answer = executeQuery(insertString, vals);
         answer->next();
         work->setBaseId(answer->lastInsertId().toInt());
+        return answer->lastInsertId().toInt();
     }
 }
 

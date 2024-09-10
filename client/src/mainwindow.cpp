@@ -47,8 +47,10 @@ void MainWindow::setPlanData(TeacherPlan *plan)
 {
     m_currentPlan = plan;
     if(!plan->baseId()){
+        ui->stackedWidget->setCurrentIndex(0);
         ui->label->setText(tr("Индивидуальный план не создан"));
     } else {
+        ui->stackedWidget->setCurrentIndex(1);
         ui->tab_totalTime->setPlanData(plan);
         ui->tab_educationWork->setPlanData(plan);
         ui->tab_metod->setPlanData(plan);
