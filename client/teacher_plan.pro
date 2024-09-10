@@ -37,6 +37,7 @@ SOURCES += \
     src/login/login.cpp \
     src/login/user.cpp \
     src/login/userform.cpp \
+    src/misc/combobox.cpp \
     src/misc/month.cpp \
     src/settings.cpp \
     src/header/header.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     src/login/login.h \
     src/login/user.h \
     src/login/userform.h \
+    src/misc/combobox.h \
     src/misc/month.h \
     src/settings.h \
     src/header/header.h \

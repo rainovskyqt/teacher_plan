@@ -20,9 +20,6 @@ public:
     QString complite() const;
     void setComplite(const QString &newComplite);
 
-    int orderplace() const;
-    void setOrderplace(int newOrderplace);
-
     int planHours() const;
     void setPlanHours(int newPlanHours);
 
@@ -36,7 +33,6 @@ private:
     int m_workFormId;
     int m_semester;
     QString m_complite;
-    int m_orderplace;
     int m_planHours;
     int m_factHours;
 };

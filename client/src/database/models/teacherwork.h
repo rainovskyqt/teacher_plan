@@ -17,11 +17,16 @@ public:
 
     int planId() const;
 
+    void setOrderPlace(int newOrderPlace);
+
+    int orderPlace() const;
+
 signals:
 
 protected:
     int m_baseId;
     int m_planId;
+    int m_orderPlace;
     WorkType m_workType;
 };
 

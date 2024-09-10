@@ -27,7 +27,7 @@ bool Database::init(QString host, int port)
     base.setHostName(host);
     base.setPort(port);
     // base.setDatabaseName("corusant");
-        base.setDatabaseName("ordo_dev");
+        base.setDatabaseName("corusant");
     base.setUserName("ordo");
     base.setPassword("ordo7532159");
     if(!base.open()){
@@ -228,7 +228,7 @@ QVector<GenericWork *> Database::genericWork(int planId, WorkType type)
         work->setWorkFormId(query->value("work_form_id").toInt());
         work->setSemester(query->value("semester").toInt());
         work->setComplite(query->value("complite").toString());
-        work->setOrderplace(query->value("order_place").toInt());
+        work->setOrderPlace(query->value("order_place").toInt());
         work->setPlanHours(query->value("plan_hours").toInt());
         work->setFactHours(query->value("fact_hours").toInt());
         works.append(work);
@@ -376,7 +376,7 @@ int Database::saveEducationalWork(TeacherWork *work)
     vals.insert(":work_form_id", w->workFormId());
     vals.insert(":course_id", w->courseId());
     vals.insert(":comments", w->comments());
-    vals.insert(":order_place", 0);
+    vals.insert(":order_place", w->orderPlace());
 
     QString updateString = "UPDATE educational_work "
                            "SET teacher_plan_id = :teacher_plan_id, discipline_id = :discipline_id, "
@@ -410,7 +410,7 @@ int Database::saveGenericWork(TeacherWork *work)
     vals.insert(":complite", w->complite());
     vals.insert(":plan_hours", w->planHours());
     vals.insert(":fact_hours", w->factHours());
-    vals.insert(":order_place", w->orderplace());
+    vals.insert(":order_place", w->orderPlace());
 
     QString updateString = "UPDATE generic_work "
                            "SET work_form_id = :work_form_id, semester = :semester, "

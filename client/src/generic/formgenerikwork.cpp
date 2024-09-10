@@ -51,6 +51,9 @@ void FormGenerikWork::addRow(GenericWork *work)
 {
     auto list = work->semester() == 1 ? ui->lw_first : ui->lw_second;
     auto item = new QListWidgetItem(list);
+
+    work->setOrderPlace(list->count());
+
     auto row = new GenerikWorkRow(work);
 
     item->setSizeHint(row->sizeHint());

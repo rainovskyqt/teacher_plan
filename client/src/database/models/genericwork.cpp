@@ -7,7 +7,6 @@ GenericWork::GenericWork(WorkType work, int planId, QObject *parent)
     m_workFormId = 0;
     m_semester = 0;
     m_complite = QString();
-    m_orderplace = 0;
     m_planHours = 0;
     m_factHours = 0;
 }
@@ -35,16 +34,6 @@ QString GenericWork::complite() const
 void GenericWork::setComplite(const QString &newComplite)
 {
     m_complite = newComplite;
-}
-
-int GenericWork::orderplace() const
-{
-    return m_orderplace;
-}
-
-void GenericWork::setOrderplace(int newOrderplace)
-{
-    m_orderplace = newOrderplace;
 }
 
 int GenericWork::planHours() const

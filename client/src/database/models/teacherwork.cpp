@@ -26,3 +26,13 @@ int TeacherWork::planId() const
 {
     return m_planId;
 }
+
+void TeacherWork::setOrderPlace(int newOrderPlace)
+{
+    m_orderPlace = newOrderPlace;
+}
+
+int TeacherWork::orderPlace() const
+{
+    return m_orderPlace;
+}

@@ -51,6 +51,9 @@ void FormEducationWork::fillTable()
 void FormEducationWork::addRow(EducationalWork *work)
 {
     auto item = new QListWidgetItem(ui->lw_educationWork);
+
+    work->setOrderPlace(ui->lw_educationWork->count());
+
     auto row = new EducationRow(ui->lw_educationWork->count(), work);
     item->setSizeHint(row->sizeHint());
     ui->lw_educationWork->setItemWidget(item, row);
