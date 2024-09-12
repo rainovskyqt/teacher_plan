@@ -39,6 +39,16 @@ void EducationalWork::setCourseId(int newCourseId)
     m_courseId = newCourseId;
 }
 
+int EducationalWork::groupCount() const
+{
+    return m_groupCount;
+}
+
+void EducationalWork::setGroupCount(int newGroupCount)
+{
+    m_groupCount = newGroupCount;
+}
+
 const QString &EducationalWork::comments() const
 {
     return m_comments;

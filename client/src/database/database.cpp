@@ -187,7 +187,7 @@ QVector<EducationalWork*> Database::educationWork(int planId)
 {
     QVector<EducationalWork*> works;
 
-    QString queryString = "SELECT id, discipline_id, work_form_id, course_id, comments, order_place "
+    QString queryString = "SELECT id, discipline_id, work_form_id, course_id, group_count, comments, order_place "
                           "FROM educational_work "
                           "WHERE teacher_plan_id = :teacher_plan_id "
                           "ORDER BY order_place";
@@ -201,7 +201,9 @@ QVector<EducationalWork*> Database::educationWork(int planId)
         work->setDisciplineId(query->value("discipline_id").toInt());
         work->setWorkFormId(query->value("work_form_id").toInt());
         work->setCourseId(query->value("course_id").toInt());
+        work->setGroupCount(query->value("group_count").toInt());
         work->setComments(query->value("comments").toString());
+        work->setOrderPlace(query->value("order_place").toInt());
         works.append(work);
     }
     delete query;
@@ -375,12 +377,13 @@ int Database::saveEducationalWork(TeacherWork *work)
     vals.insert(":discipline_id", w->disciplineId());
     vals.insert(":work_form_id", w->workFormId());
     vals.insert(":course_id", w->courseId());
+    vals.insert(":group_count", w->groupCount());
     vals.insert(":comments", w->comments());
     vals.insert(":order_place", w->orderPlace());
 
     QString updateString = "UPDATE educational_work "
                            "SET teacher_plan_id = :teacher_plan_id, discipline_id = :discipline_id, "
-                           "work_form_id = :work_form_id, course_id = :course_id, "
+                           "work_form_id = :work_form_id, course_id = :course_id, group_count = :group_count, "
                            "comments = :comments, order_place = :order_place "
                            "WHERE id = :id";
 

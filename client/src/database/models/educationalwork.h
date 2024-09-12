@@ -16,8 +16,11 @@ public:
     void setWorkFormId(int newWorkFormId);
     int courseId() const;
     void setCourseId(int newCourseId);
+    int groupCount() const;
+    void setGroupCount(int newGroupCount);
     const QString &comments() const;
     void setComments(const QString &newComments);
+
 
 signals:
 
@@ -25,6 +28,7 @@ private:
     int m_disciplineId;
     int m_workFormId;
     int m_courseId;
+    int m_groupCount;
     QString m_comments;
 };
 

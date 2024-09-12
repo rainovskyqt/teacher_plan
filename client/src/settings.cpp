@@ -130,6 +130,7 @@ Settings Settings::get()
 QString Settings::dbHost()
 {
     return get<QString>("dbHost", "127.0.0.1");
+    // return get<QString>("dbHost", "83.167.69.146");
 }
 
 void Settings::setDbHost(QString host)
@@ -140,6 +141,7 @@ void Settings::setDbHost(QString host)
 int Settings::dbPort()
 {
     return get<int>("dbPort", 3306);
+    // return get<int>("dbPort", 32138);
 }
 
 void Settings::setDbPort(int port)

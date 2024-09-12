@@ -70,6 +70,7 @@ void EducationRow::setData(EducationalWork *work)
     ui->cb_discipline->setCurrentIndex(ui->cb_discipline->findData(m_work->disciplineId()));
     ui->cb_course->setCurrentIndex(ui->cb_course->findData(m_work->courseId()));
     ui->cb_workForm->setCurrentIndex(ui->cb_workForm->findData(m_work->workFormId()));
+    ui->sb_groupCount->setValue(work->groupCount());
 }
 
 QString EducationRow::toString()
@@ -162,6 +163,11 @@ void EducationRow::makeConnections()
         Database::get()->saveWork(m_work);
         if(oldId != m_work->baseId())
             setNewWorkId(m_work->baseId());
+    });
+
+    connect(ui->sb_groupCount, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int val){
+        m_work->setGroupCount(val);
+        Database::get()->saveWork(m_work);
     });
 
     connect(ui->text_comments, &QPlainTextEdit::textChanged, this, [&]{
