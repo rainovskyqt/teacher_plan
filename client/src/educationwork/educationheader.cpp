@@ -5,6 +5,7 @@
 #include "QScrollBar"
 #include "educationmonthheader.h"
 #include "settings.h"
+#include <QDebug>
 
 EducationHeader::EducationHeader(QWidget *parent) :
     QWidget(parent),

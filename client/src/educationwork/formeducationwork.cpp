@@ -6,6 +6,7 @@
 #include "database/database.h"
 #include <QScrollBar>
 #include <QMessageBox>
+#include <QListWidgetItem>
 
 FormEducationWork::FormEducationWork(QWidget *parent)
     : QWidget(parent)
@@ -28,10 +29,10 @@ void FormEducationWork::setPlanData(TeacherPlan *plan)
 
 void FormEducationWork::setTable()
 {
-    connect(ui->lw_educationWork->horizontalScrollBar(), &QScrollBar::valueChanged,
-            ui->w_edHeader, &EducationHeader::setPosition);
-    connect(ui->lw_educationWork->horizontalScrollBar(), &QScrollBar::valueChanged,
-            ui->w_footer, &EducationalFooter::setPosition);
+    connect(ui->scrolbar, &QScrollBar::valueChanged, ui->w_edHeader, &EducationHeader::setPosition);
+    connect(ui->scrolbar, &QScrollBar::valueChanged, ui->w_footer, &EducationalFooter::setPosition);
+
+    // connect(ui->scrolbar, &QScrollBar::valueChanged, ui->w_edHeader, &EducationHeader::setScrolBarValue);
 
     connect(ui->w_footer, &EducationalFooter::firstPlaneChanged, this, &FormEducationWork::firstPlaneChanged);
     connect(ui->w_footer, &EducationalFooter::secondPlaneChanged, this, &FormEducationWork::secondPlaneChanged);
@@ -45,6 +46,10 @@ void FormEducationWork::fillTable()
     auto eWork = Database::get()->educationWork(m_plan->baseId());
     for(auto work: eWork){
         addRow(work);
+    }
+    auto timeAreaWidth = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(ui->lw_educationWork->item(0)));
+    if(timeAreaWidth){
+        ui->scrolbar->setMaximum(timeAreaWidth->timeAreaWidth());
     }
 }
 
@@ -66,6 +71,7 @@ void FormEducationWork::addRow(EducationalWork *work)
     });
 
     connect(row, &EducationRow::factValueChanged, this, &FormEducationWork::factValueChanged);
+    connect(ui->scrolbar, &QScrollBar::valueChanged, row, &EducationRow::setScrolBarValue);
 
     row->loadHours();           //Часы устанасливаются после подключения сигнала к футеру, что бы сработал посчет часов
 }

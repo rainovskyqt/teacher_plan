@@ -12,6 +12,7 @@
 
 #include <misc/month.h>
 #include <settings.h>
+#include <QScrollBar>
 
 // Для простановки часов используется QLineEdit что бы были пустые места, если буду QSpinBox, то будут 0, и форма будет перегружена
 
@@ -131,6 +132,19 @@ void EducationRow::loadHours()
     readySave = true;
 }
 
+int EducationRow::timeAreaWidth()
+{
+    return ui->scrollArea->horizontalScrollBar()->maximum() +
+           ui->text_comments->width() +
+           ui->lbl_firstPlan->width() +
+           ui->lbl_secondPlan->width() +
+           ui->lbl_yearPlan->width();
+}
+
+void EducationRow::setScrolBarValue(int val)
+{
+    ui->scrollArea->horizontalScrollBar()->setValue(val);
+}
 
 void EducationRow::loadDictionaries()
 {
