@@ -32,10 +32,12 @@ void FormEducationWork::setTable()
     connect(ui->scrolbar, &QScrollBar::valueChanged, ui->w_edHeader, &EducationHeader::setPosition);
     connect(ui->scrolbar, &QScrollBar::valueChanged, ui->w_footer, &EducationalFooter::setPosition);
 
-    // connect(ui->scrolbar, &QScrollBar::valueChanged, ui->w_edHeader, &EducationHeader::setScrolBarValue);
-
-    connect(ui->w_footer, &EducationalFooter::firstPlaneChanged, this, &FormEducationWork::firstPlaneChanged);
-    connect(ui->w_footer, &EducationalFooter::secondPlaneChanged, this, &FormEducationWork::secondPlaneChanged);
+    connect(ui->w_footer, &EducationalFooter::firstPlaneChanged, this, [&](int val){
+        emit planValueChanged(WorkType::Educational, PlanTime::FirstSemester, val);
+    });
+    connect(ui->w_footer, &EducationalFooter::secondPlaneChanged, this, [&](int val){
+        emit planValueChanged(WorkType::Educational, PlanTime::SecondSemestr, val);
+    });
 
 }
 

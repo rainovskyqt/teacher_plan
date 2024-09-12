@@ -29,6 +29,7 @@ public slots:
 signals:
     void deleteWork();
     void clear();
+    void planValueChanged(WorkType, PlanTime::Semester, int);
 
 private slots:
     void on_btn_add_clicked();

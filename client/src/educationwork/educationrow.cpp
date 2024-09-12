@@ -13,6 +13,7 @@
 #include <misc/month.h>
 #include <settings.h>
 #include <QScrollBar>
+#include "misc/wheelblocker.hpp"
 
 // Для простановки часов используется QLineEdit что бы были пустые места, если буду QSpinBox, то будут 0, и форма будет перегружена
 
@@ -28,6 +29,8 @@ EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
     setData(work);
     addMonths();
     makeConnections();
+
+    WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
 }
 
 EducationRow::~EducationRow()

@@ -38,7 +38,9 @@ SOURCES += \
     src/login/user.cpp \
     src/login/userform.cpp \
     src/misc/combobox.cpp \
+    src/misc/inplacefilter.cpp \
     src/misc/month.cpp \
+    src/misc/wheelblocker.cpp \
     src/settings.cpp \
     src/header/header.cpp \
     src/main.cpp \
@@ -74,7 +76,9 @@ HEADERS += \
     src/login/user.h \
     src/login/userform.h \
     src/misc/combobox.h \
+    src/misc/inplacefilter.hpp \
     src/misc/month.h \
+    src/misc/wheelblocker.hpp \
     src/settings.h \
     src/header/header.h \
     src/mainwindow.h \

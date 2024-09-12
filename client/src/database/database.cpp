@@ -265,7 +265,7 @@ void Database::deleteWork(TeacherWork *work)
     case ResearchingWork:
     case SportWork:
     case OtherWork:
-        table = "teacher_work";
+        table = "generic_work";
     }
     QString queryString = QString("DELETE FROM %1 WHERE id = :id").arg(table);
     Values vals;

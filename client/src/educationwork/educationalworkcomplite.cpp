@@ -89,7 +89,7 @@ void EducationalWorkComplite::setFactValue(Month::Months month, int workForm, in
     int column = getColumnNumber(workForm);
     int row = getRowNumber(month);
     if(row != -1 && column != -1)
-        ui->tw_hours->item(row, column)->setText(QString::number(value));
+        ui->tw_hours->item(row, column)->setText(value ? QString::number(value) : "");
 }
 
 void EducationalWorkComplite::setHeader()

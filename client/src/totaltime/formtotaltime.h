@@ -9,6 +9,7 @@
 #include <QLabel>
 
 #include <database/models/teacherplan.h>
+#include <database/models/datamodels.h>
 
 namespace Ui {
 class FormTotalTime;
@@ -25,8 +26,7 @@ public:
 public slots:
     void setPlanData(TeacherPlan *plan);
     void clearHours();
-    void setFirstSemester(int val);
-    void setSecondSemester(int val);
+    void setPlanTime(WorkType type, PlanTime::Semester semester, int val);
 
 signals:
     void rateChanged(double);

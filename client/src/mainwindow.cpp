@@ -16,10 +16,13 @@ MainWindow::MainWindow(User *user, QWidget *parent)
 
     connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
     connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
-
     connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
-    connect(ui->tab_educationWork, &FormEducationWork::firstPlaneChanged, ui->tab_totalTime, &FormTotalTime::setFirstSemester);
-    connect(ui->tab_educationWork, &FormEducationWork::secondPlaneChanged, ui->tab_totalTime, &FormTotalTime::setSecondSemester);
+
+    connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
     connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
 

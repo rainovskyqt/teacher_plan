@@ -20,7 +20,7 @@ public:
     };
 
     enum Semester{
-        FirstSemester,
+        FirstSemester = 1,
         SecondSemestr
     };
 

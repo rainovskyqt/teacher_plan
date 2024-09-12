@@ -24,7 +24,6 @@ public:
 
 private slots:
     void setPlanData(TeacherPlan *plan);
-
     void on_btn_create_clicked();
 
 private:

@@ -115,7 +115,7 @@
       </spacer>
      </item>
      <item>
-      <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0,0,0">
+      <layout class="QGridLayout" name="gl_totalTime" columnstretch="0,0,0,0,0,0,0">
        <property name="spacing">
         <number>0</number>
        </property>

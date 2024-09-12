@@ -33,14 +33,40 @@ void FormTotalTime::clearHours()
         h->setValue(0);
 }
 
-void FormTotalTime::setFirstSemester(int val)
+void FormTotalTime::setPlanTime(WorkType type, PlanTime::Semester semester, int val)
 {
-    ui->sb_eduFirstSemester->setValue(val);
-}
+    QString name = QString();
 
-void FormTotalTime::setSecondSemester(int val)
-{
-    ui->sb_eduSecondSemester->setValue(val);
+    switch (type) {
+    case WorkType::Educational:
+        name = "sb_edu";
+        break;
+    case WorkType::MethodicWork:
+        name = "sb_metod";
+        break;
+    case WorkType::ResearchingWork:
+        name = "sb_reseach";
+        break;
+    case WorkType::SportWork:
+        name = "sb_sport";
+        break;
+    case WorkType::OtherWork:
+        name = "sb_other";
+        break;
+    }
+
+    switch (semester) {
+    case PlanTime::FirstSemester:
+        name += "FirstSemester";
+        break;
+    case PlanTime::SecondSemestr:
+        name += "SecondSemester";
+        break;
+    }
+
+    auto time = this->findChild<QSpinBox*>(name);;
+    if(time)
+        time->setValue(val);
 }
 
 void FormTotalTime::setRate(double rate)
@@ -82,12 +108,12 @@ void FormTotalTime::createConnections()
 
     connect(m_rateGroup, QOverload<QAbstractButton *, bool>::of(&QButtonGroup::buttonToggled),
             this, [&](QAbstractButton *btn, bool checked){
-        if(checked){
-            auto rate = btn->property("rate").toDouble();
-            setRate(rate);
-            emit rateChanged(rate);
-        }
-    });
+                if(checked){
+                    auto rate = btn->property("rate").toDouble();
+                    setRate(rate);
+                    emit rateChanged(rate);
+                }
+            });
 }
 
 void FormTotalTime::colorHours(QLabel *lbl, QSpinBox *sBox)
@@ -99,7 +125,7 @@ void FormTotalTime::colorHours(QLabel *lbl, QSpinBox *sBox)
 
     if(value > max){
         sBox->setStyleSheet(Status::more());
-     } else if (sBox->value() < max) {
+    } else if (sBox->value() < max) {
         if(exactly || (value < max * 0.85))
             sBox->setStyleSheet(Status::less());
         else {
@@ -110,8 +136,6 @@ void FormTotalTime::colorHours(QLabel *lbl, QSpinBox *sBox)
     }
 
     if(sBox->value() < max){
-
-
     }
     else if(sBox->value() > max)
         sBox->setStyleSheet(Status::more());
@@ -138,23 +162,23 @@ void FormTotalTime::makeTimeConnections()
 void FormTotalTime::countFirstSemester()
 {
     ui->sb_totalFirstSemester->setValue(
-                ui->sb_eduFirstSemester->value() +
-                ui->sb_metodFirstSemester->value() +
-                ui->sb_otherFirstSemester->value() +
-                ui->sb_reseachFirstSemester->value() +
-                ui->sb_sportFirstSemester->value()
-                );
+        ui->sb_eduFirstSemester->value() +
+        ui->sb_metodFirstSemester->value() +
+        ui->sb_otherFirstSemester->value() +
+        ui->sb_reseachFirstSemester->value() +
+        ui->sb_sportFirstSemester->value()
+        );
 }
 
 void FormTotalTime::countSecondSemester()
 {
     ui->sb_totalSecondSemester->setValue(
-                ui->sb_eduSecondSemester->value() +
-                ui->sb_metodSecondSemester->value() +
-                ui->sb_otherSecondSemester->value() +
-                ui->sb_reseachSecondSemester->value() +
-                ui->sb_sportSecondSemester->value()
-                );
+        ui->sb_eduSecondSemester->value() +
+        ui->sb_metodSecondSemester->value() +
+        ui->sb_otherSecondSemester->value() +
+        ui->sb_reseachSecondSemester->value() +
+        ui->sb_sportSecondSemester->value()
+        );
 }
 
 void FormTotalTime::on_sb_eduYear_valueChanged(int arg1)

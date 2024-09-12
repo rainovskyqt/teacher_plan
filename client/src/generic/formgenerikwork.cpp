@@ -66,6 +66,8 @@ void FormGenerikWork::addRow(GenericWork *work)
         auto hours = countHours(work->semester() == 1 ? ui->lw_first : ui->lw_second);
         auto footer = work->semester() == 1 ? ui->w_footerFirst : ui->w_footerSecond;
         footer->setValues(hours.first, hours.second);
+
+        emit planValueChanged(work->workType(), static_cast<PlanTime::Semester>(work->semester()), hours.first);    //hours.first - планируемое время
     });
 
     row->init();

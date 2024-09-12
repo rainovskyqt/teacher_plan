@@ -6,6 +6,7 @@
 #include <QWidget>
 
 #include <database/models/teacherplan.h>
+#include <database/models/datamodels.h>
 
 #include <misc/month.h>
 
@@ -31,8 +32,7 @@ private slots:
     void deleteRow();
 
 signals:
-    void firstPlaneChanged(int);
-    void secondPlaneChanged(int);
+    void planValueChanged(WorkType, PlanTime::Semester, int);
     void factValueChanged(Month::Months, int, int);
 
     void clear();
