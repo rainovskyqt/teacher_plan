@@ -130,13 +130,13 @@
     <widget class="QLabel" name="label_4">
      <property name="minimumSize">
       <size>
-       <width>150</width>
+       <width>130</width>
        <height>118</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>150</width>
+       <width>130</width>
        <height>118</height>
       </size>
      </property>
@@ -238,7 +238,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>2502</width>
+        <width>2522</width>
         <height>118</height>
        </rect>
       </property>
@@ -274,13 +274,13 @@
           <widget class="QLabel" name="label_82">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
@@ -288,7 +288,7 @@
             <enum>QFrame::Box</enum>
            </property>
            <property name="text">
-            <string>I-е полугодие</string>
+            <string>I-е</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -302,13 +302,13 @@
           <widget class="QLabel" name="label_83">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>38</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>38</height>
             </size>
            </property>
@@ -330,13 +330,13 @@
           <widget class="QLabel" name="label_84">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
@@ -365,13 +365,13 @@
           <widget class="QLabel" name="label_85">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
@@ -379,7 +379,7 @@
             <enum>QFrame::Box</enum>
            </property>
            <property name="text">
-            <string>II-е полугодие</string>
+            <string>II-е</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -393,13 +393,13 @@
           <widget class="QLabel" name="label_86">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>38</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>38</height>
             </size>
            </property>
@@ -421,13 +421,13 @@
           <widget class="QLabel" name="label_87">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
@@ -456,13 +456,13 @@
           <widget class="QLabel" name="label_88">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
@@ -484,13 +484,13 @@
           <widget class="QLabel" name="label_89">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>38</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>38</height>
             </size>
            </property>
@@ -512,13 +512,13 @@
           <widget class="QLabel" name="label_90">
            <property name="minimumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>95</width>
+             <width>60</width>
              <height>39</height>
             </size>
            </property>
@@ -542,7 +542,7 @@
         <widget class="QLabel" name="label_91">
          <property name="minimumSize">
           <size>
-           <width>660</width>
+           <width>606</width>
            <height>118</height>
           </size>
          </property>
