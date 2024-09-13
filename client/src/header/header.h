@@ -66,7 +66,7 @@ private:
     TeacherPlan* m_currentPlan;
 
     void loadData();
-    void setDefaultData(int userId, int yearId, int departmentId, int postId);
+    void setDefaultData(int yearId);
     void setCurrentIndexes();
     bool changeIndex(QComboBox *box);
     void setUserDepartments();

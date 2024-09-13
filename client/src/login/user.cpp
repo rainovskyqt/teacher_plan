@@ -15,19 +15,22 @@ UserData *User::userData()
     return &m_userData;
 }
 
-QMultiMap<int, int> User::posts() const
+QList<UserPost> User::posts() const
 {
     return m_posts;
 }
 
-void User::addPost(int department, int post)
+void User::addPost(int userId, int department, int post, int id)
 {
-    m_posts.insert(department, post);
+    m_posts.append({userId, id, department, post});
 }
 
-void User::removePost(int department, int post)
+void User::removePost(int id)
 {
-    m_posts.remove(department, post);
+    foreach(const UserPost p, m_posts){
+        if(p.baseId == id)
+            m_posts.removeOne(p);
+    }
 }
 
 User::User() {m_baseId = 0;}

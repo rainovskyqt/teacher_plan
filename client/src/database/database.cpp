@@ -27,7 +27,7 @@ bool Database::init(QString host, int port)
     base.setHostName(host);
     base.setPort(port);
     // base.setDatabaseName("corusant");
-        base.setDatabaseName("corusant");
+    base.setDatabaseName("ordo_dev");
     base.setUserName("ordo");
     base.setPassword("ordo7532159");
     if(!base.open()){
@@ -61,14 +61,14 @@ int Database::addUser(User *user)
     return id;
 }
 
-void Database::addPosts(QMultiMap<int, int> posts, int userId)
+void Database::addPosts(QList<UserPost> posts, int userId)
 {
-    for(auto post = posts.begin(); post != posts.end(); ++post){
-        addPost(userId, post.key(), post.value());
+    for(auto p: posts){
+        addPost(p, userId);
     }
 }
 
-int Database::addPost(int userId, int departmentId, int postId)
+int Database::addPost(UserPost post, int userId)
 {
 
     QString queryString = "INSERT INTO staff(user_id, department_id, post_id) "
@@ -76,8 +76,8 @@ int Database::addPost(int userId, int departmentId, int postId)
 
     Values vals;
     vals.insert(":user_id", userId);
-    vals.insert(":department_id", departmentId);
-    vals.insert(":post_id", postId);
+    vals.insert(":department_id", post.departmentId);
+    vals.insert(":post_id", post.postId);
 
     auto query = executeQuery(queryString, vals);
     int id = query->lastInsertId().toInt();
@@ -145,7 +145,7 @@ User *Database::login(QString login, QString password)
 {
 
     QString queryString = "SELECT U.id AS 'uid', U.login, U.password, U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
-                          "S.department_id, S.post_id "
+                          "S.department_id, S.post_id, S.id AS staff_id "
                           "FROM user U "
                           "LEFT JOIN `rang` R ON U.rang_id = R.id "
                           "INNER JOIN `staff` S ON S.user_id = U.id "
@@ -167,7 +167,10 @@ User *Database::login(QString login, QString password)
             query->value("rname").toString(),
             query->value("rang_id").toInt()
             );
-        user->addPost(query->value("department_id").toInt(), query->value("post_id").toInt());
+        user->addPost(query->value("uid").toInt(),
+                      query->value("department_id").toInt(),
+                      query->value("post_id").toInt(),
+                      query->value("staff_id").toInt());
     }
     delete query;
     return user;
@@ -388,9 +391,9 @@ int Database::saveEducationalWork(TeacherWork *work)
                            "WHERE id = :id";
 
     QString insertString = "INSERT INTO educational_work(teacher_plan_id, discipline_id, work_form_id, course_id, "
-                           "comments, order_place)"
+                           "group_count, comments, order_place)"
                            "VALUES(:teacher_plan_id, :discipline_id, :work_form_id, :course_id,"
-                           ":comments, :order_place) ";
+                           ":group_count, :comments, :order_place) ";
     if(w->baseId()){
         delete executeQuery(updateString, vals);
         return w->baseId();
@@ -435,26 +438,23 @@ int Database::saveGenericWork(TeacherWork *work)
     }
 }
 
-TeacherPlan * Database::requestPlan(int userId, int yearId, int departmentId, int postId)
+TeacherPlan * Database::requestPlan(UserPost post, int yearId)
 {
     QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
-                          "P.protocol_date "
+                          "P.protocol_date, S.user_id, S.department_id "
                           "FROM teacher_plan P "
-                          "WHERE user_id = :user_id AND department_id = :department_id AND post_id = :post_id AND year_id = :year_id";
+                          "INNER JOIN staff S ON S.id = P.staff_id "
+                          "WHERE staff_id = :staff_id AND year_id = :year_id";
 
     Values vals;
-    vals.insert(":user_id", userId);
+    vals.insert(":staff_id", post.baseId);
     vals.insert(":year_id", yearId);
-    vals.insert(":department_id", departmentId);
-    vals.insert(":post_id", postId);
 
     auto query = executeQuery(queryString, vals);
 
-    TeacherPlan *plan = new TeacherPlan();
-    plan->setUserId(userId);
+    TeacherPlan *plan = new TeacherPlan();  
+    plan->setStaff(post);
     plan->setYearId(yearId);
-    plan->setDepartmentId(departmentId);
-    plan->setPostId(postId);
 
     if(query->next()){
         plan->setBaseId(query->value("pid").toInt());
@@ -473,9 +473,7 @@ int Database::updateTeacherPlan(TeacherPlan *plan)
 {
     Values vals;
     vals.insert(":base_id", plan->baseId());
-    vals.insert(":user_id", plan->userId());
-    vals.insert(":department_id", plan->departmentId());
-    vals.insert(":post_id", plan->postId());
+    vals.insert(":staff_id", plan->getStaff().baseId);
     vals.insert(":year_id", plan->yearId());
     vals.insert(":status_id", plan->statusId());
     vals.insert(":rate", plan->rate());
@@ -486,8 +484,8 @@ int Database::updateTeacherPlan(TeacherPlan *plan)
         delete executeQuery(queryString, vals);
         return plan->baseId();
     } else {
-        queryString = "INSERT INTO teacher_plan(user_id, department_id, post_id, year_id, status_id, rate) "
-                      "VALUES(:user_id, :department_id, :post_id, :year_id, :status_id, :rate) ";
+        queryString = "INSERT INTO teacher_plan(staff_id, year_id, status_id, rate) "
+                      "VALUES(:staff_id, :year_id, :status_id, :rate) ";
         auto query = executeQuery(queryString, vals);
         query->next();
         int id = query->lastInsertId().toInt();

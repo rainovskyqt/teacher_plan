@@ -37,9 +37,9 @@ User *UserForm::newUser()
         ui->cb_rang->currentData().toInt(),
         ui->line_password->text()
         );
-    user->addPost(ui->cb_department->currentData().toInt(), ui->cb_post->currentData().toInt());
+    user->addPost(user->baseId(), ui->cb_department->currentData().toInt(), ui->cb_post->currentData().toInt());
     if(ui->cb_department_2->currentIndex() != 0)
-        user->addPost(ui->cb_department_2->currentData().toInt(), ui->cb_post_2->currentData().toInt());
+        user->addPost(user->baseId(), ui->cb_department_2->currentData().toInt(), ui->cb_post_2->currentData().toInt());
 
     return user;
 }

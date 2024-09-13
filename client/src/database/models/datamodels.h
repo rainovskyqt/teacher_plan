@@ -53,6 +53,18 @@ private:
     QMap<Dictionary, Dictionary> m_posts;
 };
 
+struct UserPost
+{
+    int userId;
+    int baseId;
+    int departmentId;
+    int postId;
+
+    bool operator==(const UserPost& other) const {
+        return (this->baseId == other.baseId);
+    }
+};
+
 enum WorkType{
     Educational = 1,
     MethodicWork,
@@ -60,5 +72,7 @@ enum WorkType{
     SportWork,
     OtherWork
 };
+
+Q_DECLARE_METATYPE(UserPost);
 
 #endif // DATAMODELS_H

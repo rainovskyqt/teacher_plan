@@ -5,6 +5,7 @@ EducationalWork::EducationalWork(int planId, QObject *parent) : TeacherWork(plan
     m_disciplineId = 1;
     m_workFormId = 1;
     m_courseId = 1;
+    m_groupCount = 1;
     m_comments = QString();
     m_workType = Educational;
 }

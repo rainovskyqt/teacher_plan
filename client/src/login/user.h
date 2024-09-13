@@ -5,6 +5,7 @@
 #include <QObject>
 
 #include "database/models/userdata.h"
+#include "database/models/datamodels.h"
 
 class User : public QObject
 {
@@ -16,15 +17,15 @@ public:
     int baseId() const;
     void setBaseId(int baseId);
     UserData *userData();
-    QMultiMap<int, int> posts() const;
-    void addPost(int department, int post);
-    void removePost(int department, int post);
+    QList<UserPost> posts() const;
+    void addPost(int userId, int department, int post, int id = 0);
+    void removePost(int id);
 
 private:
     int m_baseId;
 
     UserData m_userData;
-    QMultiMap<int, int> m_posts;
+    QList<UserPost> m_posts;
 };
 
 #endif // USER_H

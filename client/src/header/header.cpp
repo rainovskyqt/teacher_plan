@@ -78,15 +78,13 @@ void Header::loadData()
     DictionaryAdapter::setDictionary(m_posts, Database::Post);
 }
 
-void Header::setDefaultData(int userId, int yearId, int departmentId, int postId)
+void Header::setDefaultData(int yearId)
 {
     m_currentPlan = new TeacherPlan(this);
     setStatus(TeacherPlan::Development);
     m_currentPlan->setStatusId(TeacherPlan::Development);
-    m_currentPlan->setUserId(userId);
+    m_currentPlan->setStaff(ui->cb_post->currentData().value<UserPost>());
     m_currentPlan->setYearId(yearId);
-    m_currentPlan->setDepartmentId(departmentId);
-    m_currentPlan->setPostId(postId);
     ui->w_protocol->setVisible(false);
 
     emit currentPlanChanged(m_currentPlan);
@@ -104,10 +102,6 @@ bool Header::changeIndex(QComboBox *box)
     if(box->currentIndex() == m_currentIndex.value(box))
         return false;
 
-//    if(!saveQustion()){
-//        box->setCurrentIndex(m_currentIndex.value(box));
-//        return false;
-//    }
 
     m_currentIndex.insert(box, box->currentIndex());
 
@@ -119,21 +113,24 @@ void Header::setUserDepartments()
 {
     ui->cb_department->clear();
 
-    auto userDep = m_user->posts().keys();
+    QList<int> userDep;
+    auto posts = m_user->posts();
+    for(auto p: posts)
+        userDep.append(p.departmentId);
 
     foreach (auto dep, m_departments) {
         if(userDep.contains(dep.id()))
             ui->cb_department->addItem(dep.name(), dep.id());
     }
+
 }
 
 void Header::setPlan()
 {
+    auto staff = ui->cb_post->currentData().value<UserPost>();
     auto year = ui->cb_years->currentData().toInt();
-    auto dep = ui->cb_department->currentData().toInt();
-    auto post = ui->cb_post->currentData().toInt();
 
-    setPlanData(Database::get()->requestPlan(m_user->baseId(), year, dep, post));
+    setPlanData(Database::get()->requestPlan(staff, year));
 }
 
 QString Header::currentTecher()
@@ -240,11 +237,14 @@ void Header::on_cb_department_currentIndexChanged(int index)
     ui->cb_post->clear();
 
     auto userDep = ui->cb_department->currentData().toInt();
-    auto userPosts = m_user->posts().values(userDep);
+    auto userPosts = m_user->posts();
 
-    foreach (auto post, m_posts) {
-        if(userPosts.contains(post.id()))
-            ui->cb_post->addItem(post.name(), post.id());
+    for(auto userPost: userPosts) {
+        if(userPost.departmentId != userDep)
+            continue;
+        foreach(auto post, m_posts)
+            if(userPost.postId == post.id())
+                ui->cb_post->addItem(post.name(), QVariant::fromValue(userPost));
     }
 }
 

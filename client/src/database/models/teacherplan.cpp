@@ -33,36 +33,6 @@ void TeacherPlan::setBaseId(int newBaseId)
     m_baseId = newBaseId;
 }
 
-int TeacherPlan::userId() const
-{
-    return m_userId;
-}
-
-void TeacherPlan::setUserId(int newUserId)
-{
-    m_userId = newUserId;
-}
-
-int TeacherPlan::departmentId() const
-{
-    return m_departmentId;
-}
-
-void TeacherPlan::setDepartmentId(int newDepartmentId)
-{
-    m_departmentId = newDepartmentId;
-}
-
-int TeacherPlan::postId() const
-{
-    return m_postId;
-}
-
-void TeacherPlan::setPostId(int newPostId)
-{
-    m_postId = newPostId;
-}
-
 int TeacherPlan::yearId() const
 {
     return m_yearId;
@@ -146,6 +116,16 @@ void TeacherPlan::removeEducationaWork(EducationalWork *work)
 QVector<EducationalWork *> TeacherPlan::educationWork()
 {
     return m_educationWork;
+}
+
+UserPost TeacherPlan::getStaff() const
+{
+    return staff;
+}
+
+void TeacherPlan::setStaff(const UserPost &newStaff)
+{
+    staff = newStaff;
 }
 
 //QMap<int, PlanTime*> TeacherPlan::hours() const

@@ -7,6 +7,7 @@
 #include <QVector>
 #include "login/user.h"
 #include "plantime.h"
+#include "database/models/datamodels.h"
 
 class EducationalWork;
 
@@ -56,15 +57,6 @@ public:
     int baseId() const;
     void setBaseId(int newBaseId);
 
-    int userId() const;
-    void setUserId(int newUserId);
-
-    int departmentId() const;
-    void setDepartmentId(int newDepartmentId);
-
-    int postId() const;
-    void setPostId(int newPostId);
-
     int yearId() const;
     void setYearId(int newYearId);
 
@@ -90,12 +82,13 @@ public:
     void removeEducationaWork(EducationalWork* work);
     QVector<EducationalWork*> educationWork();
 
+    UserPost getStaff() const;
+    void setStaff(const UserPost &newStaff);
+
 private:
     bool m_changed;
     int m_baseId;
-    int m_userId;
-    int m_departmentId;
-    int m_postId;
+    UserPost staff;
     int m_yearId;
     int m_statusId;
     double m_rate;

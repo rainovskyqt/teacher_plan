@@ -41,12 +41,12 @@ public:
     static Database *get();
     bool init(QString host, int port);
     int addUser(User *user);
-    void addPosts(QMultiMap<int, int> posts, int userId);
-    int addPost(int userId, int departmentId, int postId);
+    void addPosts(QList<UserPost> posts, int userId);
+    int addPost(UserPost post, int userId);
     User *login(QString login, QString password);
     QList<Dictionary> getDictionary(DictName name);
     QList<StudyYear> getYears();
-    TeacherPlan *requestPlan(int userId, int yearId, int departmentId, int postId);
+    TeacherPlan *requestPlan(UserPost post, int yearId);
     int updateTeacherPlan(TeacherPlan *plan);
     QString encodePassword(QString password);
     const QString &lastError() const;
