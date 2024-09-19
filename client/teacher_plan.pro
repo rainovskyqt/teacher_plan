@@ -30,6 +30,7 @@ SOURCES += \
     src/educationwork/educationweek.cpp \
     src/educationwork/educationweekheader.cpp \
     src/educationwork/formeducationwork.cpp \
+    src/faculty/facultypanel.cpp \
     src/generic/formgenerikwork.cpp \
     src/generic/genericfooter.cpp \
     src/generic/generikworkrow.cpp \
@@ -68,6 +69,7 @@ HEADERS += \
     src/educationwork/educationweek.h \
     src/educationwork/educationweekheader.h \
     src/educationwork/formeducationwork.h \
+    src/faculty/facultypanel.h \
     src/generic/formgenerikwork.h \
     src/generic/genericfooter.h \
     src/generic/generikworkrow.h \
@@ -95,6 +97,7 @@ FORMS += \
     src/educationwork/educationweek.ui \
     src/educationwork/educationweekheader.ui \
     src/educationwork/formeducationwork.ui \
+    src/faculty/facultypanel.ui \
     src/generic/formgenerikwork.ui \
     src/generic/genericfooter.ui \
     src/generic/generikworkrow.ui \

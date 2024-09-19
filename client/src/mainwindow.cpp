@@ -35,6 +35,7 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     ui->w_header->setUser(user);
     ui->w_header->init();
 
+    ui->w_facultyPanel->setVisible(false);
 
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);
