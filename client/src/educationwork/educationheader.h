@@ -16,6 +16,9 @@ public:
 
     explicit EducationHeader(QWidget *parent = nullptr);
     ~EducationHeader();
+    int maximumPosition();
+
+    int timeAreaWidth();
 
 public slots:
     void setPosition(int val);

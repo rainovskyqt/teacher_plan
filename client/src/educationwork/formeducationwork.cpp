@@ -39,6 +39,7 @@ void FormEducationWork::setTable()
         emit planValueChanged(WorkType::Educational, PlanTime::SecondSemestr, val);
     });
 
+    ui->scrolbar->setMaximum(ui->w_edHeader->timeAreaWidth());
 }
 
 void FormEducationWork::fillTable()
@@ -48,10 +49,6 @@ void FormEducationWork::fillTable()
     auto eWork = Database::get()->educationWork(m_plan->baseId());
     for(auto work: eWork){
         addRow(work);
-    }
-    auto timeAreaWidth = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(ui->lw_educationWork->item(0)));
-    if(timeAreaWidth){
-        ui->scrolbar->setMaximum(timeAreaWidth->timeAreaWidth());
     }
 }
 
