@@ -135,15 +135,6 @@ void EducationRow::loadHours()
     readySave = true;
 }
 
-int EducationRow::timeAreaWidth()
-{
-    return ui->scrollArea->horizontalScrollBar()->maximum() +
-           ui->text_comments->width() +
-           ui->lbl_firstPlan->width() +
-           ui->lbl_secondPlan->width() +
-           ui->lbl_yearPlan->width();
-}
-
 void EducationRow::setScrolBarValue(int val)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(val);

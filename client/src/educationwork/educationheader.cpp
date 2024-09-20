@@ -20,6 +20,18 @@ EducationHeader::~EducationHeader()
     delete ui;
 }
 
+int EducationHeader::maximumPosition()
+{
+    return ui->scrollArea->horizontalScrollBar()->maximum();
+}
+
+int EducationHeader::timeAreaWidth()
+{
+    return ui->scrollArea->horizontalScrollBar()->maximum() +
+           ui->label_82->width() + ui->label_85->width() + ui->label_82->width() + ui->label_88->width() +
+           ui->label_91->width();
+}
+
 void EducationHeader::setPosition(int val)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(val);
