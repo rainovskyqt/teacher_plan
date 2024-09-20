@@ -33,9 +33,9 @@ MainWindow::MainWindow(User *user, QWidget *parent)
             ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
     ui->w_header->setUser(user);
-    ui->w_header->init();
+    ui->w_facultyPanel->setUser(user);
 
-    ui->w_facultyPanel->setVisible(false);
+    ui->w_header->init();
 
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);

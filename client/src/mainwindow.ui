@@ -30,15 +30,11 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="FacultyPanel" name="w_facultyPanel" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout_4"/>
-      </widget>
-      <widget class="QWidget" name="">
+      <widget class="FacultyPanel" name="w_facultyPanel" native="true"/>
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="Header" name="w_header" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout"/>
-         </widget>
+         <widget class="Header" name="w_header" native="true"/>
         </item>
         <item>
          <widget class="QStackedWidget" name="stackedWidget">

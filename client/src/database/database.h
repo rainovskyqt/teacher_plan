@@ -58,6 +58,7 @@ public:
     int saveEdcationalHour(EducationalHour* hour);
     QList<GenericWorkForm *> getWorks(WorkType type);
 
+
 public slots:
 
 signals:
