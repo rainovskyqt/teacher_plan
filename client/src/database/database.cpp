@@ -27,7 +27,6 @@ bool Database::init(QString host, int port)
     base.setHostName(host);
     base.setPort(port);
     base.setDatabaseName("corusant");
-    // base.setDatabaseName("ordo_dev");
     base.setUserName("ordo");
     base.setPassword("ordo7532159");
     if(!base.open()){
