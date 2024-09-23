@@ -3,6 +3,7 @@
 
 #include "userdata.h"
 
+#include <QDate>
 #include <QMap>
 #include <QString>
 
@@ -88,6 +89,14 @@ enum WorkType{
     ResearchingWork,
     SportWork,
     OtherWork
+};
+
+struct CommentsUpdate
+{
+    int id;
+    QDate date;
+    QString version;
+    QString comments;
 };
 
 Q_DECLARE_METATYPE(UserPost);

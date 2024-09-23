@@ -45,6 +45,7 @@ SOURCES += \
     src/misc/inplacefilter.cpp \
     src/misc/month.cpp \
     src/misc/wheelblocker.cpp \
+    src/miscwidgets/updatecomments.cpp \
     src/settings.cpp \
     src/header/header.cpp \
     src/main.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     src/misc/inplacefilter.hpp \
     src/misc/month.h \
     src/misc/wheelblocker.hpp \
+    src/miscwidgets/updatecomments.h \
     src/settings.h \
     src/header/header.h \
     src/mainwindow.h \
@@ -109,6 +111,7 @@ FORMS += \
     src/login/userform.ui \
     src/header/header.ui \
     src/mainwindow.ui \
+    src/miscwidgets/updatecomments.ui \
     src/totaltime/formtotaltime.ui
 
 INCLUDEPATH += src

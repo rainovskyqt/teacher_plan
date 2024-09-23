@@ -364,6 +364,44 @@ QList<GenericWorkForm*> Database::getWorks(WorkType type)
     return wList;
 }
 
+QMap<int, CommentsUpdate> Database::updateComments(bool all, int userId)
+{
+    QString queryString = "SELECT id, `version`, `date`, comments "
+                          "FROM update_comments";
+    if(!all)
+        queryString.append(
+            " WHERE id > "
+            "(IFNULL((SELECT last_coments_id "
+            "FROM user_update_comments WHERE user_id = :user_id), 0))");
+    Values vals;
+    vals.insert(":user_id", userId);
+    auto query = executeQuery(queryString, vals);
+
+    QMap<int, CommentsUpdate> comments;
+    while (query->next()) {
+        comments.insert(query->value("id").toInt(),
+                        CommentsUpdate({query->value("id").toInt(),
+                                        query->value("date").toDate(),
+                                        query->value("version").toString(),
+                                        query->value("comments").toString()})
+                        );
+
+    }
+    return comments;
+}
+
+void Database::setViewed(int userId, int commentId)
+{
+    QString queryString = "INSERT INTO user_update_comments (user_id, last_coments_id) "
+                          "VALUES (:user_id, :last_coments_id) AS new_val "
+                          "ON DUPLICATE KEY UPDATE last_coments_id = new_val.last_coments_id";
+
+    Values vals;
+    vals.insert(":user_id", userId);
+    vals.insert(":last_coments_id", commentId);
+    delete executeQuery(queryString, vals);
+}
+
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 {
     auto base = QSqlDatabase::database();

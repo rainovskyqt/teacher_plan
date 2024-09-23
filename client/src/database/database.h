@@ -57,7 +57,8 @@ public:
     QList<EducationalHour*> getEdcationalHours(int workId);
     int saveEdcationalHour(EducationalHour* hour);
     QList<GenericWorkForm *> getWorks(WorkType type);
-
+    QMap<int, CommentsUpdate> updateComments(bool all, int userId);
+    void setViewed(int userId, int commentId);
 
 public slots:
 
