@@ -25,7 +25,6 @@ public:
 
     static UserRights fromString(const QString &str);
     bool hasRight(Right right);
-    void loadStaff();
 
 signals:
 

@@ -99,6 +99,7 @@ struct CommentsUpdate
     QString comments;
 };
 
+
 Q_DECLARE_METATYPE(UserPost);
 
 #endif // DATAMODELS_H

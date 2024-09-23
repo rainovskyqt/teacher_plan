@@ -49,8 +49,3 @@ bool UserRights::hasRight(Right right)
 
     return false;
 }
-
-void UserRights::loadStaff()
-{
-
-}

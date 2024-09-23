@@ -22,10 +22,12 @@ public:
 private:
     Ui::FacultyPanel *ui;
 
-    User *m_user ;
+    User *m_user;
+    int m_departmentId;
 
-    void setVisibility();
+    bool personalPlanOnly();
     void setFaculty();
+    void loadStaff();
 };
 
 #endif // FACULTYPANEL_H

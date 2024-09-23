@@ -45,7 +45,13 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="tree_plans"/>
+    <widget class="QTreeWidget" name="tree_plans">
+     <column>
+      <property name="text">
+       <string>Кафедры</string>
+      </property>
+     </column>
+    </widget>
    </item>
   </layout>
  </widget>
