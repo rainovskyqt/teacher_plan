@@ -154,7 +154,7 @@ User *Database::login(QString login, QString password)
                           "INNER JOIN `staff` S ON S.user_id = U.id "
                           "INNER JOIN `department` D ON D.id = S.department_id "
                           "INNER JOIN `post` P ON P.id = S.post_id "
-                          "INNER JOIN staff_access_rigth SAR ON SAR.staff_id = S.id "
+                          "LEFT JOIN staff_access_rigth SAR ON SAR.staff_id = S.id "
                           "WHERE `login` = :login AND `password` = :password "
                           "ORDER BY main, staff_id";
     Values vals;
