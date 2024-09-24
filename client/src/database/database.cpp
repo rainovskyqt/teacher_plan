@@ -88,6 +88,7 @@ int Database::addPost(UserPost post, int userId)
 QList<Dictionary> Database::getDictionary(DictName name)
 {
     QString tableName;
+    QString order = "name";
 
     switch(name){
     case Department:
@@ -104,13 +105,14 @@ QList<Dictionary> Database::getDictionary(DictName name)
         break;
     case Course:
         tableName = "`course`";
+        order.append(", course");
         break;
     case WorkForm:
         tableName = "educational_work_form";
         break;
     }
 
-    QString queryString = QString("SELECT id, name FROM %1").arg(tableName);
+    QString queryString = QString("SELECT id, name FROM %1 ORDER BY %2").arg(tableName, order);
 
     auto query = executeQuery(queryString);
 
