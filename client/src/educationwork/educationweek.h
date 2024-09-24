@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+#include <database/models/teacherwork.h>
+
 namespace Ui {
 class EducationWeek;
 }
@@ -14,8 +16,8 @@ class EducationWeek : public QWidget
     Q_OBJECT
 
 public:
-    explicit EducationWeek(EducationalHour *planHour, EducationalHour *factHour, bool readOnly = false,
-                           QWidget *parent = nullptr);
+    explicit EducationWeek(EducationalHour *planHour, EducationalHour *factHour,
+                           bool planReadOnly = false, bool factReadOnly = false, QWidget *parent = nullptr);
     ~EducationWeek();
 
     int number() const;

@@ -101,9 +101,16 @@ GenericFooter *FormGenerikWork::currentFooter()
         return ui->w_footerSecond;
 }
 
+void FormGenerikWork::clearAllData()
+{
+    clearData(ui->lw_first);
+    clearData(ui->lw_second);
+    emit clear();
+}
+
 void FormGenerikWork::fillTable()
 {
-    clearData();
+    clearAllData();
 
     auto eWork = Database::get()->genericWork(m_plan->baseId(), m_type);
     for(auto work: eWork){
@@ -111,10 +118,12 @@ void FormGenerikWork::fillTable()
     }
 }
 
-void FormGenerikWork::clearData()
+void FormGenerikWork::clearData(QListWidget *list)
 {
-    auto list = currentList();
+    auto rows = list->findChildren<GenerikWorkRow*>();
+    qDeleteAll(rows.begin(), rows.end());
     list->clear();
+
     emit clear();
 }
 

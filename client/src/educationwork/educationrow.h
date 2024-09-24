@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <misc/month.h>
 #include "educationalhour.h"
+#include "database/models/teacherwork.h"
 
 namespace Ui {
 class EducationRow;
@@ -11,12 +12,15 @@ class EducationRow;
 
 class EducationalWork;
 
+using S = TeacherWork::Status;
+
 class EducationRow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit EducationRow(int row, EducationalWork *work = nullptr, QWidget *parent = nullptr);
+    explicit EducationRow(int row, EducationalWork *work = nullptr,
+                          S status = S::Development, QWidget *parent = nullptr);
     ~EducationRow();
     void setData(EducationalWork *work);
     QString toString();
@@ -45,8 +49,10 @@ private:
 
     EducationalWork *m_work;
     bool readySave;
+    TeacherWork::Status m_status;
 
-    void addMonths();
+    void setStatus(S status);
+    void addMonths(S status);
 
     void loadDictionaries();
     void makeConnections();

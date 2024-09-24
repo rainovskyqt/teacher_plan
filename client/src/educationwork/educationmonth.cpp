@@ -3,14 +3,14 @@
 #include "ui_educationmonth.h"
 #include "settings.h"
 
-EducationMonth::EducationMonth(Month::Months month, int start, int count, int workId, bool readOnly, QWidget *parent) :
+EducationMonth::EducationMonth(Month::Months month, int start, int count, int workId, bool planReadOnly, bool factReadOnly, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EducationMonth),
     m_isFirstSemester(true)
 {
     ui->setupUi(this);
     m_month = month;
-    addWeeks(start, count, workId, readOnly);
+    addWeeks(start, count, workId, planReadOnly, factReadOnly);
 
     if(start >= Settings::get().secondSemesterWeek())
         m_isFirstSemester = false;
@@ -33,7 +33,7 @@ int EducationMonth::getTime(EducationalHour::HourType type, int week)
     return count;
 }
 
-void EducationMonth::addWeeks(int start, int count, int workId, bool readOnly)
+void EducationMonth::addWeeks(int start, int count, int workId, bool planReadOnly, bool factReadOnly)
 {
     m_startWeek = start;
     m_endWeek = start + count;
@@ -41,7 +41,7 @@ void EducationMonth::addWeeks(int start, int count, int workId, bool readOnly)
     for(int i = start; i < m_endWeek; ++i){
         auto week = new EducationWeek(new EducationalHour(0, workId, i, 0, EducationalHour::Plane, this),
                                       new EducationalHour(0, workId, i, 0, EducationalHour::Factical, this),
-                                      readOnly, this);
+                                      planReadOnly, factReadOnly, this);
 
         connect(week, &EducationWeek::hoursChanged, this, &EducationMonth::hoursChanged);
 

@@ -8,6 +8,13 @@ class TeacherWork : public QObject
 {
     Q_OBJECT
 public:
+
+    enum Status{
+        Development,
+        Aproved,
+        Closed
+    };
+
     explicit TeacherWork(int planId, QObject *parent = nullptr);
 
     int baseId() const;

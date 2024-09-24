@@ -53,7 +53,8 @@ private:
     QListWidget *currentList();
     QPair<int, int> countHours(QWidget *list);
     GenericFooter *currentFooter();
-    void clearData();
+    void clearAllData();
+    void clearData(QListWidget *list);
     void fillTable();
 
 };

@@ -3,7 +3,8 @@
 
 #include <QIntValidator>
 
-EducationWeek::EducationWeek(EducationalHour *planHour, EducationalHour *factHour, bool readOnly, QWidget *parent) :
+EducationWeek::EducationWeek(EducationalHour *planHour, EducationalHour *factHour, bool planReadOnly,
+                             bool factReadOnly, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EducationWeek)
   ,m_number(planHour->week())
@@ -13,8 +14,8 @@ EducationWeek::EducationWeek(EducationalHour *planHour, EducationalHour *factHou
     ui->setupUi(this);
     ui->line_plan->setValidator(new QIntValidator(0, 1000, this));
     ui->line_fact->setValidator(new QIntValidator(0, 1000, this));
-    ui->line_fact->setReadOnly(readOnly);
-    ui->line_plan->setReadOnly(readOnly);
+    ui->line_fact->setReadOnly(factReadOnly);
+    ui->line_plan->setReadOnly(planReadOnly);
 }
 
 EducationWeek::~EducationWeek()
