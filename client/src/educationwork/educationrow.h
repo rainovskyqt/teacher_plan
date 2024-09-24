@@ -25,6 +25,9 @@ public:
     int getTime(EducationalHour::HourType type, int week);
     void loadHours();
 
+    int row();
+    void setRow(int row);
+
 public slots:
     void setScrolBarValue(int val);
 

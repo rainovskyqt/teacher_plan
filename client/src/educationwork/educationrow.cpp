@@ -24,7 +24,7 @@ EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
 {
     readySave = false;
     ui->setupUi(this);
-    ui->lbl_number->setText(QString::number(row));
+    setRow(row);
     loadDictionaries();
     setData(work);
     addMonths();
@@ -133,6 +133,16 @@ void EducationRow::loadHours()
     }
 
     readySave = true;
+}
+
+int EducationRow::row()
+{
+    return ui->lbl_number->text().toInt();
+}
+
+void EducationRow::setRow(int row)
+{
+    ui->lbl_number->setText(QString::number(row));
 }
 
 void EducationRow::setScrolBarValue(int val)

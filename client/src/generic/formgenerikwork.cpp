@@ -135,6 +135,8 @@ void FormGenerikWork::deleteRow()
         return;
     Database::get()->deleteWork(workRow->work());
     fillTable();
+    emit planValueChanged(workRow->work()->workType(), PlanTime::FirstSemester , 0);
+    emit planValueChanged(workRow->work()->workType(), PlanTime::SecondSemestr , 0);
 }
 
 int FormGenerikWork::currentSemester()

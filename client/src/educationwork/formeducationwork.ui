@@ -30,10 +30,13 @@
         </font>
        </property>
        <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+        <enum>Qt::ScrollBarAsNeeded</enum>
        </property>
        <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustIgnored</enum>
        </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>

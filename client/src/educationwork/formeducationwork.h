@@ -47,6 +47,7 @@ private:
     void fillTable();
     void addRow(EducationalWork *work);
     int countHours(EducationalHour::HourType type, int week);
+    void updateRowNumber(int start);
 };
 
 #endif // FORMEDUCATIONWORK_H
