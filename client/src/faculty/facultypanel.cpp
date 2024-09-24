@@ -36,7 +36,7 @@ void FacultyPanel::setUser(User *newUser)
 bool FacultyPanel::personalPlanOnly()
 {
     bool boss = m_user->hasAnyRights({R::DepartmentTeacherPlans,
-                                         R::AllTeacherPlans});
+                                      R::AllTeacherPlans});
 
     return !boss;
 }
@@ -71,3 +71,11 @@ void FacultyPanel::loadStaff()
         }
     }
 }
+
+void FacultyPanel::on_tree_plans_itemClicked(QTreeWidgetItem *item, int column)
+{
+    auto id = item->data(0, Qt::UserRole).toInt();
+    if(id)
+        staffChanget(id);
+}
+

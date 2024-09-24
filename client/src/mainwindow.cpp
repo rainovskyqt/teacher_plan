@@ -37,6 +37,11 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     ui->w_header->setUser(user);
     ui->w_facultyPanel->setUser(user);
 
+    connect(ui->w_facultyPanel, &FacultyPanel::staffChanget, this, [&](int userId){
+        ui->w_header->setUser(userId);
+        ui->w_header->init();
+    });
+
     ui->w_header->init();
 
     checkUpdateComments(user->baseId());

@@ -45,12 +45,13 @@ SOURCES += \
     src/misc/inplacefilter.cpp \
     src/misc/month.cpp \
     src/misc/wheelblocker.cpp \
-    src/miscwidgets/updatecomments.cpp \
     src/settings.cpp \
     src/header/header.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/totaltime/formtotaltime.cpp
+    src/totaltime/formtotaltime.cpp \
+    src/updatecomments/updatecommentsrow.cpp \
+    src/updatecomments/updatecomments.cpp \
 
 HEADERS += \
     src/database/adapters/dictionaryadapter.h \
@@ -86,12 +87,13 @@ HEADERS += \
     src/misc/inplacefilter.hpp \
     src/misc/month.h \
     src/misc/wheelblocker.hpp \
-    src/miscwidgets/updatecomments.h \
     src/settings.h \
     src/header/header.h \
     src/mainwindow.h \
     src/totaltime/formtotaltime.h \
-    src/totaltime/status.h
+    src/totaltime/status.h \
+    src/updatecomments/updatecommentsrow.h \
+    src/updatecomments/updatecomments.h
 
 FORMS += \
     src/educationwork/educationalfooter.ui \
@@ -111,8 +113,9 @@ FORMS += \
     src/login/userform.ui \
     src/header/header.ui \
     src/mainwindow.ui \
-    src/miscwidgets/updatecomments.ui \
-    src/totaltime/formtotaltime.ui
+    src/totaltime/formtotaltime.ui \
+    src/updatecomments/updatecommentsrow.ui \
+    src/updatecomments/updatecomments.ui
 
 INCLUDEPATH += src
 

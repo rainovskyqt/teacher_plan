@@ -48,7 +48,7 @@
     <widget class="QTreeWidget" name="tree_plans">
      <column>
       <property name="text">
-       <string>Кафедры</string>
+       <string>Планы</string>
       </property>
      </column>
     </widget>

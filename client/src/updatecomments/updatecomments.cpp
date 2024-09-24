@@ -1,5 +1,6 @@
 #include "updatecomments.h"
 #include "ui_updatecomments.h"
+#include "updatecommentsrow.h"
 
 #include "database/database.h"
 
@@ -35,7 +36,7 @@ bool UpdateComments::dontShow()
 
 void UpdateComments::setViewed()
 {
-    auto commentId = ui->tableWidget->item(ui->tableWidget->rowCount() - 1, 0)->data(Qt::UserRole).toInt();
+    auto commentId = ui->listWidget->item(ui->listWidget->count() - 1)->data(Qt::UserRole).toInt();
     Database::get()->setViewed(m_userId, commentId);
 }
 
@@ -45,17 +46,10 @@ void UpdateComments::setComments(QMap<int, CommentsUpdate> comments)
     while (it != comments.constBegin()) {
         --it;
 
-        int row = ui->tableWidget->rowCount();
-        ui->tableWidget->insertRow(row);
-
-        QTableWidgetItem *item = new QTableWidgetItem(it.value().date.toString("dd.MM.yyyy"));
+        auto item = new QListWidgetItem(ui->listWidget);
         item->setData(Qt::UserRole, it.value().id);
-        ui->tableWidget->setItem(row, 0, item);
-
-        item = new QTableWidgetItem(it.value().version);
-        ui->tableWidget->setItem(row, 1, item);
-
-        item = new QTableWidgetItem(it.value().comments);
-        ui->tableWidget->setItem(row, 2, item);
+        auto row = new UpdateCommentsRow(it.value().id, it.value().date, it.value().version, it.value().comments);
+        item->setSizeHint(row->sizeHint());
+        ui->listWidget->setItemWidget(item, row);
     }
 }

@@ -148,6 +148,11 @@ QString Header::currentYear()
     return ui->cb_years->currentText();
 }
 
+void Header::setUser(int id)
+{
+    setUser(Database::get()->login("", "", id));
+}
+
 void Header::setPlanData(TeacherPlan *plan)
 {
     m_currentPlan = plan;

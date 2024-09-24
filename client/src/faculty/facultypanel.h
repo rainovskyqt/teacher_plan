@@ -1,6 +1,7 @@
 #ifndef FACULTYPANEL_H
 #define FACULTYPANEL_H
 
+#include <QTreeWidgetItem>
 #include <QWidget>
 
 #include <login/user.h>
@@ -18,6 +19,12 @@ public:
     ~FacultyPanel();
 
     void setUser(User *newUser);
+
+signals:
+    void staffChanget(int);
+
+private slots:
+    void on_tree_plans_itemClicked(QTreeWidgetItem *item, int column);
 
 private:
     Ui::FacultyPanel *ui;
