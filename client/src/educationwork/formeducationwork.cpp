@@ -46,8 +46,8 @@ void FormEducationWork::fillTable()
 {
     clearData();
 
-    auto eWork = Database::get()->educationWork(m_plan->baseId());
-    for(auto work: eWork){
+    auto works = Database::get()->educationWork(m_plan->baseId());
+    for(auto work: works){
         addRow(work);
     }
 }
@@ -85,6 +85,14 @@ int FormEducationWork::countHours(EducationalHour::HourType type, int week)
     return count;
 }
 
+void FormEducationWork::updateRowNumber(int start)
+{
+    for(int i = start; i < ui->lw_educationWork->count(); ++i){
+        auto row = dynamic_cast<EducationRow*>(ui->lw_educationWork->itemWidget(ui->lw_educationWork->item(i)));
+        row->setRow(i + 1);
+    }
+}
+
 void FormEducationWork::on_btn_add_clicked()
 {
     auto work = new EducationalWork(m_plan->baseId());
@@ -100,8 +108,13 @@ void FormEducationWork::deleteRow()
                              QString("Удалить %1 из списка?").arg(workRow->toString()))
             == QMessageBox::No)
         return;
+
     Database::get()->deleteWork(workRow->work());
-    fillTable();
+
+    int row = workRow->row() - 1;
+
+    delete ui->lw_educationWork->item(row);
+    updateRowNumber(row);
 }
 
 void FormEducationWork::clearData()
