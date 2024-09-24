@@ -31,6 +31,12 @@
    </property>
    <item>
     <widget class="QLabel" name="lbl_date">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="text">
       <string>date</string>
      </property>
@@ -41,6 +47,12 @@
    </item>
    <item>
     <widget class="QLabel" name="lbl_version">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="text">
       <string>version</string>
      </property>

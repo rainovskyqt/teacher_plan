@@ -26,6 +26,7 @@ private:
     int m_userId;
 
     void setComments(QMap<int, CommentsUpdate> comments);
+    void addRow(int id, QString date, QString version, QString comments);
 };
 
 #endif // UPDATECOMMENTS_H

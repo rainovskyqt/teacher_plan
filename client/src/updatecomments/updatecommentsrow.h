@@ -12,7 +12,7 @@ class UpdateCommentsRow : public QWidget
     Q_OBJECT
 
 public:
-    explicit UpdateCommentsRow(int id, QDate date, QString version, QString text, QWidget *parent = nullptr);
+    explicit UpdateCommentsRow(int id, QString date, QString version, QString text, QWidget *parent = nullptr);
     ~UpdateCommentsRow();
 
     int baseId() const;

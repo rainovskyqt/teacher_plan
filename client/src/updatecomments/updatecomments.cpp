@@ -42,14 +42,20 @@ void UpdateComments::setViewed()
 
 void UpdateComments::setComments(QMap<int, CommentsUpdate> comments)
 {
+    addRow(0, "Дата", "Версия", "Комментарий");
+
     auto it = comments.constEnd();
     while (it != comments.constBegin()) {
         --it;
-
-        auto item = new QListWidgetItem(ui->listWidget);
-        item->setData(Qt::UserRole, it.value().id);
-        auto row = new UpdateCommentsRow(it.value().id, it.value().date, it.value().version, it.value().comments);
-        item->setSizeHint(row->sizeHint());
-        ui->listWidget->setItemWidget(item, row);
+        addRow(it.value().id, it.value().date.toString("dd.MM.yyyy"), it.value().version, it.value().comments);
     }
+}
+
+void UpdateComments::addRow(int id, QString date, QString version, QString comments)
+{
+    auto item = new QListWidgetItem(ui->listWidget);
+    item->setData(Qt::UserRole, id);
+    auto row = new UpdateCommentsRow(id, date, version, comments);
+    item->setSizeHint(row->sizeHint());
+    ui->listWidget->setItemWidget(item, row);
 }
