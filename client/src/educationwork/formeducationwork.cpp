@@ -121,6 +121,8 @@ void FormEducationWork::clearData()
 {
     ui->lw_educationWork->clear();
     ui->w_footer->clear();
+    auto rows = this->findChildren<EducationRow*>();
+    qDeleteAll(rows.begin(), rows.end());
     emit clear();
 }
 
