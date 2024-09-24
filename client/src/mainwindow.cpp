@@ -6,7 +6,7 @@
 
 #include <QMessageBox>
 
-#include <miscwidgets/updatecomments.h>
+#include <updatecomments/updatecomments.h>
 
 MainWindow::MainWindow(User *user, QWidget *parent)
     : QMainWindow(parent)

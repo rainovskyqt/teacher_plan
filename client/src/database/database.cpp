@@ -405,7 +405,7 @@ void Database::setViewed(int userId, int commentId)
     delete executeQuery(queryString, vals);
 }
 
-QMultiHash<QString, QPair<int, QString> > Database::staffList(int facultyId)
+QMultiHash<QString, QPair<QString, int> > Database::staffList(int facultyId)
 {
     QString dep = "";
     Values vals;
@@ -422,15 +422,15 @@ QMultiHash<QString, QPair<int, QString> > Database::staffList(int facultyId)
                                   "%1 "
                                   "ORDER BY d_name, u_sname").arg(dep);
 
-    QMultiHash<QString, QPair<int, QString> > staff;
+    QMultiHash<QString, QPair<QString, int> > staff;
 
     auto query = executeQuery(queryString, vals);
     while (query->next()) {
         staff.insert(query->value("d_name").toString(),
-                     qMakePair(query->value("u_id").toInt(),
-                               QString("%1 %2 %3").arg(query->value("u_sname").toString(),
+                     qMakePair(QString("%1 %2 %3").arg(query->value("u_sname").toString(),
                                                        query->value("u_name").toString(),
-                                                       query->value("u_mname").toString())));
+                                                       query->value("u_mname").toString()),
+                               query->value("u_id").toInt()));
     }
     return staff;
 }

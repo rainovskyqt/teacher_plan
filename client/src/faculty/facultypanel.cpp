@@ -55,19 +55,24 @@ void FacultyPanel::setFaculty()
 
 void FacultyPanel::loadStaff()
 {
-    int dep = m_user->hasAnyRights({R::DepartmentTeacherPlans}) ? m_departmentId : 0;
-    auto list = Database::get()->staffList(dep);
-
     ui->tree_plans->clear();
+    int dep = m_user->hasAnyRights({R::DepartmentTeacherPlans}) ? m_departmentId : 0;
+    auto staffList = Database::get()->staffList(dep);
 
-    foreach(const QString& key, list.uniqueKeys()) {
+    auto departments = staffList.uniqueKeys();
+    std::sort(departments.begin(), departments.end());
+
+    for(const QString& key : departments) {
         QTreeWidgetItem* parentItem = new QTreeWidgetItem(ui->tree_plans);
         parentItem->setText(0, key);
 
-        foreach(const auto value, list.values(key)) {
+        auto staff = staffList.values(key);
+        auto staffUnique = QSet<QPair<QString, int>>(staff.begin(), staff.end());
+
+        for(const auto value : staffUnique) {
             QTreeWidgetItem* childItem = new QTreeWidgetItem(parentItem);
-            childItem->setData(0, Qt::UserRole, value.first);
-            childItem->setText(0, value.second);
+            childItem->setData(0, Qt::UserRole, value.second);
+            childItem->setText(0, value.first);
         }
     }
 }
