@@ -9,7 +9,7 @@
 #define FIRST_SEMESTER_ROW 5
 #define SECOND_SEMESTER_ROW 11
 #define TOTAL_ROW 12
-#define TOTAL_COLUMN 14
+#define TOTAL_COLUMN 16
 
 void CustomHeader::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const {
     painter->save();
