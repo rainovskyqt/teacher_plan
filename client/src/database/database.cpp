@@ -270,6 +270,7 @@ int Database::saveWork(TeacherWork *work)
     case ResearchingWork:
     case SportWork:
     case OtherWork:
+    default:
         return saveGenericWork(work);
     }
 }
