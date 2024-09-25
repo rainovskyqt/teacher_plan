@@ -43,7 +43,7 @@ public:
     int addUser(User *user);
     void addPosts(QList<UserPost> posts, int userId);
     int addPost(UserPost post, int userId);
-    User *login(QString login, QString password);
+    User *login(QString login, QString password, int id = 0);
     QList<Dictionary> getDictionary(DictName name);
     QList<StudyYear> getYears();
     TeacherPlan *requestPlan(UserPost post, int yearId);
@@ -57,6 +57,9 @@ public:
     QList<EducationalHour*> getEdcationalHours(int workId);
     int saveEdcationalHour(EducationalHour* hour);
     QList<GenericWorkForm *> getWorks(WorkType type);
+    QMap<int, CommentsUpdate> updateComments(bool all, int userId);
+    void setViewed(int userId, int commentId);
+    QMultiHash<QString, QPair<QString, int> > staffList(int facultyId = 0);
 
 public slots:
 

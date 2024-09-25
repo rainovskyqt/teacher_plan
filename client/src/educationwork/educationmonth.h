@@ -16,7 +16,8 @@ class EducationMonth : public QWidget
     Q_OBJECT
 
 public:
-    explicit EducationMonth(Month::Months month, int start, int count, int workId, bool readOnly = false, QWidget *parent = nullptr);
+    explicit EducationMonth(Month::Months month, int start, int count, int workId, bool planReadOnly = false,
+                            bool factReadOnly = false, QWidget *parent = nullptr);
     ~EducationMonth();
 
     int getTime(EducationalHour::HourType type, int week = 0);
@@ -39,7 +40,7 @@ private:
     int m_startWeek;
     int m_endWeek;
 
-    void addWeeks(int start, int count, int workId, bool readOnly);
+    void addWeeks(int start, int count, int workId, bool planReadOnly, bool factReadOnly);
 };
 
 #endif // EDUCATIONMONTH_H

@@ -62,7 +62,7 @@ int Database::addUser(User *user)
 
 void Database::addPosts(QList<UserPost> posts, int userId)
 {
-    for(auto p: posts){
+    foreach(auto p, posts){
         addPost(p, userId);
     }
 }
@@ -70,13 +70,15 @@ void Database::addPosts(QList<UserPost> posts, int userId)
 int Database::addPost(UserPost post, int userId)
 {
 
-    QString queryString = "INSERT INTO staff(user_id, department_id, post_id) "
-                          "VALUES (:user_id, :department_id, :post_id)";
+    QString queryString = "INSERT INTO staff(user_id, department_id, post_id, main) "
+                          "VALUES (:user_id, :department_id, :post_id, :main)";
 
     Values vals;
     vals.insert(":user_id", userId);
     vals.insert(":department_id", post.departmentId);
     vals.insert(":post_id", post.postId);
+    vals.insert(":main", post.main ? 1 : 0);
+
 
     auto query = executeQuery(queryString, vals);
     int id = query->lastInsertId().toInt();
@@ -142,16 +144,24 @@ QList<StudyYear> Database::getYears()
     return list;
 }
 
-User *Database::login(QString login, QString password)
+User *Database::login(QString login, QString password, int id)
 {
-
-    QString queryString = "SELECT U.id AS 'uid', U.login, U.password, U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
-                          "S.department_id, S.post_id, S.id AS staff_id "
-                          "FROM user U "
-                          "LEFT JOIN `rang` R ON U.rang_id = R.id "
-                          "INNER JOIN `staff` S ON S.user_id = U.id "
-                          "WHERE `login` = :login AND `password` = :password";
+    QString where = "`login` = :login AND `password` = :password ";
+    if(id)
+        where = "U.id = :id";
+    QString queryString = QString("SELECT U.id AS 'uid', U.login, U.password, U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
+                                  "S.department_id, S.post_id, S.id AS staff_id, S.main AS main, D.name as d_name, P.name AS p_name, "
+                                  "SAR.rights AS rights "
+                                  "FROM user U "
+                                  "LEFT JOIN `rang` R ON U.rang_id = R.id "
+                                  "INNER JOIN `staff` S ON S.user_id = U.id "
+                                  "INNER JOIN `department` D ON D.id = S.department_id "
+                                  "INNER JOIN `post` P ON P.id = S.post_id "
+                                  "LEFT JOIN staff_access_rigth SAR ON SAR.staff_id = S.id "
+                                  "WHERE %1 "
+                                  "ORDER BY main, staff_id").arg(where);
     Values vals;
+    vals.insert(":id", id);
     vals.insert(":login", login);
     vals.insert(":password", encodePassword(password));
 
@@ -168,10 +178,17 @@ User *Database::login(QString login, QString password)
             query->value("rname").toString(),
             query->value("rang_id").toInt()
             );
-        user->addPost(query->value("uid").toInt(),
-                      query->value("department_id").toInt(),
-                      query->value("post_id").toInt(),
-                      query->value("staff_id").toInt());
+
+        user->addPost({query->value("uid").toInt(),
+                       query->value("staff_id").toInt(),
+                       query->value("department_id").toInt(),
+                       query->value("d_name").toString(),
+                       query->value("post_id").toInt(),
+                       query->value("p_name").toString(),
+                       query->value("main").toBool()}
+                      );
+
+        user->setRights(UserRights::fromString(query->value("rights").toString()));
     }
     delete query;
     return user;
@@ -350,6 +367,74 @@ QList<GenericWorkForm*> Database::getWorks(WorkType type)
     }
     delete query;
     return wList;
+}
+
+QMap<int, CommentsUpdate> Database::updateComments(bool all, int userId)
+{
+    QString queryString = "SELECT id, `version`, `date`, comments "
+                          "FROM update_comments";
+    if(!all)
+        queryString.append(
+            " WHERE id > "
+            "(IFNULL((SELECT last_coments_id "
+            "FROM user_update_comments WHERE user_id = :user_id), 0))");
+    Values vals;
+    vals.insert(":user_id", userId);
+    auto query = executeQuery(queryString, vals);
+
+    QMap<int, CommentsUpdate> comments;
+    while (query->next()) {
+        comments.insert(query->value("id").toInt(),
+                        CommentsUpdate({query->value("id").toInt(),
+                                        query->value("date").toDate(),
+                                        query->value("version").toString(),
+                                        query->value("comments").toString()})
+                        );
+
+    }
+    return comments;
+}
+
+void Database::setViewed(int userId, int commentId)
+{
+    QString queryString = "INSERT INTO user_update_comments (user_id, last_coments_id) "
+                          "VALUES (:user_id, :last_coments_id) AS new_val "
+                          "ON DUPLICATE KEY UPDATE last_coments_id = new_val.last_coments_id";
+
+    Values vals;
+    vals.insert(":user_id", userId);
+    vals.insert(":last_coments_id", commentId);
+    delete executeQuery(queryString, vals);
+}
+
+QMultiHash<QString, QPair<QString, int> > Database::staffList(int facultyId)
+{
+    QString dep = "";
+    Values vals;
+
+    if(facultyId){
+        dep = "WHERE S.department_id = :department_id";
+        vals.insert(":department_id", facultyId);
+    }
+
+    QString queryString = QString("SELECT D.`name` AS d_name, U.id AS u_id, U.surname AS u_sname, U.`name` AS u_name, U.middle_name AS u_mname "
+                                  "FROM department D "
+                                  "INNER JOIN staff S ON S.department_id = D.id "
+                                  "INNER JOIN `user` U ON U.id = S.user_id "
+                                  "%1 "
+                                  "ORDER BY d_name, u_sname").arg(dep);
+
+    QMultiHash<QString, QPair<QString, int> > staff;
+
+    auto query = executeQuery(queryString, vals);
+    while (query->next()) {
+        staff.insert(query->value("d_name").toString(),
+                     qMakePair(QString("%1 %2 %3").arg(query->value("u_sname").toString(),
+                                                       query->value("u_name").toString(),
+                                                       query->value("u_mname").toString()),
+                               query->value("u_id").toInt()));
+    }
+    return staff;
 }
 
 QSqlQuery* Database::executeQuery(QString queryString, Values vals)

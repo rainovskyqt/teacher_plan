@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UpdateComments</class>
+ <widget class="QDialog" name="UpdateComments">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>719</width>
+    <height>633</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Новости обновлений</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../res.qrc">
+    <normaloff>:/img/img/icon.png</normaloff>:/img/img/icon.png</iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="listWidget"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="cb_dontShow">
+       <property name="text">
+        <string>Не показывать до следующего обновления</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bnt_close">
+       <property name="text">
+        <string>Закрыть</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../res.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bnt_close</sender>
+   <signal>clicked()</signal>
+   <receiver>UpdateComments</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>340</x>
+     <y>602</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>420</x>
+     <y>604</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

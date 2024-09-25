@@ -29,6 +29,7 @@ public:
     QString currentYear();
 
 public slots:
+    void setUser(int id);
 //    void modelDataChanged();
     void setRate(double rate);
 //    void savePlan();

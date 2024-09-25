@@ -3,6 +3,7 @@
 
 #include "userdata.h"
 
+#include <QDate>
 #include <QMap>
 #include <QString>
 
@@ -58,11 +59,28 @@ struct UserPost
     int userId;
     int baseId;
     int departmentId;
+    QString depName;
     int postId;
+    QString postName;
+    bool main;
 
     bool operator==(const UserPost& other) const {
         return (this->baseId == other.baseId);
     }
+};
+
+enum UserPosts{
+    LaboratoryAssistant = 1,
+    SeniorLaboratoryAssistant,
+    Assistant,
+    Teacher,
+    SeniorTeacher,
+    AssociateProfessor,
+    Professor,
+    HeadOfDepartment,
+    Dean,
+    ViceRector,
+    Rector
 };
 
 enum WorkType{
@@ -72,6 +90,15 @@ enum WorkType{
     SportWork,
     OtherWork
 };
+
+struct CommentsUpdate
+{
+    int id;
+    QDate date;
+    QString version;
+    QString comments;
+};
+
 
 Q_DECLARE_METATYPE(UserPost);
 

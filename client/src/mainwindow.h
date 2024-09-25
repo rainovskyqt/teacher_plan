@@ -26,6 +26,8 @@ private slots:
     void setPlanData(TeacherPlan *plan);
     void on_btn_create_clicked();
 
+    void on_a_exit_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -37,6 +39,8 @@ private:
     void setTypes();
 
     TeacherPlan *m_currentPlan;
+
+    void checkUpdateComments(int userId);
 
 };
 #endif // MAINWINDOW_H

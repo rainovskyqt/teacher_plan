@@ -17,7 +17,8 @@
 
 // Для простановки часов используется QLineEdit что бы были пустые места, если буду QSpinBox, то будут 0, и форма будет перегружена
 
-EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
+
+EducationRow::EducationRow(int row, EducationalWork *work, S status, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EducationRow)
     ,m_work(nullptr)
@@ -27,7 +28,8 @@ EducationRow::EducationRow(int row, EducationalWork *work, QWidget *parent) :
     setRow(row);
     loadDictionaries();
     setData(work);
-    addMonths();
+    setStatus(status);
+    addMonths(status);
     makeConnections();
 
     WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
@@ -38,8 +40,11 @@ EducationRow::~EducationRow()
     delete ui;
 }
 
-void EducationRow::addMonths()
+void EducationRow::addMonths(S status)
 {
+    bool planReadOnly = !(status == S::Development);
+    bool factReadOnly = !(status == S::Development || status == S::Aproved);
+
     int startWeek = 1;
     for(int i = Month::September; i != Month::July; ++i){        //Старт с 9 месяца, так проще
         if(i == Month::Other)
@@ -50,7 +55,7 @@ void EducationRow::addMonths()
         if(m_work)
             workId = m_work->baseId();
 
-        auto month = new EducationMonth((Month::Months)i, startWeek, weekCount, workId, false, this);
+        auto month = new EducationMonth((Month::Months)i, startWeek, weekCount, workId, planReadOnly, factReadOnly);
         connect(month, &EducationMonth::hoursChanged, this, [&](EducationalHour *hour){
             countHours(hour->type());
             saveHour(hour);
@@ -105,6 +110,18 @@ void EducationRow::countHours(EducationalHour::HourType type)
         ui->lbl_secondFact->setText(QString::number(secontCount));
         ui->lbl_yearFact->setText(QString::number(firstCount + secontCount));
     }
+}
+
+void EducationRow::setStatus(S status)
+{
+    m_status = status;
+
+    ui->cb_discipline->setEnabled(status == S::Development);
+    ui->cb_course->setEnabled(status == S::Development);
+    ui->cb_workForm->setEnabled(status == S::Development);
+    ui->btn_deleteRow->setEnabled(status == S::Development);
+
+    ui->sb_groupCount->setReadOnly(status != S::Development);
 }
 
 EducationalWork *EducationRow::work() const

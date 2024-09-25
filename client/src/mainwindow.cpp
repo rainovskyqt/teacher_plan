@@ -6,6 +6,8 @@
 
 #include <QMessageBox>
 
+#include <updatecomments/updatecomments.h>
+
 MainWindow::MainWindow(User *user, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -33,8 +35,16 @@ MainWindow::MainWindow(User *user, QWidget *parent)
             ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
     ui->w_header->setUser(user);
+    ui->w_facultyPanel->setUser(user);
+
+    connect(ui->w_facultyPanel, &FacultyPanel::staffChanget, this, [&](int userId){
+        ui->w_header->setUser(userId);
+        ui->w_header->init();
+    });
+
     ui->w_header->init();
 
+    checkUpdateComments(user->baseId());
 
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);
@@ -72,9 +82,23 @@ void MainWindow::setTypes()
     ui->tab_other->setType(WorkType::OtherWork);
 }
 
+void MainWindow::checkUpdateComments(int userId)
+{
+    UpdateComments comments;
+    if(comments.loadComments(userId))
+        comments.exec();
+    if(comments.dontShow())
+        comments.setViewed();
+}
+
 void MainWindow::on_btn_create_clicked()
 {
     m_currentPlan->setBaseId(Database::get()->updateTeacherPlan(m_currentPlan));
     ui->w_header->setPlan();
+}
+
+void MainWindow::on_a_exit_triggered()
+{
+    qApp->exit();
 }
 
