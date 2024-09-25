@@ -31,7 +31,6 @@ EducationRow::EducationRow(int row, EducationalWork *work, S status, QWidget *pa
     setStatus(status);
     addMonths(status);
     makeConnections();
-
     WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
 }
 
@@ -80,6 +79,7 @@ void EducationRow::setData(EducationalWork *work)
     ui->cb_course->setCurrentIndex(ui->cb_course->findData(m_work->courseId()));
     ui->cb_workForm->setCurrentIndex(ui->cb_workForm->findData(m_work->workFormId()));
     ui->sb_groupCount->setValue(work->groupCount());
+    colorRow((bool)m_work->baseId());
 }
 
 QString EducationRow::toString()
@@ -170,8 +170,11 @@ void EducationRow::setScrolBarValue(int val)
 void EducationRow::loadDictionaries()
 {
     DictionaryAdapter::setDictionary(ui->cb_discipline, Database::Discipline);
+    ui->cb_discipline->setCurrentIndex(0);
     DictionaryAdapter::setDictionary(ui->cb_course, Database::Course);
+    ui->cb_course->setCurrentIndex(0);
     DictionaryAdapter::setDictionary(ui->cb_workForm, Database::WorkForm);
+    ui->cb_workForm->setCurrentIndex(0);
 }
 
 void EducationRow::makeConnections()
@@ -179,7 +182,7 @@ void EducationRow::makeConnections()
     connect(ui->cb_discipline, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         int oldId = m_work->baseId();
         m_work->setDisciplineId(ui->cb_discipline->currentData().toInt());
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
         if(oldId != m_work->baseId())
             setNewWorkId(m_work->baseId());
     });
@@ -187,7 +190,7 @@ void EducationRow::makeConnections()
     connect(ui->cb_course, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         int oldId = m_work->baseId();
         m_work->setCourseId(ui->cb_course->currentData().toInt());
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
         if(oldId != m_work->baseId())
             setNewWorkId(m_work->baseId());
     });
@@ -195,19 +198,19 @@ void EducationRow::makeConnections()
     connect(ui->cb_workForm, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         int oldId = m_work->baseId();
         m_work->setWorkFormId(ui->cb_workForm->currentData().toInt());
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
         if(oldId != m_work->baseId())
             setNewWorkId(m_work->baseId());
     });
 
     connect(ui->sb_groupCount, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int val){
         m_work->setGroupCount(val);
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
     });
 
     connect(ui->text_comments, &QPlainTextEdit::textChanged, this, [&]{
         m_work->setComments(ui->text_comments->toPlainText());
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
     });
 
     connect(ui->btn_deleteRow, &QPushButton::clicked, this, &EducationRow::deleteWork);
@@ -227,4 +230,12 @@ void EducationRow::setNewWorkId(int id)
     for(auto m: month){
         m->setNewWorkId(id);
     }
+}
+
+void EducationRow::colorRow(bool accepted)
+{
+    if(accepted)
+        ui->lbl_number->setStyleSheet("background-color: rgb(100, 255, 100);");
+    else
+        ui->lbl_number->setStyleSheet("background-color: rgb(255, 100, 100);");
 }

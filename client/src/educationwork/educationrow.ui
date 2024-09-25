@@ -78,6 +78,9 @@
             <height>26</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(100, 255, 100);</string>
+          </property>
           <property name="frameShape">
            <enum>QFrame::Box</enum>
           </property>

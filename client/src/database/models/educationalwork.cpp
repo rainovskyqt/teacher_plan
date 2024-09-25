@@ -2,9 +2,9 @@
 
 EducationalWork::EducationalWork(int planId, QObject *parent) : TeacherWork(planId, parent)
 {
-    m_disciplineId = 1;
-    m_workFormId = 1;
-    m_courseId = 1;
+    m_disciplineId = 0;
+    m_workFormId = 0;
+    m_courseId = 0;
     m_groupCount = 1;
     m_comments = QString();
     m_workType = Educational;

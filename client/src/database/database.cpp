@@ -86,7 +86,7 @@ int Database::addPost(UserPost post, int userId)
     return id;
 }
 
-QList<Dictionary> Database::getDictionary(DictName name)
+QVector<Dictionary> Database::getDictionary(DictName name)
 {
     QString tableName;
     QString order = "name";
@@ -106,10 +106,11 @@ QList<Dictionary> Database::getDictionary(DictName name)
         break;
     case Course:
         tableName = "`course`";
-        order.append(", course");
+        order.prepend("course, ");
         break;
     case WorkForm:
         tableName = "educational_work_form";
+        order = "order_place";
         break;
     }
 
@@ -117,7 +118,7 @@ QList<Dictionary> Database::getDictionary(DictName name)
 
     auto query = executeQuery(queryString);
 
-    QList<Dictionary> list;
+    QVector<Dictionary> list;
     while(query->next()){
         list.append(Dictionary(query->value("id").toInt(), query->value("name").toString()));
     }
@@ -514,6 +515,8 @@ int Database::saveGenericWork(TeacherWork *work)
                            "plan_hours, fact_hours, order_place) "
                            "VALUES(:teacher_plan_id, :work_form_id, :semester, :complite, "
                            ":plan_hours, :fact_hours, :order_place) ";
+
+
     if(w->baseId()){
         delete executeQuery(updateString, vals);
         return w->baseId();

@@ -59,6 +59,8 @@ private:
 
     void saveHour(EducationalHour *hour);
     void setNewWorkId(int id);
+
+    void colorRow(bool accepted);
 };
 
 #endif // EDUCATIONROW_H

@@ -44,7 +44,7 @@ public:
     void addPosts(QList<UserPost> posts, int userId);
     int addPost(UserPost post, int userId);
     User *login(QString login, QString password, int id = 0);
-    QList<Dictionary> getDictionary(DictName name);
+    QVector<Dictionary> getDictionary(DictName name);
     QList<StudyYear> getYears();
     TeacherPlan *requestPlan(UserPost post, int yearId);
     int updateTeacherPlan(TeacherPlan *plan);
