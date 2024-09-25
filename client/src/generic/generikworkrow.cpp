@@ -8,13 +8,14 @@
 #include <database/database.h>
 #include "database/models/genericworkform.h"
 
-GenerikWorkRow::GenerikWorkRow(GenericWork *work, QWidget *parent)
+GenerikWorkRow::GenerikWorkRow(GenericWork *work, int number, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::GenerikWorkRow)
 {
     ui->setupUi(this);
 
     m_work = work;
+    ui->lbl_number->setNum(number);
 }
 
 GenerikWorkRow::~GenerikWorkRow()
@@ -50,8 +51,10 @@ void GenerikWorkRow::loadWorkTypes()
 
 void GenerikWorkRow::setWorkData(GenericWork *work)
 {
-    if(!m_work->baseId())
+    if(!m_work->baseId()){
+        colorRow(false);
         return;
+    }
 
     ui->cb_works->setCurrentIndex(ui->cb_works->findData(work->workFormId()));
     ui->sb_plan->setValue(m_work->planHours());
@@ -77,27 +80,35 @@ void GenerikWorkRow::makeConnections()
 {
     connect(ui->cb_works, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [&]{
         m_work->setWorkFormId(ui->cb_works->currentData().toInt());
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
     });
 
     connect(ui->sb_plan, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int val){
         m_work->setPlanHours(val);
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
         emit valueChanged();
     });
 
     connect(ui->sb_fact, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int val){
         m_work->setFactHours(val);
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
         emit valueChanged();
     });
 
     connect(ui->text_complite, &QPlainTextEdit::textChanged, this, [&](){
         auto text = static_cast<QPlainTextEdit*>(sender());
         m_work->setComplite(text->toPlainText());
-        Database::get()->saveWork(m_work);
+        colorRow(Database::get()->saveWork(m_work));
         emit valueChanged();
     });
 
     connect(ui->btn_delete, &QPushButton::clicked, this, &GenerikWorkRow::deleteWork);
+}
+
+void GenerikWorkRow::colorRow(bool accepted)
+{
+    if(accepted)
+        ui->lbl_number->setStyleSheet("background-color: rgb(100, 255, 100);");
+    else
+        ui->lbl_number->setStyleSheet("background-color: rgb(255, 100, 100);");
 }

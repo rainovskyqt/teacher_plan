@@ -54,7 +54,7 @@ void FormGenerikWork::addRow(GenericWork *work)
 
     work->setOrderPlace(list->count());
 
-    auto row = new GenerikWorkRow(work);
+    auto row = new GenerikWorkRow(work, list->count());
 
     item->setSizeHint(row->sizeHint());
     list->setItemWidget(item, row);

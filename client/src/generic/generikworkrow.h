@@ -13,7 +13,7 @@ class GenerikWorkRow : public QWidget
     Q_OBJECT
 
 public:
-    explicit GenerikWorkRow(GenericWork *work, QWidget *parent = nullptr);
+    explicit GenerikWorkRow(GenericWork *work, int number, QWidget *parent = nullptr);
     ~GenerikWorkRow();
 
     int planeHours();
@@ -35,6 +35,9 @@ private:
     void loadWorkTypes();
     void setWorkData(GenericWork *work);
     void makeConnections();
+
+    void colorRow(bool accepted);
+
 };
 
 #endif // GENERIKWORKROW_H
