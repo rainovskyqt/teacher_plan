@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/img">
-        <file>img/Vgafk.png</file>
-        <file>img/delete.png</file>
-        <file>img/icon.png</file>
-    </qresource>
-</RCC>
