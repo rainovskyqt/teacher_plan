@@ -32,6 +32,10 @@ public:
     int row();
     void setRow(int row);
 
+    int countMonthHourse(Month::Months month, EducationalHour::HourType type);
+
+    int workForm();
+
 public slots:
     void setScrolBarValue(int val);
 

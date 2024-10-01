@@ -162,6 +162,22 @@ void EducationRow::setRow(int row)
     ui->lbl_number->setText(QString::number(row));
 }
 
+int EducationRow::countMonthHourse(Month::Months month, EducationalHour::HourType type)
+{
+    int count = 0;
+    auto months = this->findChildren<EducationMonth*>();
+    for(auto m: months){
+        if(m->month() == month)
+            count += m->getTime(type);
+    }
+    return count;
+}
+
+int EducationRow::workForm()
+{
+    return m_work->workFormId();
+}
+
 void EducationRow::setScrolBarValue(int val)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(val);

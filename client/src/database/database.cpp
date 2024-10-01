@@ -8,6 +8,7 @@
 #include <QSqlDatabase>
 #include <QNetworkReply>
 #include <QSqlError>
+#include <QVector>
 
 #include <login/user.h>
 #include "database/models/educationalwork.h"

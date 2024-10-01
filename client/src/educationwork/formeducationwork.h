@@ -30,6 +30,7 @@ public slots:
 private slots:
     void on_btn_add_clicked();
     void deleteRow();
+    void countFactValue(Month::Months month, int workType, int);
 
 signals:
     void planValueChanged(WorkType, PlanTime::Semester, int);

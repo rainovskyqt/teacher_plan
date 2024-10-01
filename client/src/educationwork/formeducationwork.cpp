@@ -69,7 +69,7 @@ void FormEducationWork::addRow(EducationalWork *work)
         ui->w_footer->setValue(h);
     });
 
-    connect(row, &EducationRow::factValueChanged, this, &FormEducationWork::factValueChanged);
+    connect(row, &EducationRow::factValueChanged, this, &FormEducationWork::countFactValue);
     connect(ui->scrolbar, &QScrollBar::valueChanged, row, &EducationRow::setScrolBarValue);
 
     row->loadHours();           //Часы устанасливаются после подключения сигнала к футеру, что бы сработал посчет часов
@@ -115,6 +115,18 @@ void FormEducationWork::deleteRow()
 
     delete ui->lw_educationWork->item(row);
     updateRowNumber(row);
+}
+
+void FormEducationWork::countFactValue(Month::Months month, int workType, int)
+{
+    int count = 0;
+    auto rows = this->findChildren<EducationRow*>();
+    for(auto r: rows){
+        if(r->workForm() == workType){
+            count += r->countMonthHourse(month, EducationalHour::Factical);
+        }
+    }
+    emit factValueChanged(month, workType, count);
 }
 
 void FormEducationWork::clearData()

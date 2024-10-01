@@ -2,6 +2,7 @@
 #include "ui_facultypanel.h"
 
 #include "database/database.h"
+#include <QSet>
 
 using R = UserRights;
 
