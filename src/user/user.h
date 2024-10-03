@@ -19,15 +19,6 @@ class User : public QObject
 public:
     explicit User(int id = 0, QString surname = QString(), QString name = QString(), QString middleName = QString());
 
-    // QList<UserPost> posts() const;
-    // void addPost(int userId, int department, int post, bool main);
-    // void addPost(const UserPost &post);
-    // void removePost(int id);
-
-    // void setRights(const UserRights &newRights);
-    // bool hasAnyRights(QList<UserRights::Right> rights);
-    // bool hasAllRights(QList<UserRights::Right> rights);
-
     int id() const;
     void setId(int newId);
 
@@ -46,6 +37,11 @@ public:
     Staff *mainStaff() const;
     QVector<Staff*> allStaff() const;
     void addStaff(Staff* newStaff);
+
+    void setRights(const UserRights &newRights);
+    void setRights(const QString &newRights);
+    void addRights(const QString &rights);
+
 
     bool hasAnyRights(QList<UserRights::Right> rights);
     bool hasAllRights(QList<UserRights::Right> rights);

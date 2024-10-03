@@ -424,36 +424,6 @@ QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 //     delete executeQuery(queryString, vals);
 // }
 
-// QMultiHash<QString, QPair<QString, int> > Database::staffList(int facultyId)
-// {
-//     QString dep = "";
-//     Values vals;
-
-//     if(facultyId){
-//         dep = "WHERE S.department_id = :department_id";
-//         vals.insert(":department_id", facultyId);
-//     }
-
-//     QString queryString = QString("SELECT D.`name` AS d_name, U.id AS u_id, U.surname AS u_sname, U.`name` AS u_name, U.middle_name AS u_mname "
-//                                   "FROM department D "
-//                                   "INNER JOIN staff S ON S.department_id = D.id "
-//                                   "INNER JOIN `user` U ON U.id = S.user_id "
-//                                   "%1 "
-//                                   "ORDER BY d_name, u_sname").arg(dep);
-
-//     QMultiHash<QString, QPair<QString, int> > staff;
-
-//     auto query = executeQuery(queryString, vals);
-//     while (query->next()) {
-//         staff.insert(query->value("d_name").toString(),
-//                      qMakePair(QString("%1 %2 %3").arg(query->value("u_sname").toString(),
-//                                                        query->value("u_name").toString(),
-//                                                        query->value("u_mname").toString()),
-//                                query->value("u_id").toInt()));
-//     }
-//     return staff;
-// }
-
 // QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 // {
 //     auto base = QSqlDatabase::database();

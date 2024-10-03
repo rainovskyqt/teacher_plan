@@ -1,12 +1,13 @@
 #include "facultypanel.h"
 #include "ui_facultypanel.h"
 
-#include "database/database.h"
+#include <QDebug>
 
+#include "database/database.h"
 #include "user/usermanager.h"
 #include "user/user.h"
 
-// using R = UserRights;
+using R = UserRights;
 
 FacultyPanel::FacultyPanel(QWidget *parent)
     : QWidget(parent)
@@ -23,6 +24,31 @@ FacultyPanel::~FacultyPanel()
 void FacultyPanel::init()
 {
     auto user = UserManager::get()->user();
+
+    setUserData(user);
+
+    if(!personalPlanOnly()){
+        setModel(user);
+        setOwnPlans();
+    }
+}
+
+bool FacultyPanel::canBeVisible()
+{
+    return !personalPlanOnly();
+}
+
+bool FacultyPanel::personalPlanOnly()
+{
+    auto user = UserManager::get()->user();
+    bool boss = user->hasAnyRights({R::DepartmentTeacherPlans,
+                                    R::AllTeacherPlans});
+
+    return !boss;
+}
+
+void FacultyPanel::setUserData(User *user)
+{
     ui->lbl_fio->setText(user->nameShort());
     if(auto mainStaff = user->mainStaff()){
         ui->lbl_department->setText(mainStaff->departmentName());
@@ -30,43 +56,27 @@ void FacultyPanel::init()
     }
 }
 
-// bool FacultyPanel::personalPlanOnly()
-// {
-//     bool boss = m_user->hasAnyRights({R::DepartmentTeacherPlans,
-//                                       R::AllTeacherPlans});
+void FacultyPanel::setModel(User *user)
+{
+    ui->tree_plans->setModel(&model);
+    int dep = user->hasAnyRights({R::DepartmentTeacherPlans}) ? user->mainStaff()->departmentId() : 0;
+    model.loadStaff(dep);
 
-//     return !boss;
-// }
+    connect(ui->btn_own, &QPushButton::clicked, this, &FacultyPanel::setOwnPlans);
 
+    connect(ui->tree_plans->selectionModel() , &QItemSelectionModel::currentChanged,
+            this, [&](const QModelIndex &current, const QModelIndex &previous){
+                Q_UNUSED(previous)
+                int id = model.itemFromIndex(current)->data(Qt::UserRole).toInt();
+                emit staffChanged(id);
+            });
 
-// void FacultyPanel::loadStaff()
-// {
-//     ui->tree_plans->clear();
-//     int dep = m_user->hasAnyRights({R::DepartmentTeacherPlans}) ? m_departmentId : 0;
-//     auto staffList = Database::get()->staffList(dep);
+}
 
-//     auto departments = staffList.uniqueKeys();
-//     std::sort(departments.begin(), departments.end());
-
-//     for(const QString& key : departments) {
-//         QTreeWidgetItem* parentItem = new QTreeWidgetItem(ui->tree_plans);
-//         parentItem->setText(0, key);
-
-//         auto staff = staffList.values(key);
-//         auto staffUnique = QSet<QPair<QString, int>>(staff.begin(), staff.end());
-
-//         for(const auto value : staffUnique) {
-//             QTreeWidgetItem* childItem = new QTreeWidgetItem(parentItem);
-//             childItem->setData(0, Qt::UserRole, value.second);
-//             childItem->setText(0, value.first);
-//         }
-//     }
-// }
-
-// void FacultyPanel::on_tree_plans_itemClicked(QTreeWidgetItem *item, int column)
-// {
-//     auto id = item->data(0, Qt::UserRole).toInt();
-//     if(id)
-//         staffChanget(id);
-// }
-
+void FacultyPanel::setOwnPlans()
+{
+    auto model = qobject_cast<ModelStaffList*>(ui->tree_plans->model());
+    int ownId = UserManager::get()->user()->id();
+    int depId = UserManager::get()->user()->mainStaff()->departmentId();
+    ui->tree_plans->setCurrentIndex(model->getUserIndex(ownId, depId));
+}

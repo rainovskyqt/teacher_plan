@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "settings.h"
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
@@ -17,38 +18,38 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
     ui->setupUi(this);
-    setTypes();
-    ui->w_facultyPanel->init();
+    init();
 
-    // connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
-    // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
-    // connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
+// connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
+// connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
+// connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::clear,
-    //         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
+// connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
 
-    // connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
-    //         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
+// connect(ui->tab_educationWork, &FormEducationWork::clear,
+//         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
 
-    // ui->w_header->setUser(user);
-    // ui->w_facultyPanel->setUser(user);
+// connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
+//         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
-    // connect(ui->w_facultyPanel, &FacultyPanel::staffChanget, this, [&](int userId){
-    //     ui->w_header->setUser(userId);
-    //     ui->w_header->init();
-    // });
+// ui->w_header->setUser(user);
+// ui->w_facultyPanel->setUser(user);
 
-    // ui->w_header->init();
+// connect(ui->w_facultyPanel, &FacultyPanel::staffChanget, this, [&](int userId){
+//     ui->w_header->setUser(userId);
+//     ui->w_header->init();
+// });
 
-    // checkUpdateComments(user->baseId());
+// ui->w_header->init();
+
+// checkUpdateComments(user->baseId());
 
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);
@@ -58,6 +59,20 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    saveSpliterState();
+
+    QWidget::closeEvent(e);
+}
+
+void MainWindow::init()
+{
+    setTypes();
+    initFacultyPanel();
+    loadSpliterState();
 }
 
 // void MainWindow::setPlanData(TeacherPlan *plan)
@@ -84,6 +99,40 @@ void MainWindow::setTypes()
     // ui->tab_research->setType(WorkType::ResearchingWork);
     // ui->tab_sport->setType(WorkType::SportWork);
     // ui->tab_other->setType(WorkType::OtherWork);
+}
+
+void MainWindow::loadSpliterState()
+{
+    auto s = Settings::get();
+    QByteArray state = s.mainSplitterState();
+    if (!state.isEmpty()) {
+        ui->s_mainSplitter->restoreState(state);
+    }
+}
+
+void MainWindow::saveSpliterState()
+{
+    auto s = Settings::get();
+    s.setSplitterState(ui->s_mainSplitter->saveState());
+}
+
+void MainWindow::initFacultyPanel()
+{
+    ui->w_facultyPanel->init();
+    if(ui->w_facultyPanel->canBeVisible()){
+        ui->a_showFacultyPanel->setEnabled(true);
+        ui->w_facultyPanel->setVisible(Settings::get().facultyPanel());
+        ui->a_showFacultyPanel->setChecked(Settings::get().facultyPanel());
+
+        connect(ui->a_showFacultyPanel, &QAction::triggered, this, [&](bool checked){
+            ui->w_facultyPanel->setVisible(checked);
+            auto s = Settings::get();
+            s.setFacultyPanel(checked);
+        });
+    } else {
+        ui->a_showFacultyPanel->setEnabled(false);
+        ui->w_facultyPanel->setVisible(false);
+    }
 }
 
 // void MainWindow::checkUpdateComments(int userId)

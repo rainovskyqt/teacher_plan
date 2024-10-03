@@ -23,6 +23,12 @@ public:
     QString lastName();
     void setLastName(QString lastName);
 
+    bool facultyPanel();
+    void setFacultyPanel(bool visible);
+
+    QByteArray mainSplitterState();
+    void setSplitterState(QByteArray state);
+
     // int weekCount(Month::Months month);
     // QPair<int, int> weekDate(int week);
 

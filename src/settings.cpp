@@ -157,6 +157,26 @@ void Settings::setLastName(QString lastName)
     set("lastName", lastName);
 }
 
+bool Settings::facultyPanel()
+{
+    return get<bool>("faculty_panel", true);
+}
+
+void Settings::setFacultyPanel(bool visible)
+{
+    set("faculty_panel", visible);
+}
+
+QByteArray Settings::mainSplitterState()
+{
+    return get<QByteArray>("main_splitter", "");
+}
+
+void Settings::setSplitterState(QByteArray state)
+{
+    set("main_splitter", state);
+}
+
 // int Settings::weekCount(Month::Months month)
 // {
 //     return m_weekCount.value(month);

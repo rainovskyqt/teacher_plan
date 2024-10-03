@@ -4,6 +4,10 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
+#include "modelstafflist.h"
+
+class User;
+
 namespace Ui {
 class FacultyPanel;
 }
@@ -17,22 +21,23 @@ public:
     ~FacultyPanel();
 
     void init();
+    bool canBeVisible();
+
 
 signals:
-    // void staffChanget(int);
+    void staffChanged(int);
 
 private slots:
-    // void on_tree_plans_itemClicked(QTreeWidgetItem *item, int column);
+    void setOwnPlans();
 
 private:
     Ui::FacultyPanel *ui;
 
-    // User *m_user;
-    // int m_departmentId;
+    ModelStaffList model;
 
-    // bool personalPlanOnly();
-    // void setFaculty();
-    // void loadStaff();
+    bool personalPlanOnly();
+    void setUserData(User *user);
+    void setModel(User *user);
 };
 
 #endif // FACULTYPANEL_H

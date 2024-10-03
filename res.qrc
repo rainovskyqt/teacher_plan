@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>icons/plans_panel.png</file>
+    </qresource>
+</RCC>

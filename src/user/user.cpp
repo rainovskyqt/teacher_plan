@@ -78,6 +78,24 @@ void User::addStaff(Staff *newStaff)
     m_staff.append(newStaff);
 }
 
+void User::setRights(const UserRights &newRights)
+{
+    m_rights = newRights;
+}
+
+void User::setRights(const QString &newRights)
+{
+    auto right = UserRights::fromString(newRights);
+    setRights(right);
+}
+
+void User::addRights(const QString &rights)
+{
+    auto right = UserRights::fromString(rights).items();
+    for(const auto &r : qAsConst(right))
+        m_rights.add(r);
+}
+
 bool User::hasAnyRights(QList<UserRights::Right> rights)
 {
     foreach (auto r, rights) {
@@ -120,11 +138,6 @@ bool User::hasAllRights(QList<UserRights::Right> rights)
 //         if(p.baseId == id)
 //             m_posts.removeOne(p);
 //     }
-// }
-
-// void User::setRights(const UserRights &newRights)
-// {
-//     m_rights = newRights;
 // }
 
 // bool User::hasAnyRights(QList<UserRights::Right> rights)

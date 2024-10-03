@@ -17,6 +17,7 @@ public:
     };
 
     explicit UserRights(QObject *parent = nullptr);
+    ~UserRights() {}
     UserRights(UserRights&& other) ;
     UserRights &operator=(const UserRights& other);
 

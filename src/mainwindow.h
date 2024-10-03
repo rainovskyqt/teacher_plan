@@ -21,6 +21,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    virtual void closeEvent(QCloseEvent *e) override;
 
 private slots:
     // void setPlanData(TeacherPlan *plan);
@@ -35,8 +36,11 @@ private:
         Message,
         TotalTime
     };
-
+    void init();
     void setTypes();
+    void loadSpliterState();
+    void saveSpliterState();
+    void initFacultyPanel();
 
     // TeacherPlan *m_currentPlan;
 

@@ -45,13 +45,31 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeWidget" name="tree_plans">
-     <column>
-      <property name="text">
-       <string>Планы</string>
-      </property>
-     </column>
-    </widget>
+    <widget class="QTreeView" name="tree_plans"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>68</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_own">
+       <property name="text">
+        <string>Свои</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

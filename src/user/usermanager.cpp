@@ -50,6 +50,7 @@ bool UserManager::login(const QString &login, const QString &password)
                                    answer->value("p_name").toString(),
                                    answer->value("main").toBool())
                          );
+        m_user->addRights(answer->value("rights").toString());
     }
     delete answer;
     return m_user->id();
