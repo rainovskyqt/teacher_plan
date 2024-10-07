@@ -4,7 +4,9 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
-#include "modelstafflist.h"
+#include <staff/modelyear.h>
+
+#include "modelfaculty.h"
 
 class User;
 
@@ -29,15 +31,18 @@ signals:
 
 private slots:
     void setOwnPlans();
+    void loadTechers(int index);
 
 private:
     Ui::FacultyPanel *ui;
 
-    ModelStaffList model;
+    ModelFaculty m_model;
+    ModelYear m_modelYear;
 
     bool personalPlanOnly();
+    void setYearModel();
     void setUserData(User *user);
-    void setModel(User *user);
+    void setModel();
 };
 
 #endif // FACULTYPANEL_H

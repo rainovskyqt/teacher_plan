@@ -34,7 +34,7 @@
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QWidget" name="w_header" native="true"/>
+         <widget class="Header" name="w_header" native="true"/>
         </item>
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
@@ -235,6 +235,12 @@
    <class>FacultyPanel</class>
    <extends>QWidget</extends>
    <header>faculty/facultypanel.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Header</class>
+   <extends>QWidget</extends>
+   <header>header/header.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

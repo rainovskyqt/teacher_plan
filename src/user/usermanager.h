@@ -2,8 +2,7 @@
 #define USERMANAGER_H
 
 #include <QObject>
-
-class User;
+#include "user.h"
 
 class UserManager : public QObject
 {
@@ -14,12 +13,15 @@ public:
 
     static UserManager *get();
     bool login(const QString &login, const QString &password);
-    User *user();
+    User *getUser(int id);
+    User *user() const;
 
 signals:
 
 private:
     User *m_user;
+
+    void setUser(User *user);
 };
 
 #endif // USERMANAGER_H

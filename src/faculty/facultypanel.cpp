@@ -1,6 +1,7 @@
 #include "facultypanel.h"
 #include "ui_facultypanel.h"
 
+#include <QComboBox>
 #include <QDebug>
 
 #include "database/database.h"
@@ -28,7 +29,10 @@ void FacultyPanel::init()
     setUserData(user);
 
     if(!personalPlanOnly()){
-        setModel(user);
+        setYearModel();
+        setModel();
+        loadTechers(ui->cb_year->currentIndex());
+        connect(ui->cb_year, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FacultyPanel::loadTechers);
         setOwnPlans();
     }
 }
@@ -47,6 +51,13 @@ bool FacultyPanel::personalPlanOnly()
     return !boss;
 }
 
+void FacultyPanel::setYearModel()
+{
+    ui->cb_year->setModel(&m_modelYear);
+    ui->cb_year->setModelColumn(DictionaryModel::Name);
+
+}
+
 void FacultyPanel::setUserData(User *user)
 {
     ui->lbl_fio->setText(user->nameShort());
@@ -56,18 +67,19 @@ void FacultyPanel::setUserData(User *user)
     }
 }
 
-void FacultyPanel::setModel(User *user)
+void FacultyPanel::setModel()
 {
-    ui->tree_plans->setModel(&model);
-    int dep = user->hasAnyRights({R::DepartmentTeacherPlans}) ? user->mainStaff()->departmentId() : 0;
-    model.loadStaff(dep);
+    m_model.setSourceModel(new ModelStaffList(this));
+    ui->tree_plans->setModel(&m_model);
 
     connect(ui->btn_own, &QPushButton::clicked, this, &FacultyPanel::setOwnPlans);
 
     connect(ui->tree_plans->selectionModel() , &QItemSelectionModel::currentChanged,
             this, [&](const QModelIndex &current, const QModelIndex &previous){
                 Q_UNUSED(previous)
-                int id = model.itemFromIndex(current)->data(Qt::UserRole).toInt();
+                int id = 0;
+                if(m_model.itemFromIndex(current)->data(Qt::UserRole + 1).toBool())
+                    id = m_model.itemFromIndex(current)->data(Qt::UserRole).toInt();
                 emit staffChanged(id);
             });
 
@@ -75,8 +87,17 @@ void FacultyPanel::setModel(User *user)
 
 void FacultyPanel::setOwnPlans()
 {
-    auto model = qobject_cast<ModelStaffList*>(ui->tree_plans->model());
+    auto model = qobject_cast<ModelFaculty*>(ui->tree_plans->model());
     int ownId = UserManager::get()->user()->id();
     int depId = UserManager::get()->user()->mainStaff()->departmentId();
     ui->tree_plans->setCurrentIndex(model->getUserIndex(ownId, depId));
+}
+
+void FacultyPanel::loadTechers(int index)
+{
+    auto user = UserManager::get()->user();
+    int dep = user->hasAnyRights({R::DepartmentTeacherPlans}) ? user->mainStaff()->departmentId() : 0;
+    int year = m_modelYear.data(m_modelYear.index(index, 0)).toInt();
+
+    m_model.loadByDepartment(year, dep);
 }

@@ -36,15 +36,17 @@ private:
         Message,
         TotalTime
     };
+
     void init();
     void setTypes();
     void loadSpliterState();
     void saveSpliterState();
     void initFacultyPanel();
+    void initConnections();
+    void checkUpdateComments();
 
     // TeacherPlan *m_currentPlan;
 
-    // void checkUpdateComments(int userId);
 
 };
 #endif // MAINWINDOW_H

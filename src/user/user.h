@@ -8,16 +8,13 @@
 
 #include "userrigth.h"
 
-// #include "database/models/userdata.h"
-// #include "database/models/datamodels.h"
-// #include "database/models/userrigth.h"
-
 class User : public QObject
 {
     Q_OBJECT
 
 public:
     explicit User(int id = 0, QString surname = QString(), QString name = QString(), QString middleName = QString());
+    ~User() {}
 
     int id() const;
     void setId(int newId);

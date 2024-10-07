@@ -5,12 +5,13 @@
 #include <QMessageBox>
 
 #include "database/types.h"
-
 #include "database/database.h"
+#include "updatecomments/updatecomments.h"
+
+#include "user/usermanager.h"
+
 // #include "login/user.h"
 
-
-// #include <updatecomments/updatecomments.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,38 +19,37 @@ MainWindow::MainWindow(QWidget *parent)
 
 {
     ui->setupUi(this);
+
+    checkUpdateComments();
+
+    connect(ui->w_facultyPanel, &FacultyPanel::staffChanged, ui->w_header, &Header::setTeacher);
+
     init();
 
+    // connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
+    // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
+    // connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
 
-// connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
-// connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
-// connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
+    // connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    // connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    // connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    // connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    // connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
-// connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-// connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-// connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-// connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-// connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+    // connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
 
-// connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
+    // connect(ui->tab_educationWork, &FormEducationWork::clear,
+    //         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
 
-// connect(ui->tab_educationWork, &FormEducationWork::clear,
-//         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
+    // connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
+    //         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
-// connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
-//         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
+    // ui->w_header->setUser(user);
+    // ui->w_facultyPanel->setUser(user);
 
-// ui->w_header->setUser(user);
-// ui->w_facultyPanel->setUser(user);
 
-// connect(ui->w_facultyPanel, &FacultyPanel::staffChanget, this, [&](int userId){
-//     ui->w_header->setUser(userId);
-//     ui->w_header->init();
-// });
+    // ui->w_header->init();
 
-// ui->w_header->init();
-
-// checkUpdateComments(user->baseId());
 
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);
@@ -73,6 +73,7 @@ void MainWindow::init()
     setTypes();
     initFacultyPanel();
     loadSpliterState();
+    initConnections();
 }
 
 // void MainWindow::setPlanData(TeacherPlan *plan)
@@ -135,23 +136,23 @@ void MainWindow::initFacultyPanel()
     }
 }
 
-// void MainWindow::checkUpdateComments(int userId)
-// {
-//     UpdateComments comments;
-//     if(comments.loadComments(userId))
-//         comments.exec();
-//     if(comments.dontShow())
-//         comments.setViewed();
-// }
+void MainWindow::initConnections()
+{
+    connect(ui->a_exit, &QAction::triggered, this, []{ qApp->exit(0); });
+}
+
+void MainWindow::checkUpdateComments()
+{
+    UpdateComments comments;
+    if(comments.loadComments(UserManager::get()->user()->id()))
+        comments.exec();
+    if(comments.dontShow())
+        comments.setViewed(UserManager::get()->user()->id());
+}
 
 // void MainWindow::on_btn_create_clicked()
 // {
 //     m_currentPlan->setBaseId(Database::get()->updateTeacherPlan(m_currentPlan));
 //     ui->w_header->setPlan();
-// }
-
-// void MainWindow::on_a_exit_triggered()
-// {
-//     qApp->exit();
 // }
 

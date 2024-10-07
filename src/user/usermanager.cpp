@@ -1,7 +1,6 @@
 #include "usermanager.h"
 
 #include "database/database.h"
-#include "user.h"
 
 #include <QVariant>
 
@@ -9,7 +8,6 @@ Q_GLOBAL_STATIC(UserManager, globalInst)
 
 UserManager::UserManager(QObject *parent)
     : QObject{parent}
-    ,m_user(new User)
 {}
 
 UserManager *UserManager::get()
@@ -18,6 +16,30 @@ UserManager *UserManager::get()
 }
 
 bool UserManager::login(const QString &login, const QString &password)
+{
+    auto base = Database::get();
+
+    QString queryString = "SELECT id  "
+                          "FROM user U "
+                          "WHERE `login` = :login AND `password` = :password ";
+    Arguments args;
+    args.insert(":login", login);
+    args.insert(":password", password);
+
+    auto answer = base->selectQuery(queryString, args);
+
+    if(answer.next()){
+        int id = answer.value("id").toInt();
+        auto user = getUser(id);
+        if(user){
+            setUser(user);
+            return true;
+        }
+    }
+    return false;
+}
+
+User *UserManager::getUser(int id)
 {
     auto base = Database::get();
 
@@ -30,33 +52,41 @@ bool UserManager::login(const QString &login, const QString &password)
                           "INNER JOIN `department` D ON D.id = S.department_id "
                           "INNER JOIN `post` P ON P.id = S.post_id "
                           "LEFT JOIN staff_access_rigth SAR ON SAR.staff_id = S.id "
-                          "WHERE `login` = :login AND `password` = :password "
+                          "WHERE U.id = :id "
                           "ORDER BY main, staff_id";
 
-    Database::Values vals;
-    vals.insert(":login", QVariant(login));
-    vals.insert(":password", QVariant(password));
+    Arguments args;
+    args.insert(":id", QVariant(id));
 
-    auto answer = base->executeQuery(queryString, vals);
-    while(answer->next()){
-        m_user->setId(answer->value("uid").toInt());
-        m_user->setSurname(answer->value("surname").toString());
-        m_user->setName(answer->value("name").toString());
-        m_user->setMiddleName(answer->value("middle_name").toString());
-        m_user->addStaff(new Staff(answer->value("staff_id").toInt(),
-                                   answer->value("department_id").toInt(),
-                                   answer->value("d_name").toString(),
-                                   answer->value("post_id").toInt(),
-                                   answer->value("p_name").toString(),
-                                   answer->value("main").toBool())
-                         );
-        m_user->addRights(answer->value("rights").toString());
+    auto answer = base->selectQuery(queryString, args);
+
+    User *user = new User();
+
+    while(answer.next()){
+        user->setId(answer.value("uid").toInt());
+        user->setSurname(answer.value("surname").toString());
+        user->setName(answer.value("name").toString());
+        user->setMiddleName(answer.value("middle_name").toString());
+        user->addStaff(new Staff(answer.value("staff_id").toInt(),
+                                 answer.value("department_id").toInt(),
+                                 answer.value("d_name").toString(),
+                                 answer.value("post_id").toInt(),
+                                 answer.value("p_name").toString(),
+                                 answer.value("main").toBool())
+                       );
+        user->addRights(answer.value("rights").toString());
     }
-    delete answer;
-    return m_user->id();
+    return user;
 }
 
-User *UserManager::user()
+User *UserManager::user() const
 {
     return m_user;
+}
+
+void UserManager::setUser(User *user)
+{
+    if(m_user)
+        m_user->deleteLater();
+    m_user = user;
 }

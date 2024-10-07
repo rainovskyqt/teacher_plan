@@ -28,7 +28,6 @@ class Database : public QObject
 
 public:
 
-    using Values = QMap<QString, QVariant>;
     enum DictName{
         Department,
         Post,
@@ -41,7 +40,9 @@ public:
     explicit Database();
     static Database *get();
     bool init(QString host, int port);
-    QSqlQuery *executeQuery(QString queryString, Values vals = {});
+    QSqlQuery selectQuery(QString queryString, Arguments args = {});
+    int insertQuery(QString queryString, Arguments args = {});
+    void updateDeleteQuery(QString queryString, Arguments args = {});
     const QString &lastError() const;
 
 
@@ -61,8 +62,6 @@ public:
     // QList<EducationalHour*> getEdcationalHours(int workId);
     // int saveEdcationalHour(EducationalHour* hour);
     // QList<GenericWorkForm *> getWorks(WorkType type);
-    // QMap<int, CommentsUpdate> updateComments(bool all, int userId);
-    // void setViewed(int userId, int commentId);
 
 public slots:
 
@@ -71,8 +70,9 @@ signals:
 private slots:
 
 private:
-    int baseId;
     QString m_lastError;
+    QSqlQuery executeQuery(QString queryString, Arguments args);
+
     // int getId(QString json);
     // int saveEducationalWork(TeacherWork *work);
     // int saveGenericWork(TeacherWork *work);

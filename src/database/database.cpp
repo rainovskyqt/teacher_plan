@@ -41,25 +41,44 @@ const QString &Database::lastError() const
     return m_lastError;
 }
 
-QSqlQuery* Database::executeQuery(QString queryString, Values vals)
+QSqlQuery Database::executeQuery(QString queryString, Arguments args)
 {
     auto base = QSqlDatabase::database();
     if(!base.open())
         base.open();
 
-    QSqlQuery *query = new QSqlQuery(base);
-    query->prepare(queryString);
-    for(auto val = vals.begin(); val != vals.end(); ++val){
-        query->bindValue(val.key(), val.value());
+    QSqlQuery query(base);
+    query.prepare(queryString);
+    for(auto arg = args.begin(); arg != args.end(); ++arg){
+        query.bindValue(arg.key(), arg.value());
     }
-    query->exec();
+    query.exec();
 
-    if(query->lastError().isValid())
-        m_lastError = query->lastError().text();
+    if(query.lastError().isValid()){
+        m_lastError = query.lastError().text();
+        qDebug() << m_lastError;
+    }
 
     base.close();
     return query;
 }
+
+QSqlQuery Database::selectQuery(QString queryString, Arguments args)
+{
+    return executeQuery(queryString, args);
+}
+
+int Database::insertQuery(QString queryString, Arguments args)
+{
+    auto query = executeQuery(queryString, args);
+    return query.lastInsertId().toInt();
+}
+
+void Database::updateDeleteQuery(QString queryString, Arguments args)
+{
+    executeQuery(queryString, args);
+}
+
 
 // int Database::addUser(User *user)
 // {
@@ -384,44 +403,6 @@ QSqlQuery* Database::executeQuery(QString queryString, Values vals)
 //     }
 //     delete query;
 //     return wList;
-// }
-
-// QMap<int, CommentsUpdate> Database::updateComments(bool all, int userId)
-// {
-//     QString queryString = "SELECT id, `version`, `date`, comments "
-//                           "FROM update_comments";
-//     if(!all)
-//         queryString.append(
-//             " WHERE id > "
-//             "(IFNULL((SELECT last_coments_id "
-//             "FROM user_update_comments WHERE user_id = :user_id), 0))");
-//     Values vals;
-//     vals.insert(":user_id", userId);
-//     auto query = executeQuery(queryString, vals);
-
-//     QMap<int, CommentsUpdate> comments;
-//     while (query->next()) {
-//         comments.insert(query->value("id").toInt(),
-//                         CommentsUpdate({query->value("id").toInt(),
-//                                         query->value("date").toDate(),
-//                                         query->value("version").toString(),
-//                                         query->value("comments").toString()})
-//                         );
-
-//     }
-//     return comments;
-// }
-
-// void Database::setViewed(int userId, int commentId)
-// {
-//     QString queryString = "INSERT INTO user_update_comments (user_id, last_coments_id) "
-//                           "VALUES (:user_id, :last_coments_id) AS new_val "
-//                           "ON DUPLICATE KEY UPDATE last_coments_id = new_val.last_coments_id";
-
-//     Values vals;
-//     vals.insert(":user_id", userId);
-//     vals.insert(":last_coments_id", commentId);
-//     delete executeQuery(queryString, vals);
 // }
 
 // QSqlQuery* Database::executeQuery(QString queryString, Values vals)
