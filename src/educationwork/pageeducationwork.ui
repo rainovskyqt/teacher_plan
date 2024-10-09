@@ -13,20 +13,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,1,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
    <item>
     <widget class="QWidget" name="w_header" native="true"/>
    </item>
    <item>
-    <widget class="QListView" name="lv_educationWorks"/>
-   </item>
-   <item>
-    <widget class="QListWidget" name="lw_educationWork">
+    <widget class="QListView" name="lv_educationWorks">
      <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::NoSelection</enum>
+      <set>QAbstractItemView::CurrentChanged</set>
      </property>
     </widget>
    </item>

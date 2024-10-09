@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(teacher_plan VERSION 0.1.0.0 LANGUAGES CXX)
 
-# include(cmake/GlobalFlags.cmake)
+#include(cmake/GlobalFlags.cmake)
 
 
 set(CMAKE_AUTOUIC ON)

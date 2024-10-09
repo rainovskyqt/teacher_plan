@@ -12,6 +12,8 @@
 
 #include "user/usermanager.h"
 
+#include <database/planemanager.h>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,32 +24,33 @@ MainWindow::MainWindow(QWidget *parent)
     checkUpdateComments();
 
     connect(ui->w_facultyPanel, &FacultyPanel::staffChanged, ui->w_header, &Header::setTeacher);
-    connect(ui->w_header, &Header::staffChanged, ui->tab_educationWork, &PageEducationWork::setStaff);
+    // connect(ui->w_header, &Header::staffChanged, ui->tab_educationWork, &PageEducationWork::set);
+    connect(ui->w_header, &Header::staffChanged, this, &MainWindow::getPlans);
 
     init();
 
-    // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
-    // connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
+// connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
+// connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
+// connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::clear,
-    //         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
+// connect(ui->tab_educationWork, &FormEducationWork::clear,
+//         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
 
-    // connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
-    //         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
+// connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
+//         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
-    // ui->w_header->setUser(user);
-    // ui->w_facultyPanel->setUser(user);
+// ui->w_header->setUser(user);
+// ui->w_facultyPanel->setUser(user);
 
 
-    // ui->w_header->init();
+// ui->w_header->init();
 
 
 #ifndef QT_DEBUG
@@ -65,6 +68,24 @@ void MainWindow::closeEvent(QCloseEvent *e)
     saveSpliterState();
 
     QWidget::closeEvent(e);
+}
+
+void MainWindow::getPlans(int staffId)
+{
+    if(!staffId){
+        ui->stackedWidget->setCurrentIndex(0);
+    } else {
+        int planId = PlaneManager::get()->planByStaff(staffId);
+
+        if(!planId){
+            ui->stackedWidget->setCurrentIndex(1);
+        } else {
+            ui->stackedWidget->setCurrentIndex(2);
+            ui->tab_educationWork->setPlan(planId);
+        }
+    }
+
+    qApp->setOverrideCursor(Qt::ArrowCursor);
 }
 
 void MainWindow::init()

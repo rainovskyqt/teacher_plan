@@ -18,7 +18,8 @@ public:
     ~PageEducationWork();
 
 public slots:
-    void setStaff(int staffId);
+    // void setStaff(int staffId);
+    void setPlan(int planId);
 
 private slots:
     void on_btn_add_clicked();
@@ -33,7 +34,7 @@ private:
     ModelEducationWork m_model;
 
     void fillTable();
-    void addRow(int row, const ModelEducationWork::EducationWork &work);
+    // void addRow(int row, const ModelEducationWork::EducationWork &work);
     void clearData();
     void updateRowNumber(int start);
     void swapItems(int fromRow, int toRow);

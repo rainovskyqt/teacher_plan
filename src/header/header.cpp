@@ -38,6 +38,9 @@ void Header::init()
 
 void Header::setTeacher(int id)
 {
+    if(!id)
+        emit staffChanged(0);
+
     m_modelStaff.loadByUserId(id);
     init();
 }

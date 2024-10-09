@@ -24,6 +24,7 @@ public:
     virtual void closeEvent(QCloseEvent *e) override;
 
 private slots:
+    void getPlans(int staffId);
     // void setPlanData(TeacherPlan *plan);
     // void on_btn_create_clicked();
 
@@ -36,6 +37,8 @@ private:
         Message,
         TotalTime
     };
+
+    int m_staffId;
 
     void init();
     void setTypes();

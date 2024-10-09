@@ -20,19 +20,26 @@ class RowEducationWork : public QWidget
     Q_OBJECT
 
 public:
-    explicit RowEducationWork(int position, const ModelEducationWork::EducationWork &work,
-                              bool enabled = true, QWidget *parent = nullptr);
+    explicit RowEducationWork(int position, QWidget *parent = nullptr);
     ~RowEducationWork();
+
+    static QSize rowSize();
+    void setWorkData(EducationWork *work);
 
     QString toString() const;
 
     int id() const;
     int row() const;
     void setRow(int row);
-    ModelEducationWork::EducationWork work() const;
 
 signals:
     void deleteWork();
+    void saveMainData();
+
+private slots:
+    void setDiscipline(int index);
+    void setCourse(int index);
+    void setWorkForm(int index);
 
 private:
     Ui::RowEducationWork *ui;
@@ -40,13 +47,14 @@ private:
     ModelDiscipline m_disciplines;
     ModelCourses m_courses;
     ModelWorkForm m_workForm;
-    ModelEducationWork::EducationWork m_work;
+    EducationWork *m_work;
 
     void setModels();
     void setModel(QAbstractItemModel *model, QComboBox *cbox);
-    void setWorkData(const ModelEducationWork::EducationWork &work);
     void setComboboxData(QAbstractItemModel *model, QComboBox *cbox, int vId);
     void setSaved(bool s);
+    int getDictionaryId(QAbstractItemModel *model, int row);
+    bool checkMainDataForSave();
 };
 
 #endif // ROWEDUCATIONWORK_H

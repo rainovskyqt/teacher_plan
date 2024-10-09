@@ -16,6 +16,8 @@ public:
     User *getUser(int id);
     User *user() const;
 
+    int planByStaff(int staffId);
+
 signals:
 
 private:

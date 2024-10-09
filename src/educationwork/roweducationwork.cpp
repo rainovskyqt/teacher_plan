@@ -7,7 +7,7 @@
 
 #include <misc/wheelblocker.hpp>
 
-RowEducationWork::RowEducationWork(int position, const ModelEducationWork::EducationWork &work, bool enabled, QWidget *parent)
+RowEducationWork::RowEducationWork(int position, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RowEducationWork)
 {
@@ -19,13 +19,16 @@ RowEducationWork::RowEducationWork(int position, const ModelEducationWork::Educa
     connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
 
     setModels();
-    setWorkData(work);
-    setEnabled(enabled);
 }
 
 RowEducationWork::~RowEducationWork()
 {
     delete ui;
+}
+
+QSize RowEducationWork::rowSize()
+{
+    return QSize(600, 50);
 }
 
 QString RowEducationWork::toString() const
@@ -38,7 +41,7 @@ QString RowEducationWork::toString() const
 
 int RowEducationWork::id() const
 {
-    return m_work.id;
+    return m_work->id();
 }
 
 int RowEducationWork::row() const
@@ -49,11 +52,6 @@ int RowEducationWork::row() const
 void RowEducationWork::setRow(int row)
 {
     ui->lbl_rowNumber->setNum(row);
-}
-
-ModelEducationWork::EducationWork RowEducationWork::work() const
-{
-    return m_work;
 }
 
 void RowEducationWork::setModels()
@@ -69,16 +67,20 @@ void RowEducationWork::setModel(QAbstractItemModel *model, QComboBox *cbox)
     cbox->setModelColumn(1);
 }
 
-void RowEducationWork::setWorkData(const ModelEducationWork::EducationWork &work)
+void RowEducationWork::setWorkData(EducationWork *work)
 {
     m_work = work;
 
-    setSaved(m_work.id);
-    setComboboxData(&m_disciplines, ui->cb_discipline, work.disciplineId);
-    setComboboxData(&m_courses, ui->cb_course, work.courseId);
-    setComboboxData(&m_workForm, ui->cb_workForm, work.workFormId);
-    ui->sb_groupCount->setValue(work.groupCount);    
-    ui->txt_comments->setPlainText(work.comments);
+    setSaved(m_work->id());
+    setComboboxData(&m_disciplines, ui->cb_discipline, work->disciplineId());
+    setComboboxData(&m_courses, ui->cb_course, work->courseId());
+    setComboboxData(&m_workForm, ui->cb_workForm, work->workFormId());
+    ui->sb_groupCount->setValue(work->groupCount());
+    ui->txt_comments->setPlainText(work->comments());
+
+    connect(ui->cb_discipline, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &RowEducationWork::setDiscipline);
+    connect(ui->cb_course, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &RowEducationWork::setCourse);
+    connect(ui->cb_workForm, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &RowEducationWork::setWorkForm);
 }
 
 void RowEducationWork::setComboboxData(QAbstractItemModel *model, QComboBox *cbox, int vId)
@@ -100,3 +102,34 @@ void RowEducationWork::setSaved(bool s)
     else
         ui->lbl_rowNumber->setStyleSheet("background-color: rgb(255, 100, 100);");
 }
+
+int RowEducationWork::getDictionaryId(QAbstractItemModel *model, int row)
+{
+    return model->data(model->index(row, DictionaryModel::Id)).toInt();
+}
+
+bool RowEducationWork::checkMainDataForSave()
+{
+    bool d = ui->cb_discipline->currentIndex() > -1;
+    bool c = ui->cb_course->currentIndex() > -1;
+    bool w = ui->cb_workForm->currentIndex() > -1;
+
+    if (d && c && w)
+        emit saveMainData();
+}
+
+void RowEducationWork::setDiscipline(int index)
+{
+    m_work->setDisciplineId(getDictionaryId(&m_disciplines, index));
+}
+
+void RowEducationWork::setCourse(int index)
+{
+    m_work->setCourseId(getDictionaryId(&m_courses, index));
+}
+
+void RowEducationWork::setWorkForm(int index)
+{
+    m_work->setWorkFormId(getDictionaryId(&m_workForm, index));
+}
+

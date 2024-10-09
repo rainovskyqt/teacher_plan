@@ -1,9 +1,13 @@
 #ifndef MODELEDUCATIONWORK_H
 #define MODELEDUCATIONWORK_H
 
-#include <QSqlQueryModel>
+#include <QStandardItemModel>
 
-class ModelEducationWork : public QSqlQueryModel
+#include "educationwork.h"
+
+class QSqlQuery;
+
+class ModelEducationWork : public QStandardItemModel
 {
 public:
 
@@ -18,43 +22,17 @@ public:
         Hours
     };
 
-    enum HourFields{
-        HourId,
-        HourWeek,
-        HourType,
-        HourValue
-    };
-
-    struct Hour{
-        int id;
-        int week;
-        int type;
-        int value;
-    };
-
-    struct EducationWork{
-        int id;
-        int disciplineId;
-        int courseId;
-        int workFormId;
-        int groupCount;
-        QString comments;
-        int orderPalce;
-        QHash<int, Hour> hours;
-    };
-
-
     explicit ModelEducationWork(QObject *parent = nullptr);
-    void loadData(int staffId);
+    void loadData(int planId);
 
-    QVector<EducationWork> works() const;
-
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     void deleteWork(int id);
+    // void saveMainData()
 
 public slots:
 
-private:    
-    QHash<int, Hour> splitHours(const QString &hoursString) const;
+private:
+    void addData(QSqlQuery *query);
 };
 
 #endif // MODELEDUCATIONWORK_H

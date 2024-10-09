@@ -79,8 +79,9 @@ void FacultyPanel::setModel()
                 Q_UNUSED(previous)
                 qApp->setOverrideCursor(Qt::WaitCursor);
                 int id = 0;
-                if(m_model.itemFromIndex(current)->data(Qt::UserRole + 1).toBool())
+                if(m_model.itemFromIndex(current)->data(Qt::UserRole + 1).toBool()){
                     id = m_model.itemFromIndex(current)->data(Qt::UserRole).toInt();
+                }
                 emit staffChanged(id);
             });
 
