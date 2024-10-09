@@ -4,5 +4,7 @@
         <file>img/delete.png</file>
         <file>img/icon.png</file>
         <file>img/plans_panel.png</file>
+        <file>img/up.png</file>
+        <file>img/down.png</file>
     </qresource>
 </RCC>

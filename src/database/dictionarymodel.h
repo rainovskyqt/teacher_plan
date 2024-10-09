@@ -3,12 +3,14 @@
 
 #include <QSqlQueryModel>
 
+#include "database/database.h"
+
 class DictionaryModel : public QSqlQueryModel
 {
 public:
 
     enum Fields{
-        ID,
+        Id,
         Name
     };
 

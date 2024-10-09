@@ -45,7 +45,7 @@ void Header::setTeacher(int id)
 void Header::setDepartments(int index)
 {
     ui->cb_department->clear();
-    int id = m_modelYear.data(m_modelYear.index(index, DictionaryModel::ID)).toInt();
+    int id = m_modelYear.data(m_modelYear.index(index, DictionaryModel::Id)).toInt();
     auto deps = m_modelStaff.departments(id);
     for(auto it = deps.begin(); it != deps.end(); ++it)
         ui->cb_department->addItem(it.value(), it.key());
@@ -66,7 +66,6 @@ void Header::changePost(int index)
     if( index == -1 )
         return;
     int id = ui->cb_post->currentData().toInt();
-        qDebug() << id;
     emit staffChanged(id);
 }
 
@@ -90,11 +89,6 @@ void Header::initYearModel()
     setDepartments(0);
 }
 
-// User *Header::user() const
-// {
-//     return m_user;
-// }
-
 // void Header::on_btn_approvedCancel_clicked()
 // {
 //     ui->sw_approved->setCurrentIndex(Development);
@@ -108,110 +102,6 @@ void Header::initYearModel()
 //     ui->sw_approved->setCurrentIndex(OnApproved);
 //     m_currentPlan->setStatusId(TeacherPlan::OnApproved);
 //     Database::get()->updateTeacherPlan(m_currentPlan);
-// }
-
-// void Header::setStaffData()
-// {
-//     auto d = m_user->userData();
-//     ui->line_fio->setText(QString("%1 %2 %3 %4")
-//                               .arg(d->rang(),
-//                                    d->surname(),
-//                                    d->name(),
-//                                    d->middle_name()));
-//     setUserDepartments();
-// }
-
-// void Header::loadData()
-// {
-//     DictionaryAdapter::setYears(ui->cb_years);
-//     DictionaryAdapter::setDictionary(m_departments, Database::Department);
-//     DictionaryAdapter::setDictionary(m_posts, Database::Post);
-// }
-
-// void Header::setDefaultData(int yearId)
-// {
-//     m_currentPlan = new TeacherPlan(this);
-//     setStatus(TeacherPlan::Development);
-//     m_currentPlan->setStatusId(TeacherPlan::Development);
-//     m_currentPlan->setStaff(ui->cb_post->currentData().value<UserPost>());
-//     m_currentPlan->setYearId(yearId);
-//     ui->w_protocol->setVisible(false);
-
-//     emit currentPlanChanged(m_currentPlan);
-// }
-
-// void Header::setCurrentIndexes()
-// {
-//     m_currentIndex.insert(ui->cb_years, -1);
-//     m_currentIndex.insert(ui->cb_department, -1);
-//     m_currentIndex.insert(ui->cb_post, -1);
-// }
-
-// bool Header::changeIndex(QComboBox *box)
-// {
-//     if(box->currentIndex() == m_currentIndex.value(box))
-//         return false;
-
-
-//     m_currentIndex.insert(box, box->currentIndex());
-
-//     return true;
-// }
-
-
-// void Header::setUserDepartments()
-// {
-//     ui->cb_department->clear();
-
-//     QList<int> userDep;
-//     auto posts = m_user->posts();
-//     for(auto p: posts)
-//         userDep.append(p.departmentId);
-
-//     foreach (auto dep, m_departments) {
-//         if(userDep.contains(dep.id()))
-//             ui->cb_department->addItem(dep.name(), dep.id());
-//     }
-
-// }
-
-// void Header::setPlan()
-// {
-//     auto staff = ui->cb_post->currentData().value<UserPost>();
-//     auto year = ui->cb_years->currentData().toInt();
-
-//     setPlanData(Database::get()->requestPlan(staff, year));
-// }
-
-// QString Header::currentTecher()
-// {
-//     return ui->line_fio->text();
-// }
-
-// QString Header::currentDepartment()
-// {
-//     return ui->cb_department->currentText();
-// }
-
-// QString Header::currentYear()
-// {
-//     return ui->cb_years->currentText();
-// }
-
-// void Header::setUser(int id)
-// {
-//     setUser(Database::get()->login("", "", id));
-// }
-
-// void Header::setPlanData(TeacherPlan *plan)
-// {
-//     m_currentPlan = plan;
-//     setStatus(m_currentPlan->statusId());
-//     setProtocol(m_currentPlan);
-//     setApproved(m_currentPlan);
-//     qDebug() << "Загружен план с id: " << plan->baseId();
-
-//     emit currentPlanChanged(m_currentPlan);
 // }
 
 // void Header::setStatus(int status)
@@ -275,58 +165,3 @@ void Header::initYearModel()
 //    m_currentPlan->setChanged(false);
 //    return true;
 //}
-
-//void Header::savePlan()
-//{
-//    Database::get()->updateTeacherPlan(m_currentPlan);
-//    m_currentPlan->setChanged(false);
-//}
-
-// void Header::on_cb_department_currentIndexChanged(int index)
-// {
-//     Q_UNUSED(index)
-
-//     if(!changeIndex(ui->cb_department))
-//         return;
-
-//     ui->cb_post->clear();
-
-//     auto userDep = ui->cb_department->currentData().toInt();
-//     auto userPosts = m_user->posts();
-
-//     for(auto userPost: userPosts) {
-//         if(userPost.departmentId != userDep)
-//             continue;
-//         foreach(auto post, m_posts)
-//             if(userPost.postId == post.id())
-//                 ui->cb_post->addItem(post.name(), QVariant::fromValue(userPost));
-//     }
-// }
-
-// void Header::on_cb_years_currentIndexChanged(int index)
-// {
-//     Q_UNUSED(index)
-
-//     if(!changeIndex(ui->cb_years))
-//         return;
-
-//     setPlan();
-// }
-
-
-// void Header::on_cb_post_currentIndexChanged(int index)
-// {
-//     Q_UNUSED(index)
-
-//     if(!changeIndex(ui->cb_post))
-//         return;
-
-//     setPlan();
-// }
-
-
-// void Header::setRate(double rate)
-// {
-//     m_currentPlan->setRate(rate);
-//     Database::get()->updateTeacherPlan(m_currentPlan);
-// }

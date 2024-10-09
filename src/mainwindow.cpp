@@ -2,16 +2,15 @@
 #include "settings.h"
 #include "ui_mainwindow.h"
 
-#include <QMessageBox>
+#include <QDebug>
 
 #include "database/types.h"
 #include "database/database.h"
 #include "updatecomments/updatecomments.h"
 
+#include "educationwork/pageeducationwork.h"
+
 #include "user/usermanager.h"
-
-// #include "login/user.h"
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,10 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     checkUpdateComments();
 
     connect(ui->w_facultyPanel, &FacultyPanel::staffChanged, ui->w_header, &Header::setTeacher);
+    connect(ui->w_header, &Header::staffChanged, ui->tab_educationWork, &PageEducationWork::setStaff);
 
     init();
 
-    // connect(ui->w_header, &Header::currentPlanChanged, this, &MainWindow::setPlanData);
     // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
     // connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
 

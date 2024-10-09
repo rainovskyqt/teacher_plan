@@ -45,9 +45,6 @@ public:
     void updateDeleteQuery(QString queryString, Arguments args = {});
     const QString &lastError() const;
 
-
-    // User *login(QString login, QString password, int id = 0);
-
     // int addUser(User *user);
     // void addPosts(QList<UserPost> posts, int userId);
     // int addPost(UserPost post, int userId);

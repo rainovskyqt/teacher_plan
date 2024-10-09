@@ -16,8 +16,6 @@ void ModelStaffList::loadByDepartment(int year, int departmentId)
     args.insert(":year", year);
     args.insert(":department_id", departmentId);
     loadStaff(where, args);
-
-    // setHorizontalHeaderLabels(QStringList() << "Факультет");
 }
 
 void ModelStaffList::loadByUserId(int userId)

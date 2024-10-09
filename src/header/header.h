@@ -8,9 +8,9 @@
 // #include "modelheader.h"
 // #include "misc/uniquefilterproxymodel.h"
 
-#include "staff/modelyear.h"
-#include "staff/modeldepartment.h"
-#include "staff/modelpost.h"
+#include "database/dictionary/modelyear.h"
+#include "database/dictionary/modeldepartment.h"
+#include "database/dictionary/modelpost.h"
 #include "staff/modelstafflist.h"
 #include "QSortFilterProxyModel"
 
@@ -27,14 +27,6 @@ public:
     ~Header();
 
     void init();
-
-    // User *user() const;
-    // void setUser(User *newUser);
-    // void setPlan();
-
-    // QString currentTecher();
-    // QString currentDepartment();
-    // QString currentYear();
 
 public slots:
     void setTeacher(int id);
@@ -68,10 +60,6 @@ private:
     void initModels();
     void initYearModel();
 
-
-
-    // void setUserDepartments();
-    // void setPlanData(TeacherPlan *plan);
     // void setStatus(int status);
     // void setProtocol(TeacherPlan* plan);
     // void setApproved(TeacherPlan* plan);

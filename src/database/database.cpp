@@ -189,55 +189,6 @@ void Database::updateDeleteQuery(QString queryString, Arguments args)
 //     return list;
 // }
 
-// User *Database::login(QString login, QString password, int id)
-// {
-//     QString where = "`login` = :login AND `password` = :password ";
-//     if(id)
-//         where = "U.id = :id";
-//     QString queryString = QString("SELECT U.id AS 'uid', U.login, U.password, U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
-//                                   "S.department_id, S.post_id, S.id AS staff_id, S.main AS main, D.name as d_name, P.name AS p_name, "
-//                                   "SAR.rights AS rights "
-//                                   "FROM user U "
-//                                   "LEFT JOIN `rang` R ON U.rang_id = R.id "
-//                                   "INNER JOIN `staff` S ON S.user_id = U.id "
-//                                   "INNER JOIN `department` D ON D.id = S.department_id "
-//                                   "INNER JOIN `post` P ON P.id = S.post_id "
-//                                   "LEFT JOIN staff_access_rigth SAR ON SAR.staff_id = S.id "
-//                                   "WHERE %1 "
-//                                   "ORDER BY main, staff_id").arg(where);
-//     Values vals;
-//     vals.insert(":id", id);
-//     vals.insert(":login", login);
-//     vals.insert(":password", encodePassword(password));
-
-//     auto query = executeQuery(queryString, vals);
-
-//     User *user = new User();
-//     while(query->next()){
-//         user->setBaseId(query->value("uid").toInt());
-//         user->userData()->setData(
-//             query->value("login").toString(),
-//             query->value("surname").toString(),
-//             query->value("name").toString(),
-//             query->value("middle_name").toString(),
-//             query->value("rname").toString(),
-//             query->value("rang_id").toInt()
-//             );
-
-//         user->addPost({query->value("uid").toInt(),
-//                        query->value("staff_id").toInt(),
-//                        query->value("department_id").toInt(),
-//                        query->value("d_name").toString(),
-//                        query->value("post_id").toInt(),
-//                        query->value("p_name").toString(),
-//                        query->value("main").toBool()}
-//                       );
-
-//         user->setRights(UserRights::fromString(query->value("rights").toString()));
-//     }
-//     delete query;
-//     return user;
-// }
 
 // QVector<EducationalWork*> Database::educationWork(int planId)
 // {

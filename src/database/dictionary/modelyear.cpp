@@ -1,5 +1,4 @@
 #include "modelyear.h"
-#include "database/database.h"
 
 ModelYear::ModelYear(QObject *parent)
     : DictionaryModel{parent}

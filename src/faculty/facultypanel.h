@@ -4,7 +4,7 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
-#include <staff/modelyear.h>
+#include "database/dictionary/modelyear.h"
 
 #include "modelfaculty.h"
 

@@ -77,6 +77,7 @@ void FacultyPanel::setModel()
     connect(ui->tree_plans->selectionModel() , &QItemSelectionModel::currentChanged,
             this, [&](const QModelIndex &current, const QModelIndex &previous){
                 Q_UNUSED(previous)
+                qApp->setOverrideCursor(Qt::WaitCursor);
                 int id = 0;
                 if(m_model.itemFromIndex(current)->data(Qt::UserRole + 1).toBool())
                     id = m_model.itemFromIndex(current)->data(Qt::UserRole).toInt();

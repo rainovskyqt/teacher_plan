@@ -39,7 +39,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -121,7 +121,7 @@
                <enum>QTabWidget::Rounded</enum>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>2</number>
               </property>
               <widget class="QWidget" name="tab_totalTime">
                <attribute name="title">
@@ -133,7 +133,7 @@
                 <string>Выполнение учебной нагрузки</string>
                </attribute>
               </widget>
-              <widget class="QWidget" name="tab_educationWork">
+              <widget class="PageEducationWork" name="tab_educationWork">
                <attribute name="title">
                 <string>I. Учебная работа</string>
                </attribute>
@@ -241,6 +241,12 @@
    <class>Header</class>
    <extends>QWidget</extends>
    <header>header/header.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PageEducationWork</class>
+   <extends>QWidget</extends>
+   <header>educationwork/pageeducationwork.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
