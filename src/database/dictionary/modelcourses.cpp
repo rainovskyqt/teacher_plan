@@ -1,12 +1,10 @@
-#include "modelpost.h"
+#include "modelcourses.h"
 
-#include "database/database.h"
-
-ModelPost::ModelPost(QObject *parent)
+ModelCourses::ModelCourses(QObject *parent)
     : DictionaryModel{parent}
 {
     QString queryString = "SELECT id, `name` "
-                          "FROM post "
+                          "FROM course "
                           "ORDER BY `name`";
 
     auto query = Database::get()->selectQuery(queryString);

@@ -1,12 +1,10 @@
-#include "modeldepartment.h"
+#include "modeldiscipline.h"
 
-#include "database/database.h"
-
-ModelDepartment::ModelDepartment(QObject *parent)
+ModelDiscipline::ModelDiscipline(QObject *parent)
     : DictionaryModel{parent}
 {
     QString queryString = "SELECT id, `name` "
-                          "FROM department "
+                          "FROM discipline "
                           "ORDER BY `name`";
 
     auto query = Database::get()->selectQuery(queryString);
