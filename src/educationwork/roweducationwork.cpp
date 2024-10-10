@@ -19,6 +19,8 @@ RowEducationWork::RowEducationWork(int position, QWidget *parent)
     connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
 
     setModels();
+
+    ui->f_border->setStyleSheet("QFrame { border: 1px solid lightGray; }");
 }
 
 RowEducationWork::~RowEducationWork()
@@ -28,7 +30,7 @@ RowEducationWork::~RowEducationWork()
 
 QSize RowEducationWork::rowSize()
 {
-    return QSize(600, 50);
+    return QSize(800, 50);
 }
 
 QString RowEducationWork::toString() const
@@ -44,9 +46,9 @@ int RowEducationWork::id() const
     return m_work->id();
 }
 
-int RowEducationWork::row() const
+void RowEducationWork::setSelected()
 {
-    return ui->lbl_rowNumber->text().toInt();
+    ui->f_border->setStyleSheet("QFrame { border: 1px solid yellow; }");
 }
 
 void RowEducationWork::setRow(int row)

@@ -36,6 +36,22 @@ void ModelEducationWork::deleteWork(int id)
 
 }
 
+void ModelEducationWork::swapItems(int from, int to) {
+    if (from == to)
+        return;
+
+    QStandardItem *itemFrom = takeItem(from);
+    QStandardItem *itemTo = takeItem(to);
+
+    if (itemFrom && itemTo) {
+        setItem(to, itemFrom);
+        setItem(from, itemTo);
+    }
+
+    emit dataChanged(index(from, 0), index(from, columnCount() - 1));
+    emit dataChanged(index(to, 0), index(to, columnCount() - 1));
+}
+
 void ModelEducationWork::addData(QSqlQuery *query) {
     using F = Fields;
     while (query->next()) {

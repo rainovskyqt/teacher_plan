@@ -9,7 +9,9 @@ DelegateEducationWork::DelegateEducationWork(QObject *parent) :
 
 QWidget *DelegateEducationWork::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return new RowEducationWork(index.row() + 1, parent);
+    RowEducationWork *editor = new  RowEducationWork(index.row() + 1, parent);
+    // editor->setSelected();
+    return editor;
 }
 
 void DelegateEducationWork::setEditorData(QWidget *editor, const QModelIndex &index) const {
@@ -26,7 +28,6 @@ void DelegateEducationWork::setModelData(QWidget *editor, QAbstractItemModel *mo
     if (work) {
         // model->setData(index, QVariant::fromValue(work), Qt::UserRole);
     }
-    qDebug() << "setModelData";
 }
 
 void DelegateEducationWork::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const

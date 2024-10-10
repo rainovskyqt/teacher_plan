@@ -27,6 +27,7 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     void deleteWork(int id);
+    void swapItems(int from, int to);
     // void saveMainData()
 
 public slots:

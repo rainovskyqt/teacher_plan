@@ -5,7 +5,7 @@
 ComboBox::ComboBox(QWidget *parent) : QComboBox(parent) {
     completer = new QCompleter(this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
-    setCompleter(completer);
+    // setCompleter(completer);
     updateCompleterModel();
 }
 

@@ -29,7 +29,7 @@ public:
     QString toString() const;
 
     int id() const;
-    int row() const;
+    void setSelected();
     void setRow(int row);
 
 signals:

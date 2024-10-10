@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1573</width>
+    <width>1800</width>
     <height>50</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>1800</width>
     <height>50</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777215</width>
+    <width>1800</width>
     <height>50</height>
    </size>
   </property>
@@ -42,7 +42,7 @@
     <number>1</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="f_border">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
