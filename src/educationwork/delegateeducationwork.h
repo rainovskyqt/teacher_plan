@@ -9,6 +9,7 @@ class DelegateEducationWork : public QStyledItemDelegate
     Q_OBJECT
 
 public:
+
     explicit DelegateEducationWork(QObject *parent = nullptr);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

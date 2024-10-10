@@ -68,7 +68,7 @@ void ModelEducationWork::addData(QSqlQuery *query) {
             );
 
         QStandardItem *item = new QStandardItem();
-        item->setData(QVariant::fromValue(work), Qt::UserRole);
+        item->setData(QVariant::fromValue(work), EducationData);
         appendRow(item);
     }
 }

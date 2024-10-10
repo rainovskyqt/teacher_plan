@@ -22,6 +22,11 @@ public:
         Hours
     };
 
+    enum Roles{
+        EducationData = Qt::UserRole,
+        Pixmap
+    };
+
     explicit ModelEducationWork(QObject *parent = nullptr);
     void loadData(int planId);
 
