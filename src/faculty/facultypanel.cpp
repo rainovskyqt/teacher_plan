@@ -4,7 +4,7 @@
 #include <QComboBox>
 #include <QDebug>
 
-#include "database/database.h"
+#include "database/dictionary/dictionarymanager.h"
 #include "user/usermanager.h"
 #include "user/user.h"
 
@@ -53,6 +53,7 @@ bool FacultyPanel::personalPlanOnly()
 
 void FacultyPanel::setYearModel()
 {
+    m_modelYear.setSourceModel(DictionaryManager::get()->years());
     ui->cb_year->setModel(&m_modelYear);
     ui->cb_year->setModelColumn(DictionaryModel::Name);
 

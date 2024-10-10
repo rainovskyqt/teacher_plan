@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include <user/usermanager.h>
+#include "database/dictionary/dictionarymanager.h"
 
 Header::Header(QWidget *parent)
     : QWidget(parent)
@@ -38,6 +39,9 @@ void Header::init()
 
 void Header::setTeacher(int id)
 {
+    if(!id)
+        emit staffChanged(0);
+
     m_modelStaff.loadByUserId(id);
     init();
 }
@@ -83,6 +87,7 @@ void Header::setTeacherData()
 
 void Header::initYearModel()
 {
+    m_modelYear.setSourceModel(DictionaryManager::get()->years());
     ui->cb_years->setModel(&m_modelYear);
     ui->cb_years->setModelColumn(DictionaryModel::Name);
     connect(ui->cb_years , QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Header::setDepartments);

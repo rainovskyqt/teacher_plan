@@ -2,7 +2,7 @@
 #define MODELCOURSES_H
 
 #include <QObject>
-#include "database/dictionarymodel.h"
+#include "dictionarymodel.h"
 
 class ModelCourses : public DictionaryModel
 {

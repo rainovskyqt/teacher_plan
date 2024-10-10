@@ -1,10 +1,11 @@
 #ifndef FACULTYPANEL_H
 #define FACULTYPANEL_H
 
+#include <QSortFilterProxyModel>
 #include <QTreeWidgetItem>
 #include <QWidget>
 
-#include "database/dictionary/modelyear.h"
+
 
 #include "modelfaculty.h"
 
@@ -37,7 +38,7 @@ private:
     Ui::FacultyPanel *ui;
 
     ModelFaculty m_model;
-    ModelYear m_modelYear;
+    QSortFilterProxyModel m_modelYear;
 
     bool personalPlanOnly();
     void setYearModel();

@@ -6,6 +6,7 @@
 #include <QPushButton>
 
 #include <misc/wheelblocker.hpp>
+#include "database/dictionary/dictionarymanager.h"
 
 RowEducationWork::RowEducationWork(int position, const ModelEducationWork::EducationWork &work, bool enabled, QWidget *parent)
     : QWidget(parent)
@@ -58,15 +59,16 @@ ModelEducationWork::EducationWork RowEducationWork::work() const
 
 void RowEducationWork::setModels()
 {
-    setModel(&m_disciplines, ui->cb_discipline);
-    setModel(&m_courses, ui->cb_course);
-    setModel(&m_workForm, ui->cb_workForm);
+    setModel(DictionaryManager::get()->disciplines(), &m_disciplines, ui->cb_discipline);
+    setModel(DictionaryManager::get()->courses(),&m_courses, ui->cb_course);
+    setModel(DictionaryManager::get()->workForm(),&m_workForm, ui->cb_workForm);
 }
 
-void RowEducationWork::setModel(QAbstractItemModel *model, QComboBox *cbox)
+void RowEducationWork::setModel(QAbstractItemModel *model, QSortFilterProxyModel *proxy, QComboBox *cbox)
 {
-    cbox->setModel(model);
-    cbox->setModelColumn(1);
+    proxy->setSourceModel(model);
+    cbox->setModel(proxy);
+    cbox->setModelColumn(DictionaryModel::Name);
 }
 
 void RowEducationWork::setWorkData(const ModelEducationWork::EducationWork &work)
@@ -81,12 +83,12 @@ void RowEducationWork::setWorkData(const ModelEducationWork::EducationWork &work
     ui->txt_comments->setPlainText(work.comments);
 }
 
-void RowEducationWork::setComboboxData(QAbstractItemModel *model, QComboBox *cbox, int vId)
+void RowEducationWork::setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId)
 {
     for (int i = 0; i < model->rowCount(); ++i) {
         QModelIndex index = model->index(i, DictionaryModel::Id);
         if (model->data(index).toInt() == vId) {
-            cbox->setCurrentIndex(i);
+            cbox->setCurrentIndex(index.row());
             return;
         }
     }

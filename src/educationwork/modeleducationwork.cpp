@@ -8,20 +8,19 @@ ModelEducationWork::ModelEducationWork(QObject *parent)
     : QSqlQueryModel{parent}
 {}
 
-void ModelEducationWork::loadData(int staffId)
+void ModelEducationWork::loadData(int planeId)
 {
     QString queryString = R"(SELECT EW.id, EW.discipline_id, EW.course_id, EW.work_form_id, EW.group_count, EW.comments, EW.order_place,
                           GROUP_CONCAT(CONCAT(EWH.id,',', EWH.`week`,',', EWH.`type`,',', EWH.`value`) SEPARATOR ';') AS hours
                           FROM educational_work EW
                           INNER JOIN teacher_plan TP ON TP.id = EW.teacher_plan_id
-                          INNER JOIN staff S ON TP.staff_id = S.id
                           LEFT JOIN educational_work_hours EWH ON EWH.plan_work_id = EW.id
-                          WHERE S.id = :staffId
+                          WHERE TP.id = :planeId
                           GROUP BY EW.id, EW.discipline_id, EW.course_id, EW.work_form_id, EW.group_count, EW.comments, EW.order_place
                           ORDER BY EW.order_place)";
 
     Arguments args;
-    args.insert(":staffId", staffId);
+    args.insert(":planeId", planeId);
 
     auto query = Database::get()->selectQuery(queryString, args);
     setQuery(query);

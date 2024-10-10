@@ -1,7 +1,7 @@
 #ifndef MODELDEPARTMENT_H
 #define MODELDEPARTMENT_H
 
-#include "database/dictionarymodel.h"
+#include "dictionarymodel.h"
 
 class ModelDepartment : public DictionaryModel
 {

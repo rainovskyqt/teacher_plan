@@ -45,7 +45,7 @@ public:
 
 
     explicit ModelEducationWork(QObject *parent = nullptr);
-    void loadData(int staffId);
+    void loadData(int planeId);
 
     QVector<EducationWork> works() const;
 

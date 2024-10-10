@@ -1,7 +1,7 @@
 #ifndef MODELPOST_H
 #define MODELPOST_H
 
-#include "database/dictionarymodel.h"
+#include "dictionarymodel.h"
 
 class ModelPost : public DictionaryModel
 {

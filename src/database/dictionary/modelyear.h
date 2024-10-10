@@ -1,7 +1,7 @@
 #ifndef MODELYEAR_H
 #define MODELYEAR_H
 
-#include "database/dictionarymodel.h"
+#include "dictionarymodel.h"
 
 class ModelYear : public DictionaryModel
 {

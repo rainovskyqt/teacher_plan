@@ -18,14 +18,10 @@ PageEducationWork::~PageEducationWork()
     delete ui;
 }
 
-void PageEducationWork::setStaff(int staffId)
+void PageEducationWork::setPlan(int staffId)
 {
     m_model.loadData(staffId);
-
-
-    // fillTable();
-
-    qApp->setOverrideCursor(Qt::ArrowCursor);
+    fillTable();
 }
 
 void PageEducationWork::fillTable()

@@ -18,7 +18,7 @@ public:
     ~PageEducationWork();
 
 public slots:
-    void setStaff(int staffId);
+    void setPlan(int planId);
 
 private slots:
     void on_btn_add_clicked();

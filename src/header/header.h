@@ -4,13 +4,6 @@
 #include <QComboBox>
 #include <QWidget>
 
-// #include "database/database.h"
-// #include "modelheader.h"
-// #include "misc/uniquefilterproxymodel.h"
-
-#include "database/dictionary/modelyear.h"
-#include "database/dictionary/modeldepartment.h"
-#include "database/dictionary/modelpost.h"
 #include "staff/modelstafflist.h"
 #include "QSortFilterProxyModel"
 
@@ -52,7 +45,7 @@ private:
         Approveded
     };
 
-    ModelYear m_modelYear;
+    QSortFilterProxyModel m_modelYear;
     ModelStaffList m_modelStaff;
 
     void setTeacherData();

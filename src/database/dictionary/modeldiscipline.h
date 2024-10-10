@@ -2,7 +2,7 @@
 #define MODELDISCIPLINE_H
 
 #include <QObject>
-#include "database/dictionarymodel.h"
+#include "dictionarymodel.h"
 
 class ModelDiscipline : public DictionaryModel
 {

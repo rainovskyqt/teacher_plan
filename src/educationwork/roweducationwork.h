@@ -3,10 +3,7 @@
 
 #include <QWidget>
 
-#include "database/dictionary/modeldiscipline.h"
-#include "database/dictionary/modelcourses.h"
-#include "database/dictionary/modelworkform.h"
-
+#include <QSortFilterProxyModel>
 #include "modeleducationwork.h"
 
 class QComboBox;
@@ -37,15 +34,15 @@ signals:
 private:
     Ui::RowEducationWork *ui;
 
-    ModelDiscipline m_disciplines;
-    ModelCourses m_courses;
-    ModelWorkForm m_workForm;
+    QSortFilterProxyModel m_disciplines;
+    QSortFilterProxyModel m_courses;
+    QSortFilterProxyModel m_workForm;
     ModelEducationWork::EducationWork m_work;
 
     void setModels();
-    void setModel(QAbstractItemModel *model, QComboBox *cbox);
+    void setModel(QAbstractItemModel *model, QSortFilterProxyModel *proxy, QComboBox *cbox);
     void setWorkData(const ModelEducationWork::EducationWork &work);
-    void setComboboxData(QAbstractItemModel *model, QComboBox *cbox, int vId);
+    void setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId);
     void setSaved(bool s);
 };
 

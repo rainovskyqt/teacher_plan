@@ -2,7 +2,7 @@
 #define MODELWORKFORM_H
 
 #include <QObject>
-#include "database/dictionarymodel.h"
+#include "dictionarymodel.h"
 
 class ModelWorkForm : public DictionaryModel
 {

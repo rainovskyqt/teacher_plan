@@ -12,6 +12,8 @@
 
 #include "user/usermanager.h"
 
+#include <database/planemanager.h>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     checkUpdateComments();
 
     connect(ui->w_facultyPanel, &FacultyPanel::staffChanged, ui->w_header, &Header::setTeacher);
-    connect(ui->w_header, &Header::staffChanged, ui->tab_educationWork, &PageEducationWork::setStaff);
+    // connect(ui->w_header, &Header::staffChanged, ui->tab_educationWork, &PageEducationWork::set);
+    connect(ui->w_header, &Header::staffChanged, this, &MainWindow::getPlans);
 
     init();
 
@@ -65,6 +68,24 @@ void MainWindow::closeEvent(QCloseEvent *e)
     saveSpliterState();
 
     QWidget::closeEvent(e);
+}
+
+void MainWindow::getPlans(int staffId)
+{
+    if(!staffId){
+        ui->stackedWidget->setCurrentIndex(0);
+    } else {
+        int planId = PlaneManager::get()->planByStaff(staffId);
+
+        if(!planId){
+            ui->stackedWidget->setCurrentIndex(1);
+        } else {
+            ui->stackedWidget->setCurrentIndex(2);
+            ui->tab_educationWork->setPlan(planId);
+        }
+    }
+
+    qApp->setOverrideCursor(Qt::ArrowCursor);
 }
 
 void MainWindow::init()
