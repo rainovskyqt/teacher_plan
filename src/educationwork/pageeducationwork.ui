@@ -45,7 +45,7 @@
    <item>
     <widget class="QListWidget" name="lw_educationWork">
      <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>

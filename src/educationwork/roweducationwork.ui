@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1970</width>
+    <width>1355</width>
     <height>50</height>
    </rect>
   </property>
@@ -533,7 +533,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1280</width>
+           <width>665</width>
            <height>44</height>
           </rect>
          </property>
@@ -985,6 +985,18 @@
           </item>
           <item>
            <widget class="QStackedWidget" name="sw_comments">
+            <property name="minimumSize">
+             <size>
+              <width>350</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>350</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="currentIndex">
              <number>1</number>
             </property>
