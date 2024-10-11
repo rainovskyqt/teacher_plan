@@ -11,6 +11,8 @@ PageEducationWork::PageEducationWork(QWidget *parent)
     , ui(new Ui::PageEducationWork)
 {
     ui->setupUi(this);
+    addHeader();
+    addFooter();
 }
 
 PageEducationWork::~PageEducationWork()
@@ -37,7 +39,7 @@ void PageEducationWork::fillTable()
 void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork &work)
 {
     auto item = new QListWidgetItem();
-    auto rowWidget = new RowEducationWork(row + 1, work, item);
+    auto rowWidget = new RowEducationWork(row + 1, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
     item->setSizeHint(rowWidget->sizeHint());
     ui->lw_educationWork->insertItem(row, item);
     ui->lw_educationWork->setItemWidget(item, rowWidget);
@@ -127,4 +129,16 @@ void PageEducationWork::on_btn_down_clicked()
     if(cRow >= list->count() - 1)
         return;
     swapItems(cRow, cRow + 1);
+}
+
+void PageEducationWork::addHeader()
+{
+    m_header = new RowEducationWork(0, {}, RowEducationWork::Position::Header, true, this);
+    ui->vl_header->addWidget(m_header);
+}
+
+void PageEducationWork::addFooter()
+{
+    m_footer = new RowEducationWork(0, {}, RowEducationWork::Position::Footer, true, this);
+    ui->vl_footer->addWidget(m_footer);
 }

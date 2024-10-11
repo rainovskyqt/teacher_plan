@@ -17,8 +17,14 @@ class RowEducationWork : public QWidget
     Q_OBJECT
 
 public:
+    enum class Position{
+        Row,
+        Header,
+        Footer
+    };
+
     explicit RowEducationWork(int position, const ModelEducationWork::EducationWork &work,
-                              bool enabled = true, QWidget *parent = nullptr);
+                              Position pos = Position::Row, bool enabled = true, QWidget *parent = nullptr);
     ~RowEducationWork();
 
     QString toString() const;
@@ -44,6 +50,8 @@ private:
     void setWorkData(const ModelEducationWork::EducationWork &work);
     void setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId);
     void setSaved(bool s);
+
+    bool setRow(Position pos);
 };
 
 #endif // ROWEDUCATIONWORK_H

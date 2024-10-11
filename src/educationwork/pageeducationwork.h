@@ -5,6 +5,8 @@
 
 #include "modeleducationwork.h"
 
+class RowEducationWork;
+
 namespace Ui {
 class PageEducationWork;
 }
@@ -31,7 +33,11 @@ private:
     Ui::PageEducationWork *ui;
 
     ModelEducationWork m_model;
+    RowEducationWork *m_header;
+    RowEducationWork *m_footer;
 
+    void addHeader();
+    void addFooter();
     void fillTable();
     void addRow(int row, const ModelEducationWork::EducationWork &work);
     void clearData();

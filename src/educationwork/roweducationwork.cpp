@@ -8,20 +8,24 @@
 #include <misc/wheelblocker.hpp>
 #include "database/dictionary/dictionarymanager.h"
 
-RowEducationWork::RowEducationWork(int position, const ModelEducationWork::EducationWork &work, bool enabled, QWidget *parent)
+RowEducationWork::RowEducationWork(int position, const ModelEducationWork::EducationWork &work,
+                                   Position pos, bool enabled, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RowEducationWork)
 {
     ui->setupUi(this);
-    setRow(position);
 
-    WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
+    if(setRow(pos)){
+        setRow(position);
 
-    connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
+        WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
 
-    setModels();
-    setWorkData(work);
-    setEnabled(enabled);
+        connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
+
+        setModels();
+        setWorkData(work);
+        setEnabled(enabled);
+    }
 }
 
 RowEducationWork::~RowEducationWork()
@@ -101,4 +105,14 @@ void RowEducationWork::setSaved(bool s)
         ui->lbl_rowNumber->setStyleSheet("background-color: rgb(100, 255, 100);");
     else
         ui->lbl_rowNumber->setStyleSheet("background-color: rgb(255, 100, 100);");
+}
+
+bool RowEducationWork::setRow(Position pos)
+{
+    ui->sw_comboboxes->setCurrentIndex((int)pos);
+    ui->sw_hourTypeLbl->setCurrentIndex((int)pos);
+    ui->sw_comments->setCurrentIndex((int)pos);
+    ui->sw_total->setCurrentIndex((int)pos);
+
+    return pos == Position::Row;
 }
