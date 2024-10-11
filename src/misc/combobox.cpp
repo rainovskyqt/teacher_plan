@@ -19,6 +19,37 @@ void ComboBox::addItems(const QStringList &items) {
     updateCompleterModel();
 }
 
+void ComboBox::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    QStyleOptionComboBox opt;
+    initStyleOption(&opt);
+    style()->drawComplexControl(QStyle::CC_ComboBox, &opt, &painter, this);
+
+    QString text = currentText();
+    QRect textRect = opt.rect.adjusted(5, 0, -20, 0);
+    QTextOption textOption;
+    textOption.setWrapMode(QTextOption::WordWrap);
+    textOption.setAlignment(Qt::AlignHCenter);
+
+    QFontMetrics metrics(font());
+    QRect boundingRect = metrics.boundingRect(textRect, Qt::TextWordWrap, text);
+    boundingRect.setWidth(textRect.width());
+    painter.drawText(textRect, Qt::TextWordWrap, text);
+}
+
+QSize ComboBox::minimumSizeHint() const {
+    QSize size = QComboBox::minimumSizeHint();
+    QFontMetrics metrics(font());
+    QString text = currentText();
+
+    int textHeight = metrics.boundingRect(QRect(0, 0, width() - 10, 0), Qt::TextWordWrap, text).height();
+    size.setHeight(textHeight + 10);
+
+    return size;
+}
+
 void ComboBox::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {

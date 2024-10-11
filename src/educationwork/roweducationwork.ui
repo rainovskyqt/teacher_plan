@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1355</width>
-    <height>50</height>
+    <height>55</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,16 +21,22 @@
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QFrame" name="frame">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>54</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -39,7 +45,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,1">
       <property name="spacing">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -55,14 +61,8 @@
       </property>
       <item>
        <widget class="QStackedWidget" name="sw_comboboxes">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>46</height>
-         </size>
-        </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
@@ -134,16 +134,22 @@
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <widget class="ComboBox" name="cb_discipline">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>1</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>350</width>
-                <height>40</height>
+                <height>50</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>350</width>
-                <height>40</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="editable">
@@ -153,32 +159,44 @@
             </item>
             <item>
              <widget class="ComboBox" name="cb_course">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>1</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>100</width>
-                <height>40</height>
+                <height>50</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>100</width>
-                <height>40</height>
+                <height>16777215</height>
                </size>
               </property>
              </widget>
             </item>
             <item>
              <widget class="ComboBox" name="cb_workForm">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>1</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>100</width>
-                <height>40</height>
+                <height>50</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>100</width>
-                <height>40</height>
+                <height>16777215</height>
                </size>
               </property>
              </widget>
@@ -188,13 +206,13 @@
               <property name="minimumSize">
                <size>
                 <width>40</width>
-                <height>40</height>
+                <height>50</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>40</width>
-                <height>40</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="minimum">
@@ -390,11 +408,11 @@
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>46</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_3">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -458,11 +476,11 @@
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>46</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_9">
              <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -513,12 +531,6 @@
       </item>
       <item>
        <widget class="QScrollArea" name="scrollArea">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>46</height>
-         </size>
-        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
@@ -533,8 +545,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>665</width>
-           <height>44</height>
+           <width>671</width>
+           <height>50</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0,0">
