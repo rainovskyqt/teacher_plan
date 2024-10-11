@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1355</width>
-    <height>55</height>
+    <height>54</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -531,6 +531,12 @@
       </item>
       <item>
        <widget class="QScrollArea" name="scrollArea">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
@@ -546,7 +552,7 @@
            <x>0</x>
            <y>0</y>
            <width>671</width>
-           <height>50</height>
+           <height>52</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0,0">
@@ -604,7 +610,7 @@
              </size>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_13">
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -630,13 +636,13 @@
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
                  <property name="horizontalSpacing">
                   <number>0</number>
@@ -649,13 +655,13 @@
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -674,13 +680,13 @@
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -699,13 +705,13 @@
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -724,13 +730,13 @@
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -749,13 +755,13 @@
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -774,13 +780,13 @@
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -824,13 +830,13 @@
                   <number>0</number>
                  </property>
                  <property name="topMargin">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
                  <property name="rightMargin">
                   <number>0</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
                  <property name="horizontalSpacing">
                   <number>0</number>
@@ -840,17 +846,14 @@
                  </property>
                  <item row="0" column="0">
                   <widget class="QLabel" name="label_13">
-                   <property name="minimumSize">
-                    <size>
-                     <width>39</width>
-                     <height>19</height>
-                    </size>
-                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -865,17 +868,14 @@
                  </item>
                  <item row="1" column="1">
                   <widget class="QLabel" name="label_14">
-                   <property name="minimumSize">
-                    <size>
-                     <width>39</width>
-                     <height>19</height>
-                    </size>
-                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -890,17 +890,14 @@
                  </item>
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_15">
-                   <property name="minimumSize">
-                    <size>
-                     <width>39</width>
-                     <height>19</height>
-                    </size>
-                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -915,17 +912,14 @@
                  </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="label_16">
-                   <property name="minimumSize">
-                    <size>
-                     <width>39</width>
-                     <height>19</height>
-                    </size>
-                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -940,17 +934,14 @@
                  </item>
                  <item row="1" column="2">
                   <widget class="QLabel" name="label_17">
-                   <property name="minimumSize">
-                    <size>
-                     <width>39</width>
-                     <height>19</height>
-                    </size>
-                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -965,17 +956,14 @@
                  </item>
                  <item row="0" column="2">
                   <widget class="QLabel" name="label_18">
-                   <property name="minimumSize">
-                    <size>
-                     <width>39</width>
-                     <height>19</height>
-                    </size>
-                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
-                     <height>19</height>
+                     <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -999,18 +987,18 @@
            <widget class="QStackedWidget" name="sw_comments">
             <property name="minimumSize">
              <size>
-              <width>350</width>
+              <width>100</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>350</width>
+              <width>100</width>
               <height>16777215</height>
              </size>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_5">
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1031,16 +1019,16 @@
               </property>
               <item>
                <widget class="QPlainTextEdit" name="txt_comments">
-                <property name="minimumSize">
-                 <size>
-                  <width>500</width>
-                  <height>41</height>
-                 </size>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>500</width>
-                  <height>41</height>
+                  <width>16777215</width>
+                  <height>52</height>
                  </size>
                 </property>
                </widget>

@@ -20,6 +20,12 @@ PageEducationWork::~PageEducationWork()
     delete ui;
 }
 
+void PageEducationWork::resizeEvent(QResizeEvent *e)
+{
+    emit sizeChanged(this->size());
+    QWidget::resizeEvent(e);
+}
+
 void PageEducationWork::setPlan(int staffId)
 {
     m_model.loadData(staffId);

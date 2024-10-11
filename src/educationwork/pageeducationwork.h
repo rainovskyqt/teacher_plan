@@ -19,13 +19,17 @@ public:
     explicit PageEducationWork(QWidget *parent = nullptr);
     ~PageEducationWork();
 
+    void resizeEvent(QResizeEvent *e);
+
 public slots:
     void setPlan(int planId);
+
+signals:
+    void sizeChanged(QSize);
 
 private slots:
     void on_btn_add_clicked();
     void deleteRow();
-
     void on_btn_up_clicked();
     void on_btn_down_clicked();
 

@@ -27,6 +27,7 @@ list(APPEND PRJ_SRCS ${PRJ_SRCS0})
 
 add_executable(teacher_plan
     ${PROJECT_SOURCES}
+    src/educationwork/montheducationwork.h src/educationwork/montheducationwork.cpp src/educationwork/montheducationwork.ui
 )
 
 
