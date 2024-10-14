@@ -37,9 +37,14 @@ public:
 
 public slots:
     void setSliderPosition(int pos);
+    void setWidht(int widht);
 
 signals:
     void deleteWork();
+    void widhtChanged(int);
+
+protected:
+    void resizeEvent(QResizeEvent *e);
 
 private:
     Ui::RowEducationWork *ui;

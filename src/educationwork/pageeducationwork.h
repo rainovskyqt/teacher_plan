@@ -47,6 +47,7 @@ private:
     void clearData();
     void updateRowNumber(int start);
     void swapItems(int fromRow, int toRow);
+    void updateRowsSizeHint();
 };
 
 #endif // PAGEEDUCATIONWORK_H

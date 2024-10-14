@@ -68,6 +68,17 @@ void RowEducationWork::setSliderPosition(int pos)
     ui->scrollArea->horizontalScrollBar()->setValue(pos);
 }
 
+void RowEducationWork::setWidht(int widht)
+{
+    resize(widht, size().height());
+}
+
+void RowEducationWork::resizeEvent(QResizeEvent *e)
+{
+    emit widhtChanged(this->size().width());
+    QWidget::resizeEvent(e);
+}
+
 void RowEducationWork::setModels()
 {
     setModel(DictionaryManager::get()->disciplines(), &m_disciplines, ui->cb_discipline);

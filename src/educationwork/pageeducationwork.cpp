@@ -25,6 +25,8 @@ void PageEducationWork::resizeEvent(QResizeEvent *e)
 {
     ui->hsb_scroller->setMaximum(m_header->sliderWight());
 
+    updateRowsSizeHint();
+
     QWidget::resizeEvent(e);
 }
 
@@ -53,8 +55,8 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
     ui->lw_educationWork->setItemWidget(item, rowWidget);
 
     connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
-
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
+
 
     //     connect(row, &EducationRow::valueChanged, this, [this](EducationalHour *hour){
     //         auto h = new EducationalHour(-1, -1, hour->week(), countHours(hour->type(), hour->week()),
@@ -99,6 +101,14 @@ void PageEducationWork::swapItems(int fromRow, int toRow)
     addRow(toRow, work);
     ui->lw_educationWork->setCurrentRow(toRow);
     updateRowNumber(fromRow > toRow ? toRow : fromRow);
+}
+
+void PageEducationWork::updateRowsSizeHint()
+{
+    for(int i = 0; i < ui->lw_educationWork->count(); ++i){
+        auto row = ui->lw_educationWork->item(i);
+        row->setSizeHint(QSize(ui->lw_educationWork->width() - 15, row->sizeHint().height()));
+    }
 }
 
 void PageEducationWork::on_btn_add_clicked()
