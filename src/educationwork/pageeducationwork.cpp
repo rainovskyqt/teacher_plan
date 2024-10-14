@@ -4,7 +4,8 @@
 #include "roweducationwork.h"
 
 #include <QMessageBox>
-
+#include <QScrollBar>
+#include <QDebug>
 
 PageEducationWork::PageEducationWork(QWidget *parent)
     : QWidget(parent)
@@ -22,7 +23,8 @@ PageEducationWork::~PageEducationWork()
 
 void PageEducationWork::resizeEvent(QResizeEvent *e)
 {
-    emit sizeChanged(this->size());
+    ui->hsb_scroller->setMaximum(m_header->sliderWight());
+
     QWidget::resizeEvent(e);
 }
 
@@ -52,11 +54,13 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
 
     connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
 
-        //     connect(row, &EducationRow::valueChanged, this, [this](EducationalHour *hour){
-        //         auto h = new EducationalHour(-1, -1, hour->week(), countHours(hour->type(), hour->week()),
-        //                                      hour->type(), ui->w_footer);
-        //         ui->w_footer->setValue(h);
-        //     });
+    connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
+
+    //     connect(row, &EducationRow::valueChanged, this, [this](EducationalHour *hour){
+    //         auto h = new EducationalHour(-1, -1, hour->week(), countHours(hour->type(), hour->week()),
+    //                                      hour->type(), ui->w_footer);
+    //         ui->w_footer->setValue(h);
+    //     });
 
     //     connect(row, &EducationRow::factValueChanged, this, &FormEducationWork::factValueChanged);
     //     connect(ui->scrolbar, &QScrollBar::valueChanged, row, &EducationRow::setScrolBarValue);
@@ -141,10 +145,14 @@ void PageEducationWork::addHeader()
 {
     m_header = new RowEducationWork(0, {}, RowEducationWork::Position::Header, true, this);
     ui->vl_header->addWidget(m_header);
+    connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_header, &RowEducationWork::setSliderPosition);
 }
 
 void PageEducationWork::addFooter()
 {
     m_footer = new RowEducationWork(0, {}, RowEducationWork::Position::Footer, true, this);
     ui->vl_footer->addWidget(m_footer);
+    connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_footer, &RowEducationWork::setSliderPosition);
+    int smooth = m_header->smooth();
+    m_footer->setSmooth(smooth);
 }

@@ -1,31 +1,28 @@
+#include "montheducationwork.h"
+#include "monthheader.h"
 #include "roweducationwork.h"
 #include "ui_roweducationwork.h"
 
 #include <QDebug>
 #include <QComboBox>
 #include <QPushButton>
+#include <QScrollBar>
 
 #include <misc/wheelblocker.hpp>
 #include "database/dictionary/dictionarymanager.h"
 
-RowEducationWork::RowEducationWork(int position, const ModelEducationWork::EducationWork &work,
-                                   Position pos, bool enabled, QWidget *parent)
+#define HEADER_HEIGHT 90
+#define ROW_HEIGHT 54
+
+RowEducationWork::RowEducationWork(int number, const ModelEducationWork::EducationWork &work,
+                                   Position position, bool enabled, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RowEducationWork)
 {
     ui->setupUi(this);
 
-    if(setRow(pos)){
-        setRow(position);
-
-        WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
-
-        connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
-
-        setModels();
-        setWorkData(work);
-        setEnabled(enabled);
-    }
+    setPosition(position, number, work);
+    setEnabled(enabled);
 }
 
 RowEducationWork::~RowEducationWork()
@@ -59,6 +56,27 @@ void RowEducationWork::setRow(int row)
 ModelEducationWork::EducationWork RowEducationWork::work() const
 {
     return m_work;
+}
+
+int RowEducationWork::sliderWight()
+{
+    return ui->scrollArea->horizontalScrollBar()->maximum();
+}
+
+int RowEducationWork::smooth()
+{
+    return ui->w_month->width();
+}
+
+void RowEducationWork::setSmooth(int smooth)
+{
+    ui->w_month->setMinimumWidth(smooth);
+    ui->w_month->setMaximumWidth(smooth);
+}
+
+void RowEducationWork::setSliderPosition(int pos)
+{
+    ui->scrollArea->horizontalScrollBar()->setValue(pos);
 }
 
 void RowEducationWork::setModels()
@@ -107,12 +125,56 @@ void RowEducationWork::setSaved(bool s)
         ui->lbl_rowNumber->setStyleSheet("background-color: rgb(255, 100, 100);");
 }
 
-bool RowEducationWork::setRow(Position pos)
+void RowEducationWork::setPosition(Position pos, int number, const ModelEducationWork::EducationWork &work)
 {
+    switch (pos) {
+    case Position::Row:
+        setAsRow(number, work);
+        break;
+    case Position::Header:
+        setAsHeader();
+        break;
+    case Position::Footer:
+        break;
+    }
+
     ui->sw_comboboxes->setCurrentIndex((int)pos);
     ui->sw_hourTypeLbl->setCurrentIndex((int)pos);
     ui->sw_comments->setCurrentIndex((int)pos);
     ui->sw_total->setCurrentIndex((int)pos);
+}
 
-    return pos == Position::Row;
+void RowEducationWork::setAsRow(int number, const ModelEducationWork::EducationWork &work)
+{
+    ui->frame->setMaximumHeight(ROW_HEIGHT);
+    ui->frame->setMinimumHeight(ROW_HEIGHT);
+
+    WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
+
+    connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
+    setRow(number);
+    setModels();
+    setWorkData(work);
+
+    for(int i = 0; i < 10; ++i){
+        auto m = new MonthEducationWork(this);
+        addMonth(m);
+    }
+}
+
+void RowEducationWork::addMonth(QWidget *w)
+{
+    ui->hl_months->addWidget(w);
+    ui->w_month->setMinimumWidth(ui->hl_months->sizeHint().width());
+}
+
+void RowEducationWork::setAsHeader()
+{
+    ui->frame->setMaximumHeight(HEADER_HEIGHT);
+    ui->frame->setMinimumHeight(HEADER_HEIGHT);
+
+    for(int i = 0; i < 10; ++i){
+        auto m = new MonthHeader(this);
+        addMonth(m);
+    }
 }

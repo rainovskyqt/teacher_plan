@@ -70,6 +70,12 @@ void MainWindow::closeEvent(QCloseEvent *e)
     QWidget::closeEvent(e);
 }
 
+void MainWindow::resizeEvent(QResizeEvent *e)
+{
+    calculateSliderArea();
+    QMainWindow::resizeEvent(e);
+}
+
 void MainWindow::getPlans(int staffId)
 {
     if(!staffId){
@@ -168,6 +174,11 @@ void MainWindow::checkUpdateComments()
         comments.exec();
     if(comments.dontShow())
         comments.setViewed(UserManager::get()->user()->id());
+}
+
+void MainWindow::calculateSliderArea()
+{
+
 }
 
 // void MainWindow::on_btn_create_clicked()

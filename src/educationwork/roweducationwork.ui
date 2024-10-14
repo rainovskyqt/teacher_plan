@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1355</width>
+    <width>946</width>
     <height>54</height>
    </rect>
   </property>
@@ -62,7 +62,7 @@
       <item>
        <widget class="QStackedWidget" name="sw_comboboxes">
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
@@ -203,6 +203,12 @@
             </item>
             <item>
              <widget class="QSpinBox" name="sb_groupCount">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>40</width>
@@ -214,6 +220,9 @@
                 <width>40</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
               <property name="minimum">
                <number>1</number>
@@ -423,13 +432,13 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>2</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QLabel" name="label">
@@ -541,7 +550,10 @@
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAsNeeded</enum>
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
         </property>
         <property name="widgetResizable">
          <bool>true</bool>
@@ -551,13 +563,13 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>671</width>
-           <height>52</height>
+           <width>262</width>
+           <height>50</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,0,0">
           <property name="spacing">
-           <number>2</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -596,7 +608,11 @@
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="hl_months"/>
+              <layout class="QHBoxLayout" name="hl_months">
+               <property name="spacing">
+                <number>4</number>
+               </property>
+              </layout>
              </item>
             </layout>
            </widget>
@@ -610,7 +626,7 @@
              </size>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="page_13">
              <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -630,8 +646,8 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QWidget" name="w_totalHoursLbl" native="true">
-                <layout class="QGridLayout" name="gridLayout">
+               <widget class="QWidget" name="w_totalYearHoursLbl" native="true">
+                <layout class="QGridLayout" name="gridLayout_3">
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -651,7 +667,7 @@
                   <number>2</number>
                  </property>
                  <item row="0" column="0">
-                  <widget class="QLabel" name="label_7">
+                  <widget class="QLabel" name="lbl_I_totalPlan">
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
@@ -676,7 +692,7 @@
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QLabel" name="label_4">
+                  <widget class="QLabel" name="lbl_II_totalFact">
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
@@ -701,7 +717,7 @@
                   </widget>
                  </item>
                  <item row="1" column="0">
-                  <widget class="QLabel" name="label_8">
+                  <widget class="QLabel" name="lbl_I_totalFact">
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
@@ -726,7 +742,7 @@
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QLabel" name="label_3">
+                  <widget class="QLabel" name="lbl_II_totalPlan">
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
@@ -751,7 +767,7 @@
                   </widget>
                  </item>
                  <item row="1" column="2">
-                  <widget class="QLabel" name="label_5">
+                  <widget class="QLabel" name="lbl_yearTotalFact">
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
@@ -776,7 +792,7 @@
                   </widget>
                  </item>
                  <item row="0" column="2">
-                  <widget class="QLabel" name="label_6">
+                  <widget class="QLabel" name="lbl_yearTotalPlan">
                    <property name="minimumSize">
                     <size>
                      <width>39</width>
@@ -805,9 +821,8 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_14"/>
-            <widget class="QWidget" name="page_15">
-             <layout class="QVBoxLayout" name="verticalLayout_9">
+            <widget class="QWidget" name="page_14">
+             <layout class="QVBoxLayout" name="verticalLayout_12">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -845,7 +860,7 @@
                   <number>2</number>
                  </property>
                  <item row="0" column="0">
-                  <widget class="QLabel" name="label_13">
+                  <widget class="QLabel" name="lbl_I_header">
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
@@ -859,51 +874,7 @@
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="label_14">
-                   <property name="maximumSize">
-                    <size>
-                     <width>39</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="whatsThis">
-                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_15">
-                   <property name="maximumSize">
-                    <size>
-                     <width>39</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="whatsThis">
-                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
+                    <string>I-е</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -911,7 +882,7 @@
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QLabel" name="label_16">
+                  <widget class="QLabel" name="lbl_II_header">
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
@@ -920,6 +891,97 @@
                    </property>
                    <property name="whatsThis">
                     <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="text">
+                    <string>II-е</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="lbl_totalHeader">
+                   <property name="maximumSize">
+                    <size>
+                     <width>39</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="whatsThis">
+                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="text">
+                    <string>За
+год</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_15">
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QWidget" name="w_totalHoursLbl" native="true">
+                <layout class="QGridLayout" name="gridLayout">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>2</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>2</number>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>0</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>2</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="lbl_I_plan">
+                   <property name="minimumSize">
+                    <size>
+                     <width>39</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>39</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -933,15 +995,68 @@
                   </widget>
                  </item>
                  <item row="1" column="2">
-                  <widget class="QLabel" name="label_17">
+                  <widget class="QLabel" name="lbl_yearFact">
+                   <property name="minimumSize">
+                    <size>
+                     <width>39</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
                      <height>16777215</height>
                     </size>
                    </property>
-                   <property name="whatsThis">
-                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="lbl_II_fact">
+                   <property name="minimumSize">
+                    <size>
+                     <width>39</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>39</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="lbl_II_plan">
+                   <property name="minimumSize">
+                    <size>
+                     <width>39</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>39</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -955,15 +1070,43 @@
                   </widget>
                  </item>
                  <item row="0" column="2">
-                  <widget class="QLabel" name="label_18">
+                  <widget class="QLabel" name="lbl_yearPlan">
+                   <property name="minimumSize">
+                    <size>
+                     <width>39</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>39</width>
                      <height>16777215</height>
                     </size>
                    </property>
-                   <property name="whatsThis">
-                    <string extracomment="Sans Serif,9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="lbl_I_fact">
+                   <property name="minimumSize">
+                    <size>
+                     <width>39</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>39</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -1028,8 +1171,11 @@
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>52</height>
+                  <height>50</height>
                  </size>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
                 </property>
                </widget>
               </item>

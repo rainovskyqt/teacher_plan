@@ -23,8 +23,8 @@ public:
         Footer
     };
 
-    explicit RowEducationWork(int position, const ModelEducationWork::EducationWork &work,
-                              Position pos = Position::Row, bool enabled = true, QWidget *parent = nullptr);
+    explicit RowEducationWork(int number, const ModelEducationWork::EducationWork &work,
+                              Position position = Position::Row, bool enabled = true, QWidget *parent = nullptr);
     ~RowEducationWork();
 
     QString toString() const;
@@ -33,6 +33,12 @@ public:
     int row() const;
     void setRow(int row);
     ModelEducationWork::EducationWork work() const;
+    int sliderWight();
+    int smooth();
+    void setSmooth(int smooth);
+
+public slots:
+    void setSliderPosition(int pos);
 
 signals:
     void deleteWork();
@@ -51,7 +57,10 @@ private:
     void setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId);
     void setSaved(bool s);
 
-    bool setRow(Position pos);
+    void setPosition(Position pos, int number, const ModelEducationWork::EducationWork &work);
+    void setAsHeader();
+    void setAsRow(int number, const ModelEducationWork::EducationWork &work);
+    void addMonth(QWidget *w);
 };
 
 #endif // ROWEDUCATIONWORK_H

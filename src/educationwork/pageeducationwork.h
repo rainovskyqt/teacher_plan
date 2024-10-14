@@ -25,7 +25,7 @@ public slots:
     void setPlan(int planId);
 
 signals:
-    void sizeChanged(QSize);
+
 
 private slots:
     void on_btn_add_clicked();

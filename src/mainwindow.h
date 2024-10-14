@@ -22,6 +22,7 @@ public:
     ~MainWindow();
 
     virtual void closeEvent(QCloseEvent *e) override;
+    void resizeEvent(QResizeEvent *e);
 
 private slots:
     void getPlans(int staffId);
@@ -46,8 +47,8 @@ private:
     void initFacultyPanel();
     void initConnections();
     void checkUpdateComments();
+    void calculateSliderArea();
 
-    // TeacherPlan *m_currentPlan;
 
 
 };
