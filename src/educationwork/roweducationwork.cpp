@@ -63,17 +63,6 @@ int RowEducationWork::sliderWight()
     return ui->scrollArea->horizontalScrollBar()->maximum();
 }
 
-int RowEducationWork::smooth()
-{
-    return ui->w_month->width();
-}
-
-void RowEducationWork::setSmooth(int smooth)
-{
-    ui->w_month->setMinimumWidth(smooth);
-    ui->w_month->setMaximumWidth(smooth);
-}
-
 void RowEducationWork::setSliderPosition(int pos)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(pos);
@@ -135,6 +124,7 @@ void RowEducationWork::setPosition(Position pos, int number, const ModelEducatio
         setAsHeader();
         break;
     case Position::Footer:
+        setAsFooter();
         break;
     }
 
@@ -166,6 +156,17 @@ void RowEducationWork::addMonth(QWidget *w)
 {
     ui->hl_months->addWidget(w);
     ui->w_month->setMinimumWidth(ui->hl_months->sizeHint().width());
+}
+
+void RowEducationWork::setAsFooter()
+{
+    ui->frame->setMaximumHeight(ROW_HEIGHT);
+    ui->frame->setMinimumHeight(ROW_HEIGHT);
+
+    for(int i = 0; i < 10; ++i){
+        auto m = new MonthEducationWork(this);
+        addMonth(m);
+    }
 }
 
 void RowEducationWork::setAsHeader()

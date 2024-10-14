@@ -153,6 +153,4 @@ void PageEducationWork::addFooter()
     m_footer = new RowEducationWork(0, {}, RowEducationWork::Position::Footer, true, this);
     ui->vl_footer->addWidget(m_footer);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_footer, &RowEducationWork::setSliderPosition);
-    int smooth = m_header->smooth();
-    m_footer->setSmooth(smooth);
 }

@@ -34,8 +34,6 @@ public:
     void setRow(int row);
     ModelEducationWork::EducationWork work() const;
     int sliderWight();
-    int smooth();
-    void setSmooth(int smooth);
 
 public slots:
     void setSliderPosition(int pos);
@@ -61,6 +59,7 @@ private:
     void setAsHeader();
     void setAsRow(int number, const ModelEducationWork::EducationWork &work);
     void addMonth(QWidget *w);
+    void setAsFooter();
 };
 
 #endif // ROWEDUCATIONWORK_H
