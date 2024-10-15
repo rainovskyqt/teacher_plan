@@ -4,6 +4,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QMessageBox>
+#include <QFile>
 
 #include "login/login.h"
 #include "database/database.h"
@@ -27,6 +28,12 @@ int main(int argc, char *argv[])
             a.installTranslator(&translator);
             break;
         }
+    }
+
+    QFile styleFile(":/styles/styles/ligth.qss");
+    if (styleFile.open(QFile::ReadOnly)) {
+        QString style = QLatin1String(styleFile.readAll());
+        a.setStyleSheet(style);
     }
 
     Login l;

@@ -1,6 +1,7 @@
 #ifndef PAGEEDUCATIONWORK_H
 #define PAGEEDUCATIONWORK_H
 
+#include <QListWidgetItem>
 #include <QWidget>
 
 #include "modeleducationwork.h"

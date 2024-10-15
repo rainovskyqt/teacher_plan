@@ -9,6 +9,4 @@ ModelDiscipline::ModelDiscipline(QObject *parent)
 
     auto query = Database::get()->selectQuery(queryString);
     setQuery(query);
-    static int count = 0;
-    qDebug() << "Обращение к базе:" << ++count;
 }

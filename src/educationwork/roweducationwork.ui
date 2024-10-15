@@ -37,11 +37,15 @@
        <height>54</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(234, 255, 0);
+border-width: 5px</string>
+     </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,1,0,0">
       <property name="spacing">
@@ -421,7 +425,7 @@
          </size>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page_3">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -432,13 +436,13 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <item>
            <widget class="QLabel" name="label">
@@ -464,7 +468,7 @@
         </widget>
         <widget class="QWidget" name="widget"/>
         <widget class="QWidget" name="page_8">
-         <layout class="QVBoxLayout" name="verticalLayout_7">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <property name="spacing">
            <number>2</number>
           </property>
@@ -472,66 +476,32 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <item>
-           <widget class="QStackedWidget" name="sw_hourTypeLbl_2">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
+           <widget class="QLabel" name="label_3">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="currentIndex">
-             <number>1</number>
+            <property name="text">
+             <string>План</string>
             </property>
-            <widget class="QWidget" name="page_9">
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="spacing">
-               <number>2</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>2</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>2</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_11">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="text">
-                 <string>План</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_12">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="text">
-                 <string>Факт</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="widget_2"/>
-            <widget class="QWidget" name="page_10"/>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="text">
+             <string>Факт</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -563,8 +533,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>245</width>
-           <height>50</height>
+           <width>247</width>
+           <height>52</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1">
@@ -610,7 +580,7 @@
              <item>
               <layout class="QHBoxLayout" name="hl_months">
                <property name="spacing">
-                <number>4</number>
+                <number>2</number>
                </property>
               </layout>
              </item>

@@ -90,8 +90,6 @@ void MainWindow::getPlans(int staffId)
             ui->tab_educationWork->setPlan(planId);
         }
     }
-
-    qApp->setOverrideCursor(Qt::ArrowCursor);
 }
 
 void MainWindow::init()

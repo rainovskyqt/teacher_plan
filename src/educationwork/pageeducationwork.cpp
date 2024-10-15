@@ -50,7 +50,7 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
 {
     auto item = new QListWidgetItem();
     auto rowWidget = new RowEducationWork(row + 1, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
-    item->setSizeHint(rowWidget->sizeHint());
+    item->setSizeHint(QSize(ui->lw_educationWork->width() - 15, rowWidget->sizeHint().height()));
     ui->lw_educationWork->insertItem(row, item);
     ui->lw_educationWork->setItemWidget(item, rowWidget);
 

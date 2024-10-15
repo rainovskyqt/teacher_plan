@@ -7,4 +7,7 @@
         <file>img/up.png</file>
         <file>img/down.png</file>
     </qresource>
+    <qresource prefix="/styles">
+        <file>styles/ligth.qss</file>
+    </qresource>
 </RCC>
