@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(teacher_plan VERSION 0.1.0.0 LANGUAGES CXX)
 
-# include(cmake/GlobalFlags.cmake)
-
-
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -61,3 +58,10 @@ install(TARGETS teacher_plan
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # Включение AddressSanitizer для компиляторов Clang и GCC
+    set(SANITIZER_FLAGS "-fsanitize=address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SANITIZER_FLAGS}")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${SANITIZER_FLAGS}")
+endif()
