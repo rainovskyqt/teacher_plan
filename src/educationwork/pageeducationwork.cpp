@@ -140,7 +140,7 @@ void PageEducationWork::deleteRow()
 
     m_model.deleteWork(workRow->id());
 
-    int row = workRow->row() - 1;
+    int row = workRow->row();
 
     delete ui->lw_educationWork->item(row);
     updateRowNumber(row);
