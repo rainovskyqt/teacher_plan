@@ -7,6 +7,7 @@
 
 #include <user/usermanager.h>
 #include "database/dictionary/dictionarymanager.h"
+#include <misc/months.h>
 
 Header::Header(QWidget *parent)
     : QWidget(parent)
@@ -14,6 +15,12 @@ Header::Header(QWidget *parent)
 {
     ui->setupUi(this);
     this->setVisible(false);
+
+    connect(ui->cb_years, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](){
+        int yearId = m_modelYear.data(m_modelYear.index(ui->cb_years->currentIndex(), DictionaryModel::Id)).toInt();
+        Months::get()->loadSettings(yearId);
+        setDepartments(yearId);
+    });
 
     connect(ui->cb_post, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Header::changePost);
     connect(ui->cb_department, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Header::setPosts);
@@ -90,7 +97,6 @@ void Header::initYearModel()
     m_modelYear.setSourceModel(DictionaryManager::get()->years());
     ui->cb_years->setModel(&m_modelYear);
     ui->cb_years->setModelColumn(DictionaryModel::Name);
-    connect(ui->cb_years , QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Header::setDepartments);
     setDepartments(0);
 }
 

@@ -12,8 +12,6 @@ PageEducationWork::PageEducationWork(QWidget *parent)
     , ui(new Ui::PageEducationWork)
 {
     ui->setupUi(this);
-    addHeader();
-    addFooter();
 }
 
 PageEducationWork::~PageEducationWork()
@@ -24,15 +22,15 @@ PageEducationWork::~PageEducationWork()
 void PageEducationWork::resizeEvent(QResizeEvent *e)
 {
     ui->hsb_scroller->setMaximum(m_header->sliderWight());
-
     updateRowsSizeHint();
-
     QWidget::resizeEvent(e);
 }
 
 void PageEducationWork::setPlan(int staffId)
 {
     m_model.loadData(staffId);
+    addHeader();
+    addFooter();
     fillTable();
 }
 
@@ -40,16 +38,26 @@ void PageEducationWork::fillTable()
 {
     clearData();
 
-    auto works = m_model.works();
-    for(const auto &work: qAsConst(works)){
-        addRow(ui->lw_educationWork->count(), work);
+    using F = ModelEducationWork::Fields;
+    for(int row = 0; row < m_model.rowCount(); ++row){
+        const ModelEducationWork::EducationWork work(
+            m_model.data(m_model.index(row, (int)F::WorkId)).toInt(),
+            m_model.data(m_model.index(row, (int)F::DisciplineId)).toInt(),
+            m_model.data(m_model.index(row, (int)F::CourseId)).toInt(),
+            m_model.data(m_model.index(row, (int)F::WorkFormId)).toInt(),
+            m_model.data(m_model.index(row, (int)F::GroupCount)).toInt(),
+            m_model.data(m_model.index(row, (int)F::Comments)).toString(),
+            m_model.data(m_model.index(row, (int)F::OrderPalce)).toInt(),
+            m_model.hours(row)
+            );
+        addRow(row, work);
     }
 }
 
 void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork &work)
 {
     auto item = new QListWidgetItem();
-    auto rowWidget = new RowEducationWork(row + 1, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
+    auto rowWidget = new RowEducationWork(row, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
     item->setSizeHint(QSize(ui->lw_educationWork->width() - 15, rowWidget->sizeHint().height()));
     ui->lw_educationWork->insertItem(row, item);
     ui->lw_educationWork->setItemWidget(item, rowWidget);
@@ -73,17 +81,14 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
 void PageEducationWork::clearData()
 {
     ui->lw_educationWork->clear();
-    // ui->w_footer->clear();
-    // auto rows = this->findChildren<EducationRow*>();
-    // qDeleteAll(rows.begin(), rows.end());
-    // emit clear();
+    emit clear();
 }
 
 void PageEducationWork::updateRowNumber(int start)
 {
     for(int i = start; i < ui->lw_educationWork->count(); ++i){
         auto row = dynamic_cast<RowEducationWork*>(ui->lw_educationWork->itemWidget(ui->lw_educationWork->item(i)));
-        row->setRow(i + 1);
+        row->setRow(i);
     }
 }
 
@@ -111,7 +116,15 @@ void PageEducationWork::updateRowsSizeHint()
     }
 }
 
-void PageEducationWork::on_btn_add_clicked()
+void PageEducationWork::clearLayout(QLayout *la)
+{
+    while (QLayoutItem* item = la->takeAt(0)) {
+        delete item->widget();
+        delete item;
+    }
+}
+
+void PageEducationWork::addNewRow()
 {
     addRow(ui->lw_educationWork->count(), {});
 }
@@ -133,7 +146,7 @@ void PageEducationWork::deleteRow()
     updateRowNumber(row);
 }
 
-void PageEducationWork::on_btn_up_clicked()
+void PageEducationWork::rowUp()
 {
     auto list = ui->lw_educationWork;
     int cRow = list->currentRow();
@@ -142,7 +155,7 @@ void PageEducationWork::on_btn_up_clicked()
     swapItems(cRow, cRow - 1);
 }
 
-void PageEducationWork::on_btn_down_clicked()
+void PageEducationWork::rowDown()
 {
     auto list = ui->lw_educationWork;
     int cRow = list->currentRow();
@@ -153,6 +166,7 @@ void PageEducationWork::on_btn_down_clicked()
 
 void PageEducationWork::addHeader()
 {
+    clearLayout(ui->vl_header);
     m_header = new RowEducationWork(0, {}, RowEducationWork::Position::Header, true, this);
     ui->vl_header->addWidget(m_header);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_header, &RowEducationWork::setSliderPosition);
@@ -160,7 +174,11 @@ void PageEducationWork::addHeader()
 
 void PageEducationWork::addFooter()
 {
+    clearLayout(ui->vl_footer);
     m_footer = new RowEducationWork(0, {}, RowEducationWork::Position::Footer, true, this);
     ui->vl_footer->addWidget(m_footer);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_footer, &RowEducationWork::setSliderPosition);
+    connect(m_footer, &RowEducationWork::addNewRow, this, &PageEducationWork::addNewRow);
+    connect(m_footer, &RowEducationWork::rowUpClicked, this, &PageEducationWork::rowUp);
+    connect(m_footer, &RowEducationWork::rowDownClicked, this, &PageEducationWork::rowDown);
 }

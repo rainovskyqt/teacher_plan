@@ -26,42 +26,37 @@ void ModelEducationWork::loadData(int planeId)
     setQuery(query);
 }
 
-QVector<ModelEducationWork::EducationWork> ModelEducationWork::works() const
-{
-    QVector<EducationWork> works;
-
-    for(int row = 0; row < rowCount(); ++row){
-        works.append(EducationWork(
-            data(index(row, WorkId)).toInt(),
-            data(index(row, DisciplineId)).toInt(),
-            data(index(row, CourseId)).toInt(),
-            data(index(row, WorkFormId)).toInt(),
-            data(index(row, GroupCount)).toInt(),
-            data(index(row, Comments)).toString(),
-            data(index(row, OrderPalce)).toInt(),
-            splitHours(data(index(row, Hours)).toString())
-            ));
-    }
-
-    return works;
-}
-
 void ModelEducationWork::deleteWork(int id)
 {
 
 }
 
-QHash<int, ModelEducationWork::Hour> ModelEducationWork::splitHours(const QString &hoursString) const
+QHash<int, ModelEducationWork::Hour> ModelEducationWork::hours(int row) const
 {
     QHash<int, ModelEducationWork::Hour> hours;
+    QString hoursString = data(index(row, (int)Fields::Hours)).toString();
     QStringList splittedHours = hoursString.split(";", Qt::SkipEmptyParts);
     for(const QString &hourRow : qAsConst(splittedHours)){
         QStringList h = hourRow.split(",");
-        hours.insert(h.at(HourWeek).toInt(), {h.at(HourId).toInt(),
-                                                 h.at(HourWeek).toInt(),
-                                                 h.at(HourType).toInt(),
-                                                 h.at(HourValue).toInt()
-                                             });
+        int week = h.at((int)HourFields::HourWeek).toInt();
+        int id = h.at((int)HourFields::HourId).toInt();
+        int type = h.at((int)HourFields::HourType).toInt();
+        int value = h.at((int)HourFields::HourValue).toInt();
+
+        auto current = hours.value(week);
+        if(type == 1)
+            current.planValue = value;
+        else
+            current.factValue = value;
+        current.id = id;
+        current.week = week;
+        hours.insert(week, current);
     }
+
     return hours;
+}
+
+void ModelEducationWork::updateHour(Hour hour)
+{
+
 }

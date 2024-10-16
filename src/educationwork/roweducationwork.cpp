@@ -11,6 +11,8 @@
 #include <misc/wheelblocker.hpp>
 #include "database/dictionary/dictionarymanager.h"
 
+#include <misc/months.h>
+
 #define HEADER_HEIGHT 90
 #define ROW_HEIGHT 54
 
@@ -23,6 +25,10 @@ RowEducationWork::RowEducationWork(int number, const ModelEducationWork::Educati
 
     setPosition(position, number, work);
     setEnabled(enabled);
+
+    connect(ui->btn_up, &QPushButton::clicked, this, &RowEducationWork::rowUpClicked);
+    connect(ui->btn_down, &QPushButton::clicked, this, &RowEducationWork::rowDownClicked);
+    connect(ui->btn_add, &QPushButton::clicked, this, &RowEducationWork::addNewRow);
 }
 
 RowEducationWork::~RowEducationWork()
@@ -45,12 +51,13 @@ int RowEducationWork::id() const
 
 int RowEducationWork::row() const
 {
-    return ui->lbl_rowNumber->text().toInt();
+    return m_row;
 }
 
 void RowEducationWork::setRow(int row)
 {
-    ui->lbl_rowNumber->setNum(row);
+    m_row = row;
+    ui->lbl_rowNumber->setNum(m_row + 1);
 }
 
 ModelEducationWork::EducationWork RowEducationWork::work() const
@@ -157,9 +164,9 @@ void RowEducationWork::setAsRow(int number, const ModelEducationWork::EducationW
     setModels();
     setWorkData(work);
 
-    for(int i = 0; i < 10; ++i){
-        auto m = new MonthEducationWork(this);
-        addMonth(m);
+    auto months = Months::get()->educationYearList();
+    for(auto m : months){
+        addMonth(new MonthEducationWork(this, m, work.hours));
     }
 }
 
@@ -174,9 +181,9 @@ void RowEducationWork::setAsFooter()
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
 
-    for(int i = 0; i < 10; ++i){
-        auto m = new MonthEducationWork(this);
-        addMonth(m);
+    auto months = Months::get()->educationYearList();
+    for(auto m : months){
+        addMonth(new MonthEducationWork(this, m));
     }
 }
 
@@ -184,9 +191,8 @@ void RowEducationWork::setAsHeader()
 {
     ui->frame->setMaximumHeight(HEADER_HEIGHT);
     ui->frame->setMinimumHeight(HEADER_HEIGHT);
-
-    for(int i = 0; i < 10; ++i){
-        auto m = new MonthHeader(this);
-        addMonth(m);
+    auto months = Months::get()->educationYearList();
+    for(auto m : months){
+        addMonth(new MonthHeader(m, this));
     }
 }

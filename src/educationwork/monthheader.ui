@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>197</width>
-    <height>76</height>
+    <width>202</width>
+    <height>86</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>197</width>
-    <height>76</height>
+    <width>164</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>204</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,16 +45,16 @@ border-left-width: 2;</string>
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="lbl_name">
      <property name="frameShape">
       <enum>QFrame::Box</enum>
      </property>
@@ -67,6 +79,12 @@ border-left-width: 2;</string>
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>195</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>2</number>
@@ -87,13 +105,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_s_1">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -112,13 +130,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_e_1">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -137,13 +155,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_week_1">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -192,13 +210,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_s_5">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -217,13 +235,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_e_5">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -242,13 +260,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_week_2">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -297,13 +315,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_s_6">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -322,13 +340,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_e_6">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -347,13 +365,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_week_3">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -402,13 +420,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_s_7">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -427,13 +445,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_e_7">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -452,13 +470,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_week_4">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -507,13 +525,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_s_8">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -532,13 +550,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_e_8">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>
@@ -557,13 +575,13 @@ border-left-width: 2;</string>
          <widget class="QLabel" name="lbl_week_5">
           <property name="minimumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>39</width>
+            <width>40</width>
             <height>16777215</height>
            </size>
           </property>

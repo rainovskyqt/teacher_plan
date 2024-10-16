@@ -26,13 +26,13 @@ public slots:
     void setPlan(int planId);
 
 signals:
-
+    void clear();
 
 private slots:
-    void on_btn_add_clicked();
     void deleteRow();
-    void on_btn_up_clicked();
-    void on_btn_down_clicked();
+    void rowUp();
+    void rowDown();
+    void addNewRow();
 
 private:
     Ui::PageEducationWork *ui;
@@ -49,6 +49,7 @@ private:
     void updateRowNumber(int start);
     void swapItems(int fromRow, int toRow);
     void updateRowsSizeHint();
+    void clearLayout(QLayout *la);
 };
 
 #endif // PAGEEDUCATIONWORK_H

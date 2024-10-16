@@ -7,7 +7,7 @@ class ModelEducationWork : public QSqlQueryModel
 {
 public:
 
-    enum Fields{
+    enum class Fields{
         WorkId,
         DisciplineId,
         CourseId,
@@ -18,7 +18,7 @@ public:
         Hours
     };
 
-    enum HourFields{
+    enum class HourFields{
         HourId,
         HourWeek,
         HourType,
@@ -28,8 +28,8 @@ public:
     struct Hour{
         int id;
         int week;
-        int type;
-        int value;
+        int planValue;
+        int factValue;
     };
 
     struct EducationWork{
@@ -46,15 +46,14 @@ public:
 
     explicit ModelEducationWork(QObject *parent = nullptr);
     void loadData(int planeId);
-
-    QVector<EducationWork> works() const;
-
     void deleteWork(int id);
+
+    QHash<int, Hour> hours(int row) const;
+    void updateHour(Hour hour);
 
 public slots:
 
 private:    
-    QHash<int, Hour> splitHours(const QString &hoursString) const;
 };
 
 #endif // MODELEDUCATIONWORK_H

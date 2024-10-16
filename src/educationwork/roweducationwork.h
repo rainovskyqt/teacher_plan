@@ -42,6 +42,9 @@ public slots:
 signals:
     void deleteWork();
     void widhtChanged(int);
+    void rowUpClicked();
+    void rowDownClicked();
+    void addNewRow();
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -49,6 +52,7 @@ protected:
 private:
     Ui::RowEducationWork *ui;
 
+    int m_row;
     QSortFilterProxyModel m_disciplines;
     QSortFilterProxyModel m_courses;
     QSortFilterProxyModel m_workForm;
