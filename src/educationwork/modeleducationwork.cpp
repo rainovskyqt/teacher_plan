@@ -56,7 +56,12 @@ QHash<int, ModelEducationWork::Hour> ModelEducationWork::hours(int row) const
     return hours;
 }
 
-void ModelEducationWork::updateHour(Hour hour)
+void ModelEducationWork::updateValues(Hour hour)
 {
+    QString queryString = R"()";
 
+    Arguments args;
+    args.insert(":planeId", planeId);
+
+    auto query = Database::get()->selectQuery(queryString, args);
 }

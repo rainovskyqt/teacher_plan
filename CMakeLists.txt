@@ -24,11 +24,7 @@ list(APPEND PRJ_SRCS ${PRJ_SRCS0})
 
 add_executable(teacher_plan
     ${PROJECT_SOURCES}
-    src/educationwork/montheducationwork.h src/educationwork/montheducationwork.cpp src/educationwork/montheducationwork.ui
-    src/educationwork/weekeducationwork.h src/educationwork/weekeducationwork.cpp src/educationwork/weekeducationwork.ui
-    src/educationwork/monthheader.h src/educationwork/monthheader.cpp src/educationwork/monthheader.ui
 )
-
 
 list(APPEND PRJ_RESOURCES
     "src/res.qrc"
@@ -57,6 +53,6 @@ install(TARGETS teacher_plan
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-include(cmake/ASAN.cmake)
+#include(cmake/ASAN.cmake)
 
 

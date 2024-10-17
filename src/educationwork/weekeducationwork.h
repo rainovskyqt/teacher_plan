@@ -15,19 +15,21 @@ class WeekEducationWork : public QWidget
     Q_OBJECT
 
 public:
-    explicit WeekEducationWork(ModelEducationWork::Hour hour, QWidget *parent = nullptr);
+    explicit WeekEducationWork(const ModelEducationWork::Hour &hour, QWidget *parent = nullptr);
     ~WeekEducationWork();
 
 signals:
-    void valueChanged(int, int, int);           //id, plane, fact
+    void valueChanged(ModelEducationWork::Hour);           //id, plane, fact
 
 private slots:
     void clearField(QString text);
+    void on_line_plane_textChanged(const QString &arg1);
+    void on_line_fact_textChanged(const QString &arg1);
 
 private:
     Ui::WeekEducationWork *ui;
 
-    int m_id;
+    ModelEducationWork::Hour m_hour;
 
     void setClearingField(QLineEdit *editor);
 };

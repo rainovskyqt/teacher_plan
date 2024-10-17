@@ -49,9 +49,9 @@ public:
     void deleteWork(int id);
 
     QHash<int, Hour> hours(int row) const;
-    void updateHour(Hour hour);
 
 public slots:
+    void updateValues(Hour hour);
 
 private:    
 };

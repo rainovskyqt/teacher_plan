@@ -45,6 +45,10 @@ signals:
     void rowUpClicked();
     void rowDownClicked();
     void addNewRow();
+    void valueChanged(ModelEducationWork::Hour);
+
+private slots:
+    void updateValues(ModelEducationWork::Hour hour);
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -69,6 +73,7 @@ private:
     void setAsRow(int number, const ModelEducationWork::EducationWork &work);
     void addMonth(QWidget *w);
     void setAsFooter();
+    void countValues();
 };
 
 #endif // ROWEDUCATIONWORK_H

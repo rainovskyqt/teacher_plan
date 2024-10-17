@@ -21,12 +21,13 @@ public:
     ~MonthEducationWork();
 
 signals:
-    void valueChanged(int, int, int);           //id, plane, fact
+    void valueChanged(H);
 
 private:
     Ui::MonthEducationWork *ui;
 
     void addWeeks(Months::Month month, const QHash<int, H> &hours);
+    H getWeekHours(int week, const QHash<int, H> &hours);
 };
 
 #endif // MONTHEDUCATIONWORK_H

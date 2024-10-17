@@ -3,6 +3,7 @@
 #include <database/database.h>
 
 #include <QVariant>
+#include <QDebug>
 
 Q_GLOBAL_STATIC(Months, globalInst)
 
@@ -70,6 +71,11 @@ bool Months::isFirstSemester(Month month) const
         return false;
 }
 
+bool Months::isFirstSemester(int week) const
+{
+    return week < m_secondSemesterFirstWeek;
+}
+
 QPair<int, int> Months::monthWeeks(Month month) const
 {
     return m_monthWeeks.value(month);
@@ -98,4 +104,22 @@ void Months::loadSettings(int year)
         m_monthWeeks.insert(m, qMakePair(start, count));
         start += count;
     }
+
+    countSecondSemesterFirstWeek();
+}
+
+void Months::countSecondSemesterFirstWeek()
+{
+    if(m_monthWeeks.isEmpty()){
+        qDebug() << "Список недель по месецам пустой";
+        return;
+    }
+    m_secondSemesterFirstWeek = 0;
+    auto months = educationYearList();
+    for(auto m : months){
+        if(m == February)
+            break;
+        m_secondSemesterFirstWeek += m_monthWeeks.value(m).second;          // В second хранится количество недель
+    }
+    ++m_secondSemesterFirstWeek;                //Повышаем на еденицу, что бы получить первую неделю второго семестра
 }

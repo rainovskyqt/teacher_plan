@@ -63,6 +63,7 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
     ui->lw_educationWork->setItemWidget(item, rowWidget);
 
     connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
+    connect(rowWidget, &RowEducationWork::updateValues, this, &ModelEducationWork::updateValues);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
 
 

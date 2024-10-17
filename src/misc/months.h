@@ -32,6 +32,7 @@ public:
     QString name(Month month) const;
     QList<Month> educationYearList() const;
     bool isFirstSemester(Month month) const;
+    bool isFirstSemester(int week) const;
     QPair<int, int> monthWeeks(Month month) const;
     QPair<int, int> weekDates(int week) const;
 
@@ -40,9 +41,11 @@ public:
 signals:
 
 private:
-    QHash<Month, QPair<int, int>> m_monthWeeks;
-    QHash<int, QPair<int, int>> m_weeksDates;
+    int m_secondSemesterFirstWeek;
 
+    QHash<Month, QPair<int, int>> m_monthWeeks;     //месяц <стартовая неделя, количество недель>
+    QHash<int, QPair<int, int>> m_weeksDates;       //неделя <дата начала, дата окончания>
+    void countSecondSemesterFirstWeek();
 };
 
 #endif // MONTHS_H

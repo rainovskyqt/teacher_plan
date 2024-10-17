@@ -3,13 +3,12 @@
 
 #include <QIntValidator>
 
-WeekEducationWork::WeekEducationWork(ModelEducationWork::Hour hour, QWidget *parent)
+WeekEducationWork::WeekEducationWork(const ModelEducationWork::Hour &hour, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WeekEducationWork)
-    , m_id{0}
 {
     ui->setupUi(this);
-    m_id = hour.id;
+    m_hour = hour;
 
     setClearingField(ui->line_plane);
     setClearingField(ui->line_fact);
@@ -35,3 +34,16 @@ void WeekEducationWork::setClearingField(QLineEdit *editor)
     connect(editor, &QLineEdit::textChanged, this, &WeekEducationWork::clearField);
     editor->setValidator(new QIntValidator(0, 1000, this));
 }
+
+void WeekEducationWork::on_line_plane_textChanged(const QString &arg1)
+{
+    m_hour.planValue = arg1.toInt();
+    emit valueChanged(m_hour);
+}
+
+void WeekEducationWork::on_line_fact_textChanged(const QString &arg1)
+{
+    m_hour.factValue = arg1.toInt();
+    emit valueChanged(m_hour);
+}
+
