@@ -16,6 +16,11 @@ Months *Months::get()
     return globalInst();
 }
 
+int Months::weekCount() const
+{
+    return m_weeksDates.count();
+}
+
 QString Months::name(Month month) const
 {
     switch (month) {
@@ -79,6 +84,11 @@ bool Months::isFirstSemester(int week) const
 QPair<int, int> Months::monthWeeks(Month month) const
 {
     return m_monthWeeks.value(month);
+}
+
+QPair<int, int> Months::weekDates(int week) const
+{
+    return m_weeksDates.value(week);
 }
 
 void Months::loadSettings(int year)

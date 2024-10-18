@@ -29,6 +29,7 @@ public:
     explicit Months(QObject *parent = nullptr);
 
     static Months *get();
+    int weekCount() const;
     QString name(Month month) const;
     QList<Month> educationYearList() const;
     bool isFirstSemester(Month month) const;

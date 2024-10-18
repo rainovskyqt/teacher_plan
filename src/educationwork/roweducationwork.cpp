@@ -2,6 +2,7 @@
 #include "monthheader.h"
 #include "roweducationwork.h"
 #include "ui_roweducationwork.h"
+#include "weekeducationwork.h"
 
 #include <QDebug>
 #include <QComboBox>
@@ -171,19 +172,22 @@ void RowEducationWork::setAsRow(int number, const ModelEducationWork::EducationW
     setModels();
     setWorkData(work);
 
-    auto months = Months::get()->educationYearList();
-    for(auto m : months){
-        auto newM = new MonthEducationWork(this, m, work.hours);
-        connect(newM, &MonthEducationWork::valueChanged, this, &RowEducationWork::updateValues);
+    // auto weeks = work.hours;
+    // for(int i = 1; i < ){
+    auto newM = new WeekEducationWork({}, this);
+        // connect(newM, &MonthEducationWork::valueChanged, this, &RowEducationWork::updateValues);
         addMonth(newM);
-    }
+        // addMonth();
+    // }
 
-    countValues();
+    // countValues();
 }
 
 void RowEducationWork::addMonth(QWidget *w)
 {
+    int h = ui->hl_months->sizeHint().width();
     ui->hl_months->addWidget(w);
+    int k = ui->hl_months->sizeHint().width();
     ui->w_month->setMinimumWidth(ui->hl_months->sizeHint().width());
 }
 
@@ -192,10 +196,10 @@ void RowEducationWork::setAsFooter()
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
 
-    auto months = Months::get()->educationYearList();
-    for(auto m : months){
-        addMonth(new MonthEducationWork(this, m));
-    }
+    // auto months = Months::get()->educationYearList();
+    // for(auto m : months){
+    //     addMonth(new MonthEducationWork(this, m));
+    // }
 }
 
 void RowEducationWork::countValues()
@@ -230,8 +234,5 @@ void RowEducationWork::setAsHeader()
 {
     ui->frame->setMaximumHeight(HEADER_HEIGHT);
     ui->frame->setMinimumHeight(HEADER_HEIGHT);
-    auto months = Months::get()->educationYearList();
-    for(auto m : months){
-        addMonth(new MonthHeader(m, this));
-    }
+    addMonth(new MonthHeader(this));
 }

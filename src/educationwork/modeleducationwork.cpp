@@ -61,7 +61,7 @@ void ModelEducationWork::updateValues(Hour hour)
     QString queryString = R"()";
 
     Arguments args;
-    args.insert(":planeId", planeId);
+    // args.insert(":planeId", planeId);
 
-    auto query = Database::get()->selectQuery(queryString, args);
+    // auto query = Database::get()->selectQuery(queryString, args);
 }

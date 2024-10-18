@@ -14,15 +14,15 @@ class MonthHeader : public QWidget
     Q_OBJECT
 
 public:
-    explicit MonthHeader(Months::Month month, QWidget *parent = nullptr);
+    explicit MonthHeader(QWidget *parent = nullptr);
     ~MonthHeader();
 
-    bool isFirstSemester() const;
+    // bool isFirstSemester() const;
 
 private:
     Ui::MonthHeader *ui;
-    bool m_firstSemester;
-
+    // bool m_firstSemester;
+    void setMonthsHeaders();
     void setWeeks(Months::Month month);
 };
 
