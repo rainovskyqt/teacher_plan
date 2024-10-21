@@ -6,6 +6,10 @@
 
 #include "modeleducationwork.h"
 
+using HT = ModelEducationWork::HourType;
+using H = ModelEducationWork::Hour;
+
+
 namespace Ui {
 class WeekEducationWork;
 }
@@ -15,23 +19,21 @@ class WeekEducationWork : public QWidget
     Q_OBJECT
 
 public:
-    explicit WeekEducationWork(const ModelEducationWork::Hour &hour, QWidget *parent = nullptr);
+    explicit WeekEducationWork(const QHash<int, H> &hours, QWidget *parent = nullptr);
     ~WeekEducationWork();
 
 signals:
-    void valueChanged(ModelEducationWork::Hour);           //id, plane, fact
+    void valueChanged(int, HT, int);           //id, тип, значение
 
 private slots:
-    void clearField(QString text);
-    void on_line_plane_textChanged(const QString &arg1);
-    void on_line_fact_textChanged(const QString &arg1);
+    void updateValue(QString text);
 
 private:
     Ui::WeekEducationWork *ui;
-
-    ModelEducationWork::Hour m_hour;
-
+    void initFieds(const QHash<int, H> &hours);
     void setClearingField(QLineEdit *editor);
+    void setWeekProperty(QLineEdit *editor);
+    void setValues(QList<QLineEdit *> editors, const QHash<int, H> &hours);
 };
 
 #endif // WEEKEDUCATIONWORK_H

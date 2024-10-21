@@ -25,10 +25,16 @@ public:
         HourValue
     };
 
+    enum class HourType{
+        Plane = 1,
+        Factical
+    };
+
     struct Hour{
-        int id;
         int week;
+        int planId;
         int planValue;
+        int factId;
         int factValue;
     };
 
@@ -55,5 +61,7 @@ public slots:
 
 private:    
 };
+
+Q_DECLARE_METATYPE(ModelEducationWork::HourType)
 
 #endif // MODELEDUCATIONWORK_H

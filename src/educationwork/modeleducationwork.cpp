@@ -38,18 +38,20 @@ QHash<int, ModelEducationWork::Hour> ModelEducationWork::hours(int row) const
     QStringList splittedHours = hoursString.split(";", Qt::SkipEmptyParts);
     for(const QString &hourRow : qAsConst(splittedHours)){
         QStringList h = hourRow.split(",");
-        int week = h.at((int)HourFields::HourWeek).toInt();
         int id = h.at((int)HourFields::HourId).toInt();
-        int type = h.at((int)HourFields::HourType).toInt();
+        int week = h.at((int)HourFields::HourWeek).toInt();
+        HourType type = (HourType)h.at((int)HourFields::HourType).toInt();
         int value = h.at((int)HourFields::HourValue).toInt();
 
         auto current = hours.value(week);
-        if(type == 1)
-            current.planValue = value;
-        else
-            current.factValue = value;
-        current.id = id;
         current.week = week;
+        if(type == HourType::Plane){
+            current.planId = id;
+            current.planValue = value;
+        } else {
+            current.factId = id;
+            current.factValue = value;
+        }
         hours.insert(week, current);
     }
 

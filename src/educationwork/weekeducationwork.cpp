@@ -2,19 +2,15 @@
 #include "ui_weekeducationwork.h"
 
 #include <QIntValidator>
+#include <QLabel>
+#include <QDebug>
 
-WeekEducationWork::WeekEducationWork(const ModelEducationWork::Hour &hour, QWidget *parent)
+WeekEducationWork::WeekEducationWork(const QHash<int, H> &hours, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WeekEducationWork)
 {
     ui->setupUi(this);
-    // m_hour = hour;
-
-    // setClearingField(ui->line_plane);
-    // setClearingField(ui->line_fact);
-
-    // ui->line_plane->setText(QString::number(hour.planValue));
-    // ui->line_fact->setText(QString::number(hour.factValue));
+    initFieds(hours);
 }
 
 WeekEducationWork::~WeekEducationWork()
@@ -22,28 +18,52 @@ WeekEducationWork::~WeekEducationWork()
     delete ui;
 }
 
-void WeekEducationWork::clearField(QString text)
+void WeekEducationWork::updateValue(QString text)
 {
-    // auto editor = static_cast<QLineEdit*>(sender());
-    // if(text.toInt() == 0)
-    //     editor->setText("");
+    auto editor = static_cast<QLineEdit*>(sender());
+    int val = text.toInt();
+    if(val == 0)
+        editor->setText("");
+
+    emit valueChanged(editor->property("id").value<int>(),
+                      editor->property("type").value<HT>(),
+                      val);
 }
 
-void WeekEducationWork::setClearingField(QLineEdit *editor)
+void WeekEducationWork::setClearingField(QLineEdit * editor)
 {
-    // connect(editor, &QLineEdit::textChanged, this, &WeekEducationWork::clearField);
-    // editor->setValidator(new QIntValidator(0, 1000, this));
+    connect(editor, &QLineEdit::textChanged, this, &WeekEducationWork::updateValue);
+    editor->setValidator(new QIntValidator(0, 1000, this));
 }
 
-void WeekEducationWork::on_line_plane_textChanged(const QString &arg1)
+void WeekEducationWork::setWeekProperty(QLineEdit * editor)
 {
-    // m_hour.planValue = arg1.toInt();
-    // emit valueChanged(m_hour);
+    QString name = editor->objectName();
+    int week = name.rightRef(2).toInt();
+    editor->setProperty("week", week);
 }
 
-void WeekEducationWork::on_line_fact_textChanged(const QString &arg1)
+void WeekEducationWork::setValues(QList<QLineEdit *>editors, const QHash<int, H> &hours)
 {
-    // m_hour.factValue = arg1.toInt();
-    // emit valueChanged(m_hour);
+    for(auto editor : qAsConst(editors)){
+        int week = editor->property("week").toInt();
+        H hour = hours.value(week);
+        QString name = editor->objectName();
+        bool isPLane = name.contains("plane");
+        int value = isPLane ? hour.planValue : hour.factValue;
+        editor->setText(QString::number(value));
+        editor->setProperty("id", isPLane ? hour.planId : hour.factId);
+    }
+}
+
+void WeekEducationWork::initFieds(const QHash<int, H> &hours)
+{
+    auto fields = findChildren<QLineEdit*>();
+    for(auto f : fields){
+        setClearingField(f);
+        setWeekProperty(f);
+    }
+
+    setValues(fields, hours);
 }
 

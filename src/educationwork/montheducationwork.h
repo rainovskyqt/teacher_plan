@@ -27,7 +27,6 @@ private:
     Ui::MonthEducationWork *ui;
 
     void addWeeks(Months::Month month, const QHash<int, H> &hours);
-    H getWeekHours(int week, const QHash<int, H> &hours);
 };
 
 #endif // MONTHEDUCATIONWORK_H
