@@ -1,8 +1,6 @@
 #include "monthheader.h"
 #include "roweducationwork.h"
 #include "ui_roweducationwork.h"
-#include "weekeducationwork.h"
-
 #include <QDebug>
 #include <QComboBox>
 #include <QPushButton>
@@ -80,11 +78,20 @@ void RowEducationWork::setWidht(int widht)
     resize(widht, size().height());
 }
 
-void RowEducationWork::updateValues(ModelEducationWork::Hour hour)
+void RowEducationWork::updateValues(int id, HT type, int val, int week)
 {
-    m_work.hours.insert(hour.week, hour);
-    countValues();
-    emit valueChanged(hour);
+    Q_UNUSED(id) Q_UNUSED(val) Q_UNUSED(week)
+
+    bool plane = type == HT::Plane;
+    auto weeks = static_cast<WeekEducationWork*>(sender());
+    auto first = plane ? ui->lbl_I_plan : ui->lbl_I_fact;
+    auto second = plane ? ui->lbl_II_plan : ui->lbl_II_fact;
+    auto total = plane ? ui->lbl_yearPlan : ui->lbl_yearFact;
+
+    auto vals = weeks->totalValue(type);
+    first->setNum(vals.first);
+    second->setNum(vals.second);
+    total->setNum(vals.first + vals.second);
 }
 
 void RowEducationWork::resizeEvent(QResizeEvent *e)
@@ -171,13 +178,13 @@ void RowEducationWork::setAsRow(int number, const ModelEducationWork::EducationW
     setModels();
     setWorkData(work);
 
-    auto newM = new WeekEducationWork(work.hours, this);
-    addMonth(newM);
-
-    // countValues();
+    auto weeks = new WeekEducationWork(this);
+    connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
+    weeks->setValues(work.hours);
+    addWeeks(weeks);
 }
 
-void RowEducationWork::addMonth(QWidget *w)
+void RowEducationWork::addWeeks(QWidget *w)
 {
     ui->hl_months->addWidget(w);
     ui->w_month->setMinimumWidth(ui->hl_months->sizeHint().width());
@@ -188,41 +195,13 @@ void RowEducationWork::setAsFooter()
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
 
-    auto newM = new WeekEducationWork({}, this);
-    addMonth(newM);
-}
-
-void RowEducationWork::countValues()
-{
-    int planeCountI = 0;
-    int  planeCountII = 0;
-    int factCountI = 0;
-    int factCountII = 0;
-
-    auto hours = m_work.hours.values();
-    for(auto h : hours){
-
-    //     if(Months::get()->isFirstSemester(h.week)){
-    //         planeCountI += h.planValue;
-    //         factCountI += h.factValue;
-    //     } else {
-    //         planeCountII += h.planValue;
-    //         factCountII += h.factValue;
-    //     }
-    }
-
-    ui->lbl_I_plan->setNum(planeCountI);
-    ui->lbl_II_plan->setNum(planeCountII);
-    ui->lbl_I_fact->setNum(factCountI);
-    ui->lbl_II_fact->setNum(factCountII);
-
-    ui->lbl_yearPlan->setNum(planeCountI + planeCountII);
-    ui->lbl_yearFact->setNum(factCountI + factCountII);
+    auto newM = new WeekEducationWork(this);
+    addWeeks(newM);
 }
 
 void RowEducationWork::setAsHeader()
 {
     ui->frame->setMaximumHeight(HEADER_HEIGHT);
     ui->frame->setMinimumHeight(HEADER_HEIGHT);
-    addMonth(new MonthHeader(this));
+    addWeeks(new MonthHeader(this));
 }

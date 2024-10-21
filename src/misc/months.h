@@ -36,6 +36,7 @@ public:
     bool isFirstSemester(int week) const;
     QPair<int, int> monthWeeks(Month month) const;
     QPair<int, int> weekDates(int week) const;
+    QHash<int, QPair<int, int>> weekDates() const;
 
     void loadSettings(int year);
 
@@ -47,6 +48,7 @@ private:
     QHash<Month, QPair<int, int>> m_monthWeeks;     //месяц <стартовая неделя, количество недель>
     QHash<int, QPair<int, int>> m_weeksDates;       //неделя <дата начала, дата окончания>
     void countSecondSemesterFirstWeek();
+    void setWeeksDates(QString firstWeek, int year, int count);
 };
 
 #endif // MONTHS_H

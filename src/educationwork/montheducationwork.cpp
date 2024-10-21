@@ -22,7 +22,7 @@ void MonthEducationWork::addWeeks(Months::Month month, const QHash<int, H> &hour
     int count = weeks.second;
 
     for(int i = start; i < start + count; ++i){
-        auto week = new WeekEducationWork(hours, this);
+        auto week = new WeekEducationWork(this);
         // connect(week, &WeekEducationWork::valueChanged, this, &MonthEducationWork::valueChanged);
         ui->hl_weeks->addWidget(week);
     }

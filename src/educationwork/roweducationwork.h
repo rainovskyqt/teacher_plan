@@ -5,6 +5,8 @@
 
 #include <QSortFilterProxyModel>
 #include "modeleducationwork.h"
+#include "weekeducationwork.h"
+
 
 class QComboBox;
 
@@ -48,7 +50,7 @@ signals:
     void valueChanged(ModelEducationWork::Hour);
 
 private slots:
-    void updateValues(ModelEducationWork::Hour hour);
+    void updateValues(int id, HT type, int val, int week);
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -62,6 +64,7 @@ private:
     QSortFilterProxyModel m_workForm;
     ModelEducationWork::EducationWork m_work;
 
+
     void setModels();
     void setModel(QAbstractItemModel *model, QSortFilterProxyModel *proxy, QComboBox *cbox);
     void setWorkData(const ModelEducationWork::EducationWork &work);
@@ -71,9 +74,8 @@ private:
     void setPosition(Position pos, int number, const ModelEducationWork::EducationWork &work);
     void setAsHeader();
     void setAsRow(int number, const ModelEducationWork::EducationWork &work);
-    void addMonth(QWidget *w);
+    void addWeeks(QWidget *w);
     void setAsFooter();
-    void countValues();
 };
 
 #endif // ROWEDUCATIONWORK_H

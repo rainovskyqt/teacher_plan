@@ -12,10 +12,7 @@ MonthHeader::MonthHeader(QWidget *parent)
 {
     ui->setupUi(this);
     setMonthsHeaders();
-
-    // ui->lbl_name->setText(Months::get()->name(month));
-    // m_firstSemester = Months::get()->isFirstSemester(month);
-    // setWeeks(month);
+    setWeeks();
 }
 
 MonthHeader::~MonthHeader()
@@ -37,29 +34,20 @@ void MonthHeader::setMonthsHeaders()
     }
 }
 
-// bool MonthHeader::isFirstSemester() const
-// {
-    // return m_firstSemester;
-// }
 
-void MonthHeader::setWeeks(Months::Month month)
+void MonthHeader::setWeeks()
 {
+    auto weeks = Months::get()->weekDates();
 
+    auto lbls = findChildren<QLabel*>(QRegularExpression("lbl_s_\\d+"));
+    lbls.append(findChildren<QLabel*>(QRegularExpression("lbl_e_\\d+")));
+    for(auto l : lbls){
+        QString name = l->objectName();
+        bool isStart = name.contains("_s_");
+        QString strWeek = name.rightRef(2).toString();
+        int weekNumber = strWeek.remove("_").toInt();
+
+        auto week = weeks.value(weekNumber);
+        l->setNum(isStart ? week.first : week.second);
+    }
 }
-
-// void MonthHeader::setWeeks(Months::Month month)
-// {
-    // QPair<int, int> weeks = Months::get()->monthWeeks(month);
-    // int start = weeks.first;
-    // int count = weeks.second;
-
-    // ui->lbl_week_1->setNum(start);
-    // ui->lbl_week_2->setNum(start + 1);
-    // ui->lbl_week_3->setNum(start + 2);
-    // ui->lbl_week_4->setNum(start + 3);
-    // if(count >= 5){
-    //     ui->lbl_week_5->setNum(start + 4);
-    // } else {
-    //     ui->w_5->setVisible(false);
-    // }
-// }

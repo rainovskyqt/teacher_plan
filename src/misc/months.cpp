@@ -4,6 +4,7 @@
 
 #include <QVariant>
 #include <QDebug>
+#include <QDate>
 
 Q_GLOBAL_STATIC(Months, globalInst)
 
@@ -91,14 +92,22 @@ QPair<int, int> Months::weekDates(int week) const
     return m_weeksDates.value(week);
 }
 
+QHash<int, QPair<int, int> > Months::weekDates() const
+{
+    return m_weeksDates;
+}
+
 void Months::loadSettings(int year)
 {
     m_monthWeeks.clear();
 
-    QString queryString = R"(SELECT id, year_id, total_count, start_week_dates,
-                             january, february, march, april, may, june, july, august, september, october, november, december
-                             FROM weeks_settings
-                             WHERE year_id = :year)";
+    QString queryString = R"(SELECT WS.id, WS.year_id, WS.total_count, WS.start_week_dates,
+                            WS.january, WS.february, WS.march, WS.april, WS.may, WS.june, WS.july, WS.august, WS.september,
+                            WS.october, WS.november, WS.december,
+                            EY.begin_year
+                            FROM weeks_settings WS
+                            INNER JOIN educational_years EY ON EY.id = WS.year_id
+                            WHERE year_id = :year)";
     Arguments args;
     args.insert(":year", QVariant(year));
 
@@ -114,7 +123,9 @@ void Months::loadSettings(int year)
         m_monthWeeks.insert(m, qMakePair(start, count));
         start += count;
     }
-
+    setWeeksDates(answer.value("start_week_dates").toString(),
+                  answer.value("begin_year").toInt(),
+                  answer.value("total_count").toInt());
     countSecondSemesterFirstWeek();
 }
 
@@ -132,4 +143,20 @@ void Months::countSecondSemesterFirstWeek()
         m_secondSemesterFirstWeek += m_monthWeeks.value(m).second;          // В second хранится количество недель
     }
     ++m_secondSemesterFirstWeek;                //Повышаем на еденицу, что бы получить первую неделю второго семестра
+}
+
+void Months::setWeeksDates(QString firstWeek, int year, int count)
+{
+    m_weeksDates.clear();
+    QStringList dates = firstWeek.split(";");
+    QDate start = QDate(year, 9, dates.at(1).toInt());
+    m_weeksDates.insert(1, qMakePair(dates.at(0).toInt(), dates.at(1).toInt()));
+    for(int i = 2; i < count + 1; ++i){
+        int sd, ed;
+        start = start.addDays(1);
+        sd = start.toString("dd").toInt();
+        start = start.addDays(6);
+        ed = start.toString("dd").toInt();
+        m_weeksDates.insert(i, qMakePair(sd, ed));
+    }
 }

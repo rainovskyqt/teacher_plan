@@ -17,13 +17,11 @@ public:
     explicit MonthHeader(QWidget *parent = nullptr);
     ~MonthHeader();
 
-    // bool isFirstSemester() const;
-
 private:
     Ui::MonthHeader *ui;
-    // bool m_firstSemester;
+
     void setMonthsHeaders();
-    void setWeeks(Months::Month month);
+    void setWeeks();
 };
 
 #endif // MONTHHEADER_H
