@@ -67,9 +67,9 @@ void WeekEducationWork::setValues(const QHash<int, H> &hours)
         int week = editor->property("week").toInt();
         H hour = hours.value(week);
         bool isPLane = editor->property("is_plane").toBool();
-        int value = isPLane ? hour.planValue : hour.factValue;
+        int value = isPLane ? hour.plan : hour.fact;
         editor->setText(QString::number(value));
-        editor->setProperty("id", isPLane ? hour.planId : hour.factId);
+        editor->setProperty("id", hour.id);
     }
 
     emit valueChanged(0,HT::Plane, 0, 0);

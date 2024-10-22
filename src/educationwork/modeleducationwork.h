@@ -21,8 +21,8 @@ public:
     enum class HourFields{
         HourId,
         HourWeek,
-        HourType,
-        HourValue
+        HourPlanValue,
+        HourFactValue
     };
 
     enum class HourType{
@@ -31,11 +31,10 @@ public:
     };
 
     struct Hour{
+        int id;
         int week;
-        int planId;
-        int planValue;
-        int factId;
-        int factValue;
+        int plan;
+        int fact;
     };
 
     struct EducationWork{
