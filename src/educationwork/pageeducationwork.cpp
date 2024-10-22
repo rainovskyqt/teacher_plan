@@ -7,6 +7,8 @@
 #include <QScrollBar>
 #include <QDebug>
 
+#define SCROLLBAR_WIGHT 15
+
 PageEducationWork::PageEducationWork(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PageEducationWork)
@@ -28,16 +30,20 @@ void PageEducationWork::resizeEvent(QResizeEvent *e)
 
 void PageEducationWork::setPlan(int staffId)
 {
+    m_readySave = false;
+
     m_model.loadData(staffId);
     addHeader();
     addFooter();
     fillTable();
+
+    m_readySave = true;
+
 }
 
 void PageEducationWork::fillTable()
 {
     clearData();
-
     using F = ModelEducationWork::Fields;
     for(int row = 0; row < m_model.rowCount(); ++row){
         const ModelEducationWork::EducationWork work(
@@ -58,13 +64,13 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
 {
     auto item = new QListWidgetItem();
     auto rowWidget = new RowEducationWork(row, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
-    item->setSizeHint(QSize(ui->lw_educationWork->width() - 15, rowWidget->sizeHint().height()));
+    item->setSizeHint(QSize(ui->lw_educationWork->width() - SCROLLBAR_WIGHT, rowWidget->sizeHint().height()));
     ui->lw_educationWork->insertItem(row, item);
     ui->lw_educationWork->setItemWidget(item, rowWidget);
 
-    // connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
-    // connect(rowWidget, &RowEducationWork::updateValues, this, &ModelEducationWork::updateValues);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
+    connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
+    // connect(rowWidget, &RowEducationWork::updateValues, this, &ModelEducationWork::updateValues);
 
 
     //     connect(row, &EducationRow::valueChanged, this, [this](EducationalHour *hour){

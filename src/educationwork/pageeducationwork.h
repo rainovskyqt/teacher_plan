@@ -41,6 +41,8 @@ private:
     RowEducationWork *m_header;
     RowEducationWork *m_footer;
 
+    bool m_readySave;
+
     void addHeader();
     void addFooter();
     void fillTable();
