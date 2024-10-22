@@ -3,12 +3,13 @@
 #include <QDebug>
 
 #include "database/database.h"
+#include "educationwork.h"
 
 ModelEducationWork::ModelEducationWork(QObject *parent)
-    : QSqlQueryModel{parent}
+    : QObject{parent}
 {}
 
-void ModelEducationWork::loadData(int planeId)
+QList<EducationWork *> ModelEducationWork::loadData(int planeId)
 {
     QString queryString = R"(SELECT EW.id, EW.discipline_id, EW.course_id, EW.work_form_id, EW.group_count, EW.comments, EW.order_place,
                           GROUP_CONCAT(CONCAT(EH.id,',', EH.`week`,',', EH.`plane`,',', EH.`fact`) SEPARATOR ';') AS hours
@@ -23,40 +24,24 @@ void ModelEducationWork::loadData(int planeId)
     args.insert(":planeId", planeId);
 
     auto query = Database::get()->selectQuery(queryString, args);
-    setQuery(query);
+
+    QList<EducationWork*> list;
+    while(query.next()){
+        EducationWork *work = new EducationWork(this);
+        work->setId(query.value("id").toInt());
+        work->setDisciplineId(query.value("discipline_id").toInt());
+        work->setCourseId(query.value("course_id").toInt());
+        work->setWorkFormId(query.value("work_form_id").toInt());
+        work->setGroupCount(query.value("group_count").toInt());
+        work->setComments(query.value("comments").toString());
+        work->setOrderPalce(query.value("order_place").toInt());
+        work->setHours(query.value("hours").toString());
+        list.append(work);
+    }
+    return list;
 }
 
 void ModelEducationWork::deleteWork(int id)
 {
 
-}
-
-QHash<int, ModelEducationWork::Hour> ModelEducationWork::hours(int row) const
-{
-    QHash<int, ModelEducationWork::Hour> hours;
-    QString hoursString = data(index(row, (int)Fields::Hours)).toString();
-    QStringList splittedHours = hoursString.split(";", Qt::SkipEmptyParts);
-    for(const QString &hourRow : qAsConst(splittedHours)){
-        QStringList h = hourRow.split(",");
-        int week = h.at((int)HourFields::HourWeek).toInt();
-
-        auto current = hours.value(week);
-        current.id = h.at((int)HourFields::HourId).toInt();
-        current.week = week;
-        current.plan = h.at((int)HourFields::HourPlanValue).toInt();
-        current.fact = h.at((int)HourFields::HourFactValue).toInt();
-        hours.insert(week, current);
-    }
-
-    return hours;
-}
-
-void ModelEducationWork::updateValues(Hour hour)
-{
-    QString queryString = R"()";
-
-    Arguments args;
-    // args.insert(":planeId", planeId);
-
-    // auto query = Database::get()->selectQuery(queryString, args);
 }

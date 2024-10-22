@@ -4,6 +4,7 @@
 #include <QListWidgetItem>
 #include <QWidget>
 
+#include "educationwork.h"
 #include "modeleducationwork.h"
 
 class RowEducationWork;
@@ -40,13 +41,14 @@ private:
     ModelEducationWork m_model;
     RowEducationWork *m_header;
     RowEducationWork *m_footer;
+    QList<EducationWork*> m_edWorks;
 
     bool m_readySave;
 
     void addHeader();
     void addFooter();
-    void fillTable();
-    void addRow(int row, const ModelEducationWork::EducationWork &work);
+    void fillTable(int staffId);
+    void addRow(int row, EducationWork *work);
     void clearData();
     void updateRowNumber(int start);
     void swapItems(int fromRow, int toRow);

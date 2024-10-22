@@ -14,8 +14,7 @@
 #define HEADER_HEIGHT 90
 #define ROW_HEIGHT 54
 
-RowEducationWork::RowEducationWork(int number, const ModelEducationWork::EducationWork &work,
-                                   Position position, bool enabled, QWidget *parent)
+RowEducationWork::RowEducationWork(int number, EducationWork *work, Position position, bool enabled, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RowEducationWork)
 {
@@ -44,7 +43,7 @@ QString RowEducationWork::toString() const
 
 int RowEducationWork::id() const
 {
-    return m_work.id;
+    return m_work->id();
 }
 
 int RowEducationWork::row() const
@@ -58,7 +57,7 @@ void RowEducationWork::setRow(int row)
     ui->lbl_rowNumber->setNum(m_row + 1);
 }
 
-ModelEducationWork::EducationWork RowEducationWork::work() const
+EducationWork *RowEducationWork::work() const
 {
     return m_work;
 }
@@ -78,20 +77,17 @@ void RowEducationWork::setWidht(int widht)
     resize(widht, size().height());
 }
 
-void RowEducationWork::updateValues(int id, HT type, int val, int week)
+void RowEducationWork::updateValues(H hour)
 {
-    Q_UNUSED(id) Q_UNUSED(val) Q_UNUSED(week)
+    // auto weeks = static_cast<WeekEducationWork*>(sender());
+    // auto first = plane ? ui->lbl_I_plan : ui->lbl_I_fact;
+    // auto second = plane ? ui->lbl_II_plan : ui->lbl_II_fact;
+    // auto total = plane ? ui->lbl_yearPlan : ui->lbl_yearFact;
 
-    bool plane = type == HT::Plane;
-    auto weeks = static_cast<WeekEducationWork*>(sender());
-    auto first = plane ? ui->lbl_I_plan : ui->lbl_I_fact;
-    auto second = plane ? ui->lbl_II_plan : ui->lbl_II_fact;
-    auto total = plane ? ui->lbl_yearPlan : ui->lbl_yearFact;
-
-    auto vals = weeks->totalValue(type);
-    first->setNum(vals.first);
-    second->setNum(vals.second);
-    total->setNum(vals.first + vals.second);
+    // auto vals = weeks->totalValue(type);
+    // first->setNum(vals.first);
+    // second->setNum(vals.second);
+    // total->setNum(vals.first + vals.second);
 }
 
 void RowEducationWork::resizeEvent(QResizeEvent *e)
@@ -114,16 +110,16 @@ void RowEducationWork::setModel(QAbstractItemModel *model, QSortFilterProxyModel
     cbox->setModelColumn(DictionaryModel::Name);
 }
 
-void RowEducationWork::setWorkData(const ModelEducationWork::EducationWork &work)
+void RowEducationWork::setWorkData(EducationWork *work)
 {
     m_work = work;
 
-    setSaved(m_work.id);
-    setComboboxData(&m_disciplines, ui->cb_discipline, work.disciplineId);
-    setComboboxData(&m_courses, ui->cb_course, work.courseId);
-    setComboboxData(&m_workForm, ui->cb_workForm, work.workFormId);
-    ui->sb_groupCount->setValue(work.groupCount);    
-    ui->txt_comments->setPlainText(work.comments);
+    setSaved(m_work->id());
+    setComboboxData(&m_disciplines, ui->cb_discipline, work->disciplineId());
+    setComboboxData(&m_courses, ui->cb_course, work->courseId());
+    setComboboxData(&m_workForm, ui->cb_workForm, work->workFormId());
+    ui->sb_groupCount->setValue(work->groupCount());
+    ui->txt_comments->setPlainText(work->comments());
 }
 
 void RowEducationWork::setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId)
@@ -146,7 +142,7 @@ void RowEducationWork::setSaved(bool s)
         ui->lbl_rowNumber->setStyleSheet("background-color: rgb(255, 100, 100);");
 }
 
-void RowEducationWork::setPosition(Position pos, int number, const ModelEducationWork::EducationWork &work)
+void RowEducationWork::setPosition(Position pos, int number, EducationWork *work)
 {
     switch (pos) {
     case Position::Row:
@@ -166,7 +162,7 @@ void RowEducationWork::setPosition(Position pos, int number, const ModelEducatio
     ui->sw_total->setCurrentIndex((int)pos);
 }
 
-void RowEducationWork::setAsRow(int number, const ModelEducationWork::EducationWork &work)
+void RowEducationWork::setAsRow(int number, EducationWork *work)
 {
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
@@ -180,7 +176,7 @@ void RowEducationWork::setAsRow(int number, const ModelEducationWork::EducationW
 
     auto weeks = new WeekEducationWork(this);
     connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
-    weeks->setValues(work.hours);
+    weeks->setValues(work->hours());
     addWeeks(weeks);
 }
 

@@ -32,35 +32,25 @@ void PageEducationWork::setPlan(int staffId)
 {
     m_readySave = false;
 
-    m_model.loadData(staffId);
     addHeader();
     addFooter();
-    fillTable();
+    fillTable(staffId);
 
     m_readySave = true;
 
 }
 
-void PageEducationWork::fillTable()
+void PageEducationWork::fillTable(int staffId)
 {
     clearData();
-    using F = ModelEducationWork::Fields;
-    for(int row = 0; row < m_model.rowCount(); ++row){
-        const ModelEducationWork::EducationWork work(
-            m_model.data(m_model.index(row, (int)F::WorkId)).toInt(),
-            m_model.data(m_model.index(row, (int)F::DisciplineId)).toInt(),
-            m_model.data(m_model.index(row, (int)F::CourseId)).toInt(),
-            m_model.data(m_model.index(row, (int)F::WorkFormId)).toInt(),
-            m_model.data(m_model.index(row, (int)F::GroupCount)).toInt(),
-            m_model.data(m_model.index(row, (int)F::Comments)).toString(),
-            m_model.data(m_model.index(row, (int)F::OrderPalce)).toInt(),
-            m_model.hours(row)
-            );
-        addRow(row, work);
+    m_edWorks = m_model.loadData(staffId);
+
+    for(int row = 0; row < m_edWorks.count(); ++row){
+        addRow(row, m_edWorks.at(row));
     }
 }
 
-void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork &work)
+void PageEducationWork::addRow(int row, EducationWork *work)
 {
     auto item = new QListWidgetItem();
     auto rowWidget = new RowEducationWork(row, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
@@ -88,6 +78,7 @@ void PageEducationWork::addRow(int row, const ModelEducationWork::EducationWork 
 void PageEducationWork::clearData()
 {
     ui->lw_educationWork->clear();
+    qDeleteAll(m_edWorks.begin(), m_edWorks.end());
     emit clear();
 }
 
@@ -133,7 +124,8 @@ void PageEducationWork::clearLayout(QLayout *la)
 
 void PageEducationWork::addNewRow()
 {
-    addRow(ui->lw_educationWork->count(), {});
+    EducationWork *work = new EducationWork(&m_model);
+    addRow(ui->lw_educationWork->count(), work);
 }
 
 void PageEducationWork::deleteRow()

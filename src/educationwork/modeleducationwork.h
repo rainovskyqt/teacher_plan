@@ -1,9 +1,11 @@
 #ifndef MODELEDUCATIONWORK_H
 #define MODELEDUCATIONWORK_H
 
-#include <QSqlQueryModel>
+#include <QObject>
 
-class ModelEducationWork : public QSqlQueryModel
+class EducationWork;
+
+class ModelEducationWork : public QObject
 {
 public:
 
@@ -30,33 +32,13 @@ public:
         Factical
     };
 
-    struct Hour{
-        int id;
-        int week;
-        int plan;
-        int fact;
-    };
-
-    struct EducationWork{
-        int id;
-        int disciplineId;
-        int courseId;
-        int workFormId;
-        int groupCount;
-        QString comments;
-        int orderPalce;
-        QHash<int, Hour> hours;
-    };
-
-
     explicit ModelEducationWork(QObject *parent = nullptr);
-    void loadData(int planeId);
+    QList<EducationWork*> loadData(int planeId);
     void deleteWork(int id);
 
-    QHash<int, Hour> hours(int row) const;
 
 public slots:
-    void updateValues(Hour hour);
+    // void updateValues(Hour hour);
 
 private:    
 };

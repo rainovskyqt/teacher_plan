@@ -15,9 +15,6 @@
 
 // #include <database/models/genericwork.h>
 
-
-
-class EducationalWork;
 class GenericWorkForm;
 
 using Arguments = QMap<QString, QVariant>;

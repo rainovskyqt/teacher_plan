@@ -1,13 +1,14 @@
 #ifndef WEEKEDUCATIONWORK_H
 #define WEEKEDUCATIONWORK_H
 
-#include <QLineEdit>
 #include <QWidget>
 
 #include "modeleducationwork.h"
+#include "weekvalues.h"
+#include "educationwork.h"
 
 using HT = ModelEducationWork::HourType;
-using H = ModelEducationWork::Hour;
+using H = Hour;
 
 
 namespace Ui {
@@ -21,25 +22,23 @@ class WeekEducationWork : public QWidget
 public:
     explicit WeekEducationWork(QWidget *parent = nullptr);
     ~WeekEducationWork();
-    void setValues(const QHash<int, H> &hours);
-    QPair<int, int> totalValue(HT type);
+    void setValues(const QHash<int, Hour*> &hours);
+    QPair<Hour, Hour> totalValues() const;
 
 signals:
-    void valueChanged(int, HT, int, int);           //id, тип, значение, неделя
+    void valueChanged(Hour);
 
 private slots:
-    void updateValue(QString text);
+    // void updateValue(QString text);
 
 private:
     Ui::WeekEducationWork *ui;
 
-    QList<QLineEdit *> m_planeFields;
-    QList<QLineEdit *> m_factFields;
+//     QList<QLineEdit *> m_planeFields;
+//     QList<QLineEdit *> m_factFields;
 
     void initFieds();
-    void setFieldType(QLineEdit *editor);
-    void setClearingField(QLineEdit *editor);
-    void setWeekProperty(QLineEdit *editor);
+    void setWeekProperty(WeekValues *editor);
 };
 
 #endif // WEEKEDUCATIONWORK_H
