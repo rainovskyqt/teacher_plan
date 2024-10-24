@@ -3,12 +3,12 @@
 
 #include "misc/months.h"
 
-WeekEducationWork::WeekEducationWork(QWidget *parent)
+WeekEducationWork::WeekEducationWork(bool planeActive, bool factActive, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WeekEducationWork)
 {
     ui->setupUi(this);
-    initFieds();
+    initFieds(planeActive, factActive);
 }
 
 WeekEducationWork::~WeekEducationWork()
@@ -16,11 +16,13 @@ WeekEducationWork::~WeekEducationWork()
     delete ui;
 }
 
-void WeekEducationWork::initFieds()
+void WeekEducationWork::initFieds(bool planeReadOnly, bool factReadOnly)
 {
     auto fields = findChildren<WeekValues*>();
     for(auto f : fields){
         setWeekProperty(f);
+        f->setPlaneReadOnly(planeReadOnly);
+        f->setFactReadOnly(factReadOnly);
     }
 }
 
@@ -36,8 +38,10 @@ void WeekEducationWork::setValues(const QHash<int, Hour*> &hours)
     auto editors = findChildren<WeekValues*>();
     for(auto editor : qAsConst(editors)){
         int week = editor->week();
-        editor->setWeekValues(hours.value(week));
-        // connect(editor, &WeekValues::valueUpdated, this, &WeekEducationWork::valueChanged);
+        auto val = hours.value(week);
+        if(val)
+            editor->setWeekValues(val);
+        connect(editor, &WeekValues::valueUpdated, this, &WeekEducationWork::valueChanged);
     }
 }
 

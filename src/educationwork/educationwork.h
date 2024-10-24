@@ -4,7 +4,7 @@
 #include <QHash>
 #include <QObject>
 
-class Hour{
+class Hour : public QObject{
 
 public:
     explicit Hour(QObject *parent = nullptr);
@@ -47,7 +47,7 @@ public:
     void setOrderPalce(int newOrderPalce);
     void setHours(QString hoursStr);
 
-    QHash<int, Hour *> hours() const;
+    QHash<int, Hour*> hours() const;
 
 signals:
 

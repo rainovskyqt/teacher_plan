@@ -23,11 +23,14 @@ public:
     int planeValue() const;
     int factValue() const;
 
+    void setPlaneReadOnly(bool readOnly);
+    void setFactReadOnly(bool readOnly);
+
 signals:
-    // void valueUpdated(const H);
+    void valueUpdated(int);
 
 private slots:
-    void updatetValue();
+
 
 private:
     Ui::WeekValues *ui;

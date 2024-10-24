@@ -67,6 +67,13 @@ int RowEducationWork::sliderWight()
     return ui->scrollArea->horizontalScrollBar()->maximum();
 }
 
+void RowEducationWork::setHours(QHash<int, Hour*> hours)
+{
+    WeekEducationWork *weeks = this->findChildren<WeekEducationWork*>().at(0);          //Он всегда один
+    if(weeks)
+        weeks->setValues(hours);
+}
+
 void RowEducationWork::setSliderPosition(int pos)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(pos);
@@ -77,17 +84,11 @@ void RowEducationWork::setWidht(int widht)
     resize(widht, size().height());
 }
 
-void RowEducationWork::updateValues(H hour)
+void RowEducationWork::updateValues(int week)
 {
-    // auto weeks = static_cast<WeekEducationWork*>(sender());
-    // auto first = plane ? ui->lbl_I_plan : ui->lbl_I_fact;
-    // auto second = plane ? ui->lbl_II_plan : ui->lbl_II_fact;
-    // auto total = plane ? ui->lbl_yearPlan : ui->lbl_yearFact;
+    countTotal();
 
-    // auto vals = weeks->totalValue(type);
-    // first->setNum(vals.first);
-    // second->setNum(vals.second);
-    // total->setNum(vals.first + vals.second);
+    emit valueChanged(m_work, week);
 }
 
 void RowEducationWork::resizeEvent(QResizeEvent *e)
@@ -174,10 +175,12 @@ void RowEducationWork::setAsRow(int number, EducationWork *work)
     setModels();
     setWorkData(work);
 
-    auto weeks = new WeekEducationWork(this);
+    auto weeks = new WeekEducationWork(false, false, this);
     connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
     weeks->setValues(work->hours());
     addWeeks(weeks);
+
+    countTotal();
 }
 
 void RowEducationWork::addWeeks(QWidget *w)
@@ -191,8 +194,33 @@ void RowEducationWork::setAsFooter()
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
 
-    auto newM = new WeekEducationWork(this);
-    addWeeks(newM);
+    auto weekRow = new WeekEducationWork(true, true, this);
+    addWeeks(weekRow);
+}
+
+void RowEducationWork::countTotal()
+{
+    int firstPlan = 0;
+    int secondPlan = 0;
+    int firstFact = 0;
+    int secondFact = 0;
+    auto m = Months::get();
+    auto hours = m_work->hours();
+    for(Hour *h : hours){
+        if(m->isFirstSemester(h->week())){
+            firstPlan += h->plan();
+            firstFact += h->fact();
+        } else {
+            secondPlan += h->plan();
+            secondFact += h->fact();
+        }
+    }
+    ui->lbl_I_plan->setNum(firstPlan);
+    ui->lbl_II_plan->setNum(secondPlan);
+    ui->lbl_I_fact->setNum(firstFact);
+    ui->lbl_II_fact->setNum(secondFact);
+    ui->lbl_yearPlan->setNum(firstPlan + secondPlan);
+    ui->lbl_yearFact->setNum(firstPlan + secondFact);
 }
 
 void RowEducationWork::setAsHeader()

@@ -35,6 +35,7 @@ public:
     void setRow(int row);
     EducationWork *work() const;
     int sliderWight();
+    void setHours(QHash<int, Hour *> hours);
 
 public slots:
     void setSliderPosition(int pos);
@@ -46,10 +47,10 @@ signals:
     void rowUpClicked();
     void rowDownClicked();
     void addNewRow();
-    // void valueChanged(Hour);
+    void valueChanged(EducationWork *w, int);
 
 private slots:
-    void updateValues(H hour);
+    void updateValues(int week);
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -65,7 +66,6 @@ private:
 
     EducationWork *m_work;
 
-
     void setModels();
     void setModel(QAbstractItemModel *model, QSortFilterProxyModel *proxy, QComboBox *cbox);
     void setWorkData(EducationWork *work);
@@ -77,6 +77,7 @@ private:
     void setAsRow(int number, EducationWork *work);
     void addWeeks(QWidget *w);
     void setAsFooter();
+    void countTotal();
 };
 
 #endif // ROWEDUCATIONWORK_H

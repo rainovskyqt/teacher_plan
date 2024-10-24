@@ -34,6 +34,7 @@ public:
 
     explicit ModelEducationWork(QObject *parent = nullptr);
     QList<EducationWork*> loadData(int planeId);
+    void saveHours(EducationWork*w, int week);
     void deleteWork(int id);
 
 

@@ -41,6 +41,34 @@ QList<EducationWork *> ModelEducationWork::loadData(int planeId)
     return list;
 }
 
+void ModelEducationWork::saveHours(EducationWork *w, int week)
+{
+    QString updateQuery = "UPDATE educational_hours SET plane = :plane, fact = :fact WHERE id = :id";
+    QString insertQuery = "INSERT INTO educational_hours (plan_work_id, week, plane, fact) "
+                          "VALUES (:plan_work_id, :week, :plane, :fact)";
+    QString deleteQuery = "DELETE FROM educational_hours WHERE id = :id";
+
+    int plane = w->hours().value(week)->plan();
+    int fact = w->hours().value(week)->fact();
+    int id = w->hours().value(week)->id();
+
+    Arguments args;
+    args.insert(":plan_work_id", w->id());
+    args.insert(":week", week);
+    args.insert(":plane", plane);
+    args.insert(":fact", fact);
+    args.insert(":id", id);
+
+    if(!plane && !fact){
+        Database::get()->updateDeleteQuery(deleteQuery, args);
+    } else if(!id){
+        int newId = Database::get()->insertQuery(insertQuery, args);
+        w->hours().value(week)->setId(newId);
+    } else {
+        Database::get()->updateDeleteQuery(updateQuery, args);
+    }
+}
+
 void ModelEducationWork::deleteWork(int id)
 {
 

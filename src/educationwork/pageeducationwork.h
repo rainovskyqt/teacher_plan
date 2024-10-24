@@ -34,6 +34,7 @@ private slots:
     void rowUp();
     void rowDown();
     void addNewRow();
+    void updateValues(EducationWork *w, int week);
 
 private:
     Ui::PageEducationWork *ui;
@@ -42,6 +43,7 @@ private:
     RowEducationWork *m_header;
     RowEducationWork *m_footer;
     QList<EducationWork*> m_edWorks;
+    QHash<int, Hour*> m_totalHours;
 
     bool m_readySave;
 
@@ -54,6 +56,9 @@ private:
     void swapItems(int fromRow, int toRow);
     void updateRowsSizeHint();
     void clearLayout(QLayout *la);
+    void resetScrollbar();
+    void updateTotal();
+    void saveNewValue(EducationWork *w, int week);
 };
 
 #endif // PAGEEDUCATIONWORK_H

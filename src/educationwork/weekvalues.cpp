@@ -7,21 +7,20 @@ WeekValues::WeekValues(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->line_plane, &ClearingLine::valueChanged, this, &WeekValues::updatetValue);
-    connect(ui->line_fact, &ClearingLine::valueChanged, this, &WeekValues::updatetValue);
+    connect(ui->line_plane, &ClearingLine::valueChanged, this, [this]{
+        m_hours->setPlan(ui->line_plane->text().toInt());
+        emit valueUpdated(m_week);
+    });
+
+    connect(ui->line_fact, &ClearingLine::valueChanged, this, [this]{
+        m_hours->setFact(ui->line_fact->text().toInt());
+        emit valueUpdated(m_week);
+    });
 }
 
 WeekValues::~WeekValues()
 {
     delete ui;
-}
-
-void WeekValues::updatetValue()
-{
-    // emit valueUpdated(Hour(m_id,
-    //                     m_week,
-    //                     ui->line_plane->text().toInt(),
-    //                     ui->line_fact->text().toInt()));
 }
 
 int WeekValues::week() const
@@ -39,11 +38,22 @@ int WeekValues::factValue() const
     return ui->line_fact->text().toInt();
 }
 
+void WeekValues::setPlaneReadOnly(bool readOnly)
+{
+    ui->line_plane->setReadOnly(readOnly);
+}
+
+void WeekValues::setFactReadOnly(bool readOnly)
+{
+    ui->line_fact->setReadOnly(readOnly);
+}
+
 void WeekValues::setWeekValues(Hour *hours)
 {
     m_hours = hours;
     ui->line_plane->setNum(hours->plan());
     ui->line_fact->setNum(hours->fact());
+    m_hours->setWeek(m_week);
 }
 
 void WeekValues::setWeek(int newWeek)

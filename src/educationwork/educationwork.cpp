@@ -5,7 +5,7 @@
 
 using HF = ModelEducationWork::HourFields;
 
-Hour::Hour(QObject *parent)
+Hour::Hour(QObject *parent) : QObject(parent)
 {
     m_id = 0;
     m_week = 0;
@@ -64,7 +64,7 @@ EducationWork::EducationWork(QObject *parent)
     m_comments = "";
     m_orderPalce = 0;
     for(int i = 1; i < Months::get()->weekCount() + 1; ++i){
-        m_hours.insert(i, new Hour());
+        m_hours.insert(i, new Hour(this));
     }
 }
 
@@ -144,13 +144,11 @@ void EducationWork::setHours(QString hoursStr)
     for(const QString &hourRow : qAsConst(splittedHours)){
         QStringList h = hourRow.split(",");
         int week = h.at((int)HF::HourWeek).toInt();
-
         Hour *current = m_hours.value(week);
         current->setId(h.at((int)HF::HourId).toInt());
         current->setWeek(week);
         current->setPlan(h.at((int)HF::HourPlanValue).toInt());
         current->setFact(h.at((int)HF::HourFactValue).toInt());
-        m_hours.insert(week, current);
     }
 }
 
