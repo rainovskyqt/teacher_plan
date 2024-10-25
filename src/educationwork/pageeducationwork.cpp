@@ -63,18 +63,6 @@ void PageEducationWork::addRow(int row, EducationWork *work)
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
     connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
     connect(rowWidget, &RowEducationWork::valueChanged, this, &PageEducationWork::updateValues);
-
-
-    //     connect(row, &EducationRow::valueChanged, this, [this](EducationalHour *hour){
-    //         auto h = new EducationalHour(-1, -1, hour->week(), countHours(hour->type(), hour->week()),
-    //                                      hour->type(), ui->w_footer);
-    //         ui->w_footer->setValue(h);
-    //     });
-
-    //     connect(row, &EducationRow::factValueChanged, this, &FormEducationWork::factValueChanged);
-    //     connect(ui->scrolbar, &QScrollBar::valueChanged, row, &EducationRow::setScrolBarValue);
-
-    //     row->loadHours();           //Часы устанасливаются после подключения сигнала к футеру, что бы сработал посчет часов
 }
 
 void PageEducationWork::clearData()

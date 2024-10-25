@@ -204,6 +204,7 @@ void RowEducationWork::countTotal()
     int secondPlan = 0;
     int firstFact = 0;
     int secondFact = 0;
+
     auto m = Months::get();
     auto hours = m_work->hours();
     for(Hour *h : hours){

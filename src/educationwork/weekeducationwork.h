@@ -23,19 +23,12 @@ public:
     explicit WeekEducationWork(bool planeActive, bool factActive, QWidget *parent = nullptr);
     ~WeekEducationWork();
     void setValues(const QHash<int, Hour*> &hours);
-    QPair<Hour, Hour> totalValues() const;
 
 signals:
     void valueChanged(int);
 
-private slots:
-    // void updateValue(QString text);
-
 private:
     Ui::WeekEducationWork *ui;
-
-//     QList<QLineEdit *> m_planeFields;
-//     QList<QLineEdit *> m_factFields;
 
     void initFieds(bool planeReadOnly, bool factReadOnly);
     void setWeekProperty(WeekValues *editor);
