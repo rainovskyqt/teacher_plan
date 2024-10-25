@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <misc/emptylbl.h>
+
 #include <QSortFilterProxyModel>
 #include "modeleducationwork.h"
 #include "weekeducationwork.h"
@@ -66,6 +68,15 @@ private:
 
     EducationWork *m_work;
 
+    EmptyLbl* m_firstPlan;
+    EmptyLbl* m_secondPlan;
+    EmptyLbl* m_firstFact;
+    EmptyLbl* m_secondFact;
+    EmptyLbl* m_totalPlan;
+    EmptyLbl* m_totalFact;
+
+    TotalHour m_totalHours;
+
     void setModels();
     void setModel(QAbstractItemModel *model, QSortFilterProxyModel *proxy, QComboBox *cbox);
     void setWorkData(EducationWork *work);
@@ -77,7 +88,7 @@ private:
     void setAsRow(int number, EducationWork *work);
     void addWeeks(QWidget *w);
     void setAsFooter();
-    void countTotal();
+    void setTotal();
 };
 
 #endif // ROWEDUCATIONWORK_H

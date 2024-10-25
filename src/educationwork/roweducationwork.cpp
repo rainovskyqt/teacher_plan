@@ -70,8 +70,11 @@ int RowEducationWork::sliderWight()
 void RowEducationWork::setHours(QHash<int, Hour*> hours)
 {
     WeekEducationWork *weeks = this->findChildren<WeekEducationWork*>().at(0);          //Он всегда один
-    if(weeks)
+    if(weeks){
         weeks->setValues(hours);
+        m_totalHours.setHours(hours);
+    }
+    setTotal();
 }
 
 void RowEducationWork::setSliderPosition(int pos)
@@ -86,7 +89,7 @@ void RowEducationWork::setWidht(int widht)
 
 void RowEducationWork::updateValues(int week)
 {
-    countTotal();
+    setTotal();
 
     emit valueChanged(m_work, week);
 }
@@ -170,6 +173,13 @@ void RowEducationWork::setAsRow(int number, EducationWork *work)
 
     WheelBlocker::make({ui->cb_course, ui->cb_discipline, ui->cb_workForm, ui->sb_groupCount});
 
+    m_firstPlan = ui->lbl_I_plan;
+    m_secondPlan = ui->lbl_II_plan;
+    m_firstFact = ui->lbl_I_fact;
+    m_secondFact = ui->lbl_II_fact;
+    m_totalPlan = ui->lbl_yearPlan;
+    m_totalFact = ui->lbl_yearFact;
+
     connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
     setRow(number);
     setModels();
@@ -177,10 +187,8 @@ void RowEducationWork::setAsRow(int number, EducationWork *work)
 
     auto weeks = new WeekEducationWork(false, false, this);
     connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
-    weeks->setValues(work->hours());
+    setHours(work->hours());
     addWeeks(weeks);
-
-    countTotal();
 }
 
 void RowEducationWork::addWeeks(QWidget *w)
@@ -194,34 +202,26 @@ void RowEducationWork::setAsFooter()
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
 
+    m_firstPlan = ui->lbl_I_totalPlan;
+    m_secondPlan = ui->lbl_II_totalPlan;
+    m_firstFact = ui->lbl_I_totalFact;
+    m_secondFact = ui->lbl_II_totalFact;
+    m_totalPlan = ui->lbl_yearTotalPlan;
+    m_totalFact = ui->lbl_yearTotalFact;
+
     auto weekRow = new WeekEducationWork(true, true, this);
     addWeeks(weekRow);
+    setTotal();
 }
 
-void RowEducationWork::countTotal()
+void RowEducationWork::setTotal()
 {
-    int firstPlan = 0;
-    int secondPlan = 0;
-    int firstFact = 0;
-    int secondFact = 0;
-
-    auto m = Months::get();
-    auto hours = m_work->hours();
-    for(Hour *h : hours){
-        if(m->isFirstSemester(h->week())){
-            firstPlan += h->plan();
-            firstFact += h->fact();
-        } else {
-            secondPlan += h->plan();
-            secondFact += h->fact();
-        }
-    }
-    ui->lbl_I_plan->setNum(firstPlan);
-    ui->lbl_II_plan->setNum(secondPlan);
-    ui->lbl_I_fact->setNum(firstFact);
-    ui->lbl_II_fact->setNum(secondFact);
-    ui->lbl_yearPlan->setNum(firstPlan + secondPlan);
-    ui->lbl_yearFact->setNum(firstPlan + secondFact);
+    m_firstPlan->setNum(m_totalHours.firstPlane());
+    m_secondPlan->setNum(m_totalHours.secondPlane());
+    m_firstFact->setNum(m_totalHours.firstFact());
+    m_secondFact->setNum(m_totalHours.secondFact());
+    m_totalPlan->setNum(m_totalHours.firstPlane() + m_totalHours.secondPlane());
+    m_totalFact->setNum(m_totalHours.firstFact() + m_totalHours.secondFact());
 }
 
 void RowEducationWork::setAsHeader()

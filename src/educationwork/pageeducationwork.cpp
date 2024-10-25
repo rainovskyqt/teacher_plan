@@ -123,25 +123,20 @@ void PageEducationWork::updateTotal()
     qDeleteAll(m_totalHours.begin(), m_totalHours.end());
     m_totalHours.clear();
 
-    QMultiHash<int, Hour*> hours;
     for(EducationWork *w : qAsConst(m_edWorks)){
         auto workHours = w->hours();
-        for(auto it = workHours.begin(); it != workHours.end(); ++it)
-            hours.insert(it.key(), it.value());
+        for(auto it = workHours.begin(); it != workHours.end(); ++it){
+            int week = it.key();
+            Hour *h = m_totalHours[week];
+            if(!h)
+                h = new Hour(this);
+            h->setPlan(it.value()->plan() + h->plan());
+            h->setFact(it.value()->fact() + h->fact());
+            m_totalHours.insert(week, h);
+        }
     }
 
-    for(auto it = hours.begin(); it != hours.end(); ++it){
-        int week = it.key();
-        Hour *h = m_totalHours[week];
-        if(!h)
-            h = new Hour(this);
-        h->setPlan(it.value()->plan() + h->plan());
-        h->setFact(it.value()->fact() + h->fact());
-        m_totalHours.insert(week, h);
-    }
-
-    RowEducationWork *footer = static_cast<RowEducationWork*>(ui->w_footer);
-    footer->setHours(m_totalHours);
+    m_footer->setHours(m_totalHours);
 }
 
 void PageEducationWork::saveNewValue(EducationWork *w, int week)

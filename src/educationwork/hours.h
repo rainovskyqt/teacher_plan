@@ -1,6 +1,7 @@
 #ifndef HOURS_H
 #define HOURS_H
 
+#include <QHash>
 #include <QObject>
 
 class Hour : public QObject{
@@ -28,6 +29,21 @@ class TotalHour : public QObject{
 
 public:
     explicit TotalHour(QObject *parent = nullptr);
+
+    void setHours(const QHash<int, Hour *> &newHours);
+
+    int firstPlane();
+    int secondPlane();
+    int firstFact();
+    int secondFact();
+
+private:
+    QHash<int, Hour*> m_hours;
+
+    QList<Hour*> m_first;
+    QList<Hour*> m_second;
+
+    void splitSemesters();
 };
 
 #endif // HOURS_H

@@ -1,5 +1,7 @@
 #include "hours.h"
 
+#include <misc/months.h>
+
 Hour::Hour(QObject *parent) : QObject(parent)
 {
     m_id = 0;
@@ -49,7 +51,68 @@ void Hour::setFact(int newFact)
 }
 
 //=============================TotalHour=============================
-TotalHour::TotalHour(QObject *parent)
+TotalHour::TotalHour(QObject *parent) : QObject(parent)
 {
+}
 
+void TotalHour::setHours(const QHash<int, Hour *> &newHours)
+{
+    m_hours.clear();
+    m_hours = newHours;
+
+    splitSemesters();
+}
+
+int TotalHour::firstPlane()
+{
+    int count = 0;
+
+    for(auto h : qAsConst(m_first))
+        count += h->plan();
+
+    return count;
+}
+
+int TotalHour::secondPlane()
+{
+    int count = 0;
+
+    for(auto h : qAsConst(m_second))
+        count += h->plan();
+
+    return count;
+}
+
+int TotalHour::firstFact()
+{
+    int count = 0;
+
+    for(auto h : qAsConst(m_first))
+        count += h->fact();
+
+    return count;
+}
+
+int TotalHour::secondFact()
+{
+    int count = 0;
+
+    for(auto h : qAsConst(m_second))
+        count += h->fact();
+
+    return count;
+}
+
+void TotalHour::splitSemesters()
+{
+    auto m = Months::get();
+    auto hours = m_hours.values();
+
+    for(Hour *h : hours){
+        if(m->isFirstSemester(h->week())){
+            m_first.append(h);
+        } else {
+            m_second.append(h);
+        }
+    }
 }
