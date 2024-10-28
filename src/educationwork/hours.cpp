@@ -55,7 +55,7 @@ TotalHour::TotalHour(QObject *parent) : QObject(parent)
 {
 }
 
-void TotalHour::setHours(const QHash<int, Hour *> &newHours)
+void TotalHour::setHours(const QMap<int, Hour*> &newHours)
 {
     m_hours.clear();
     m_hours = newHours;
@@ -63,7 +63,7 @@ void TotalHour::setHours(const QHash<int, Hour *> &newHours)
     splitSemesters();
 }
 
-int TotalHour::firstPlane()
+int TotalHour::firstPlane() const
 {
     int count = 0;
 
@@ -73,7 +73,7 @@ int TotalHour::firstPlane()
     return count;
 }
 
-int TotalHour::secondPlane()
+int TotalHour::secondPlane() const
 {
     int count = 0;
 
@@ -83,7 +83,7 @@ int TotalHour::secondPlane()
     return count;
 }
 
-int TotalHour::firstFact()
+int TotalHour::firstFact() const
 {
     int count = 0;
 
@@ -93,7 +93,7 @@ int TotalHour::firstFact()
     return count;
 }
 
-int TotalHour::secondFact()
+int TotalHour::secondFact() const
 {
     int count = 0;
 
@@ -105,6 +105,9 @@ int TotalHour::secondFact()
 
 void TotalHour::splitSemesters()
 {
+    m_first.clear();
+    m_second.clear();
+
     auto m = Months::get();
     auto hours = m_hours.values();
 

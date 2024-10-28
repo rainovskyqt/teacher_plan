@@ -41,6 +41,9 @@
         <property name="checked">
          <bool>true</bool>
         </property>
+        <property name="rate" stdset="0">
+         <double>1.000000000000000</double>
+        </property>
        </widget>
       </item>
       <item>
@@ -51,6 +54,9 @@
         <property name="checked">
          <bool>false</bool>
         </property>
+        <property name="rate" stdset="0">
+         <double>0.750000000000000</double>
+        </property>
        </widget>
       </item>
       <item>
@@ -58,12 +64,18 @@
         <property name="text">
          <string>0.5 ст.</string>
         </property>
+        <property name="rate" stdset="0">
+         <double>0.500000000000000</double>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="rb_quaterTime">
         <property name="text">
          <string>0.25 ст.</string>
+        </property>
+        <property name="rate" stdset="0">
+         <double>0.250000000000000</double>
         </property>
        </widget>
       </item>

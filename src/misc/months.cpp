@@ -92,7 +92,7 @@ QPair<int, int> Months::weekDates(int week) const
     return m_weeksDates.value(week);
 }
 
-QHash<int, QPair<int, int> > Months::weekDates() const
+QMap<int, QPair<int, int> > Months::weekDates() const
 {
     return m_weeksDates;
 }

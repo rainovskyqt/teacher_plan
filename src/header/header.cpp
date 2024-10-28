@@ -5,9 +5,10 @@
 #include <QMessageBox>
 #include <QDebug>
 
-#include <user/usermanager.h>
+#include "user/usermanager.h"
 #include "database/dictionary/dictionarymanager.h"
-#include <misc/months.h>
+#include "misc/months.h"
+#include "teacherplan/planemanager.h"
 
 Header::Header(QWidget *parent)
     : QWidget(parent)
@@ -58,8 +59,8 @@ void Header::setDepartments(int index)
     ui->cb_department->clear();
     int id = m_modelYear.data(m_modelYear.index(index, DictionaryModel::Id)).toInt();
     auto deps = m_modelStaff.departments(id);
-    for(auto it = deps.begin(); it != deps.end(); ++it)
-        ui->cb_department->addItem(it.value(), it.key());
+    for(const auto &d : qAsConst(deps))
+        ui->cb_department->addItem(d.second, d.first);
 }
 
 void Header::setPosts(int index)
@@ -68,8 +69,8 @@ void Header::setPosts(int index)
     ui->cb_post->clear();
     int id = ui->cb_department->currentData().toInt();
     auto posts = m_modelStaff.posts(id);
-    for(auto it = posts.begin(); it != posts.end(); ++it)
-        ui->cb_post->addItem(it.value(), it.key());
+    for(const auto &p : qAsConst(posts))
+        ui->cb_post->addItem(p.second, p.first);
 }
 
 void Header::changePost(int index)
@@ -99,6 +100,7 @@ void Header::initYearModel()
     ui->cb_years->setModelColumn(DictionaryModel::Name);
     setDepartments(0);
 }
+
 
 // void Header::on_btn_approvedCancel_clicked()
 // {

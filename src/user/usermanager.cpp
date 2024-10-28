@@ -84,6 +84,16 @@ User *UserManager::user() const
     return m_user;
 }
 
+bool UserManager::userStaff(int staff)
+{
+    const auto staffList = m_user->allStaff();
+    for(const auto &s : staffList)
+        if(s->id() == staff)
+            return true;
+
+    return false;
+}
+
 void UserManager::setUser(User *user)
 {
     if(m_user)

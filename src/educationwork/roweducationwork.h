@@ -8,6 +8,7 @@
 #include <QSortFilterProxyModel>
 #include "modeleducationwork.h"
 #include "weekeducationwork.h"
+#include "database/types.h"
 
 class QComboBox;
 
@@ -26,8 +27,8 @@ public:
         Footer
     };
 
-    explicit RowEducationWork(int number, EducationWork *work, Position position = Position::Row,
-                              bool enabled = true, QWidget *parent = nullptr);
+    explicit RowEducationWork(int number, Position position = Position::Row,
+                              bool readOnly = false, QWidget *parent = nullptr);
     ~RowEducationWork();
 
     QString toString() const;
@@ -36,12 +37,14 @@ public:
     int row() const;
     void setRow(int row);
     EducationWork *work() const;
+    void setWorkData(EducationWork *work);
     int sliderWight();
-    void setHours(QHash<int, Hour *> hours);
+    void setHours(QMap<int, Hour *> hours);
 
 public slots:
     void setSliderPosition(int pos);
     void setWidht(int widht);
+    void setReadOnly(bool read);
 
 signals:
     void deleteWork();
@@ -50,6 +53,8 @@ signals:
     void rowDownClicked();
     void addNewRow();
     void valueChanged(EducationWork *w, int);
+    void totalChanged(WorkType, const TotalHour*);
+    void sliderMaximum(int);
 
 private slots:
     void updateValues(int week);
@@ -62,6 +67,7 @@ private:
 
     int m_row;
 
+    const WorkType m_workType;
     QSortFilterProxyModel m_disciplines;
     QSortFilterProxyModel m_courses;
     QSortFilterProxyModel m_workForm;
@@ -76,16 +82,16 @@ private:
     EmptyLbl* m_totalFact;
 
     TotalHour m_totalHours;
+    bool m_readOnly;
 
     void setModels();
     void setModel(QAbstractItemModel *model, QSortFilterProxyModel *proxy, QComboBox *cbox);
-    void setWorkData(EducationWork *work);
     void setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId);
     void setSaved(bool s);
 
-    void setPosition(Position pos, int number, EducationWork *work);
+    void setPosition(Position pos, int number);
     void setAsHeader();
-    void setAsRow(int number, EducationWork *work);
+    void setAsRow(int number);
     void addWeeks(QWidget *w);
     void setAsFooter();
     void setTotal();

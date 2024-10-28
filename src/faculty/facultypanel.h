@@ -44,6 +44,7 @@ private:
     void setYearModel();
     void setUserData(User *user);
     void setModel();
+    void loadPlans(int id);
 };
 
 #endif // FACULTYPANEL_H

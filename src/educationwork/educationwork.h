@@ -1,7 +1,7 @@
 #ifndef EDUCATIONWORK_H
 #define EDUCATIONWORK_H
 
-#include <QHash>
+#include <QMap>
 #include <QObject>
 #include "hours.h"
 
@@ -27,7 +27,7 @@ public:
     void setOrderPalce(int newOrderPalce);
     void setHours(QString hoursStr);
 
-    QHash<int, Hour*> hours() const;
+    QMap<int, Hour *> hours() const;
 
 signals:
 
@@ -39,7 +39,7 @@ private:
     int m_groupCount;
     QString m_comments;
     int m_orderPalce;
-    QHash<int, Hour*> m_hours;
+    QMap<int, Hour*> m_hours;
 };
 
 #endif // EDUCATIONWORK_H

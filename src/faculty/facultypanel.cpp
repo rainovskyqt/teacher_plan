@@ -34,6 +34,8 @@ void FacultyPanel::init()
         loadTechers(ui->cb_year->currentIndex());
         connect(ui->cb_year, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FacultyPanel::loadTechers);
         setOwnPlans();
+    } else {
+        loadPlans(UserManager::get()->user()->id());
     }
 }
 
@@ -81,9 +83,15 @@ void FacultyPanel::setModel()
                 int id = 0;
                 if(m_model.itemFromIndex(current)->data(Qt::UserRole + 1).toBool())
                     id = m_model.itemFromIndex(current)->data(Qt::UserRole).toInt();
-                emit staffChanged(id);
+                loadPlans(id);
             });
 
+}
+
+void FacultyPanel::loadPlans(int id)
+{
+    qApp->setOverrideCursor(Qt::WaitCursor);
+    emit staffChanged(id);
 }
 
 void FacultyPanel::setOwnPlans()

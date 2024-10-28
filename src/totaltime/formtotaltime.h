@@ -8,8 +8,8 @@
 #include <QButtonGroup>
 #include <QLabel>
 
-// #include <database/models/teacherplan.h>
-// #include <database/models/datamodels.h>
+#include "educationwork/hours.h"
+#include "database/types.h"
 
 namespace Ui {
 class FormTotalTime;
@@ -24,28 +24,28 @@ public:
     ~FormTotalTime();
 
 public slots:
-    // void setPlanData(TeacherPlan *plan);
-    // void clearHours();
-    // void setPlanTime(WorkType type, PlanTime::Semester semester, int val);
+    void updateValues(const WorkType type, const TotalHour *vals);
+    void setRate(double rate);
 
 signals:
-    // void rateChanged(double);
-    // void educationYearHours(int);
+
 
 private slots:
-    // void on_sb_eduYear_valueChanged(int arg1);
-    // void on_sb_totalYear_valueChanged(int arg1);
-    // void countYearTime();
+    void changeRate(bool toggled);
+
 
 private:
     Ui::FormTotalTime *ui;
 
-    // QButtonGroup *m_rateGroup;
-    // QMap<QPair<QSpinBox*,QSpinBox*>, QSpinBox*> m_hours;
+    QMap<WorkType, const TotalHour*> m_totalHours;
 
-    // void setRate(double rate);
-    // void createConnections();
-    // void colorHours(QLabel *lbl, QSpinBox *sBox);
+    void colorHours();
+    void colorHour(QLabel *lbl, QSpinBox *sBox);
+    void createConnections();
+    void setValues();
+    void setValue(QSpinBox *first, QSpinBox *second, QSpinBox *total, const TotalHour *vals);
+    void setRateBtn(double rate);
+
     // void makeTimeConnections();
     // void countFirstSemester();
     // void countSecondSemester();

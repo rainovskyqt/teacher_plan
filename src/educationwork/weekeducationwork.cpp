@@ -3,12 +3,12 @@
 
 #include "misc/months.h"
 
-WeekEducationWork::WeekEducationWork(bool planeActive, bool factActive, QWidget *parent)
+WeekEducationWork::WeekEducationWork(bool planeReadOnly, bool factReadOnly, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WeekEducationWork)
 {
     ui->setupUi(this);
-    initFieds(planeActive, factActive);
+    initFieds(planeReadOnly, factReadOnly);
 }
 
 WeekEducationWork::~WeekEducationWork()
@@ -33,7 +33,7 @@ void WeekEducationWork::setWeekProperty(WeekValues * editor)
     editor->setWeek(week);
 }
 
-void WeekEducationWork::setValues(const QHash<int, Hour*> &hours)
+void WeekEducationWork::setValues(const QMap<int, Hour*> &hours)
 {
     auto editors = findChildren<WeekValues*>();
     for(auto editor : qAsConst(editors)){

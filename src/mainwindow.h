@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-// #include <database/models/teacherplan.h>
+#include "teacherplan/teacherplan.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +26,8 @@ public:
 
 private slots:
     void getPlans(int staffId);
+    void getStaffPlan(int staff);
+
 
     // void setPlanData(TeacherPlan *plan);
     // void on_btn_create_clicked();
@@ -40,6 +42,8 @@ private:
         TotalTime
     };
 
+    TeacherPlan *m_plan;
+
     void init();
     void setTypes();
     void loadSpliterState();
@@ -47,9 +51,7 @@ private:
     void initFacultyPanel();
     void initConnections();
     void checkUpdateComments();
-    void calculateSliderArea();
-
-
+    void setPlanData();
 
 };
 #endif // MAINWINDOW_H

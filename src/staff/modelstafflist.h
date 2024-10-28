@@ -29,11 +29,12 @@ public:
     void loadByDepartment(int year, int departmentId);
     void loadByUserId(int userId);
 
-    QMap<int, QString> departments(int yearId);
-    QMap<int, QString> posts(int depId);
+    QVector<QPair<int, QString>> departments(int yearId);
+    QVector<QPair<int, QString>> posts(int depId);
 
 private:
     void loadStaff(QString where, Arguments arg = {});
+    bool exists(const QVector<QPair<int, QString>> &list, const QString &name);
 };
 
 #endif // MODELSTAFFLIST_H

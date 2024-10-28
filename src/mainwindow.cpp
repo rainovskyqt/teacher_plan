@@ -9,48 +9,50 @@
 #include "updatecomments/updatecomments.h"
 
 #include "educationwork/pageeducationwork.h"
+#include "totaltime/formtotaltime.h"
 
 #include "user/usermanager.h"
 
-#include <database/planemanager.h>
+#include <teacherplan/planemanager.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-
+    ,m_plan{nullptr}
 {
     ui->setupUi(this);
 
     checkUpdateComments();
 
     connect(ui->w_facultyPanel, &FacultyPanel::staffChanged, ui->w_header, &Header::setTeacher);
-    // connect(ui->w_header, &Header::staffChanged, ui->tab_educationWork, &PageEducationWork::set);
     connect(ui->w_header, &Header::staffChanged, this, &MainWindow::getPlans);
+
+    connect(ui->tab_educationWork, &PageEducationWork::totalChanged, ui->tab_totalTime, &FormTotalTime::updateValues);
 
     init();
 
-    // connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
-    // connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
+// connect(ui->tab_totalTime, &FormTotalTime::rateChanged, ui->w_header, &Header::setRate);
+// connect(ui->tab_educationWork, &FormEducationWork::clear, ui->tab_totalTime, &FormTotalTime::clearHours);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
-    // connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_educationWork, &FormEducationWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_metod, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_research, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
+// connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
+// connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::clear,
-    //         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
+// connect(ui->tab_educationWork, &FormEducationWork::clear,
+//         ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
 
-    // connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
-    //         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
+// connect(ui->tab_totalTime, &FormTotalTime::educationYearHours,
+//         ui->tab_educationFactical, &EducationalWorkComplite::setYearHours);
 
-    // ui->w_header->setUser(user);
-    // ui->w_facultyPanel->setUser(user);
+// ui->w_header->setUser(user);
+// ui->w_facultyPanel->setUser(user);
 
 
-    // ui->w_header->init();
+// ui->w_header->init();
 
 
 #ifndef QT_DEBUG
@@ -72,7 +74,6 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
-    calculateSliderArea();
     QMainWindow::resizeEvent(e);
 }
 
@@ -81,15 +82,28 @@ void MainWindow::getPlans(int staffId)
     if(!staffId){
         ui->stackedWidget->setCurrentIndex(0);
     } else {
-        int planId = PlaneManager::get()->planByStaff(staffId);
-
-        if(!planId){
+        getStaffPlan(staffId);
+        if(!m_plan->id()){
             ui->stackedWidget->setCurrentIndex(1);
         } else {
             ui->stackedWidget->setCurrentIndex(2);
-            ui->tab_educationWork->setPlan(planId);
+            ui->tab_educationWork->setOwnPlan(staffId);
+            ui->tab_educationWork->setPlan(m_plan->id());
+            setPlanData();
+#ifndef QT_DEBUG
+            ui->tabWidget->setCurrentIndex(0);
+#endif
         }
     }
+    qApp->restoreOverrideCursor();
+}
+
+void MainWindow::getStaffPlan(int staff)
+{
+    if(m_plan)
+        m_plan->deleteLater();
+
+    m_plan = PlaneManager::get()->staffPlan(staff);
 }
 
 void MainWindow::init()
@@ -99,24 +113,6 @@ void MainWindow::init()
     loadSpliterState();
     initConnections();
 }
-
-// void MainWindow::setPlanData(TeacherPlan *plan)
-// {
-//     m_currentPlan = plan;
-//     if(!plan->baseId()){
-//         ui->stackedWidget->setCurrentIndex(0);
-//         ui->label->setText(tr("Индивидуальный план не создан"));
-//     } else {
-//         ui->stackedWidget->setCurrentIndex(1);
-//         ui->tab_totalTime->setPlanData(plan);
-//         ui->tab_educationWork->setPlanData(plan);
-//         ui->tab_metod->setPlanData(plan);
-//         ui->tab_research->setPlanData(plan);
-//         ui->tab_sport->setPlanData(plan);
-//         ui->tab_other->setPlanData(plan);
-//         ui->stackedWidget->setCurrentIndex(TotalTime);
-//     }
-// }
 
 void MainWindow::setTypes()
 {
@@ -174,9 +170,9 @@ void MainWindow::checkUpdateComments()
         comments.setViewed(UserManager::get()->user()->id());
 }
 
-void MainWindow::calculateSliderArea()
+void MainWindow::setPlanData()
 {
-
+    ui->tab_totalTime->setRate(m_plan->rate());
 }
 
 // void MainWindow::on_btn_create_clicked()

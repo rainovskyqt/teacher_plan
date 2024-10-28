@@ -7,6 +7,8 @@
 #include <QScrollBar>
 #include <QDebug>
 
+#include <user/usermanager.h>
+
 #define SCROLLBAR_WIGHT 15
 
 PageEducationWork::PageEducationWork(QWidget *parent)
@@ -39,7 +41,16 @@ void PageEducationWork::setPlan(int staffId)
     updateTotal();
 
     m_readySave = true;
+}
 
+void PageEducationWork::setOwnPlan(int staff)
+{
+    bool own = UserManager::get()->userStaff(staff);
+    if(m_ownPlan == own)
+        return;
+
+    m_ownPlan = own;
+    updateOwn(m_ownPlan);
 }
 
 void PageEducationWork::fillTable(int staffId)
@@ -55,7 +66,7 @@ void PageEducationWork::fillTable(int staffId)
 void PageEducationWork::addRow(int row, EducationWork *work)
 {
     auto item = new QListWidgetItem();
-    auto rowWidget = new RowEducationWork(row, work, RowEducationWork::Position::Row, true, ui->lw_educationWork);
+    auto rowWidget = new RowEducationWork(row, RowEducationWork::Position::Row, !m_ownPlan, ui->lw_educationWork);
     item->setSizeHint(QSize(ui->lw_educationWork->width() - SCROLLBAR_WIGHT, rowWidget->sizeHint().height()));
     ui->lw_educationWork->insertItem(row, item);
     ui->lw_educationWork->setItemWidget(item, rowWidget);
@@ -63,6 +74,8 @@ void PageEducationWork::addRow(int row, EducationWork *work)
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
     connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
     connect(rowWidget, &RowEducationWork::valueChanged, this, &PageEducationWork::updateValues);
+
+    rowWidget->setWorkData(work);
 }
 
 void PageEducationWork::clearData()
@@ -144,6 +157,11 @@ void PageEducationWork::saveNewValue(EducationWork *w, int week)
     m_model.saveHours(w, week);
 }
 
+void PageEducationWork::updateOwn(bool own)
+{
+
+}
+
 void PageEducationWork::addNewRow()
 {
     EducationWork *work = new EducationWork(&m_model);
@@ -154,6 +172,11 @@ void PageEducationWork::updateValues(EducationWork *w, int week)
 {
     updateTotal();
     saveNewValue(w, week);
+}
+
+void PageEducationWork::setSliderMaximum(int max)
+{
+    ui->hsb_scroller->setMaximum(max);
 }
 
 void PageEducationWork::deleteRow()
@@ -194,7 +217,7 @@ void PageEducationWork::rowDown()
 void PageEducationWork::addHeader()
 {
     clearLayout(ui->vl_header);
-    m_header = new RowEducationWork(0, {}, RowEducationWork::Position::Header, true, this);
+    m_header = new RowEducationWork(0, RowEducationWork::Position::Header, true, this);
     ui->vl_header->addWidget(m_header);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_header, &RowEducationWork::setSliderPosition);
 }
@@ -202,10 +225,11 @@ void PageEducationWork::addHeader()
 void PageEducationWork::addFooter()
 {
     clearLayout(ui->vl_footer);
-    m_footer = new RowEducationWork(0, {}, RowEducationWork::Position::Footer, true, this);
+    m_footer = new RowEducationWork(0, RowEducationWork::Position::Footer, true, this);
     ui->vl_footer->addWidget(m_footer);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_footer, &RowEducationWork::setSliderPosition);
     connect(m_footer, &RowEducationWork::addNewRow, this, &PageEducationWork::addNewRow);
     connect(m_footer, &RowEducationWork::rowUpClicked, this, &PageEducationWork::rowUp);
     connect(m_footer, &RowEducationWork::rowDownClicked, this, &PageEducationWork::rowDown);
+    connect(m_footer, &RowEducationWork::totalChanged, this, &PageEducationWork::totalChanged);
 }

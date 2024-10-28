@@ -104,7 +104,7 @@ void EducationWork::setHours(QString hoursStr)
     }
 }
 
-QHash<int, Hour *> EducationWork::hours() const
+QMap<int, Hour *> EducationWork::hours() const
 {
     return m_hours;
 }

@@ -20,9 +20,9 @@ class WeekEducationWork : public QWidget
     Q_OBJECT
 
 public:
-    explicit WeekEducationWork(bool planeActive, bool factActive, QWidget *parent = nullptr);
+    explicit WeekEducationWork(bool planeReadOnly, bool factReadOnly, QWidget *parent = nullptr);
     ~WeekEducationWork();
-    void setValues(const QHash<int, Hour*> &hours);
+    void setValues(const QMap<int, Hour*> &hours);
 
 signals:
     void valueChanged(int);

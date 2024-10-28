@@ -38,9 +38,6 @@ public:
     void deleteWork(int id);
 
 
-public slots:
-    // void updateValues(Hour hour);
-
 private:    
 };
 

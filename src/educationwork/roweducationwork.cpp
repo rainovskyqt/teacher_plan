@@ -14,14 +14,15 @@
 #define HEADER_HEIGHT 90
 #define ROW_HEIGHT 54
 
-RowEducationWork::RowEducationWork(int number, EducationWork *work, Position position, bool enabled, QWidget *parent)
+RowEducationWork::RowEducationWork(int number, Position position, bool readOnly, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RowEducationWork)
+    , m_workType(WorkType::Educational)
 {
     ui->setupUi(this);
 
-    setPosition(position, number, work);
-    setEnabled(enabled);
+    setReadOnly(readOnly);
+    setPosition(position, number);
 
     connect(ui->btn_up, &QPushButton::clicked, this, &RowEducationWork::rowUpClicked);
     connect(ui->btn_down, &QPushButton::clicked, this, &RowEducationWork::rowDownClicked);
@@ -67,9 +68,9 @@ int RowEducationWork::sliderWight()
     return ui->scrollArea->horizontalScrollBar()->maximum();
 }
 
-void RowEducationWork::setHours(QHash<int, Hour*> hours)
+void RowEducationWork::setHours(QMap<int, Hour*> hours)
 {
-    WeekEducationWork *weeks = this->findChildren<WeekEducationWork*>().at(0);          //Он всегда один
+    WeekEducationWork *weeks = this->findChild<WeekEducationWork*>();
     if(weeks){
         weeks->setValues(hours);
         m_totalHours.setHours(hours);
@@ -87,10 +88,18 @@ void RowEducationWork::setWidht(int widht)
     resize(widht, size().height());
 }
 
+void RowEducationWork::setReadOnly(bool read)
+{
+    m_readOnly = read;
+    ui->cb_course->setEnabled(!read);
+    ui->cb_discipline->setEnabled(!read);
+    ui->cb_workForm->setEnabled(!read);
+}
+
 void RowEducationWork::updateValues(int week)
 {
     setTotal();
-
+    emit sliderMaximum(sliderWight());
     emit valueChanged(m_work, week);
 }
 
@@ -124,6 +133,11 @@ void RowEducationWork::setWorkData(EducationWork *work)
     setComboboxData(&m_workForm, ui->cb_workForm, work->workFormId());
     ui->sb_groupCount->setValue(work->groupCount());
     ui->txt_comments->setPlainText(work->comments());
+
+    auto weeks = new WeekEducationWork(m_readOnly, m_readOnly, this);
+    connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
+    setHours(work->hours());
+    addWeeks(weeks);
 }
 
 void RowEducationWork::setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId)
@@ -146,11 +160,11 @@ void RowEducationWork::setSaved(bool s)
         ui->lbl_rowNumber->setStyleSheet("background-color: rgb(255, 100, 100);");
 }
 
-void RowEducationWork::setPosition(Position pos, int number, EducationWork *work)
+void RowEducationWork::setPosition(Position pos, int number)
 {
     switch (pos) {
     case Position::Row:
-        setAsRow(number, work);
+        setAsRow(number);
         break;
     case Position::Header:
         setAsHeader();
@@ -166,7 +180,7 @@ void RowEducationWork::setPosition(Position pos, int number, EducationWork *work
     ui->sw_total->setCurrentIndex((int)pos);
 }
 
-void RowEducationWork::setAsRow(int number, EducationWork *work)
+void RowEducationWork::setAsRow(int number)
 {
     ui->frame->setMaximumHeight(ROW_HEIGHT);
     ui->frame->setMinimumHeight(ROW_HEIGHT);
@@ -183,12 +197,6 @@ void RowEducationWork::setAsRow(int number, EducationWork *work)
     connect(ui->btn_delete, &QPushButton::clicked, this, &RowEducationWork::deleteWork);
     setRow(number);
     setModels();
-    setWorkData(work);
-
-    auto weeks = new WeekEducationWork(false, false, this);
-    connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
-    setHours(work->hours());
-    addWeeks(weeks);
 }
 
 void RowEducationWork::addWeeks(QWidget *w)
@@ -222,6 +230,8 @@ void RowEducationWork::setTotal()
     m_secondFact->setNum(m_totalHours.secondFact());
     m_totalPlan->setNum(m_totalHours.firstPlane() + m_totalHours.secondPlane());
     m_totalFact->setNum(m_totalHours.firstFact() + m_totalHours.secondFact());
+
+    emit totalChanged(m_workType, &m_totalHours);
 }
 
 void RowEducationWork::setAsHeader()

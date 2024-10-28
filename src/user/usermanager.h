@@ -15,6 +15,7 @@ public:
     bool login(const QString &login, const QString &password);
     User *getUser(int id);
     User *user() const;
+    bool userStaff(int staff);
 
 signals:
 

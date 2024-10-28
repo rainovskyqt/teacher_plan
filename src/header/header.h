@@ -4,8 +4,9 @@
 #include <QComboBox>
 #include <QWidget>
 
-#include "staff/modelstafflist.h"
 #include "QSortFilterProxyModel"
+
+#include "staff/modelstafflist.h"
 
 namespace Ui {
 class Header;

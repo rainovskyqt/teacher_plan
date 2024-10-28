@@ -1,12 +1,13 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-enum WorkType{
+enum class WorkType{
     Educational = 1,
     MethodicWork,
     ResearchingWork,
     SportWork,
-    OtherWork
+    OtherWork,
+    Total
 };
 
 #endif // TYPES_H

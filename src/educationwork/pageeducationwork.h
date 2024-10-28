@@ -6,6 +6,7 @@
 
 #include "educationwork.h"
 #include "modeleducationwork.h"
+#include "database/types.h"
 
 class RowEducationWork;
 
@@ -25,9 +26,12 @@ public:
 
 public slots:
     void setPlan(int planId);
+    void setOwnPlan(int staff);
 
 signals:
     void clear();
+    void totalChanged(WorkType, const TotalHour*);
+    void rateChanged(double);
 
 private slots:
     void deleteRow();
@@ -35,6 +39,7 @@ private slots:
     void rowDown();
     void addNewRow();
     void updateValues(EducationWork *w, int week);
+    void setSliderMaximum(int max);
 
 private:
     Ui::PageEducationWork *ui;
@@ -43,9 +48,10 @@ private:
     RowEducationWork *m_header;
     RowEducationWork *m_footer;
     QList<EducationWork*> m_edWorks;
-    QHash<int, Hour*> m_totalHours;
+    QMap<int, Hour*> m_totalHours;
 
     bool m_readySave;
+    bool m_ownPlan;
 
     void addHeader();
     void addFooter();
@@ -59,6 +65,7 @@ private:
     void resetScrollbar();
     void updateTotal();
     void saveNewValue(EducationWork *w, int week);
+    void updateOwn(bool own);
 };
 
 #endif // PAGEEDUCATIONWORK_H

@@ -1,7 +1,7 @@
 #ifndef HOURS_H
 #define HOURS_H
 
-#include <QHash>
+#include <QMap>
 #include <QObject>
 
 class Hour : public QObject{
@@ -29,16 +29,17 @@ class TotalHour : public QObject{
 
 public:
     explicit TotalHour(QObject *parent = nullptr);
+    ~TotalHour() {}
 
-    void setHours(const QHash<int, Hour *> &newHours);
+    void setHours(const QMap<int, Hour *> &newHours);
 
-    int firstPlane();
-    int secondPlane();
-    int firstFact();
-    int secondFact();
+    int firstPlane() const;
+    int secondPlane() const;
+    int firstFact() const;
+    int secondFact() const;
 
 private:
-    QHash<int, Hour*> m_hours;
+    QMap<int, Hour*> m_hours;
 
     QList<Hour*> m_first;
     QList<Hour*> m_second;
