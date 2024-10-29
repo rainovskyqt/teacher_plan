@@ -12,6 +12,7 @@ public:
     static PlaneManager *get();
     int planByStaff(int staffId);
     TeacherPlan *staffPlan(int staff);
+    void savePlan(TeacherPlan *plan);
 };
 
 #endif // PLANEMANAGER_H

@@ -9,6 +9,8 @@
 
 #include <user/usermanager.h>
 
+#include <teacherplan/planemanager.h>
+
 #define SCROLLBAR_WIGHT 15
 
 PageEducationWork::PageEducationWork(QWidget *parent)
@@ -30,15 +32,17 @@ void PageEducationWork::resizeEvent(QResizeEvent *e)
     QWidget::resizeEvent(e);
 }
 
-void PageEducationWork::setPlan(int staffId)
+void PageEducationWork::setPlan(int planId)
 {
     m_readySave = false;
 
     addHeader();
     addFooter();
-    fillTable(staffId);
+    fillTable(planId);
     resetScrollbar();
     updateTotal();
+
+    m_planId = planId;
 
     m_readySave = true;
 }
@@ -74,6 +78,7 @@ void PageEducationWork::addRow(int row, EducationWork *work)
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, rowWidget, &RowEducationWork::setSliderPosition);
     connect(rowWidget, &RowEducationWork::deleteWork, this, &PageEducationWork::deleteRow);
     connect(rowWidget, &RowEducationWork::valueChanged, this, &PageEducationWork::updateValues);
+    connect(rowWidget, &RowEducationWork::saveWork, this, &PageEducationWork::saveWork);
 
     rowWidget->setWorkData(work);
 }
@@ -154,7 +159,8 @@ void PageEducationWork::updateTotal()
 
 void PageEducationWork::saveNewValue(EducationWork *w, int week)
 {
-    m_model.saveHours(w, week);
+    if(m_readySave)
+        m_model.saveHours(w, week);
 }
 
 void PageEducationWork::updateOwn(bool own)
@@ -165,6 +171,8 @@ void PageEducationWork::updateOwn(bool own)
 void PageEducationWork::addNewRow()
 {
     EducationWork *work = new EducationWork(&m_model);
+    work->setTeacherPlanId(m_planId);
+    work->setOrderPlace(ui->lw_educationWork->count() + 1);
     addRow(ui->lw_educationWork->count(), work);
 }
 
@@ -177,6 +185,11 @@ void PageEducationWork::updateValues(EducationWork *w, int week)
 void PageEducationWork::setSliderMaximum(int max)
 {
     ui->hsb_scroller->setMaximum(max);
+}
+
+void PageEducationWork::saveWork(EducationWork *w)
+{
+    m_model.saveWork(w);
 }
 
 void PageEducationWork::deleteRow()

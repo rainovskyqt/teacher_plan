@@ -119,3 +119,37 @@ void TotalHour::splitSemesters()
         }
     }
 }
+
+PlanTotalHour::PlanTotalHour(QObject *parent)
+{
+}
+
+void PlanTotalHour::setHours(WorkType type, const TotalHour *hours)
+{
+    m_totalHours.insert(type, hours);
+}
+
+const TotalHour *PlanTotalHour::getHours(WorkType type)
+{
+    return m_totalHours.value(type);
+}
+
+int PlanTotalHour::firstTotal()
+{
+    int count = 0;
+
+    for(auto it = m_totalHours.begin(); it != m_totalHours.end(); ++it)
+        count += it.value()->firstPlane();
+
+    return count;
+}
+
+int PlanTotalHour::secondTotal()
+{
+    int count = 0;
+
+    for(auto it = m_totalHours.begin(); it != m_totalHours.end(); ++it)
+        count += it.value()->secondPlane();
+
+    return count;
+}

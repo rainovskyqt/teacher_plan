@@ -55,9 +55,14 @@ signals:
     void valueChanged(EducationWork *w, int);
     void totalChanged(WorkType, const TotalHour*);
     void sliderMaximum(int);
+    void saveWork(EducationWork*);
 
 private slots:
     void updateValues(int week);
+    void setDiscipline(int index);
+    void setCourse(int index);
+    void setWorkForm(int index);
+    void setGroupCount(int val);
 
 protected:
     void resizeEvent(QResizeEvent *e);
@@ -95,6 +100,9 @@ private:
     void addWeeks(QWidget *w);
     void setAsFooter();
     void setTotal();
+    void saveWorkData();
+    void makeConnects();
+    void makeDisconnects();
 };
 
 #endif // ROWEDUCATIONWORK_H

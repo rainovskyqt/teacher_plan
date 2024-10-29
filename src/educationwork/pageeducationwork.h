@@ -40,6 +40,7 @@ private slots:
     void addNewRow();
     void updateValues(EducationWork *w, int week);
     void setSliderMaximum(int max);
+    void saveWork(EducationWork *w);
 
 private:
     Ui::PageEducationWork *ui;
@@ -52,6 +53,7 @@ private:
 
     bool m_readySave;
     bool m_ownPlan;
+    int m_planId;
 
     void addHeader();
     void addFooter();

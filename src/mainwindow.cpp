@@ -106,6 +106,16 @@ void MainWindow::getStaffPlan(int staff)
     m_plan = PlaneManager::get()->staffPlan(staff);
 }
 
+void MainWindow::setPlanRate(double rate)
+{
+    if(m_plan->rate() == rate)
+        return;
+
+    m_plan->setRate(rate);
+    ui->tab_totalTime->setRate(rate);
+    PlaneManager::get()->savePlan(m_plan);
+}
+
 void MainWindow::init()
 {
     setTypes();
@@ -172,7 +182,9 @@ void MainWindow::checkUpdateComments()
 
 void MainWindow::setPlanData()
 {
-    ui->tab_totalTime->setRate(m_plan->rate());
+    auto tab =  ui->tab_totalTime;
+    tab->setRate(m_plan->rate());
+    connect(tab, &FormTotalTime::rateChanged, this, &MainWindow::setPlanRate);
 }
 
 // void MainWindow::on_btn_create_clicked()

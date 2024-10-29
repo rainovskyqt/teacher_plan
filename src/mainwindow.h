@@ -27,6 +27,7 @@ public:
 private slots:
     void getPlans(int staffId);
     void getStaffPlan(int staff);
+    void setPlanRate(double rate);
 
 
     // void setPlanData(TeacherPlan *plan);

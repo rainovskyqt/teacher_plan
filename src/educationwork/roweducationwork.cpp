@@ -18,6 +18,7 @@ RowEducationWork::RowEducationWork(int number, Position position, bool readOnly,
     : QWidget(parent)
     , ui(new Ui::RowEducationWork)
     , m_workType(WorkType::Educational)
+    , m_work(nullptr)
 {
     ui->setupUi(this);
 
@@ -27,6 +28,8 @@ RowEducationWork::RowEducationWork(int number, Position position, bool readOnly,
     connect(ui->btn_up, &QPushButton::clicked, this, &RowEducationWork::rowUpClicked);
     connect(ui->btn_down, &QPushButton::clicked, this, &RowEducationWork::rowDownClicked);
     connect(ui->btn_add, &QPushButton::clicked, this, &RowEducationWork::addNewRow);
+
+    makeConnects();
 }
 
 RowEducationWork::~RowEducationWork()
@@ -55,7 +58,12 @@ int RowEducationWork::row() const
 void RowEducationWork::setRow(int row)
 {
     m_row = row;
-    ui->lbl_rowNumber->setNum(m_row + 1);
+    int orderPlace = m_row + 1;
+    ui->lbl_rowNumber->setNum(orderPlace);
+    if(m_work && m_work->orderPlace() != orderPlace){
+        m_work->setOrderPlace(orderPlace);
+        emit saveWork(m_work);
+    }
 }
 
 EducationWork *RowEducationWork::work() const
@@ -125,6 +133,7 @@ void RowEducationWork::setModel(QAbstractItemModel *model, QSortFilterProxyModel
 
 void RowEducationWork::setWorkData(EducationWork *work)
 {
+    makeDisconnects();
     m_work = work;
 
     setSaved(m_work->id());
@@ -138,6 +147,7 @@ void RowEducationWork::setWorkData(EducationWork *work)
     connect(weeks, &WeekEducationWork::valueChanged, this, &RowEducationWork::updateValues);
     setHours(work->hours());
     addWeeks(weeks);
+    makeConnects();
 }
 
 void RowEducationWork::setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId)
@@ -234,9 +244,62 @@ void RowEducationWork::setTotal()
     emit totalChanged(m_workType, &m_totalHours);
 }
 
+void RowEducationWork::saveWorkData()
+{
+    emit saveWork(m_work);
+    setSaved(m_work->id());
+}
+
+void RowEducationWork::makeConnects()
+{
+    connect(ui->cb_discipline, QOverload<int>::of(&ComboBox::currentIndexChanged), this, &RowEducationWork::setDiscipline);
+    connect(ui->cb_course, QOverload<int>::of(&ComboBox::currentIndexChanged), this, &RowEducationWork::setCourse);
+    connect(ui->cb_workForm, QOverload<int>::of(&ComboBox::currentIndexChanged), this, &RowEducationWork::setWorkForm);
+    connect(ui->sb_groupCount, QOverload<int>::of(&QSpinBox::valueChanged), this, &RowEducationWork::setGroupCount);
+}
+
+void RowEducationWork::makeDisconnects()
+{
+    disconnect(ui->cb_discipline, QOverload<int>::of(&ComboBox::currentIndexChanged), this, &RowEducationWork::setDiscipline);
+    disconnect(ui->cb_course, QOverload<int>::of(&ComboBox::currentIndexChanged), this, &RowEducationWork::setCourse);
+    disconnect(ui->cb_workForm, QOverload<int>::of(&ComboBox::currentIndexChanged), this, &RowEducationWork::setWorkForm);
+    disconnect(ui->sb_groupCount, QOverload<int>::of(&QSpinBox::valueChanged), this, &RowEducationWork::setGroupCount);
+}
+
 void RowEducationWork::setAsHeader()
 {
     ui->frame->setMaximumHeight(HEADER_HEIGHT);
     ui->frame->setMinimumHeight(HEADER_HEIGHT);
     addWeeks(new MonthHeader(this));
 }
+
+void RowEducationWork::setDiscipline(int index)
+{
+    int id = m_disciplines.data(m_disciplines.index(index, 0), DictionaryModel::Id).toInt();
+    if(id)
+        m_work->setDisciplineId(id);
+    saveWorkData();
+}
+
+void RowEducationWork::setCourse(int index)
+{
+    int id = m_courses.data(m_courses.index(index, 0), DictionaryModel::Id).toInt();
+    if(id)
+        m_work->setCourseId(id);
+    saveWorkData();
+}
+
+void RowEducationWork::setWorkForm(int index)
+{
+    int id = m_workForm.data(m_workForm.index(index, 0), DictionaryModel::Id).toInt();
+    if(id)
+        m_work->setWorkFormId(id);
+    saveWorkData();
+}
+
+void RowEducationWork::setGroupCount(int val)
+{
+    m_work->setGroupCount(val);
+    saveWorkData();
+}
+

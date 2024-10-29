@@ -36,7 +36,7 @@ public:
     QList<EducationWork*> loadData(int planeId);
     void saveHours(EducationWork*w, int week);
     void deleteWork(int id);
-
+    void saveWork(EducationWork *w);
 
 private:    
 };

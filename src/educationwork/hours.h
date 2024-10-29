@@ -4,6 +4,8 @@
 #include <QMap>
 #include <QObject>
 
+#include "database/types.h"
+
 class Hour : public QObject{
 
 public:
@@ -38,6 +40,8 @@ public:
     int firstFact() const;
     int secondFact() const;
 
+    void reset();
+
 private:
     QMap<int, Hour*> m_hours;
 
@@ -45,6 +49,20 @@ private:
     QList<Hour*> m_second;
 
     void splitSemesters();
+};
+
+class PlanTotalHour : public QObject{
+
+public:
+    explicit PlanTotalHour(QObject *parent = nullptr);
+    ~PlanTotalHour() {}
+    void setHours(WorkType type, const TotalHour* hours);
+    const TotalHour* getHours(WorkType type);
+    int firstTotal();
+    int secondTotal();
+
+private:
+    QMap<WorkType, const TotalHour*> m_totalHours;
 };
 
 #endif // HOURS_H

@@ -65,3 +65,24 @@ TeacherPlan *PlaneManager::staffPlan(int staff)
 
     return plan;
 }
+
+void PlaneManager::savePlan(TeacherPlan *plan)
+{
+    Arguments args;
+    args.insert(":base_id", plan->id());
+    args.insert(":staff_id", plan->staffId());
+    args.insert(":year_id", plan->yearId());
+    args.insert(":status_id", plan->statusId());
+    args.insert(":rate", plan->rate());
+
+    QString update = "UPDATE teacher_plan SET status_id = :status_id, rate = :rate WHERE id = :base_id";
+    QString insert = "INSERT INTO teacher_plan(staff_id, year_id, status_id, rate) "
+                     "VALUES(:staff_id, :year_id, :status_id, :rate) ";
+
+    if(plan->id()){
+        Database::get()->updateDeleteQuery(update, args);
+    } else {
+        int id = Database::get()->insertQuery(insert, args);
+        plan->setId(id);
+    }
+}

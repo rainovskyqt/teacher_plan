@@ -28,7 +28,7 @@ public slots:
     void setRate(double rate);
 
 signals:
-
+    void rateChanged(double rate);
 
 private slots:
     void changeRate(bool toggled);
@@ -37,7 +37,7 @@ private slots:
 private:
     Ui::FormTotalTime *ui;
 
-    QMap<WorkType, const TotalHour*> m_totalHours;
+    PlanTotalHour m_totalHours;
 
     void colorHours();
     void colorHour(QLabel *lbl, QSpinBox *sBox);
@@ -45,10 +45,7 @@ private:
     void setValues();
     void setValue(QSpinBox *first, QSpinBox *second, QSpinBox *total, const TotalHour *vals);
     void setRateBtn(double rate);
-
-    // void makeTimeConnections();
-    // void countFirstSemester();
-    // void countSecondSemester();
+    void setTotal();
 };
 
 #endif // FORMTOTALTIME_H

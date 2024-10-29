@@ -9,12 +9,13 @@ EducationWork::EducationWork(QObject *parent)
     : QObject{parent}
 {
     m_id = 0;
+    m_teacherPlanId = 0;
     m_disciplineId = 0;
     m_courseId = 0;
     m_workFormId = 0;
     m_groupCount = 0;
     m_comments = "";
-    m_orderPalce = 0;
+    m_orderPlace = 0;
     for(int i = 1; i < Months::get()->weekCount() + 1; ++i){
         m_hours.insert(i, new Hour(this));
     }
@@ -28,6 +29,16 @@ int EducationWork::id() const
 void EducationWork::setId(int newId)
 {
     m_id = newId;
+}
+
+int EducationWork::teacherPlanId() const
+{
+    return m_teacherPlanId;
+}
+
+void EducationWork::setTeacherPlanId(int newTeacherPlanId)
+{
+    m_teacherPlanId = newTeacherPlanId;
 }
 
 int EducationWork::disciplineId() const
@@ -80,14 +91,14 @@ void EducationWork::setComments(const QString &newComments)
     m_comments = newComments;
 }
 
-int EducationWork::orderPalce() const
+int EducationWork::orderPlace() const
 {
-    return m_orderPalce;
+    return m_orderPlace;
 }
 
-void EducationWork::setOrderPalce(int newOrderPalce)
+void EducationWork::setOrderPlace(int newOrderPlace)
 {
-    m_orderPalce = newOrderPalce;
+    m_orderPlace = newOrderPlace;
 }
 
 void EducationWork::setHours(QString hoursStr)
