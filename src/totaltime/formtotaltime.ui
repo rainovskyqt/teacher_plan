@@ -525,7 +525,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -550,7 +550,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -575,7 +575,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -600,7 +600,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -625,7 +625,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -650,7 +650,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -675,7 +675,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -700,7 +700,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -725,7 +725,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -750,7 +750,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -775,7 +775,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -800,7 +800,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -850,7 +850,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -875,7 +875,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -900,7 +900,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -925,7 +925,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -972,7 +972,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
