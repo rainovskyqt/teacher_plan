@@ -99,9 +99,17 @@ void RowEducationWork::setWidht(int widht)
 void RowEducationWork::setReadOnly(bool read)
 {
     m_readOnly = read;
-    ui->cb_course->setEnabled(!read);
-    ui->cb_discipline->setEnabled(!read);
-    ui->cb_workForm->setEnabled(!read);
+    auto btns = this->findChildren<QAbstractButton*>();
+    for(auto b : btns)
+        b->setEnabled(!read);
+
+    auto boxes = this->findChildren<QComboBox*>();
+    for(auto b : boxes)
+        b->setEnabled(!read);
+
+    auto sboxes = this->findChildren<QSpinBox*>();
+    for(auto b : sboxes)
+        b->setEnabled(!read);
 }
 
 void RowEducationWork::updateValues(int week)

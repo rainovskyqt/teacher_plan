@@ -53,11 +53,6 @@ private:
 
     void initModels();
     void initYearModel();
-
-    // void setStatus(int status);
-    // void setProtocol(TeacherPlan* plan);
-    // void setApproved(TeacherPlan* plan);
-//    bool saveQustion();
 };
 
 #endif // HEADER_H

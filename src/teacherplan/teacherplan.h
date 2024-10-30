@@ -4,6 +4,8 @@
 #include <QDate>
 #include <QObject>
 
+#include "database/types.h"
+
 class TeacherPlan : public QObject
 {
     Q_OBJECT
@@ -14,12 +16,10 @@ public:
     void setId(int newId);
     int staffId() const;
     void setStaffId(int newStaffId);
-    int yearId() const;
-    void setYearId(int newYearId);
     double rate() const;
     void setRate(double newRate);
-    int statusId() const;
-    void setStatusId(int newStatusId);
+    PlanStatus status() const;
+    void setStatus(PlanStatus newStatus);
     int approvedUserId() const;
     void setApprovedUserId(int newApprovedUserId);
     QDate approvedDate() const;
@@ -38,9 +38,8 @@ signals:
 private:
     int m_id;
     int m_staffId;
-    int m_yearId;
     double m_rate;
-    int m_statusId;
+    PlanStatus m_status;
     int m_approvedUserId;
     QDate m_approvedDate;
     int m_departmentBossSignId;

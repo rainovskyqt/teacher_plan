@@ -11,6 +11,7 @@ DictionaryManager::DictionaryManager(QObject *parent)
     m_posts = new ModelPost(this);
     m_workForm = new ModelWorkForm(this);
     m_years = new ModelYear(this);
+    m_genericWorkForm = new ModelGenericWorkForm(this);
 }
 
 DictionaryManager *DictionaryManager::get()
@@ -46,4 +47,9 @@ ModelWorkForm *DictionaryManager::workForm() const
 ModelYear *DictionaryManager::years() const
 {
     return m_years;
+}
+
+ModelGenericWorkForm *DictionaryManager::genericWorkForm() const
+{
+    return m_genericWorkForm;
 }

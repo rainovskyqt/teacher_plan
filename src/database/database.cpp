@@ -8,11 +8,6 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 
-// #include <login/user.h>
-// #include "database/models/educationalwork.h"
-
-// #include <database/models/genericworkform.h>
-
 Q_GLOBAL_STATIC(Database, globalInst)
 
 Database *Database::get()

@@ -15,8 +15,6 @@
 
 // #include <database/models/genericwork.h>
 
-class GenericWorkForm;
-
 using Arguments = QMap<QString, QVariant>;
 
 class Database : public QObject

@@ -10,4 +10,14 @@ enum class WorkType{
     Total
 };
 
+enum class PlanStatus{
+    NotSet,
+    Development,
+    PendingApproval,
+    Approved
+};
+
+Q_DECLARE_METATYPE(WorkType)
+Q_DECLARE_METATYPE(PlanStatus)
+
 #endif // TYPES_H

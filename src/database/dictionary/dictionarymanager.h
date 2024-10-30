@@ -7,6 +7,7 @@
 #include "modelpost.h"
 #include "modelworkform.h"
 #include "modelyear.h"
+#include "modelgenericworkform.h"
 
 #include <QObject>
 
@@ -25,6 +26,8 @@ public:
     ModelWorkForm *workForm() const;
     ModelYear *years() const;
 
+    ModelGenericWorkForm *genericWorkForm() const;
+
 signals:
 
 private:
@@ -34,6 +37,7 @@ private:
     ModelPost *m_posts;
     ModelWorkForm *m_workForm;
     ModelYear *m_years;
+    ModelGenericWorkForm *m_genericWorkForm;
 };
 
 #endif // DICTIONARYMANAGER_H

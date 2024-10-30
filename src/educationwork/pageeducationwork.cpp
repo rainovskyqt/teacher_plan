@@ -173,6 +173,7 @@ void PageEducationWork::addNewRow()
     EducationWork *work = new EducationWork(&m_model);
     work->setTeacherPlanId(m_planId);
     work->setOrderPlace(ui->lw_educationWork->count() + 1);
+    m_edWorks.append(work);
     addRow(ui->lw_educationWork->count(), work);
 }
 
@@ -238,7 +239,7 @@ void PageEducationWork::addHeader()
 void PageEducationWork::addFooter()
 {
     clearLayout(ui->vl_footer);
-    m_footer = new RowEducationWork(0, RowEducationWork::Position::Footer, true, this);
+    m_footer = new RowEducationWork(0, RowEducationWork::Position::Footer, !m_ownPlan, this);
     ui->vl_footer->addWidget(m_footer);
     connect(ui->hsb_scroller, &QScrollBar::valueChanged, m_footer, &RowEducationWork::setSliderPosition);
     connect(m_footer, &RowEducationWork::addNewRow, this, &PageEducationWork::addNewRow);

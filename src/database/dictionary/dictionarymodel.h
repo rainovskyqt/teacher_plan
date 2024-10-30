@@ -11,7 +11,10 @@ public:
 
     enum Fields{
         Id,
-        Name
+        Name,
+        WorkType,
+        Chapter,
+        MaxYearCount
     };
 
     explicit DictionaryModel(QObject *parent = nullptr);

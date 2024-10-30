@@ -28,12 +28,7 @@ private slots:
     void getPlans(int staffId);
     void getStaffPlan(int staff);
     void setPlanRate(double rate);
-
-
-    // void setPlanData(TeacherPlan *plan);
-    // void on_btn_create_clicked();
-
-    // void on_a_exit_triggered();
+    void on_btn_create_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -5,9 +5,8 @@ TeacherPlan::TeacherPlan(QObject *parent)
 {
     m_id = 0;
     m_staffId = 0;
-    m_yearId = 0;
     m_rate = 1;
-    m_statusId = 0;
+    m_status = PlanStatus::NotSet;
     m_approvedUserId = 0;
     m_approvedDate;
     m_departmentBossSignId = 0;
@@ -36,16 +35,6 @@ void TeacherPlan::setStaffId(int newStaffId)
     m_staffId = newStaffId;
 }
 
-int TeacherPlan::yearId() const
-{
-    return m_yearId;
-}
-
-void TeacherPlan::setYearId(int newYearId)
-{
-    m_yearId = newYearId;
-}
-
 double TeacherPlan::rate() const
 {
     return m_rate;
@@ -56,14 +45,14 @@ void TeacherPlan::setRate(double newRate)
     m_rate = newRate;
 }
 
-int TeacherPlan::statusId() const
+PlanStatus TeacherPlan::status() const
 {
-    return m_statusId;
+    return m_status;
 }
 
-void TeacherPlan::setStatusId(int newStatusId)
+void TeacherPlan::setStatus(PlanStatus newStatus)
 {
-    m_statusId = newStatusId;
+    m_status = newStatus;
 }
 
 int TeacherPlan::approvedUserId() const

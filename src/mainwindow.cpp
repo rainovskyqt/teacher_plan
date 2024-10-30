@@ -104,6 +104,12 @@ void MainWindow::getStaffPlan(int staff)
         m_plan->deleteLater();
 
     m_plan = PlaneManager::get()->staffPlan(staff);
+    if(m_plan->id())
+        return;
+
+    m_plan->setStaffId(staff);
+    m_plan->setStatus(PlanStatus::Development);
+
 }
 
 void MainWindow::setPlanRate(double rate)
@@ -126,10 +132,10 @@ void MainWindow::init()
 
 void MainWindow::setTypes()
 {
-    // ui->tab_metod->setType(WorkType::MethodicWork);
-    // ui->tab_research->setType(WorkType::ResearchingWork);
-    // ui->tab_sport->setType(WorkType::SportWork);
-    // ui->tab_other->setType(WorkType::OtherWork);
+    ui->tab_metod->setType(WorkType::MethodicWork);
+    ui->tab_research->setType(WorkType::ResearchingWork);
+    ui->tab_sport->setType(WorkType::SportWork);
+    ui->tab_other->setType(WorkType::OtherWork);
 }
 
 void MainWindow::loadSpliterState()
@@ -187,9 +193,9 @@ void MainWindow::setPlanData()
     connect(tab, &FormTotalTime::rateChanged, this, &MainWindow::setPlanRate);
 }
 
-// void MainWindow::on_btn_create_clicked()
-// {
-//     m_currentPlan->setBaseId(Database::get()->updateTeacherPlan(m_currentPlan));
-//     ui->w_header->setPlan();
-// }
+void MainWindow::on_btn_create_clicked()
+{
+    PlaneManager::get()->savePlan(m_plan);
+    getPlans(m_plan->staffId());
+}
 

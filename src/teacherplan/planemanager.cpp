@@ -52,9 +52,8 @@ TeacherPlan *PlaneManager::staffPlan(int staff)
     if(answer.next()){
         plan->setId(answer.value("id").toInt());
         plan->setStaffId(answer.value("staff_id").toInt());
-        plan->setYearId(answer.value("year_id").toInt());
         plan->setRate(answer.value("rate").toDouble());
-        plan->setStatusId(answer.value("status_id").toInt());
+        plan->setStatus((PlanStatus)answer.value("status_id").toInt());
         plan->setApprovedUserId(answer.value("approved_user_id").toInt());
         plan->setApprovedDate(answer.value("approved_date").toDate());
         plan->setDepartmentBossSignId(answer.value("department_boss_sign_id").toInt());
@@ -71,13 +70,12 @@ void PlaneManager::savePlan(TeacherPlan *plan)
     Arguments args;
     args.insert(":base_id", plan->id());
     args.insert(":staff_id", plan->staffId());
-    args.insert(":year_id", plan->yearId());
-    args.insert(":status_id", plan->statusId());
+    args.insert(":status_id", (int)plan->status());
     args.insert(":rate", plan->rate());
 
     QString update = "UPDATE teacher_plan SET status_id = :status_id, rate = :rate WHERE id = :base_id";
-    QString insert = "INSERT INTO teacher_plan(staff_id, year_id, status_id, rate) "
-                     "VALUES(:staff_id, :year_id, :status_id, :rate) ";
+    QString insert = "INSERT INTO teacher_plan(staff_id, status_id, rate) "
+                     "VALUES(:staff_id, :status_id, :rate) ";
 
     if(plan->id()){
         Database::get()->updateDeleteQuery(update, args);
