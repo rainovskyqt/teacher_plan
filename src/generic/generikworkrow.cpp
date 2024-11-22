@@ -23,6 +23,8 @@ GenerikWorkRow::GenerikWorkRow(GenericWork *work, int number, QWidget *parent)
     ui->lbl_number->setNum(number);
     ui->cb_works->setCurrentIndex(-1);
     setWorkData(work);
+
+    connect(ui->btn_delete, &QPushButton::clicked, this, &GenerikWorkRow::deleteWork);
 }
 
 GenerikWorkRow::~GenerikWorkRow()
@@ -60,7 +62,7 @@ void GenerikWorkRow::setWorkData(GenericWork *work)
     ui->sb_fact->setValue(m_work->factHours());
     ui->text_complite->setPlainText(m_work->complite());
 
-    // emit valueChanged();
+    emit valueChanged();
 }
 
 void GenerikWorkRow::setComboboxData(QSortFilterProxyModel *model, QComboBox *cbox, int vId)
@@ -113,7 +115,6 @@ void GenerikWorkRow::setComboboxData(QSortFilterProxyModel *model, QComboBox *cb
 //         emit valueChanged();
 //     });
 
-//     connect(ui->btn_delete, &QPushButton::clicked, this, &GenerikWorkRow::deleteWork);
 // }
 
 void GenerikWorkRow::colorRow(bool accepted)

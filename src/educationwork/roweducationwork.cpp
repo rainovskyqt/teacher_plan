@@ -110,6 +110,10 @@ void RowEducationWork::setReadOnly(bool read)
     auto sboxes = this->findChildren<QSpinBox*>();
     for(auto b : sboxes)
         b->setEnabled(!read);
+
+    auto text = this->findChildren<QPlainTextEdit*>();
+    for(auto t : text)
+        t->setReadOnly(read);
 }
 
 void RowEducationWork::updateValues(int week)

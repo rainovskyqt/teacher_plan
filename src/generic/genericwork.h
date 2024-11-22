@@ -4,7 +4,7 @@
 #include <QObject>
 #include "database/types.h"
 
-class GenericWork : QObject
+class GenericWork : public QObject
 {
     Q_OBJECT
 public:

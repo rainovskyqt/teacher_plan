@@ -28,8 +28,9 @@ public:
     // void init();
 
 signals:
-    // void valueChanged();
-    // void deleteWork();
+    void valueChanged();
+    void saveWork(GenericWork *work);
+    void deleteWork();
 
 private:
     Ui::GenerikWorkRow *ui;

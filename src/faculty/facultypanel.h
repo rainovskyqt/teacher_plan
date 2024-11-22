@@ -5,8 +5,6 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
-
-
 #include "modelfaculty.h"
 
 class User;
