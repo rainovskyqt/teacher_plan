@@ -68,9 +68,10 @@ void FacultyPanel::loadStaff()
         parentItem->setText(0, key);
 
         auto staff = staffList.values(key);
-        auto staffUnique = QSet<QPair<QString, int>>(staff.begin(), staff.end());
+        // auto staffUnique = QSet<QPair<QString, int>>(staff.begin(), staff.end());
+        QSet<QPair<QString, int>> staffUnique = QSet<QPair<QString, int>>::fromList(staff);
 
-        for(const auto value : staffUnique) {
+        for(const auto value : qAsConst(staffUnique)) {
             QTreeWidgetItem* childItem = new QTreeWidgetItem(parentItem);
             childItem->setData(0, Qt::UserRole, value.second);
             childItem->setText(0, value.first);
@@ -82,6 +83,6 @@ void FacultyPanel::on_tree_plans_itemClicked(QTreeWidgetItem *item, int column)
 {
     auto id = item->data(0, Qt::UserRole).toInt();
     if(id)
-        staffChanget(id);
+        emit staffChanget(id);
 }
 

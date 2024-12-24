@@ -92,6 +92,20 @@ void EducationalWorkComplite::setFactValue(Month::Months month, int workForm, in
         ui->tw_hours->item(row, column)->setText(value ? QString::number(value) : "");
 }
 
+void EducationalWorkComplite::setMonthValue(Month::Months month, int workForm, int value, EducationalHour::HourType hourType)
+{
+    int column = getColumnNumber(workForm);
+    int row = getRowNumber(month);
+    if(row != -1 && column != -1){
+        auto item = ui->tw_hours->item(row, column);
+        if(hourType == EducationalHour::HourType::Plane)
+            item->setData(Plane, value);
+        else
+            item->setData(Factical, value);
+        item->setText(QString("%1 / %2").arg(item->data(Plane).toString(), item->data(Factical).toString()));
+    }
+}
+
 void EducationalWorkComplite::setHeader()
 {
     CustomHeader *hHeader = new CustomHeader(Qt::Horizontal, ui->tw_hours);
@@ -150,6 +164,8 @@ void EducationalWorkComplite::fillTable()
     for(int col = 0; col <= TOTAL_COLUMN; ++col){
         for(int row = 0; row <= TOTAL_ROW; ++row){
             auto item = new QTableWidgetItem("");
+            item->setData(Plane, 0);
+            item->setData(Factical, 0);
             item->setTextAlignment(Qt::AlignCenter);
 
             if (col == TOTAL_COLUMN && (row == FIRST_SEMESTER_ROW || row == SECOND_SEMESTER_ROW || row == TOTAL_ROW)){

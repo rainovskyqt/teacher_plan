@@ -60,11 +60,12 @@ void EducationRow::addMonths(S status)
             saveHour(hour);
             emit valueChanged(hour);
 
-            if(hour->type() == EducationalHour::Factical){
+            // if(hour->type() == EducationalHour::Factical){
                 auto month = static_cast<EducationMonth*>(sender());
-                int factCount = month->getTime(EducationalHour::Factical);
-                emit factValueChanged(month->month(), m_work->workFormId(), factCount);
-            }
+                int factCount = month->getTime(hour->type());
+                // int factCount = month->getTime( EducationalHour::Factical);
+                emit factValueChanged(month->month(), m_work->workFormId(), factCount, hour->type());
+            // }
         });
         ui->hl_months->addWidget(month);
         startWeek += weekCount;

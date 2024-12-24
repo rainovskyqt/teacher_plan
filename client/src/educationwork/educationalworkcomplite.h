@@ -1,6 +1,8 @@
 #ifndef EDUCATIONALWORKCOMPLITE_H
 #define EDUCATIONALWORKCOMPLITE_H
 
+#include "educationalhour.h"
+
 #include <QHeaderView>
 #include <QWidget>
 
@@ -35,12 +37,18 @@ public slots:
     void clearHours();
 
     void setFactValue(Month::Months month, int workForm, int value);
+    void setMonthValue(Month::Months month, int workForm, int value, EducationalHour::HourType hourType);
 
 private slots:
     void on_tw_hours_cellChanged(int row, int column);
 
 private:
     Ui::EducationalWorkComplite *ui;
+
+    enum HourType{
+        Plane = Qt::UserRole +1,
+        Factical
+    };
 
     void setHeader();
     void setColumns();

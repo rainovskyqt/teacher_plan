@@ -121,6 +121,7 @@ QVector<Dictionary> Database::getDictionary(DictName name)
 
     QVector<Dictionary> list;
     while(query->next()){
+        // Dictionary(query->value("id").toInt(), query->value("name").toString());
         list.append(Dictionary(query->value("id").toInt(), query->value("name").toString()));
     }
 

@@ -11,6 +11,8 @@ class Dictionary
 {
 public:
 
+    Dictionary(): m_id{0}, m_name{""} {}
+
     Dictionary(int id, const QString &name)
     {
         m_id = id;

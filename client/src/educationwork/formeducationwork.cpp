@@ -117,16 +117,20 @@ void FormEducationWork::deleteRow()
     updateRowNumber(row);
 }
 
-void FormEducationWork::countFactValue(Month::Months month, int workType, int)
+void FormEducationWork::countFactValue(Month::Months month, int workType, int, EducationalHour::HourType hourType)
 {
     int count = 0;
     auto rows = this->findChildren<EducationRow*>();
     for(auto r: rows){
         if(r->workForm() == workType){
-            count += r->countMonthHourse(month, EducationalHour::Factical);
+            count += r->countMonthHourse(month, hourType);
         }
     }
-    emit factValueChanged(month, workType, count);
+    emit monthValueChanged(month, workType, count, hourType);
+    // if(hourType == EducationalHour::HourType::Factical)
+        // emit factValueChanged(month, workType, count);
+    // else
+    //     emit planMaonthValueChanged(month, workType, count);
 }
 
 void FormEducationWork::clearData()

@@ -46,7 +46,7 @@ signals:
     void deleteWork();
     void saveWork(EducationalWork*);
     void valueChanged(EducationalHour*);
-    void factValueChanged(Month::Months, int, int);
+    void factValueChanged(Month::Months, int, int, EducationalHour::HourType);
 
 private:
     Ui::EducationRow *ui;

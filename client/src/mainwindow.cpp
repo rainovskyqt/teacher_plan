@@ -26,7 +26,8 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
     connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
-    connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
+    // connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
+    connect(ui->tab_educationWork, &FormEducationWork::monthValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setMonthValue);
 
     connect(ui->tab_educationWork, &FormEducationWork::clear,
             ui->tab_educationFactical, &EducationalWorkComplite::clearHours);
