@@ -202,44 +202,50 @@ int EducationalWorkComplite::getColumnNumber(int workForm)
 
 void EducationalWorkComplite::setRowCount(int row)
 {
-    int count = 0;
+    int countPlane = 0;
+    int countFact = 0;
     for(int i = 0; i < TOTAL_COLUMN; ++i){
         auto item = ui->tw_hours->item(row, i);
-        if(item)
-            count += item->text().toInt();
+        if(item){
+            countPlane += item->data(Plane).toInt();
+            countFact += item->data(Factical).toInt();
+        }
     }
     auto item = ui->tw_hours->item(row, TOTAL_COLUMN);
     if(item)
-        item->setText(count ? QString::number(count) : "");
+        item->setText((countPlane || countFact) ? QString("%1 / %2").arg(countPlane).arg(countFact) : "");
 }
 
 void EducationalWorkComplite::setColunmCount(int column)
 {
-    int first = 0;
-    int second = 0;
+    int firstPlane = 0;
+    int firstFact = 0;
+    int secondPlane = 0;
+    int secondFact = 0;
 
     for(int i = 0; i < TOTAL_ROW; ++i){
         auto item = ui->tw_hours->item(i, column);
         if(!item)
             continue;
 
-        int val = item->text().toInt();
-
         if(i < FIRST_SEMESTER_ROW){
-            first += val;
+            firstPlane += item->data(Plane).toInt();
+            firstFact += item->data(Factical).toInt();
         } else if (i == FIRST_SEMESTER_ROW){
-            item->setText(first ? QString::number(first) : "");
+            item->setText((firstPlane || firstFact) ? QString("%1 / %2").arg(firstPlane).arg(firstFact) : "");
         } else if (i < SECOND_SEMESTER_ROW){
-            second += val;
+            secondPlane += item->data(Plane).toInt();
+            secondFact += item->data(Factical).toInt();
         } else if (i == SECOND_SEMESTER_ROW){
-            item->setText(second ? QString::number(second) : "");
+            item->setText((secondPlane || secondFact) ? QString("%1 / %2").arg(secondPlane).arg(secondFact) : "");
         }
     }
 
     auto item = ui->tw_hours->item(TOTAL_ROW, column);
     if(item){
-        int count = first + second;
-        item->setText(count ? QString::number(count) : "");
+        int countPlane = firstPlane + secondPlane;
+        int countFact = firstFact + secondFact;
+        item->setText((countPlane || countFact) ? QString("%1 / %2").arg(countPlane).arg(countFact) : "");
     }
 }
 
@@ -267,6 +273,7 @@ void EducationalWorkComplite::on_tw_hours_cellChanged(int row, int column)
 
     setColunmCount(column);
     setRowCount(row);
+    // setYearCount();
 
     checkTotalTime();
 }

@@ -162,7 +162,7 @@ User *Database::login(QString login, QString password, int id)
                                   "INNER JOIN `post` P ON P.id = S.post_id "
                                   "LEFT JOIN staff_access_rigth SAR ON SAR.staff_id = S.id "
                                   "WHERE %1 "
-                                  "ORDER BY main, staff_id").arg(where);
+                                  "ORDER BY main DESC, staff_id, S.main DESC").arg(where);
     Values vals;
     vals.insert(":id", id);
     vals.insert(":login", login);
@@ -191,7 +191,8 @@ User *Database::login(QString login, QString password, int id)
                        query->value("main").toBool()}
                       );
 
-        user->setRights(UserRights::fromString(query->value("rights").toString()));
+        if(query->value("main").toBool())
+            user->setRights(UserRights::fromString(query->value("rights").toString()));
     }
     delete query;
     return user;
@@ -426,7 +427,7 @@ QMultiHash<QString, QPair<QString, int> > Database::staffList(int facultyId)
                                   "INNER JOIN staff S ON S.department_id = D.id "
                                   "INNER JOIN `user` U ON U.id = S.user_id "
                                   "%1 "
-                                  "ORDER BY d_name, u_sname").arg(dep);
+                                  "ORDER BY d_name, u_sname, S.main DESC").arg(dep);
 
     QMultiHash<QString, QPair<QString, int> > staff;
 
