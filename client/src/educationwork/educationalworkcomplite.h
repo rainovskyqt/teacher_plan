@@ -40,7 +40,7 @@ public slots:
     void setMonthValue(Month::Months month, int workForm, int value, EducationalHour::HourType hourType);
 
 private slots:
-    void on_tw_hours_cellChanged(int row, int column);
+    void hoursChanged(int row, int column);
 
 private:
     Ui::EducationalWorkComplite *ui;
@@ -60,7 +60,9 @@ private:
     int getColumnNumber(int workForm);
     void setRowCount(int row);
     void setColunmCount(int column);
+    void setYearCount();
     void checkTotalTime();
+
 };
 
 #endif // EDUCATIONALWORKCOMPLITE_H

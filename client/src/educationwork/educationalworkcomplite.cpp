@@ -51,6 +51,8 @@ EducationalWorkComplite::EducationalWorkComplite(QWidget *parent) :
     setColumns();
     setRows();
     fillTable();
+
+    connect(ui->tw_hours, &QTableWidget::cellChanged, this, &EducationalWorkComplite::hoursChanged);
 }
 
 EducationalWorkComplite::~EducationalWorkComplite()
@@ -212,7 +214,9 @@ void EducationalWorkComplite::setRowCount(int row)
         }
     }
     auto item = ui->tw_hours->item(row, TOTAL_COLUMN);
-    if(item)
+    if(item != nullptr)
+        // item->setData(Plane, countPlane);
+        // item->setData(Factical, countFact);
         item->setText((countPlane || countFact) ? QString("%1 / %2").arg(countPlane).arg(countFact) : "");
 }
 
@@ -233,10 +237,15 @@ void EducationalWorkComplite::setColunmCount(int column)
             firstFact += item->data(Factical).toInt();
         } else if (i == FIRST_SEMESTER_ROW){
             item->setText((firstPlane || firstFact) ? QString("%1 / %2").arg(firstPlane).arg(firstFact) : "");
+            qDebug() << firstPlane <<"   " << i <<"   " << column;
+            item->setData(Plane, firstPlane);
+            item->setData(Factical, firstFact);
         } else if (i < SECOND_SEMESTER_ROW){
             secondPlane += item->data(Plane).toInt();
             secondFact += item->data(Factical).toInt();
         } else if (i == SECOND_SEMESTER_ROW){
+            item->setData(Plane, secondPlane);
+            item->setData(Factical, secondFact);
             item->setText((secondPlane || secondFact) ? QString("%1 / %2").arg(secondPlane).arg(secondFact) : "");
         }
     }
@@ -245,8 +254,15 @@ void EducationalWorkComplite::setColunmCount(int column)
     if(item){
         int countPlane = firstPlane + secondPlane;
         int countFact = firstFact + secondFact;
+        item->setData(Plane, countPlane);
+        item->setData(Factical, countFact);
         item->setText((countPlane || countFact) ? QString("%1 / %2").arg(countPlane).arg(countFact) : "");
     }
+}
+
+void EducationalWorkComplite::setYearCount()
+{
+
 }
 
 void EducationalWorkComplite::checkTotalTime()
@@ -255,7 +271,7 @@ void EducationalWorkComplite::checkTotalTime()
     if(!item)
         return;
 
-    int totalVal = item->text().toInt();
+    int totalVal = item->data(Plane).toInt();
     int maxTotalVal = ui->lbl_yearHours->text().toInt();
     if(totalVal > maxTotalVal){
         item->setBackground(Qt::red);
@@ -266,15 +282,12 @@ void EducationalWorkComplite::checkTotalTime()
     }
 }
 
-void EducationalWorkComplite::on_tw_hours_cellChanged(int row, int column)
+void EducationalWorkComplite::hoursChanged(int row, int column)
 {
-    if(column == TOTAL_COLUMN || (column == TOTAL_COLUMN && row == TOTAL_ROW))
-        return;
+    if(column != TOTAL_COLUMN)
+        setColunmCount(column);
 
-    setColunmCount(column);
     setRowCount(row);
-    // setYearCount();
-
     checkTotalTime();
 }
 
