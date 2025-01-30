@@ -48,6 +48,8 @@ public:
     QList<StudyYear> getYears();
     TeacherPlan *requestPlan(UserPost post, int yearId);
     int updateTeacherPlan(TeacherPlan *plan);
+    QString getTeacherPlanComments(int planId);
+    void updateTeacherPlanComments(int planId, const QString &comments);
     QString encodePassword(QString password);
     const QString &lastError() const;
     QVector<EducationalWork *> educationWork(int planId);

@@ -128,20 +128,12 @@ void TeacherPlan::setStaff(const UserPost &newStaff)
     staff = newStaff;
 }
 
-//QMap<int, PlanTime*> TeacherPlan::hours() const
-//{
-//    return m_hours;
-//}
+QString TeacherPlan::comments() const
+{
+    return m_comments;
+}
 
-//void TeacherPlan::setHours(const QMap<int, PlanTime *> &newHours)
-//{
-//    auto times = m_hours.values();
-//    qDeleteAll(times);
-//    m_hours.clear();
-//    m_hours = newHours;
-//}
-
-//void TeacherPlan::addHour(int orderPlace, PlanTime *time)
-//{
-//    m_hours.insert(orderPlace, time);
-//}
+void TeacherPlan::setComments(const QString &newComments)
+{
+    m_comments = newComments;
+}

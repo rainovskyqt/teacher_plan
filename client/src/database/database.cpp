@@ -534,7 +534,7 @@ int Database::saveGenericWork(TeacherWork *work)
 TeacherPlan * Database::requestPlan(UserPost post, int yearId)
 {
     QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
-                          "P.protocol_date, S.user_id, S.department_id "
+                          "P.protocol_date, S.user_id, S.department_id, P.comments "
                           "FROM teacher_plan P "
                           "INNER JOIN staff S ON S.id = P.staff_id "
                           "WHERE staff_id = :staff_id AND year_id = :year_id";
@@ -557,6 +557,7 @@ TeacherPlan * Database::requestPlan(UserPost post, int yearId)
         plan->setRate(query->value("rate").toDouble());
         plan->setProtocolNumber(query->value("protocol_number").toString());
         plan->setProtocolDate(query->value("protocol_date").toDate());
+        plan->setComments(query->value("comments").toString());
     }
 
     return plan;
@@ -570,6 +571,7 @@ int Database::updateTeacherPlan(TeacherPlan *plan)
     vals.insert(":year_id", plan->yearId());
     vals.insert(":status_id", plan->statusId());
     vals.insert(":rate", plan->rate());
+    vals.insert(":comments", plan->comments());
 
     QString queryString;
     if(plan->baseId()){
@@ -577,14 +579,35 @@ int Database::updateTeacherPlan(TeacherPlan *plan)
         delete executeQuery(queryString, vals);
         return plan->baseId();
     } else {
-        queryString = "INSERT INTO teacher_plan(staff_id, year_id, status_id, rate) "
-                      "VALUES(:staff_id, :year_id, :status_id, :rate) ";
+        queryString = "INSERT INTO teacher_plan(staff_id, year_id, status_id, rate, comments) "
+                      "VALUES(:staff_id, :year_id, :status_id, :rate, :comments) ";
         auto query = executeQuery(queryString, vals);
         query->next();
         int id = query->lastInsertId().toInt();
         delete query;
         return id;
     }
+}
+
+QString Database::getTeacherPlanComments(int planId)
+{
+    Values vals;
+    vals.insert(":base_id", planId);
+    QString queryString = "SELECT comments FROM teacher_plan WHERE id = :base_id";
+    auto query = executeQuery(queryString, vals);
+    QString comments;
+    if(query->next())
+        comments = query->value("comments").toString();
+    return comments;
+}
+
+void Database::updateTeacherPlanComments(int planId, const QString &comments)
+{
+    Values vals;
+    vals.insert(":base_id", planId);
+    vals.insert(":comments", comments);
+    QString queryString = "UPDATE teacher_plan SET comments = :comments WHERE id = :base_id";
+    delete executeQuery(queryString, vals);
 }
 
 

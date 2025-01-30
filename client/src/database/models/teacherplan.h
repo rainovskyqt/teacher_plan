@@ -85,6 +85,9 @@ public:
     UserPost getStaff() const;
     void setStaff(const UserPost &newStaff);
 
+    QString comments() const;
+    void setComments(const QString &newComments);
+
 private:
     bool m_changed;
     int m_baseId;
@@ -97,6 +100,7 @@ private:
     int m_approveUserId;
     QDate m_approveDate;
     QVector<EducationalWork*> m_educationWork;
+    QString m_comments;
 
     // User m_departmentBoss;
 };

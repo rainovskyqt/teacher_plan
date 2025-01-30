@@ -15,7 +15,6 @@ void CustomHeader::paintSection(QPainter *painter, const QRect &rect, int logica
     painter->save();
 
     QFont font = painter->font();
-    //    font.setBold(true);
     painter->setFont(font);
 
     QString text = model()->headerData(logicalIndex, orientation(), Qt::DisplayRole).toString();
@@ -44,7 +43,8 @@ QSize CustomHeader::sizeHint() const {
 
 EducationalWorkComplite::EducationalWorkComplite(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::EducationalWorkComplite)
+    ui(new Ui::EducationalWorkComplite),
+    m_planId{0}
 {
     ui->setupUi(this);
     setHeader();
@@ -215,8 +215,6 @@ void EducationalWorkComplite::setRowCount(int row)
     }
     auto item = ui->tw_hours->item(row, TOTAL_COLUMN);
     if(item != nullptr)
-        // item->setData(Plane, countPlane);
-        // item->setData(Factical, countFact);
         item->setText((countPlane || countFact) ? QString("%1 / %2").arg(countPlane).arg(countFact) : "");
 }
 
@@ -282,6 +280,11 @@ void EducationalWorkComplite::checkTotalTime()
     }
 }
 
+void EducationalWorkComplite::setComments()
+{
+    ui->text_comments->setPlainText(Database::get()->getTeacherPlanComments(m_planId));
+}
+
 void EducationalWorkComplite::hoursChanged(int row, int column)
 {
     if(column != TOTAL_COLUMN)
@@ -289,5 +292,21 @@ void EducationalWorkComplite::hoursChanged(int row, int column)
 
     setRowCount(row);
     checkTotalTime();
+}
+
+int EducationalWorkComplite::planId() const
+{
+    return m_planId;
+}
+
+void EducationalWorkComplite::setPlanId(int newPlanId)
+{
+    m_planId = newPlanId;
+    setComments();
+}
+
+void EducationalWorkComplite::on_text_comments_textChanged()
+{
+    Database::get()->updateTeacherPlanComments(m_planId, ui->text_comments->toPlainText());
 }
 

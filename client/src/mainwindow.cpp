@@ -72,6 +72,7 @@ void MainWindow::setPlanData(TeacherPlan *plan)
         ui->tab_sport->setPlanData(plan);
         ui->tab_other->setPlanData(plan);
         ui->stackedWidget->setCurrentIndex(TotalTime);
+        ui->tab_educationFactical->setPlanId(plan->baseId());
     }
 }
 

@@ -32,6 +32,9 @@ public:
     explicit EducationalWorkComplite(QWidget *parent = nullptr);
     ~EducationalWorkComplite();
 
+    int planId() const;
+    void setPlanId(int newPlanId);
+
 public slots:
     void setYearHours(int hours);
     void clearHours();
@@ -42,6 +45,8 @@ public slots:
 private slots:
     void hoursChanged(int row, int column);
 
+    void on_text_comments_textChanged();
+
 private:
     Ui::EducationalWorkComplite *ui;
 
@@ -49,6 +54,8 @@ private:
         Plane = Qt::UserRole +1,
         Factical
     };
+
+    int m_planId;
 
     void setHeader();
     void setColumns();
@@ -62,7 +69,7 @@ private:
     void setColunmCount(int column);
     void setYearCount();
     void checkTotalTime();
-
+    void setComments();
 };
 
 #endif // EDUCATIONALWORKCOMPLITE_H
