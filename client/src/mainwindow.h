@@ -25,8 +25,8 @@ public:
 private slots:
     void setPlanData(TeacherPlan *plan);
     void on_btn_create_clicked();
-
     void on_a_exit_triggered();
+    void on_action_print_triggered();
 
 private:
     Ui::MainWindow *ui;

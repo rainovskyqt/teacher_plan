@@ -8,6 +8,8 @@
 
 #include <updatecomments/updatecomments.h>
 
+#include <print/printform.h>
+
 MainWindow::MainWindow(User *user, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -102,5 +104,12 @@ void MainWindow::on_btn_create_clicked()
 void MainWindow::on_a_exit_triggered()
 {
     qApp->exit();
+}
+
+
+void MainWindow::on_action_print_triggered()
+{
+    PrintForm *pf = new PrintForm(m_currentPlan, ui->w_header->user(), this);
+    pf->exec();
 }
 

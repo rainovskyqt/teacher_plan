@@ -1,4 +1,4 @@
-QT       += core gui sql network
+QT       += core gui sql network printsupport
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 
@@ -41,6 +41,10 @@ SOURCES += \
     src/misc/inplacefilter.cpp \
     src/misc/month.cpp \
     src/misc/wheelblocker.cpp \
+    src/print/pagetitle.cpp \
+    src/print/printdata.cpp \
+    src/print/printform.cpp \
+    src/print/printpage.cpp \
     src/settings.cpp \
     src/header/header.cpp \
     src/main.cpp \
@@ -83,6 +87,10 @@ HEADERS += \
     src/misc/inplacefilter.hpp \
     src/misc/month.h \
     src/misc/wheelblocker.hpp \
+    src/print/pagetitle.h \
+    src/print/printdata.h \
+    src/print/printform.h \
+    src/print/printpage.h \
     src/settings.h \
     src/header/header.h \
     src/mainwindow.h \
@@ -109,6 +117,8 @@ FORMS += \
     src/login/userform.ui \
     src/header/header.ui \
     src/mainwindow.ui \
+    src/print/printform.ui \
+    src/print/printpage.ui \
     src/totaltime/formtotaltime.ui \
     src/updatecomments/updatecommentsrow.ui \
     src/updatecomments/updatecomments.ui
