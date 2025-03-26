@@ -12,6 +12,7 @@ class MainWindow;
 QT_END_NAMESPACE
 
 class User;
+class PrintTotalData;
 
 class MainWindow : public QMainWindow
 {
@@ -27,6 +28,8 @@ private slots:
     void on_btn_create_clicked();
     void on_a_exit_triggered();
     void on_action_print_triggered();
+
+    void setTotalTime(PrintTotalData *total);
 
 private:
     Ui::MainWindow *ui;

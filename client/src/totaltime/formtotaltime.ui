@@ -92,7 +92,7 @@
       </font>
      </property>
      <property name="text">
-      <string>РАСПРЕДЕЛЕНИЕ ГОДОВОГО ОБЪЕМА ВРЕМЕНИ НА СОНОВНЫЕ ВИДЫ РАБОТ</string>
+      <string>РАСПРЕДЕЛЕНИЕ ГОДОВОГО ОБЪЕМА ВРЕМЕНИ НА ОСНОВНЫЕ ВИДЫ РАБОТ</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

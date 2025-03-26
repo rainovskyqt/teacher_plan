@@ -2,7 +2,8 @@
 #define PAGETITLE_H
 
 #include "printpage.h"
-#include "printdata.h"
+
+class PrintTitleData;
 
 class PageTitle : public PrintPage
 {
@@ -23,7 +24,7 @@ private:
     QRect m_teacherName;
     QRect m_teacherPost;
 
-    PrintTitleData* m_titleData;
+    PrintTitleData* m_printData;
 
 protected:
     void setRects() override;

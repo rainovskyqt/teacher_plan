@@ -6,6 +6,7 @@
 #include <database/models/teacherplan.h>
 
 class QPrinter;
+class PrintTotalData;
 
 namespace Ui {
 class PrintForm;
@@ -19,13 +20,15 @@ public:
     explicit PrintForm(TeacherPlan *plan, User *user, QWidget *parent = nullptr);
     ~PrintForm();
 
+signals:
+    void getTotalTime(PrintTotalData *d);
+
 private slots:
     void print();
 
     void on_btn_print_clicked();
     void on_btn_title_clicked();
     void on_btn_total_clicked();
-
     void on_btn_cancel_clicked();
 
 private:

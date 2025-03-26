@@ -22,6 +22,7 @@ class FormTotalTime : public QWidget
 public:
     explicit FormTotalTime(QWidget *parent = nullptr);
     ~FormTotalTime();
+    int getTime(WorkType type, PlanTime::Semester semester);
 
 public slots:
     void setPlanData(TeacherPlan *plan);
@@ -42,6 +43,8 @@ private:
 
     QButtonGroup *m_rateGroup;
     QMap<QPair<QSpinBox*,QSpinBox*>, QSpinBox*> m_hours;
+
+    QString getTimeName(WorkType type, PlanTime::Semester semester);
 
     void setRate(double rate);
     void createConnections();

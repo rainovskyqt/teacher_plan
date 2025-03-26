@@ -21,6 +21,14 @@ FormTotalTime::~FormTotalTime()
     delete ui;
 }
 
+int FormTotalTime::getTime(WorkType type, PlanTime::Semester semester)
+{
+    QString name = getTimeName(type, semester);
+
+    auto time = this->findChild<QSpinBox*>(name);
+    return time->value();
+}
+
 void FormTotalTime::setPlanData(TeacherPlan *plan)
 {
     setRate(plan->rate());
@@ -35,36 +43,9 @@ void FormTotalTime::clearHours()
 
 void FormTotalTime::setPlanTime(WorkType type, PlanTime::Semester semester, int val)
 {
-    QString name = QString();
+    QString name = getTimeName(type, semester);
 
-    switch (type) {
-    case WorkType::Educational:
-        name = "sb_edu";
-        break;
-    case WorkType::MethodicWork:
-        name = "sb_metod";
-        break;
-    case WorkType::ResearchingWork:
-        name = "sb_reseach";
-        break;
-    case WorkType::SportWork:
-        name = "sb_sport";
-        break;
-    case WorkType::OtherWork:
-        name = "sb_other";
-        break;
-    }
-
-    switch (semester) {
-    case PlanTime::FirstSemester:
-        name += "FirstSemester";
-        break;
-    case PlanTime::SecondSemestr:
-        name += "SecondSemester";
-        break;
-    }
-
-    auto time = this->findChild<QSpinBox*>(name);;
+    auto time = this->findChild<QSpinBox*>(name);
     if(time)
         time->setValue(val);
 }
@@ -221,5 +202,39 @@ void FormTotalTime::countYearTime()
     }else if(name.contains("sb_total")){
         ui->sb_totalYear->setValue(ui->sb_totalFirstSemester->value() + ui->sb_totalSecondSemester->value());
     }
+}
+
+QString FormTotalTime::getTimeName(WorkType type, PlanTime::Semester semester)
+{
+    QString name = QString();
+
+    switch (type) {
+    case WorkType::Educational:
+        name = "sb_edu";
+        break;
+    case WorkType::MethodicWork:
+        name = "sb_metod";
+        break;
+    case WorkType::ResearchingWork:
+        name = "sb_reseach";
+        break;
+    case WorkType::SportWork:
+        name = "sb_sport";
+        break;
+    case WorkType::OtherWork:
+        name = "sb_other";
+        break;
+    }
+
+    switch (semester) {
+    case PlanTime::FirstSemester:
+        name += "FirstSemester";
+        break;
+    case PlanTime::SecondSemestr:
+        name += "SecondSemester";
+        break;
+    }
+
+    return name;
 }
 

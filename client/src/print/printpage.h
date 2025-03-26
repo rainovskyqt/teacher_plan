@@ -1,7 +1,7 @@
 #ifndef PRINTPAGE_H
 #define PRINTPAGE_H
 
-#include "printdata.h"
+#include "datafiles/printdata.h"
 
 #include <QWidget>
 
@@ -32,6 +32,9 @@ protected:
     const int m_coef;
     const int m_wigth;
     const int m_height;
+    const int m_leftBord;
+    const int m_rigthBord;
+
     PrintData m_data;
 
     QFont m_fontMain;
@@ -42,6 +45,7 @@ protected:
     virtual void setRects() = 0;
 
     int point(int absPoint);
+    void drawCell(QPainter *p, QRect r, int flag, QString text);
 };
 
 #endif // PRINTPAGE_H

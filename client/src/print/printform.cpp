@@ -1,10 +1,14 @@
 #include "pagetitle.h"
+#include "pagetotal.h"
 #include "printform.h"
 #include "ui_printform.h"
 
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QPainter>
+
+#include <print/datafiles/printtitledata.h>
+#include <print/datafiles/printtotaldata.h>
 
 #define PAGE_WIGTH 210
 #define PAGE_HEIGTH 270
@@ -87,7 +91,6 @@ void PrintForm::on_btn_title_clicked()
     d->setStudyRector("А.М. Безнебеева");
     d->setStartYear(2024);
     d->setEndYear(2025);
-    // QString h = m_plan->getStaff().depName;
     d->setOffice(m_plan->getStaff().depName);
     d->setFio(QString("%1 %2 %3").arg(m_user->userData()->surname(), m_user->userData()->name(), m_user->userData()->middle_name()));
     d->setPost(m_plan->getStaff().postName);
@@ -103,6 +106,16 @@ void PrintForm::on_btn_title_clicked()
 void PrintForm::on_btn_total_clicked()
 {
     clearLayout(ui->vl_printData);
+
+    PrintTotalData *d = new PrintTotalData(this);
+    d->setRate(QString::number(m_plan->rate()));
+    emit getTotalTime(d);
+
+
+    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    w->setData(d);
+    w->init();
+    ui->vl_printData->addWidget(w);
 }
 
 

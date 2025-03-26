@@ -41,8 +41,11 @@ SOURCES += \
     src/misc/inplacefilter.cpp \
     src/misc/month.cpp \
     src/misc/wheelblocker.cpp \
+    src/print/datafiles/printdata.cpp \
+    src/print/datafiles/printtitledata.cpp \
+    src/print/datafiles/printtotaldata.cpp \
     src/print/pagetitle.cpp \
-    src/print/printdata.cpp \
+    src/print/pagetotal.cpp \
     src/print/printform.cpp \
     src/print/printpage.cpp \
     src/settings.cpp \
@@ -87,8 +90,11 @@ HEADERS += \
     src/misc/inplacefilter.hpp \
     src/misc/month.h \
     src/misc/wheelblocker.hpp \
+    src/print/datafiles/printdata.h \
+    src/print/datafiles/printtitledata.h \
+    src/print/datafiles/printtotaldata.h \
     src/print/pagetitle.h \
-    src/print/printdata.h \
+    src/print/pagetotal.h \
     src/print/printform.h \
     src/print/printpage.h \
     src/settings.h \

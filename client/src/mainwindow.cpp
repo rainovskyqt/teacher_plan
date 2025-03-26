@@ -10,6 +10,8 @@
 
 #include <print/printform.h>
 
+#include <print/datafiles/printtotaldata.h>
+
 MainWindow::MainWindow(User *user, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -110,6 +112,22 @@ void MainWindow::on_a_exit_triggered()
 void MainWindow::on_action_print_triggered()
 {
     PrintForm *pf = new PrintForm(m_currentPlan, ui->w_header->user(), this);
+
+    connect(pf, &PrintForm::getTotalTime, this, &MainWindow::setTotalTime);
+
     pf->exec();
 }
 
+void MainWindow::setTotalTime(PrintTotalData *total)
+{
+    using W = WorkType;
+    using S = PlanTime::Semester;
+
+    auto w = ui->tab_totalTime;
+
+    for(int type = (int)W::Educational; type <= (int)W::OtherWork; ++type){
+        auto t = static_cast<W>(type);
+        total->setTime(t, S::FirstSemester, w->getTime(t, S::FirstSemester));
+        total->setTime(t, S::SecondSemestr, w->getTime(t, S::SecondSemestr));
+    }
+}

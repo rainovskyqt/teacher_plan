@@ -9,6 +9,8 @@ PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *pare
     , m_coef(coefficient)
     , m_wigth(point(absWigth))
     , m_height(point(absHeight))
+    , m_leftBord(point(10))
+    , m_rigthBord(m_wigth - point(10))
 {
     ui->setupUi(this);
 }
@@ -52,4 +54,10 @@ void PrintPage::setFonts()
 int PrintPage::point(int absPoint)
 {
     return absPoint * m_coef;
+}
+
+void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text)
+{
+    p->drawRect(r);
+    p->drawText(r, flag, text);
 }
