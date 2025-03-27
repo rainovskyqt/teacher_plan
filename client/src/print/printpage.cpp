@@ -3,14 +3,17 @@
 
 #include <QPainter>
 
-PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent)
+PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent, int semester)
     : QWidget(parent)
     , ui(new Ui::PrintPage)
     , m_coef(coefficient)
     , m_wigth(point(absWigth))
     , m_height(point(absHeight))
     , m_leftBord(point(10))
-    , m_rigthBord(m_wigth - point(10))
+    , m_rigthBord(m_wigth - m_leftBord - point(10))
+    , m_topBord(point(10))
+    , m_bottomBord(m_height - point(10))
+    , m_semester(semester)
 {
     ui->setupUi(this);
 }
@@ -36,8 +39,8 @@ void PrintPage::paintEvent(QPaintEvent *e)
 
 void PrintPage::init()
 {
-    setRects();
     setFonts();
+    setRects();
 }
 
 void PrintPage::setFonts()
@@ -56,8 +59,21 @@ int PrintPage::point(int absPoint)
     return absPoint * m_coef;
 }
 
-void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text)
+void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text, double modification)
 {
+    auto font = p->font();
+    auto newFont = p->font();
+
+    newFont.setPointSize(font.pointSize() * modification);
+    p->setFont(newFont);
+
     p->drawRect(r);
     p->drawText(r, flag, text);
+
+    p->setFont(font);
+}
+
+double PrintPage::singleRow()
+{
+    return m_fontTitle.pointSize() * 1.5;
 }

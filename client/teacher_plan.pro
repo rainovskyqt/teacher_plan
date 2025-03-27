@@ -44,6 +44,8 @@ SOURCES += \
     src/print/datafiles/printdata.cpp \
     src/print/datafiles/printtitledata.cpp \
     src/print/datafiles/printtotaldata.cpp \
+    src/print/pageanalysis.cpp \
+    src/print/pagecomplete.cpp \
     src/print/pagetitle.cpp \
     src/print/pagetotal.cpp \
     src/print/printform.cpp \
@@ -93,6 +95,8 @@ HEADERS += \
     src/print/datafiles/printdata.h \
     src/print/datafiles/printtitledata.h \
     src/print/datafiles/printtotaldata.h \
+    src/print/pageanalysis.h \
+    src/print/pagecomplete.h \
     src/print/pagetitle.h \
     src/print/pagetotal.h \
     src/print/printform.h \

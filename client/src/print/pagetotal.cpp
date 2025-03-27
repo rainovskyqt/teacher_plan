@@ -90,11 +90,11 @@ int PageTotal::getTotalTime(WorkType type)
 
 void PageTotal::setRects()
 {
-    m_rate = QRect(m_leftBord, point(20), m_rigthBord, m_fontMain.pointSize() * 2);
-    m_title = QRect(m_leftBord, m_rate.bottom() + point(40), m_rigthBord, m_fontMain.pointSize() * 2);
+    m_rate = QRect(m_leftBord, point(20), m_rigthBord, singleRow());
+    m_title = QRect(m_leftBord, m_rate.bottom() + point(40), m_rigthBord, singleRow());
 
-    m_numberTitle = QRect(m_leftBord, m_title.bottom() + point(5), point(10), m_fontMain.pointSize() * 8);
-    m_number_I = QRect(m_numberTitle.left(), m_numberTitle.bottom(), m_numberTitle.width(), m_fontMain.pointSize() * 4);
+    m_numberTitle = QRect(m_leftBord, m_title.bottom() + point(5), point(10), singleRow() * 4);
+    m_number_I = QRect(m_numberTitle.left(), m_numberTitle.bottom(), m_numberTitle.width(), singleRow() * 2);
     m_number_II = QRect(m_numberTitle.left(), m_number_I.bottom(), m_numberTitle.width(), m_number_I.height());
     m_number_III = QRect(m_numberTitle.left(), m_number_II.bottom(), m_numberTitle.width(), m_number_I.height());
     m_number_IV = QRect(m_numberTitle.left(), m_number_III.bottom(), m_numberTitle.width(), m_number_I.height());
@@ -134,6 +134,6 @@ void PageTotal::setRects()
     m_workOther_year = QRect(m_yearTitle.left(), m_workSport_year.bottom(), m_yearTitle.width(), m_number_V.height());
     m_workTotal_year = QRect(m_yearTitle.left(), m_workOther_year.bottom(), m_yearTitle.width(), m_workTotal.height());
 
-    m_protocolTitle = QRect(m_leftBord, m_workTotal.bottom() + point(20), m_rigthBord, m_fontMain.pointSize() * 2);
-    m_protocolNumber = QRect(m_leftBord, m_protocolTitle.bottom() + point(3), m_rigthBord, m_fontMain.pointSize() * 2);
+    m_protocolTitle = QRect(m_leftBord, m_workTotal.bottom() + point(20), m_rigthBord, singleRow());
+    m_protocolNumber = QRect(m_leftBord, m_protocolTitle.bottom() + point(3), m_rigthBord, singleRow());
 }

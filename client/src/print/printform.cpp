@@ -1,9 +1,10 @@
+#include "pageanalysis.h"
+#include "pagecomplete.h"
 #include "pagetitle.h"
 #include "pagetotal.h"
 #include "printform.h"
 #include "ui_printform.h"
 
-#include <QPrinter>
 #include <QPrintDialog>
 #include <QPainter>
 
@@ -21,6 +22,7 @@ PrintForm::PrintForm(TeacherPlan *plan, User *user, QWidget *parent)
     ui->setupUi(this);
     m_plan = plan;
     m_user = user;
+    ui->w_semester->setVisible(false);
 }
 
 PrintForm::~PrintForm()
@@ -30,7 +32,8 @@ PrintForm::~PrintForm()
 
 void PrintForm::print()
 {
-    QPrinter *printer = setPrinter();
+
+    QPrinter *printer = setPrinter(getOrientation());
     QPainter painter;
 
     // if(!printer)
@@ -48,7 +51,7 @@ void PrintForm::print()
     delete printer;
 }
 
-QPrinter *PrintForm::setPrinter()
+QPrinter *PrintForm::setPrinter(QPrinter::Orientation o)
 {
     QPrinter *printer = new QPrinter();
     QPrintDialog dialog(printer, this);
@@ -58,7 +61,7 @@ QPrinter *PrintForm::setPrinter()
 
     printer->setPageSize(QPageSize(QPageSize::A4));
     printer->setFullPage(true);
-    printer->setOrientation(QPrinter::Portrait);
+    printer->setOrientation(o);
     printer->setMargins({0,0,0,0});
     printer->setResolution(100);
 
@@ -77,6 +80,15 @@ void PrintForm::clearLayout(QLayout *layout) {
     }
 }
 
+void PrintForm::setSemester()
+{
+    auto currentWidget = ui->vl_printData->itemAt(0)->widget();
+    if(qobject_cast<PageAnalysis*>(currentWidget)){
+        on_btn_analisis_clicked();
+    }
+
+}
+
 void PrintForm::on_btn_print_clicked()
 {
     print();
@@ -85,6 +97,7 @@ void PrintForm::on_btn_print_clicked()
 
 void PrintForm::on_btn_title_clicked()
 {
+    ui->w_semester->setVisible(false);
     clearLayout(ui->vl_printData);
 
     PrintTitleData *d = new PrintTitleData(this);
@@ -105,6 +118,7 @@ void PrintForm::on_btn_title_clicked()
 
 void PrintForm::on_btn_total_clicked()
 {
+    ui->w_semester->setVisible(false);
     clearLayout(ui->vl_printData);
 
     PrintTotalData *d = new PrintTotalData(this);
@@ -122,5 +136,52 @@ void PrintForm::on_btn_total_clicked()
 void PrintForm::on_btn_cancel_clicked()
 {
     this->close();
+}
+
+
+void PrintForm::on_btn_analisis_clicked()
+{
+    ui->w_semester->setVisible(true);
+    clearLayout(ui->vl_printData);
+    int semester = ui->rb_first->isChecked() ? 1 : 2;
+
+    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, semester, this);
+    w->init();
+    ui->vl_printData->addWidget(w);
+}
+
+
+void PrintForm::on_rb_first_clicked()
+{
+    setSemester();
+}
+
+
+void PrintForm::on_rb_second_clicked()
+{
+    setSemester();
+}
+
+QPrinter::Orientation PrintForm::getOrientation()
+{
+    QPrinter::Orientation o = QPrinter::Portrait;
+
+    auto currentWidget = ui->vl_printData->itemAt(0)->widget();
+    if(qobject_cast<PageComplete*>(currentWidget)){
+                o = QPrinter::Landscape;
+    }
+
+    return o;
+}
+
+
+void PrintForm::on_btn_complete_clicked()
+{
+    ui->w_semester->setVisible(false);
+    clearLayout(ui->vl_printData);
+
+    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    w->init();
+    ui->vl_printData->addWidget(w);
 }
 

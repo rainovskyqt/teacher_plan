@@ -41,12 +41,12 @@ void PageTitle::paintData(QPainter &painter)
 
 void PageTitle::setRects()
 {
-    m_header = QRect(m_leftBord, point(10), m_rigthBord, m_fontMain.pointSize() * 9);
-    m_approved = QRect(point(130), m_header.bottom() + point(20), m_wigth, m_fontMain.pointSize() * 3);
-    m_approvedUser = QRect(m_approved.left(), m_approved.bottom(), m_wigth, m_fontMain.pointSize() * 9);
-    m_title = QRect(m_leftBord, m_approvedUser.bottom() + point(25), m_rigthBord, m_fontTitle.pointSize() * 2);
-    m_year = QRect(m_title.left(), m_title.bottom() + point(5), m_title.right(), m_fontMain.pointSize() * 2);
-    m_office = QRect(m_leftBord, m_year.bottom() + point(15), m_rigthBord, m_fontMain.pointSize() * 2);
-    m_teacherName = QRect(m_leftBord, m_office.bottom() + point(15), m_rigthBord, m_fontMain.pointSize() * 2);
-    m_teacherPost = QRect(m_leftBord, m_teacherName.bottom() + point(15), m_rigthBord, m_fontMain.pointSize() * 2);
+    m_header = QRect(m_leftBord, point(10), m_rigthBord, singleRow() * 4.5);
+    m_approved = QRect(point(130), m_header.bottom() + point(20), m_wigth, singleRow() * 1.5);
+    m_approvedUser = QRect(m_approved.left(), m_approved.bottom(), m_wigth, singleRow() * 4.5);
+    m_title = QRect(m_leftBord, m_approvedUser.bottom() + point(25), m_rigthBord, singleRow());
+    m_year = QRect(m_title.left(), m_title.bottom() + point(5), m_title.right(), singleRow());
+    m_office = QRect(m_leftBord, m_year.bottom() + point(15), m_rigthBord, singleRow());
+    m_teacherName = QRect(m_leftBord, m_office.bottom() + point(15), m_rigthBord, singleRow());
+    m_teacherPost = QRect(m_leftBord, m_teacherName.bottom() + point(15), m_rigthBord, singleRow());
 }

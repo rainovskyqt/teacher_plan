@@ -16,7 +16,7 @@ class PrintPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent = nullptr);
+    explicit PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent = nullptr, int semester = 0);
     ~PrintPage();
 
     virtual void print(QPrinter *printer);
@@ -34,6 +34,9 @@ protected:
     const int m_height;
     const int m_leftBord;
     const int m_rigthBord;
+    const int m_topBord;
+    const int m_bottomBord;
+    const int m_semester;
 
     PrintData m_data;
 
@@ -45,7 +48,8 @@ protected:
     virtual void setRects() = 0;
 
     int point(int absPoint);
-    void drawCell(QPainter *p, QRect r, int flag, QString text);
+    void drawCell(QPainter *p, QRect r, int flag = 0, QString text = "", double modification = 1.0);
+    double singleRow();
 };
 
 #endif // PRINTPAGE_H

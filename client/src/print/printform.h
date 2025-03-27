@@ -2,10 +2,10 @@
 #define PRINTFORM_H
 
 #include <QDialog>
+#include <QPrinter>
 
 #include <database/models/teacherplan.h>
 
-class QPrinter;
 class PrintTotalData;
 
 namespace Ui {
@@ -30,14 +30,22 @@ private slots:
     void on_btn_title_clicked();
     void on_btn_total_clicked();
     void on_btn_cancel_clicked();
+    void on_btn_analisis_clicked();
+    void on_rb_first_clicked();
+    void on_rb_second_clicked();
+
+    void on_btn_complete_clicked();
 
 private:
     Ui::PrintForm *ui;
 
-    QPrinter* setPrinter();
-    void clearLayout(QLayout *layout);
     TeacherPlan *m_plan;
     User *m_user;
+
+    QPrinter::Orientation getOrientation();
+    QPrinter* setPrinter(QPrinter::Orientation o);
+    void clearLayout(QLayout *layout);
+    void setSemester();
 };
 
 #endif // PRINTFORM_H
