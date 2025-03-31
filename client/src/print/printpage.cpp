@@ -2,6 +2,7 @@
 #include "ui_printpage.h"
 
 #include <QPainter>
+#include <QPrinter>
 
 PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent, int semester)
     : QWidget(parent)
@@ -25,7 +26,16 @@ PrintPage::~PrintPage()
 
 void PrintPage::print(QPrinter *printer)
 {
+    QPainter p;
 
+    int phys_w = printer->width();
+    int phys_h = printer->height();
+
+    p.begin(printer);
+    p.setWindow(0,0, m_wigth, m_height);
+    p.setViewport(0, 0, phys_w, phys_h);
+    paintData(p);
+    p.end();
 }
 
 void PrintPage::paintEvent(QPaintEvent *e)

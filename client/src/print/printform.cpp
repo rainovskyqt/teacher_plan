@@ -32,21 +32,13 @@ PrintForm::~PrintForm()
 
 void PrintForm::print()
 {
-
     QPrinter *printer = setPrinter(getOrientation());
-    QPainter painter;
 
-    // if(!printer)
-    //     return;
+    if(!printer)
+        return;
 
-    // int phys_w = printer->width();
-    // int phys_h = printer->height();
-
-    // painter.begin(printer);
-    // painter.setWindow(0,0, m_pageWigth, m_pageHeigth);
-    // painter.setViewport(0, 0, phys_w, phys_h);
-
-    // painter.end();
+    PrintPage *p = qobject_cast<PrintPage*>(ui->vl_printData->itemAt(0)->widget());
+    p->print(printer);
 
     delete printer;
 }
