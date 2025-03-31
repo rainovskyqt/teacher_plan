@@ -41,8 +41,8 @@ void PageTitle::paintData(QPainter &painter)
 
 void PageTitle::setRects()
 {
-    m_header = QRect(m_leftBord, point(10), m_rigthBord, singleRow() * 4.5);
-    m_approved = QRect(point(130), m_header.bottom() + point(20), m_wigth, singleRow() * 1.5);
+    m_header = QRect(m_leftBord, point(15), m_rigthBord, singleRow() * 4.5);
+    m_approved = QRect(point(110), m_header.bottom() + point(20), m_wigth, singleRow() * 1.5);
     m_approvedUser = QRect(m_approved.left(), m_approved.bottom(), m_wigth, singleRow() * 4.5);
     m_title = QRect(m_leftBord, m_approvedUser.bottom() + point(25), m_rigthBord, singleRow());
     m_year = QRect(m_title.left(), m_title.bottom() + point(5), m_title.right(), singleRow());

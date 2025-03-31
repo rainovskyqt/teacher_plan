@@ -1,13 +1,13 @@
-#ifndef PRINTDATA_H
-#define PRINTDATA_H
+#ifndef PRINTTITLEDATA_H
+#define PRINTTITLEDATA_H
 
-#include <QObject>
+#include "printdata.h"
 
-class PrintData : public QObject
+class PrintTitleData : public PrintData
 {
     Q_OBJECT
 public:
-    explicit PrintData(QObject *parent = nullptr);
+    explicit PrintTitleData(QObject *parent = nullptr);
 
     QString studyRector() const;
     void setStudyRector(const QString &newStudyRector);
@@ -15,18 +15,6 @@ public:
     void setStartYear(int newStartYear);
     int endYear() const;
     void setEndYear(int newEndYear);
-
-private:
-    QString m_studyRector;
-    int m_startYear;
-    int m_endYear;
-};
-
-class PrintTitleData : public PrintData
-{
-    Q_OBJECT
-public:
-    explicit PrintTitleData(QObject *parent = nullptr);
     QString office() const;
     void setOffice(const QString &newOffice);
     QString fio() const;
@@ -35,10 +23,14 @@ public:
     void setPost(const QString &newPost);
 
 private:
+    QString m_studyRector;
+    int m_startYear;
+    int m_endYear;
     QString m_office;
     QString m_fio;
     QString m_post;
 
+
 };
 
-#endif // PRINTDATA_H
+#endif // PRINTTITLEDATA_H

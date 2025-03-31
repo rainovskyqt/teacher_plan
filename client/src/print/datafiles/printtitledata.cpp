@@ -1,42 +1,38 @@
-#include "printdata.h"
-
-PrintData::PrintData(QObject *parent)
-    : QObject{parent}
-{}
-
-QString PrintData::studyRector() const
-{
-    return m_studyRector;
-}
-
-void PrintData::setStudyRector(const QString &newStudyRector)
-{
-    m_studyRector = newStudyRector;
-}
-
-int PrintData::startYear() const
-{
-    return m_startYear;
-}
-
-void PrintData::setStartYear(int newStartYear)
-{
-    m_startYear = newStartYear;
-}
-
-int PrintData::endYear() const
-{
-    return m_endYear;
-}
-
-void PrintData::setEndYear(int newEndYear)
-{
-    m_endYear = newEndYear;
-}
+#include "printtitledata.h"
 
 PrintTitleData::PrintTitleData(QObject *parent)
     : PrintData(parent)
 {
+}
+
+QString PrintTitleData::studyRector() const
+{
+    return m_studyRector;
+}
+
+void PrintTitleData::setStudyRector(const QString &newStudyRector)
+{
+    m_studyRector = newStudyRector;
+}
+
+int PrintTitleData::startYear() const
+{
+    return m_startYear;
+}
+
+void PrintTitleData::setStartYear(int newStartYear)
+{
+    m_startYear = newStartYear;
+}
+
+int PrintTitleData::endYear() const
+{
+    return m_endYear;
+}
+
+void PrintTitleData::setEndYear(int newEndYear)
+{
+    m_endYear = newEndYear;
 }
 
 QString PrintTitleData::office() const
