@@ -32,7 +32,7 @@ void PageAnalysis::paintData(QPainter &painter)
 
     painter.drawText(m_teacherSign, Qt::AlignLeft, QString("Преподаватель ______________________/%1\n\n"
                                                            "\"______\"____________________ 20____г.")
-                                                       .arg("Препод"));
+                                                       .arg("________________"));
 
     painter.drawText(m_cheefTitle, Qt::AlignCenter, QString("Заключение заведующего кафедрой о выполнении нагрузки и качестве работы\n"
                                                             " преподавателя в %1:")
