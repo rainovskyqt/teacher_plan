@@ -59,18 +59,22 @@ int PrintPage::point(int absPoint)
     return absPoint * m_coef;
 }
 
-void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text, double modification)
+void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text, double modification, bool vertical)
 {
-    auto font = p->font();
-    auto newFont = p->font();
+    p->save();
 
-    newFont.setPointSize(font.pointSize() * modification);
-    p->setFont(newFont);
+    p->setFont(QFont(p->font().family(), p->font().pointSize() * modification));
 
     p->drawRect(r);
-    p->drawText(r, flag, text);
 
-    p->setFont(font);
+    if(vertical){
+        p->translate(r.x(), r.y());
+        p->rotate(-90);
+        p->drawText(-r.height(), 0, r.height(), r.width(), flag, text);
+    } else {
+        p->drawText(r, flag, text);
+    }
+    p->restore();
 }
 
 double PrintPage::singleRow()

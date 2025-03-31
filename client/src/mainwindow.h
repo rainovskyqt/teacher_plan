@@ -5,6 +5,8 @@
 
 #include <database/models/teacherplan.h>
 
+#include <print/datafiles/printcomplite.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -30,6 +32,7 @@ private slots:
     void on_action_print_triggered();
 
     void setTotalTime(PrintTotalData *total);
+    void setCompliteTime(PrintComplite *c);
 
 private:
     Ui::MainWindow *ui;

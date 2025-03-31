@@ -30,7 +30,6 @@ MainWindow::MainWindow(User *user, QWidget *parent)
     connect(ui->tab_sport, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
     connect(ui->tab_other, &FormGenerikWork::planValueChanged, ui->tab_totalTime, &FormTotalTime::setPlanTime);
 
-    // connect(ui->tab_educationWork, &FormEducationWork::factValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setFactValue);
     connect(ui->tab_educationWork, &FormEducationWork::monthValueChanged, ui->tab_educationFactical, &EducationalWorkComplite::setMonthValue);
 
     connect(ui->tab_educationWork, &FormEducationWork::clear,
@@ -114,6 +113,7 @@ void MainWindow::on_action_print_triggered()
     PrintForm *pf = new PrintForm(m_currentPlan, ui->w_header->user(), this);
 
     connect(pf, &PrintForm::getTotalTime, this, &MainWindow::setTotalTime);
+    connect(pf, &PrintForm::getCompliteTime, this, &MainWindow::setCompliteTime);
 
     pf->exec();
 }
@@ -130,4 +130,9 @@ void MainWindow::setTotalTime(PrintTotalData *total)
         total->setTime(t, S::FirstSemester, w->getTime(t, S::FirstSemester));
         total->setTime(t, S::SecondSemestr, w->getTime(t, S::SecondSemestr));
     }
+}
+
+void MainWindow::setCompliteTime(PrintComplite *c)
+{
+    ui->tab_educationFactical->setCompliteTime(c);
 }

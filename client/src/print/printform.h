@@ -6,6 +6,8 @@
 
 #include <database/models/teacherplan.h>
 
+#include <print/datafiles/printcomplite.h>
+
 class PrintTotalData;
 
 namespace Ui {
@@ -22,6 +24,7 @@ public:
 
 signals:
     void getTotalTime(PrintTotalData *d);
+    void getCompliteTime(PrintComplite *d);
 
 private slots:
     void print();

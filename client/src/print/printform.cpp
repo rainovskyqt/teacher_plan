@@ -180,7 +180,12 @@ void PrintForm::on_btn_complete_clicked()
     ui->w_semester->setVisible(false);
     clearLayout(ui->vl_printData);
 
+    PrintComplite *pc = new PrintComplite(this);
+    pc->setComments(m_plan->comments());
+    emit getCompliteTime(pc);
+
     PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    w->setData(pc);
     w->init();
     ui->vl_printData->addWidget(w);
 }

@@ -305,6 +305,15 @@ void EducationalWorkComplite::setPlanId(int newPlanId)
     setComments();
 }
 
+void EducationalWorkComplite::setCompliteTime(PrintComplite *c)
+{
+    for(int row = 0; row < ui->tw_hours->rowCount(); ++row){
+        for(int column = 0; column < ui->tw_hours->columnCount(); ++column){
+            c->setValue(row, column, ui->tw_hours->item(row, column)->text());
+        }
+    }
+}
+
 void EducationalWorkComplite::on_text_comments_textChanged()
 {
     Database::get()->updateTeacherPlanComments(m_planId, ui->text_comments->toPlainText());

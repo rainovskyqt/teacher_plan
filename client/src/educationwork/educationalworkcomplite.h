@@ -8,6 +8,8 @@
 
 #include <misc/month.h>
 
+#include <print/datafiles/printcomplite.h>
+
 
 class CustomHeader : public QHeaderView {
 public:
@@ -34,6 +36,8 @@ public:
 
     int planId() const;
     void setPlanId(int newPlanId);
+
+    void setCompliteTime(PrintComplite *c);
 
 public slots:
     void setYearHours(int hours);

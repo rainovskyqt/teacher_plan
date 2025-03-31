@@ -48,7 +48,7 @@ protected:
     virtual void setRects() = 0;
 
     int point(int absPoint);
-    void drawCell(QPainter *p, QRect r, int flag = 0, QString text = "", double modification = 1.0);
+    void drawCell(QPainter *p, QRect r, int flag = 0, QString text = "", double modification = 1.0, bool vertical = false);
     double singleRow();
 };
 

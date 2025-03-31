@@ -3,3 +3,4 @@
 PrintData::PrintData(QObject *parent)
     : QObject{parent}
 {}
+

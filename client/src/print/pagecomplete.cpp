@@ -3,6 +3,7 @@
 #include <QPainter>
 
 #include <database/database.h>
+#include<QMultiMap>
 
 #include <misc/month.h>
 
@@ -13,7 +14,7 @@ PageComplete::PageComplete(int wigth, int height, int coefficient, QWidget *pare
 
 void PageComplete::setData(PrintData *data)
 {
-    Q_UNUSED(data)
+    m_data = qobject_cast<PrintComplite*>(data);
 }
 
 void PageComplete::paintData(QPainter &painter)
@@ -29,11 +30,11 @@ void PageComplete::paintData(QPainter &painter)
     drawCell(&painter, m_startCell);
     drawRowNames(painter);
     drawColumnNames(painter);
+    drawValues(painter);
 
 
     painter.drawText(m_comments, Qt::AlignJustify|Qt::TextWordWrap, QString("Примечание:\n%1")
-                                                        .arg(""));
-
+                                                                          .arg(m_data->comments()));
 }
 
 void PageComplete::drawRowNames(QPainter &painter)
@@ -70,15 +71,30 @@ void PageComplete::drawColumnNames(QPainter &painter)
 
     auto workTypes = Database::get()->getDictionary(Database::WorkForm);
 
-    double columnWidth = (m_tableHeader.width() / (workTypes.count() + 1)) + 1;
+    m_cellWigth = (m_tableHeader.width() / (workTypes.count() + 1)) + 1;
+
 
     for(int column = 0; column < workTypes.count(); ++column){
-        drawCell(&painter, QRect(m_tableHeader.left() + columnWidth * column, m_tableHeader.bottom(), columnWidth, singleRow() * 4),
-                 Qt::AlignCenter|Qt::TextWordWrap, workTypes.at(column).name());
+        drawCell(&painter, QRect(m_tableHeader.left() + m_cellWigth * column, m_tableHeader.bottom(), m_cellWigth, singleRow() * 4),
+                 Qt::AlignCenter|Qt::TextWordWrap, workTypes.at(column).name(), 1.0, true);
     }
 
-    drawCell(&painter, QRect(m_tableHeader.left() + columnWidth * workTypes.count(), m_tableHeader.bottom(), columnWidth - 6, singleRow() * 4),
-             Qt::AlignCenter|Qt::TextWordWrap, "Всего\nчасов");
+    drawCell(&painter, QRect(m_tableHeader.left() + m_cellWigth * workTypes.count(), m_tableHeader.bottom(), m_cellWigth - 6, singleRow() * 4),
+             Qt::AlignCenter|Qt::TextWordWrap, "Всего\nчасов", 1.0, true);
+}
+
+void PageComplete::drawValues(QPainter &painter)
+{
+    auto values = m_data->values();
+
+    for(auto it = values.begin(); it != values.end(); ++it){
+        auto val = it.value();
+        drawCell(&painter, QRect(m_startCell.right() + m_cellWigth * val.first,
+                                 m_startCell.bottom() + m_cellHeigth * it.key(),
+                                 m_cellWigth, m_cellHeigth),
+                 Qt::AlignCenter, it.value().second, 0.9);
+    }
+
 }
 
 void PageComplete::setRects()
@@ -86,6 +102,8 @@ void PageComplete::setRects()
     m_title = QRect(m_leftBord, point(5), m_rigthBord, singleRow());
     m_totalHourses = QRect(m_leftBord, m_title.bottom(), m_rigthBord, singleRow());
     m_startCell = QRect(m_leftBord - point(5), m_totalHourses.bottom(), point(17), singleRow() *5);
-    m_tableHeader = QRect(m_startCell.right(), m_startCell.top(), m_rigthBord - point(5), singleRow());
+    m_tableHeader = QRect(m_startCell.right(), m_startCell.top(), m_rigthBord, singleRow());
     m_comments = QRect(m_leftBord, 0, m_rigthBord, m_bottomBord);
+
+    m_cellHeigth = singleRow();
 }

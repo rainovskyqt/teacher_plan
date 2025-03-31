@@ -3,6 +3,8 @@
 
 #include "printpage.h"
 
+#include <print/datafiles/printcomplite.h>
+
 class PageComplete : public PrintPage
 {
     Q_OBJECT
@@ -18,9 +20,14 @@ private:
     QRect m_startCell;
     QRect m_tableHeader;
     QRect m_comments;
+    int m_cellHeigth;
+    int m_cellWigth;
+
+    PrintComplite *m_data;
 
     void drawRowNames(QPainter &painter);
     void drawColumnNames(QPainter &painter);
+    void drawValues(QPainter &painter);
 
 protected:
     void setRects() override;
