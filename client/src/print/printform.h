@@ -39,6 +39,8 @@ private slots:
 
     void on_btn_complete_clicked();
 
+    void on_btn_workMethodic_clicked();
+
 private:
     Ui::PrintForm *ui;
 

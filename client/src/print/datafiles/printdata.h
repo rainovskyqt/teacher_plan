@@ -10,6 +10,11 @@ class PrintData : public QObject
 public:
     explicit PrintData(QObject *parent = nullptr);
 
+    bool isSecond() const;
+    void setSecondSemester(bool newSecondSemester);
+
+protected:
+    bool m_secondSemester;
 };
 
 #endif // PRINTDATA_H

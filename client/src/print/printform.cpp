@@ -10,6 +10,10 @@
 
 #include <print/datafiles/printtitledata.h>
 #include <print/datafiles/printtotaldata.h>
+#include <print/datafiles/printanalysisdata.h>
+#include <print/datafiles/printgenericwork.h>
+
+#include "genericworks/pagemethodicwork.h"
 
 #define PAGE_WIGTH 210
 #define PAGE_HEIGTH 270
@@ -77,6 +81,8 @@ void PrintForm::setSemester()
     auto currentWidget = ui->vl_printData->itemAt(0)->widget();
     if(qobject_cast<PageAnalysis*>(currentWidget)){
         on_btn_analisis_clicked();
+    } else if(qobject_cast<PageMethodicWork*>(currentWidget)){
+        on_btn_workMethodic_clicked();
     }
 
 }
@@ -135,9 +141,12 @@ void PrintForm::on_btn_analisis_clicked()
 {
     ui->w_semester->setVisible(true);
     clearLayout(ui->vl_printData);
-    int semester = ui->rb_first->isChecked() ? 1 : 2;
 
-    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, semester, this);
+    PrintAnalysisData *ad = new PrintAnalysisData(this);
+    ad->setSecondSemester(ui->rb_second->isChecked());
+
+    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    w->setData(ad);
     w->init();
     ui->vl_printData->addWidget(w);
 }
@@ -178,6 +187,25 @@ void PrintForm::on_btn_complete_clicked()
 
     PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
     w->setData(pc);
+    w->init();
+    ui->vl_printData->addWidget(w);
+}
+
+
+void PrintForm::on_btn_workMethodic_clicked()
+{
+    ui->w_semester->setVisible(true);
+    clearLayout(ui->vl_printData);
+
+    PrintGenericWork *gd = new PrintGenericWork(this);
+    gd->setApprovedPost("Проректор по научно-исследовательской\n"
+                        "работе ФГБОУ ВО \"ВГАФК\"");
+    gd->setApprovedUser("И.А. Фатьянов");
+    gd->setSecondSemester(ui->rb_second->isChecked());
+    // emit getCompliteTime(pc);
+
+    PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
 }

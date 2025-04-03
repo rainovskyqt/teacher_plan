@@ -41,10 +41,14 @@ SOURCES += \
     src/misc/inplacefilter.cpp \
     src/misc/month.cpp \
     src/misc/wheelblocker.cpp \
+    src/print/datafiles/printanalysisdata.cpp \
     src/print/datafiles/printcomplite.cpp \
     src/print/datafiles/printdata.cpp \
+    src/print/datafiles/printgenericwork.cpp \
     src/print/datafiles/printtitledata.cpp \
     src/print/datafiles/printtotaldata.cpp \
+    src/print/genericworks/pagegenericwork.cpp \
+    src/print/genericworks/pagemethodicwork.cpp \
     src/print/pageanalysis.cpp \
     src/print/pagecomplete.cpp \
     src/print/pagetitle.cpp \
@@ -93,10 +97,14 @@ HEADERS += \
     src/misc/inplacefilter.hpp \
     src/misc/month.h \
     src/misc/wheelblocker.hpp \
+    src/print/datafiles/printanalysisdata.h \
     src/print/datafiles/printcomplite.h \
     src/print/datafiles/printdata.h \
+    src/print/datafiles/printgenericwork.h \
     src/print/datafiles/printtitledata.h \
     src/print/datafiles/printtotaldata.h \
+    src/print/genericworks/pagegenericwork.h \
+    src/print/genericworks/pagemethodicwork.h \
     src/print/pageanalysis.h \
     src/print/pagecomplete.h \
     src/print/pagetitle.h \

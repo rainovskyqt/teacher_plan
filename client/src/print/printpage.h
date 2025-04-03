@@ -16,7 +16,7 @@ class PrintPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent = nullptr, int semester = 0);
+    explicit PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent = nullptr);
     ~PrintPage();
 
     virtual void print(QPrinter *printer);
@@ -36,7 +36,6 @@ protected:
     const int m_rigthBord;
     const int m_topBord;
     const int m_bottomBord;
-    const int m_semester;
 
     PrintData m_data;
 

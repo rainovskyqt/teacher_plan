@@ -38,6 +38,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="btn_workMethodic">
+       <property name="text">
+        <string>Уч.-мет. работа</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="btn_analisis">
        <property name="text">
         <string>Анализ</string>

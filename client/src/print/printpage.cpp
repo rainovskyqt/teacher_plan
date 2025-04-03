@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QPrinter>
 
-PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent, int semester)
+PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PrintPage)
     , m_coef(coefficient)
@@ -14,7 +14,6 @@ PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, QWidget *pare
     , m_rigthBord(m_wigth - m_leftBord - point(10))
     , m_topBord(point(10))
     , m_bottomBord(m_height - point(10))
-    , m_semester(semester)
 {
     ui->setupUi(this);
 }

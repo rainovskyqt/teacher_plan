@@ -50,6 +50,8 @@ MainWindow::MainWindow(User *user, QWidget *parent)
 
     checkUpdateComments(user->baseId());
 
+    ui->action_print->setVisible(user->hasAnyRights({UserRights::AllTeacherPlans}));
+
 #ifndef QT_DEBUG
     ui->tabWidget->setCurrentIndex(0);
 #endif
