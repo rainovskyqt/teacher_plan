@@ -6,6 +6,7 @@
 #include <database/models/teacherplan.h>
 
 #include <print/datafiles/printcomplite.h>
+#include <print/datafiles/printgenericdata.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,6 +16,7 @@ QT_END_NAMESPACE
 
 class User;
 class PrintTotalData;
+class PrintGenericData;
 
 class MainWindow : public QMainWindow
 {
@@ -33,6 +35,7 @@ private slots:
 
     void setTotalTime(PrintTotalData *total);
     void setCompliteTime(PrintComplite *c);
+    void setGenericTime(WorkType type, PrintGenericData *c);
 
 private:
     Ui::MainWindow *ui;

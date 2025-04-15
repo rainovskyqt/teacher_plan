@@ -116,6 +116,7 @@ void MainWindow::on_action_print_triggered()
 
     connect(pf, &PrintForm::getTotalTime, this, &MainWindow::setTotalTime);
     connect(pf, &PrintForm::getCompliteTime, this, &MainWindow::setCompliteTime);
+    connect(pf, &PrintForm::getGenericTime, this, &MainWindow::setGenericTime);
 
     pf->exec();
 }
@@ -137,4 +138,16 @@ void MainWindow::setTotalTime(PrintTotalData *total)
 void MainWindow::setCompliteTime(PrintComplite *c)
 {
     ui->tab_educationFactical->setCompliteTime(c);
+}
+
+void MainWindow::setGenericTime(WorkType type, PrintGenericData *c)
+{
+    if(type == WorkType::MethodicWork)
+        ui->tab_metod->setGenericTime(c);
+    else if(type == WorkType::ResearchingWork)
+        ui->tab_research->setGenericTime(c);
+    else if(type == WorkType::SportWork)
+        ui->tab_sport->setGenericTime(c);
+    else if(type == WorkType::OtherWork)
+        ui->tab_other->setGenericTime(c);
 }

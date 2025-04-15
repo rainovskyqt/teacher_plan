@@ -64,6 +64,14 @@ const QHash<int, PrintGenericWork *> PrintGenericData::works() const
     return m_works;
 }
 
+void PrintGenericData::addWork(int position, PrintGenericWork *work)
+{
+    if(auto w = m_works.value(position))
+        w->deleteLater();
+
+    m_works.insert(position, work);
+}
+
 QString PrintGenericData::department() const
 {
     return m_department;
@@ -72,4 +80,14 @@ QString PrintGenericData::department() const
 void PrintGenericData::setDepartment(const QString &newDepartment)
 {
     m_department = newDepartment;
+}
+
+QString PrintGenericData::workName() const
+{
+    return m_workName;
+}
+
+void PrintGenericData::setWorkName(const QString &newWorkName)
+{
+    m_workName = newWorkName;
 }

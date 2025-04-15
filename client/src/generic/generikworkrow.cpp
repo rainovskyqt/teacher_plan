@@ -23,21 +23,36 @@ GenerikWorkRow::~GenerikWorkRow()
     delete ui;
 }
 
-int GenerikWorkRow::planeHours()
+int GenerikWorkRow::position() const
+{
+    return ui->lbl_number->text().toInt();
+}
+
+QString GenerikWorkRow::workName()
+{
+  return ui->cb_works->currentText();
+}
+
+int GenerikWorkRow::planeHours() const
 {
     return ui->sb_plan->value();
 }
 
-int GenerikWorkRow::factHours()
+int GenerikWorkRow::factHours() const
 {
     return ui->sb_fact->value();
 }
 
-QString GenerikWorkRow::toString()
+const QString GenerikWorkRow::toString() const
 {
     return QString("%1(%2)").arg(
         ui->cb_works->currentText()
         );
+}
+
+const QString GenerikWorkRow::comments() const
+{
+    return ui->text_complite->toPlainText();
 }
 
 void GenerikWorkRow::loadWorkTypes()

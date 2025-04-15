@@ -17,6 +17,12 @@ private:
 
     QRect m_approved;
     QRect m_approvedUser;
+    QRect m_title;
+    QRect m_semester;
+    QRect m_hoursTitle;
+    QRect m_plane;
+    QRect m_fact;
+    QRect m_comments;
 
     PrintGenericData *m_data;
 

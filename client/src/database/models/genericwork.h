@@ -26,7 +26,6 @@ public:
     int factHours() const;
     void setFactHours(int newFactHours);
 
-
 signals:
 
 private:

@@ -9,6 +9,8 @@
 
 #include <database/database.h>
 
+#include <print/datafiles/printgenericdata.h>
+
 FormGenerikWork::FormGenerikWork(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::FormGenerikWork)
@@ -45,6 +47,20 @@ void FormGenerikWork::setPlanData(TeacherPlan *plan)
     m_plan = plan;
 
     fillTable();
+}
+
+void FormGenerikWork::setGenericTime(PrintGenericData *c)
+{
+    auto list = c->isSecond() ? ui->lw_second : ui->lw_first;
+    auto rows = list->findChildren<GenerikWorkRow*>();
+    for(auto r: rows){
+        c->addWork(r->position(),new PrintGenericWork(r->position(),
+                                                       r->workName(),
+                                                       r->planeHours(),
+                                                       r->factHours(),
+                                                       r->comments())
+                   );
+    }
 }
 
 void FormGenerikWork::addRow(GenericWork *work)

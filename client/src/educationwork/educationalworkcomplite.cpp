@@ -235,7 +235,6 @@ void EducationalWorkComplite::setColunmCount(int column)
             firstFact += item->data(Factical).toInt();
         } else if (i == FIRST_SEMESTER_ROW){
             item->setText((firstPlane || firstFact) ? QString("%1 / %2").arg(firstPlane).arg(firstFact) : "");
-            qDebug() << firstPlane <<"   " << i <<"   " << column;
             item->setData(Plane, firstPlane);
             item->setData(Factical, firstFact);
         } else if (i < SECOND_SEMESTER_ROW){

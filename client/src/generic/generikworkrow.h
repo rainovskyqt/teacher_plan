@@ -16,9 +16,12 @@ public:
     explicit GenerikWorkRow(GenericWork *work, int number, QWidget *parent = nullptr);
     ~GenerikWorkRow();
 
-    int planeHours();
-    int factHours();
-    QString toString();
+    int position() const;
+    QString workName();
+    int planeHours() const;
+    int factHours() const;
+    const QString toString() const;
+    const QString comments() const;
 
     GenericWork *work() const;
 

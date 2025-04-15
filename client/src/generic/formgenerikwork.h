@@ -8,6 +8,8 @@
 #include "database/models/genericwork.h"
 #include "genericfooter.h"
 
+class PrintGenericData;
+
 namespace Ui {
 class FormGenerikWork;
 }
@@ -25,6 +27,7 @@ public:
 
 public slots:
     void setPlanData(TeacherPlan *plan);
+    void setGenericTime(PrintGenericData *c);
 
 signals:
     void deleteWork();

@@ -89,9 +89,12 @@ void PageComplete::drawValues(QPainter &painter)
 
     for(auto it = values.begin(); it != values.end(); ++it){
         auto val = it.value();
+        int offset = 0;
+        if(it.value() == values.first())
+            offset = 6;
         drawCell(&painter, QRect(m_startCell.right() + m_cellWigth * val.first,
                                  m_startCell.bottom() + m_cellHeigth * it.key(),
-                                 m_cellWigth, m_cellHeigth),
+                                 m_cellWigth - offset, m_cellHeigth),
                  Qt::AlignCenter, it.value().second, 0.9);
     }
 
@@ -102,8 +105,8 @@ void PageComplete::setRects()
     m_title = QRect(m_leftBord, point(5), m_rigthBord, singleRow());
     m_totalHourses = QRect(m_leftBord, m_title.bottom(), m_rigthBord, singleRow());
     m_startCell = QRect(m_leftBord - point(5), m_totalHourses.bottom(), point(17), singleRow() *5);
-    m_tableHeader = QRect(m_startCell.right(), m_startCell.top(), m_rigthBord, singleRow());
-    m_comments = QRect(m_leftBord, 0, m_rigthBord, m_bottomBord);
+    m_tableHeader = QRect(m_startCell.right(), m_startCell.top(), m_rigthBord - point(5), singleRow());
+    m_comments = QRect(m_leftBord, 0, m_rigthBord - point(5), m_bottomBord);
 
     m_cellHeigth = singleRow();
 }

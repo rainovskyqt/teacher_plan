@@ -159,7 +159,6 @@ void Header::setPlanData(TeacherPlan *plan)
     setStatus(m_currentPlan->statusId());
     setProtocol(m_currentPlan);
     setApproved(m_currentPlan);
-    qDebug() << "Загружен план с id: " << plan->baseId();
 
     emit currentPlanChanged(m_currentPlan);
 }

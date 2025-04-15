@@ -7,6 +7,7 @@
 #include <database/models/teacherplan.h>
 
 #include <print/datafiles/printcomplite.h>
+#include <print/datafiles/printgenericdata.h>
 
 class PrintTotalData;
 
@@ -25,6 +26,7 @@ public:
 signals:
     void getTotalTime(PrintTotalData *d);
     void getCompliteTime(PrintComplite *d);
+    void getGenericTime(WorkType, PrintGenericData *d);
 
 private slots:
     void print();
@@ -36,15 +38,10 @@ private slots:
     void on_btn_analisis_clicked();
     void on_rb_first_clicked();
     void on_rb_second_clicked();
-
     void on_btn_complete_clicked();
-
     void on_btn_workMethodic_clicked();
-
     void on_btn_researchingWork_clicked();
-
     void on_btn_sportWork_clicked();
-
     void on_btn_otherWork_clicked();
 
 private:

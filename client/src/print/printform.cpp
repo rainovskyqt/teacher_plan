@@ -207,7 +207,8 @@ void PrintForm::on_btn_workMethodic_clicked()
 
     PrintGenericData *gd = new PrintGenericData(this);
     gd->setSecondSemester(ui->rb_second->isChecked());
-    // emit getCompliteTime(pc);
+    gd->setWorkName("II. УЧЕБНО-МЕТОДИЧЕСКАЯ РАБОТА");
+    emit getGenericTime(WorkType::MethodicWork, gd);
 
     PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
     w->setData(gd);
@@ -226,7 +227,8 @@ void PrintForm::on_btn_researchingWork_clicked()
     "работе ФГБОУ ВО \"ВГАФК\"");
     gd->setApprovedUser("И.А. Фатьянов");
     gd->setSecondSemester(ui->rb_second->isChecked());
-    // emit getCompliteTime(pc);
+    gd->setWorkName("III. НАУЧНО-ИССЛЕДОВАТЕЛЬСКАЯ РАБОТА");
+    emit getGenericTime(WorkType::ResearchingWork, gd);
 
     PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
     w->setData(gd);
@@ -245,7 +247,8 @@ void PrintForm::on_btn_sportWork_clicked()
                         "ФГБОУ ВО \"ВГАФК\"");
     gd->setApprovedUser("И.А. Кириллова");
     gd->setSecondSemester(ui->rb_second->isChecked());
-    // emit getCompliteTime(pc);
+    gd->setWorkName("IV. ВОСПИТАТЕЛЬНАЯ И СПОРТИВНАЯ РАБОТА");
+    emit getGenericTime(WorkType::SportWork, gd);
 
     PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
     w->setData(gd);
@@ -264,7 +267,8 @@ void PrintForm::on_btn_otherWork_clicked()
                                 "ФГБОУ ВО \"ВГАФК\"").arg("_____________"));
     gd->setApprovedUser("__________________");
     gd->setSecondSemester(ui->rb_second->isChecked());
-    // emit getCompliteTime(pc);
+    gd->setWorkName("V. ДРУГИЕ ВИДЫ РАБОТ");
+    emit getGenericTime(WorkType::OtherWork, gd);
 
     PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
     w->setData(gd);

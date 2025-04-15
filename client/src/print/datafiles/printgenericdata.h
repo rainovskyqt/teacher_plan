@@ -38,14 +38,19 @@ public:
 
 
     const QHash<int, PrintGenericWork *> works() const;
+    void addWork(int position, PrintGenericWork *work);
 
     QString department() const;
     void setDepartment(const QString &newDepartment);
+
+    QString workName() const;
+    void setWorkName(const QString &newWorkName);
 
 private:
     QString m_approvedPost;
     QString m_approvedUser;
     QString m_department;
+    QString m_workName;
 
     QHash<int, PrintGenericWork*> m_works;           //тут QHash только для сортировки по ключу
 };
