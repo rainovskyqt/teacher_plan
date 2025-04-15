@@ -11,7 +11,6 @@
 #include <print/datafiles/printtitledata.h>
 #include <print/datafiles/printtotaldata.h>
 #include <print/datafiles/printanalysisdata.h>
-#include <print/datafiles/printgenericwork.h>
 
 #include "genericworks/pagemethodicwork.h"
 #include "genericworks/pageotherwork.h"
@@ -86,12 +85,12 @@ void PrintForm::setSemester()
         on_btn_analisis_clicked();
     } else if(qobject_cast<PageMethodicWork*>(currentWidget)){
         on_btn_workMethodic_clicked();
-    // } else if(qobject_cast<PageResearchingWork*>(currentWidget)){
-        // on_btn_researchingWork_clicked();
-    // } else if(qobject_cast<PageSportWork*>(currentWidget)){
-        // on_btn_sportWork_clicked();
-    // } else if(qobject_cast<PageOtherWork*>(currentWidget)){
-        // on_btn_otherWork_clicked();
+    } else if(qobject_cast<PageResearchingWork*>(currentWidget)){
+        on_btn_researchingWork_clicked();
+    } else if(qobject_cast<PageSportWork*>(currentWidget)){
+        on_btn_sportWork_clicked();
+    } else if(qobject_cast<PageOtherWork*>(currentWidget)){
+        on_btn_otherWork_clicked();
     }
 
 }
@@ -206,7 +205,7 @@ void PrintForm::on_btn_workMethodic_clicked()
     ui->w_semester->setVisible(true);
     clearLayout(ui->vl_printData);
 
-    PrintGenericWork *gd = new PrintGenericWork(this);
+    PrintGenericData *gd = new PrintGenericData(this);
     gd->setSecondSemester(ui->rb_second->isChecked());
     // emit getCompliteTime(pc);
 
@@ -222,17 +221,17 @@ void PrintForm::on_btn_researchingWork_clicked()
     ui->w_semester->setVisible(true);
     clearLayout(ui->vl_printData);
 
-    PrintGenericWork *gd = new PrintGenericWork(this);
+    PrintGenericData *gd = new PrintGenericData(this);
     gd->setApprovedPost("Проректор по научно-исследовательской\n"
     "работе ФГБОУ ВО \"ВГАФК\"");
     gd->setApprovedUser("И.А. Фатьянов");
     gd->setSecondSemester(ui->rb_second->isChecked());
     // emit getCompliteTime(pc);
 
-    // PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
-    // w->setData(gd);
-    // w->init();
-    // ui->vl_printData->addWidget(w);
+    PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    w->setData(gd);
+    w->init();
+    ui->vl_printData->addWidget(w);
 }
 
 
@@ -241,17 +240,17 @@ void PrintForm::on_btn_sportWork_clicked()
     ui->w_semester->setVisible(true);
     clearLayout(ui->vl_printData);
 
-    PrintGenericWork *gd = new PrintGenericWork(this);
+    PrintGenericData *gd = new PrintGenericData(this);
     gd->setApprovedPost("Проректор по молодежной политике\n"
                         "ФГБОУ ВО \"ВГАФК\"");
     gd->setApprovedUser("И.А. Кириллова");
     gd->setSecondSemester(ui->rb_second->isChecked());
     // emit getCompliteTime(pc);
 
-    // PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
-    // w->setData(gd);
-    // w->init();
-    // ui->vl_printData->addWidget(w);
+    PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    w->setData(gd);
+    w->init();
+    ui->vl_printData->addWidget(w);
 }
 
 
@@ -260,16 +259,16 @@ void PrintForm::on_btn_otherWork_clicked()
     ui->w_semester->setVisible(true);
     clearLayout(ui->vl_printData);
 
-    PrintGenericWork *gd = new PrintGenericWork(this);
-    gd->setApprovedPost(QString("Заведующий кафедрой _____________\n"
-                                "ФГБОУ ВО \"ВГАФК\"").arg(""));
+    PrintGenericData *gd = new PrintGenericData(this);
+    gd->setApprovedPost(QString("Заведующий кафедрой %1\n"
+                                "ФГБОУ ВО \"ВГАФК\"").arg("_____________"));
     gd->setApprovedUser("__________________");
     gd->setSecondSemester(ui->rb_second->isChecked());
     // emit getCompliteTime(pc);
 
-    // PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
-    // w->setData(gd);
-    // w->init();
-    // ui->vl_printData->addWidget(w);
+    PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    w->setData(gd);
+    w->init();
+    ui->vl_printData->addWidget(w);
 }
 

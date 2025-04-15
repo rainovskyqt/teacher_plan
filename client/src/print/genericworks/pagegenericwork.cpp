@@ -9,7 +9,7 @@ PageGenericWork::PageGenericWork(int wigth, int height, int coefficient, QWidget
 
 void PageGenericWork::setData(PrintData *data)
 {
-    m_data = qobject_cast<PrintGenericWork*>(data);
+    m_data = qobject_cast<PrintGenericData*>(data);
 }
 
 void PageGenericWork::paintData(QPainter &painter)

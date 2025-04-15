@@ -1,9 +1,9 @@
 #ifndef PAGEGENERICWORK_H
-#define PAGETGENERICWORK_H
+#define PAGEGENERICWORK_H
 
 #include "print/printpage.h"
 
-#include "print/datafiles/printgenericwork.h"
+#include "print/datafiles/printgenericdata.h"
 
 class PageGenericWork : public PrintPage
 {
@@ -18,7 +18,7 @@ private:
     QRect m_approved;
     QRect m_approvedUser;
 
-    PrintGenericWork *m_data;
+    PrintGenericData *m_data;
 
     void paintData(QPainter &painter) override;
 
