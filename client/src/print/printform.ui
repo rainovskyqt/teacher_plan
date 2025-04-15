@@ -38,13 +38,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="btn_workMethodic">
-       <property name="text">
-        <string>Уч.-мет. работа</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QToolButton" name="btn_analisis">
        <property name="text">
         <string>Анализ</string>
@@ -53,6 +46,51 @@
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QToolButton" name="btn_workMethodic">
+       <property name="text">
+        <string>Уч.-мет. раб.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_researchingWork">
+       <property name="text">
+        <string>Науч-исл. раб.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_sportWork">
+       <property name="text">
+        <string>Восп. и спорт раб.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_otherWork">
+       <property name="text">
+        <string>Др. раб.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -132,7 +170,7 @@
         <x>0</x>
         <y>0</y>
         <width>709</width>
-        <height>648</height>
+        <height>616</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">

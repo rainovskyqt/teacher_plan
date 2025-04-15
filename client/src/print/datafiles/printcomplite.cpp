@@ -23,3 +23,13 @@ QMultiMap<int, QPair<int, QString> > PrintComplite::values() const
 {
     return m_values;
 }
+
+int PrintComplite::totalHours() const
+{
+    return m_totalHours;
+}
+
+void PrintComplite::setTotalHours(int newTotalHours)
+{
+    m_totalHours = newTotalHours;
+}

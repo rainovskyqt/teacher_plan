@@ -14,6 +14,9 @@
 #include <print/datafiles/printgenericwork.h>
 
 #include "genericworks/pagemethodicwork.h"
+#include "genericworks/pageotherwork.h"
+#include "genericworks/pageresearchingwork.h"
+#include "genericworks/pagesportwork.h"
 
 #define PAGE_WIGTH 210
 #define PAGE_HEIGTH 270
@@ -83,6 +86,12 @@ void PrintForm::setSemester()
         on_btn_analisis_clicked();
     } else if(qobject_cast<PageMethodicWork*>(currentWidget)){
         on_btn_workMethodic_clicked();
+    // } else if(qobject_cast<PageResearchingWork*>(currentWidget)){
+        // on_btn_researchingWork_clicked();
+    // } else if(qobject_cast<PageSportWork*>(currentWidget)){
+        // on_btn_sportWork_clicked();
+    // } else if(qobject_cast<PageOtherWork*>(currentWidget)){
+        // on_btn_otherWork_clicked();
     }
 
 }
@@ -198,9 +207,6 @@ void PrintForm::on_btn_workMethodic_clicked()
     clearLayout(ui->vl_printData);
 
     PrintGenericWork *gd = new PrintGenericWork(this);
-    gd->setApprovedPost("Проректор по научно-исследовательской\n"
-                        "работе ФГБОУ ВО \"ВГАФК\"");
-    gd->setApprovedUser("И.А. Фатьянов");
     gd->setSecondSemester(ui->rb_second->isChecked());
     // emit getCompliteTime(pc);
 
@@ -208,5 +214,62 @@ void PrintForm::on_btn_workMethodic_clicked()
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
+}
+
+
+void PrintForm::on_btn_researchingWork_clicked()
+{
+    ui->w_semester->setVisible(true);
+    clearLayout(ui->vl_printData);
+
+    PrintGenericWork *gd = new PrintGenericWork(this);
+    gd->setApprovedPost("Проректор по научно-исследовательской\n"
+    "работе ФГБОУ ВО \"ВГАФК\"");
+    gd->setApprovedUser("И.А. Фатьянов");
+    gd->setSecondSemester(ui->rb_second->isChecked());
+    // emit getCompliteTime(pc);
+
+    // PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    // w->setData(gd);
+    // w->init();
+    // ui->vl_printData->addWidget(w);
+}
+
+
+void PrintForm::on_btn_sportWork_clicked()
+{
+    ui->w_semester->setVisible(true);
+    clearLayout(ui->vl_printData);
+
+    PrintGenericWork *gd = new PrintGenericWork(this);
+    gd->setApprovedPost("Проректор по молодежной политике\n"
+                        "ФГБОУ ВО \"ВГАФК\"");
+    gd->setApprovedUser("И.А. Кириллова");
+    gd->setSecondSemester(ui->rb_second->isChecked());
+    // emit getCompliteTime(pc);
+
+    // PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    // w->setData(gd);
+    // w->init();
+    // ui->vl_printData->addWidget(w);
+}
+
+
+void PrintForm::on_btn_otherWork_clicked()
+{
+    ui->w_semester->setVisible(true);
+    clearLayout(ui->vl_printData);
+
+    PrintGenericWork *gd = new PrintGenericWork(this);
+    gd->setApprovedPost(QString("Заведующий кафедрой _____________\n"
+                                "ФГБОУ ВО \"ВГАФК\"").arg(""));
+    gd->setApprovedUser("__________________");
+    gd->setSecondSemester(ui->rb_second->isChecked());
+    // emit getCompliteTime(pc);
+
+    // PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    // w->setData(gd);
+    // w->init();
+    // ui->vl_printData->addWidget(w);
 }
 

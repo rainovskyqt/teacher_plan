@@ -41,6 +41,12 @@ private slots:
 
     void on_btn_workMethodic_clicked();
 
+    void on_btn_researchingWork_clicked();
+
+    void on_btn_sportWork_clicked();
+
+    void on_btn_otherWork_clicked();
+
 private:
     Ui::PrintForm *ui;
 

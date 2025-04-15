@@ -17,9 +17,13 @@ public:
 
     QMultiMap<int, QPair<int, QString> > values() const;
 
+    int totalHours() const;
+    void setTotalHours(int newTotalHours);
+
 private:
     QString m_comments;
     QMultiMap<int, QPair<int, QString>> m_values;  //< Месяц < Вид, Значение>>
+    int m_totalHours;
 };
 
 #endif // PRINTCOMPLITE_H

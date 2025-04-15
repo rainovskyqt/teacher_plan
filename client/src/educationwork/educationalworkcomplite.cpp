@@ -312,6 +312,7 @@ void EducationalWorkComplite::setCompliteTime(PrintComplite *c)
             c->setValue(row, column, ui->tw_hours->item(row, column)->text());
         }
     }
+    c->setTotalHours(ui->lbl_yearHours->text().toInt());
 }
 
 void EducationalWorkComplite::on_text_comments_textChanged()

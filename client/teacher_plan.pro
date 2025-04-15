@@ -49,6 +49,9 @@ SOURCES += \
     src/print/datafiles/printtotaldata.cpp \
     src/print/genericworks/pagegenericwork.cpp \
     src/print/genericworks/pagemethodicwork.cpp \
+    src/print/genericworks/pageotherwork.cpp \
+    src/print/genericworks/pageresearchingwork.cpp \
+    src/print/genericworks/pagesportwork.cpp \
     src/print/pageanalysis.cpp \
     src/print/pagecomplete.cpp \
     src/print/pagetitle.cpp \
@@ -105,6 +108,9 @@ HEADERS += \
     src/print/datafiles/printtotaldata.h \
     src/print/genericworks/pagegenericwork.h \
     src/print/genericworks/pagemethodicwork.h \
+    src/print/genericworks/pageotherwork.h \
+    src/print/genericworks/pageresearchingwork.h \
+    src/print/genericworks/pagesportwork.h \
     src/print/pageanalysis.h \
     src/print/pagecomplete.h \
     src/print/pagetitle.h \

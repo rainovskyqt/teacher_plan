@@ -25,7 +25,7 @@ void PageComplete::paintData(QPainter &painter)
 
     painter.setFont(m_fontMain);
     painter.drawText(m_totalHourses, Qt::AlignLeft, QString("Учебная годовая нагрузка %1 час.")
-                                                        .arg("555"));
+                                                        .arg(m_data->totalHours()));
 
     drawCell(&painter, m_startCell);
     drawRowNames(painter);
