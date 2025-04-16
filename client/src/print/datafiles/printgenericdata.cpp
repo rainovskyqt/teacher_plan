@@ -37,6 +37,8 @@ const QString PrintGenericWork::getComments() const
 PrintGenericData::PrintGenericData(QObject *parent)
     : PrintData{parent}
     , m_approvedPost(QString())
+    , m_totalPlane(0)
+    , m_totalFact(0)
 {}
 
 QString PrintGenericData::approvedPost() const
@@ -59,7 +61,7 @@ void PrintGenericData::setApprovedUser(const QString &newApprovedUser)
     m_approvedUser = newApprovedUser;
 }
 
-const QHash<int, PrintGenericWork *> PrintGenericData::works() const
+const QMap<int, PrintGenericWork *> PrintGenericData::works() const
 {
     return m_works;
 }
@@ -90,4 +92,24 @@ QString PrintGenericData::workName() const
 void PrintGenericData::setWorkName(const QString &newWorkName)
 {
     m_workName = newWorkName;
+}
+
+int PrintGenericData::totalPlane() const
+{
+    return m_totalPlane;
+}
+
+void PrintGenericData::setTotalPlane(int newTotalPlane)
+{
+    m_totalPlane = newTotalPlane;
+}
+
+int PrintGenericData::totalFact() const
+{
+    return m_totalFact;
+}
+
+void PrintGenericData::setTotalFact(int newTotalFact)
+{
+    m_totalFact = newTotalFact;
 }

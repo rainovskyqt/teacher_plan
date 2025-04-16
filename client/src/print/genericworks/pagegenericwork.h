@@ -20,9 +20,16 @@ private:
     QRect m_title;
     QRect m_semester;
     QRect m_hoursTitle;
+    QRect m_planeTitle;
+    QRect m_factTitle;
+    QRect m_commentsTitle;
+
+    QRect m_position;
+    QRect m_name;
     QRect m_plane;
     QRect m_fact;
     QRect m_comments;
+
 
     PrintGenericData *m_data;
 

@@ -37,7 +37,7 @@ public:
     void setApprovedUser(const QString &newApprovedUser);
 
 
-    const QHash<int, PrintGenericWork *> works() const;
+    const QMap<int, PrintGenericWork *> works() const;
     void addWork(int position, PrintGenericWork *work);
 
     QString department() const;
@@ -46,13 +46,21 @@ public:
     QString workName() const;
     void setWorkName(const QString &newWorkName);
 
+    int totalPlane() const;
+    void setTotalPlane(int newTotalPlane);
+    int totalFact() const;
+    void setTotalFact(int newTotalFact);
+
 private:
     QString m_approvedPost;
     QString m_approvedUser;
     QString m_department;
     QString m_workName;
 
-    QHash<int, PrintGenericWork*> m_works;           //тут QHash только для сортировки по ключу
+    int m_totalPlane;
+    int m_totalFact;
+
+    QMap<int, PrintGenericWork*> m_works;           //тут QMap только для сортировки по ключу
 };
 
 

@@ -15,6 +15,16 @@ GenericFooter::~GenericFooter()
     delete ui;
 }
 
+int GenericFooter::totalPlane() const
+{
+    return ui->lbl_plan->text().toInt();
+}
+
+int GenericFooter::totalFact() const
+{
+    return ui->lbl_fact->text().toInt();
+}
+
 void GenericFooter::setPosition(int val)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(val);

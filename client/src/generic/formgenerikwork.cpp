@@ -52,6 +52,7 @@ void FormGenerikWork::setPlanData(TeacherPlan *plan)
 void FormGenerikWork::setGenericTime(PrintGenericData *c)
 {
     auto list = c->isSecond() ? ui->lw_second : ui->lw_first;
+    auto footer = c->isSecond() ? ui->w_footerSecond : ui->w_footerFirst;
     auto rows = list->findChildren<GenerikWorkRow*>();
     for(auto r: rows){
         c->addWork(r->position(),new PrintGenericWork(r->position(),
@@ -60,6 +61,8 @@ void FormGenerikWork::setGenericTime(PrintGenericData *c)
                                                        r->factHours(),
                                                        r->comments())
                    );
+        c->setTotalPlane(footer->totalPlane());
+        c->setTotalFact(footer->totalFact());
     }
 }
 
