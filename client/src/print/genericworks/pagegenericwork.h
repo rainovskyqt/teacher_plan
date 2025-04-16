@@ -29,6 +29,8 @@ private:
     QRect m_plane;
     QRect m_fact;
     QRect m_comments;
+    QRect m_signTeacher;
+    QRect m_signBoss;
 
 
     PrintGenericData *m_data;

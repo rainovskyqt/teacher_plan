@@ -37,18 +37,26 @@ void PageGenericWork::paintData(QPainter &painter)
     int bottom = 0;
 
     for(auto const w: works){
-        drawCell(&painter, QRect(m_position.x(), m_position.y() + bottom, m_position.width(), m_position.height()), Qt::AlignCenter, QString::number(w->number()));
-        drawCell(&painter, QRect(m_name.x(), m_name.y() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.8);
-        drawCell(&painter, QRect(m_plane.x(), m_plane.y() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->plane()));
-        drawCell(&painter, QRect(m_fact.x(), m_fact.y() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->fact()));
-        drawCell(&painter, QRect(m_comments.x(), m_comments.y() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, w->getComments(), 0.8);
+        drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width(), m_position.height()), Qt::AlignCenter, QString::number(w->number()));
+        drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.8);
+        drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->plane()));
+        drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->fact()));
+        drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, w->getComments(), 0.8);
         bottom += m_position.height();
     }
 
-    drawCell(&painter, QRect(m_position.x(), m_position.y() + bottom, m_position.width() + m_name.width(), m_position.height()), Qt::AlignRight, "Всего часов:");
-    drawCell(&painter, QRect(m_plane.x(), m_plane.y() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(m_data->totalPlane()));
-    drawCell(&painter, QRect(m_fact.x(), m_fact.y() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(m_data->totalFact()));
-    drawCell(&painter, QRect(m_comments.x(), m_comments.y() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, "");
+    drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width() + m_name.width(), m_position.height()), Qt::AlignRight, "Всего часов:");
+    drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(m_data->totalPlane()));
+    drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(m_data->totalFact()));
+    drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, "");
+    bottom += singleRow() + point(5);
+
+    painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
+                     QString("Преподаватель __________________/%1/").arg("________________"));
+
+    bottom += singleRow() + point(5);
+    painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
+                     QString("Выполнение проверил заведующий кафедрой __________________/%1/").arg("________________"));
 }
 
 void PageGenericWork::setRects()
@@ -74,4 +82,7 @@ void PageGenericWork::setRects()
     m_plane = QRect(m_planeTitle.left(), m_semester.bottom() + 1, m_planeTitle.width(), singleRow() * 1.2);
     m_fact = QRect(m_factTitle.left(), m_semester.bottom() + 1, m_factTitle.width(), singleRow() * 1.2);
     m_comments = QRect(m_commentsTitle.left(), m_semester.bottom() + 1, m_commentsTitle.width(), singleRow() * 1.2);
+
+    m_signTeacher = QRect(m_leftBord, m_position.bottom() + 1, m_wigth, singleRow());
+    m_signBoss = QRect(m_leftBord, m_signTeacher.bottom() + 1, m_wigth, singleRow());
 }
