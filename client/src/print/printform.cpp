@@ -19,7 +19,7 @@
 #include "genericworks/pagesportwork.h"
 
 #define PAGE_WIGTH 210
-#define PAGE_HEIGTH 270
+#define PAGE_HEIGTH 297
 #define COEFFICIENT 4
 
 PrintForm::PrintForm(TeacherPlan *plan, User *user, QWidget *parent)
