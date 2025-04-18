@@ -22,13 +22,6 @@ void PageTitle::paintData(QPainter &painter)
                                                 "\"ВОЛГОГРАДСКАЯ ГОСУДАРСТВЕННАЯ АКАДЕМИЯ ФИЗИЧЕСКОЙ КУЛЬТУРЫ\"\n"
                                                 "(ФГБОУ ВО \"ВГАФК\")");
 
-    // painter.drawText(m_approved, Qt::AlignLeft, "УТВЕРЖДАЮ");
-
-    // painter.drawText(m_approvedUser, Qt::AlignLeft, QString("Проректор по учебной работе\n"
-    //                                                         "ФГБОУ ВО \"ВГАФК\"\n"
-    //                                                         "_________________%1\n"
-    //                                                         "\"____\"_______________ 20____г.").arg(m_titleData->studyRector()));
-
     painter.setFont(m_fontTitle);
     painter.drawText(m_title, Qt::AlignCenter, "ИНДИВИДУАЛЬНЫЙ ПЛАН");
 

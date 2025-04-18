@@ -205,6 +205,10 @@
    </property>
   </action>
   <action name="action_print">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/img/img/printer.png</normaloff>:/img/img/printer.png</iconset>
+   </property>
    <property name="text">
     <string>Печать</string>
    </property>

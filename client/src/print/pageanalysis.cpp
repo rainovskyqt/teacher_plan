@@ -46,7 +46,7 @@ void PageAnalysis::paintData(QPainter &painter)
 
     painter.drawText(m_cheefSign, Qt::AlignLeft, QString("Зав. кафедрой ______________________/%1\n\n"
                                                            "\"______\"____________________ 20____г.")
-                                                       .arg("Зав."));
+                                                       .arg("______________________."));
 
     painter.drawText(m_protocol, Qt::AlignLeft, QString("Выполнение Индивидуального плана рассмотрено на заседании кафедры,\n"
                                                            "протокол № ______ от \"______\"____________________ 20____г."));

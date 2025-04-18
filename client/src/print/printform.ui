@@ -62,6 +62,13 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
+      <widget class="QToolButton" name="btn_workStudy">
+       <property name="text">
+        <string>Учеб. раб.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="btn_workMethodic">
        <property name="text">
         <string>Уч.-мет. раб.</string>

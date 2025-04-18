@@ -1,5 +1,6 @@
 #include "pageanalysis.h"
 #include "pagecomplete.h"
+#include "pagestudy.h"
 #include "pagetitle.h"
 #include "pagetotal.h"
 #include "printform.h"
@@ -29,6 +30,7 @@ PrintForm::PrintForm(TeacherPlan *plan, User *user, QWidget *parent)
     m_plan = plan;
     m_user = user;
     ui->w_semester->setVisible(false);
+    on_btn_title_clicked();
 }
 
 PrintForm::~PrintForm()
@@ -272,6 +274,22 @@ void PrintForm::on_btn_otherWork_clicked()
 
     PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
     w->setData(gd);
+    w->init();
+    ui->vl_printData->addWidget(w);
+}
+
+
+void PrintForm::on_btn_workStudy_clicked()
+{
+    ui->w_semester->setVisible(true);
+    clearLayout(ui->vl_printData);
+
+    // PrintComplite *pc = new PrintComplite(this);
+    // pc->setComments(m_plan->comments());
+    // emit getCompliteTime(pc);
+
+    PageStudy *w = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    // w->setData(pc);
     w->init();
     ui->vl_printData->addWidget(w);
 }
