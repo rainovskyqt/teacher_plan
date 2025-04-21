@@ -10,6 +10,7 @@
 #include <print/datafiles/printgenericdata.h>
 
 class PrintTotalData;
+class PrintStudyData;
 
 namespace Ui {
 class PrintForm;
@@ -27,6 +28,7 @@ signals:
     void getTotalTime(PrintTotalData *d);
     void getCompliteTime(PrintComplite *d);
     void getGenericTime(WorkType, PrintGenericData *d);
+    void getStudyTime(PrintStudyData *d);
 
 private slots:
     void print();

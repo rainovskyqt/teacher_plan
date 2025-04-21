@@ -12,7 +12,7 @@ class Settings : public QSettings
 
 public:
     static Settings get();
-    ~Settings() {};
+    ~Settings() {}
 
     QString dbHost();
     void setDbHost(QString host);
@@ -36,13 +36,13 @@ private:
         QSettings s("settings.ini", QSettings::IniFormat);
         QVariant val = s.value(key, defValue);
         return val.value<T>();
-    };
+    }
 
     template<typename  T>
     void set(const QString &key, const T &val){
         QSettings s("settings.ini", QSettings::IniFormat);
         s.setValue(key, val);
-    };
+    }
 
     void loadWeeksCount();
     void loadWeeks();

@@ -12,6 +12,7 @@
 #include <print/datafiles/printtitledata.h>
 #include <print/datafiles/printtotaldata.h>
 #include <print/datafiles/printanalysisdata.h>
+#include <print/datafiles/printstudydata.h>
 
 #include "genericworks/pagemethodicwork.h"
 #include "genericworks/pageotherwork.h"
@@ -83,6 +84,7 @@ void PrintForm::clearLayout(QLayout *layout) {
 void PrintForm::setSemester()
 {
     auto currentWidget = ui->vl_printData->itemAt(0)->widget();
+
     if(qobject_cast<PageAnalysis*>(currentWidget)){
         on_btn_analisis_clicked();
     } else if(qobject_cast<PageMethodicWork*>(currentWidget)){
@@ -93,8 +95,9 @@ void PrintForm::setSemester()
         on_btn_sportWork_clicked();
     } else if(qobject_cast<PageOtherWork*>(currentWidget)){
         on_btn_otherWork_clicked();
+    } else if(qobject_cast<PageStudy*>(currentWidget)){
+        on_btn_workStudy_clicked();
     }
-
 }
 
 void PrintForm::on_btn_print_clicked()
@@ -284,12 +287,12 @@ void PrintForm::on_btn_workStudy_clicked()
     ui->w_semester->setVisible(true);
     clearLayout(ui->vl_printData);
 
-    // PrintComplite *pc = new PrintComplite(this);
-    // pc->setComments(m_plan->comments());
-    // emit getCompliteTime(pc);
+    PrintStudyData *ps = new PrintStudyData(this);
+    ps->setSecondSemester(ui->rb_second->isChecked());
+    emit getStudyTime(ps);
 
     PageStudy *w = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
-    // w->setData(pc);
+    w->setData(ps);
     w->init();
     ui->vl_printData->addWidget(w);
 }

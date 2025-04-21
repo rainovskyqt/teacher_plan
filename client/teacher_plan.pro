@@ -45,6 +45,7 @@ SOURCES += \
     src/print/datafiles/printcomplite.cpp \
     src/print/datafiles/printdata.cpp \
     src/print/datafiles/printgenericdata.cpp \
+    src/print/datafiles/printstudydata.cpp \
     src/print/datafiles/printtitledata.cpp \
     src/print/datafiles/printtotaldata.cpp \
     src/print/genericworks/pagegenericwork.cpp \
@@ -105,6 +106,7 @@ HEADERS += \
     src/print/datafiles/printcomplite.h \
     src/print/datafiles/printdata.h \
     src/print/datafiles/printgenericdata.h \
+    src/print/datafiles/printstudydata.h \
     src/print/datafiles/printtitledata.h \
     src/print/datafiles/printtotaldata.h \
     src/print/genericworks/pagegenericwork.h \
