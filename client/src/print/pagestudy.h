@@ -29,12 +29,12 @@ private:
     QRect m_hoursTotalPlaneTitle;
     QRect m_hoursTotalFactTitle;
 
-
     QRect m_positionTitle;
     QRect m_workNameTitle;
     QRect m_hoursTypeTitle;
-
     QRect m_weekStartTitle;
+
+    QRect m_workPositionStart;
 
     void drawWeek(QPainter &p, QRect baseRect, int week);
 

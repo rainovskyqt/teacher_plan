@@ -33,11 +33,46 @@ void EducationalFooter::setValue(EducationalHour *hour)
     countHours(hour->type());
 }
 
+void EducationalFooter::setTotalValue(int value, QString name)
+{
+
+}
+
 void EducationalFooter::clear()
 {
     auto month = this->findChildren<EducationMonth*>();
     for(auto m: month)
         m->clear();
+}
+
+int EducationalFooter::totalFirstPlane()
+{
+    return ui->lbl_firstPlan->text().toInt();
+}
+
+int EducationalFooter::totalFirstFact()
+{
+    return ui->lbl_firstFact->text().toInt();
+}
+
+int EducationalFooter::totalSecondPlane()
+{
+    return ui->lbl_secondPlan->text().toInt();
+}
+
+int EducationalFooter::totalSecondFact()
+{
+    return ui->lbl_secondFact->text().toInt();
+}
+
+int EducationalFooter::totalYearPlane()
+{
+    return ui->lbl_yearPlan->text().toInt();
+}
+
+int EducationalFooter::totalYearFact()
+{
+    return ui->lbl_yearFact->text().toInt();
 }
 
 

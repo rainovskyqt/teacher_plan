@@ -10,6 +10,8 @@
 
 #include <misc/month.h>
 
+class PrintStudyData;
+
 namespace Ui {
 class FormEducationWork;
 }
@@ -26,6 +28,7 @@ public:
 
 public slots:
     void setPlanData(TeacherPlan *plan);
+    void setStudyTime(PrintStudyData *c);
 
 private slots:
     void on_btn_add_clicked();

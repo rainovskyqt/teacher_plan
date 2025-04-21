@@ -7,6 +7,7 @@
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QListWidgetItem>
+#include <print/datafiles/printstudydata.h>
 
 FormEducationWork::FormEducationWork(QWidget *parent)
     : QWidget(parent)
@@ -25,6 +26,26 @@ void FormEducationWork::setPlanData(TeacherPlan *plan)
 {
     m_plan = plan;
     fillTable();
+}
+
+void FormEducationWork::setStudyTime(PrintStudyData *c)
+{
+    c->setTotalFirstPlane(ui->w_footer->totalFirstPlane());
+    c->setTotalFirstFact(ui->w_footer->totalFirstFact());
+    c->setTotalSecondPlane(ui->w_footer->totalSecondPlane());
+    c->setTotalSecondFact(ui->w_footer->totalSecondFact());
+    c->setTotalYearPlane(ui->w_footer->totalYearPlane());
+    c->setTotalYearFact(ui->w_footer->totalYearFact());
+
+    for(int row = 0; row < ui->lw_educationWork->count(); ++row){
+        auto item = ui->lw_educationWork->item(row);
+        auto work = qobject_cast<EducationRow*>(ui->lw_educationWork->itemWidget(item));
+        c->addWork(work->row(), new PrintStudyWork(work->row(), work->name(),
+                                           work->totalPlaneI(), work->totalFactI(),
+                                           work->totalPlaneII(), work->totalFactII(),
+                                           work->totalPlaneYear(), work->totalFactYear(),
+                                           work->comments()));
+    }
 }
 
 void FormEducationWork::setTable()
@@ -104,9 +125,9 @@ void FormEducationWork::deleteRow()
 {
     auto workRow = dynamic_cast<EducationRow*>(sender());
     if(QMessageBox::question(this,
-                             "Удаление",
-                             QString("Удалить %1 из списка?").arg(workRow->toString()))
-            == QMessageBox::No)
+                              "Удаление",
+                              QString("Удалить %1 из списка?").arg(workRow->toString()))
+        == QMessageBox::No)
         return;
 
     Database::get()->deleteWork(workRow->work());
@@ -128,7 +149,7 @@ void FormEducationWork::countFactValue(Month::Months month, int workType, int, E
     }
     emit monthValueChanged(month, workType, count, hourType);
     // if(hourType == EducationalHour::HourType::Factical)
-        // emit factValueChanged(month, workType, count);
+    // emit factValueChanged(month, workType, count);
     // else
     //     emit planMaonthValueChanged(month, workType, count);
 }

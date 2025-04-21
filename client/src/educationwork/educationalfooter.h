@@ -22,6 +22,13 @@ public:
     void setTotalValue(int value, QString name);
     void clear();
 
+    int totalFirstPlane();
+    int totalFirstFact();
+    int totalSecondPlane();
+    int totalSecondFact();
+    int totalYearPlane();
+    int totalYearFact();
+
 signals:
     void firstPlaneChanged(int);
     void secondPlaneChanged(int);

@@ -61,10 +61,10 @@ void EducationRow::addMonths(S status)
             emit valueChanged(hour);
 
             // if(hour->type() == EducationalHour::Factical){
-                auto month = static_cast<EducationMonth*>(sender());
-                int factCount = month->getTime(hour->type());
-                // int factCount = month->getTime( EducationalHour::Factical);
-                emit factValueChanged(month->month(), m_work->workFormId(), factCount, hour->type());
+            auto month = static_cast<EducationMonth*>(sender());
+            int factCount = month->getTime(hour->type());
+            // int factCount = month->getTime( EducationalHour::Factical);
+            emit factValueChanged(month->month(), m_work->workFormId(), factCount, hour->type());
             // }
         });
         ui->hl_months->addWidget(month);
@@ -163,6 +163,41 @@ void EducationRow::setRow(int row)
     ui->lbl_number->setText(QString::number(row));
 }
 
+int EducationRow::totalPlaneI() const
+{
+    return ui->lbl_firstPlan->text().toInt();
+}
+
+int EducationRow::totalFactI() const
+{
+    return ui->lbl_firstFact->text().toInt();
+}
+
+int EducationRow::totalPlaneII() const
+{
+    return ui->lbl_secondPlan->text().toInt();
+}
+
+int EducationRow::totalFactII() const
+{
+    return ui->lbl_secondFact->text().toInt();
+}
+
+int EducationRow::totalPlaneYear() const
+{
+    return ui->lbl_yearPlan->text().toInt();
+}
+
+int EducationRow::totalFactYear() const
+{
+    return ui->lbl_yearFact->text().toInt();
+}
+
+QString EducationRow::comments()
+{
+    return ui->text_comments->toPlainText();
+}
+
 int EducationRow::countMonthHourse(Month::Months month, EducationalHour::HourType type)
 {
     int count = 0;
@@ -177,6 +212,11 @@ int EducationRow::countMonthHourse(Month::Months month, EducationalHour::HourTyp
 int EducationRow::workForm()
 {
     return m_work->workFormId();
+}
+
+QString EducationRow::name() const
+{
+    return QString("%1/%2/%3").arg(ui->cb_discipline->currentText(), ui->cb_course->currentText(), ui->cb_workForm->currentText());
 }
 
 void EducationRow::setScrolBarValue(int val)

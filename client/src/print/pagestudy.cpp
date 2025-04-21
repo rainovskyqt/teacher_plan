@@ -42,6 +42,34 @@ void PageStudy::paintData(QPainter &painter)
 
     for(int week = startWeek; week <= endWeek; ++week)
         drawWeek(painter, m_weekStartTitle, week);
+
+    auto works = m_data->works();
+    QRect position = m_positionTitle;
+    position.setHeight(singleRow());
+    position.moveTop(position.bottom() + 1);
+
+    QRect name = m_workNameTitle;
+    name.setHeight(singleRow());
+    name.moveTop(position.top());
+
+    QRect typePlane = m_hoursTypeTitle;
+    typePlane.setHeight((singleRow() / 2) + 1);
+    typePlane.moveTop(position.top());
+    QRect typeFact = typePlane;
+    typeFact.setHeight(typeFact.height() - 1);
+    typeFact.moveTop(typePlane.bottom());
+
+    for(auto work = works.begin(); work != works.end(); ++work){
+        position.moveTop(position.bottom() + 1);
+        name.moveTop(position.top());
+        typePlane.moveTop(position.top());
+        typeFact.moveTop(typePlane.bottom() + 1);
+
+        drawCell(&painter, position, Qt::AlignCenter, QString::number(work.key()));
+        drawCell(&painter, name, Qt::AlignJustify|Qt::TextWordWrap, work.value()->name(), 0.5);
+        drawCell(&painter, typePlane, Qt::AlignCenter, "план", 0.5);
+        drawCell(&painter, typeFact, Qt::AlignCenter, "факт", 0.5);
+    }
 }
 
 void PageStudy::drawWeek(QPainter &p, QRect baseRect, int week)

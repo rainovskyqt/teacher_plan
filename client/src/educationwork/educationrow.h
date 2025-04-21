@@ -32,9 +32,19 @@ public:
     int row();
     void setRow(int row);
 
+    int totalPlaneI() const;
+    int totalFactI() const;
+    int totalPlaneII() const;
+    int totalFactII() const;
+    int totalPlaneYear() const;
+    int totalFactYear() const;
+    QString comments();
+
     int countMonthHourse(Month::Months month, EducationalHour::HourType type);
 
     int workForm();
+
+    QString name() const;
 
 public slots:
     void setScrolBarValue(int val);

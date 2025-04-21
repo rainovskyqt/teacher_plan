@@ -17,6 +17,7 @@ QT_END_NAMESPACE
 class User;
 class PrintTotalData;
 class PrintGenericData;
+class PrintStudyData;
 
 class MainWindow : public QMainWindow
 {
@@ -36,6 +37,7 @@ private slots:
     void setTotalTime(PrintTotalData *total);
     void setCompliteTime(PrintComplite *c);
     void setGenericTime(WorkType type, PrintGenericData *c);
+    void setStudyTime(PrintStudyData *c);
 
 private:
     Ui::MainWindow *ui;

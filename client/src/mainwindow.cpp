@@ -11,6 +11,7 @@
 #include <print/printform.h>
 
 #include <print/datafiles/printtotaldata.h>
+#include <print/datafiles/printstudydata.h>
 
 MainWindow::MainWindow(User *user, QWidget *parent)
     : QMainWindow(parent)
@@ -117,6 +118,7 @@ void MainWindow::on_action_print_triggered()
     connect(pf, &PrintForm::getTotalTime, this, &MainWindow::setTotalTime);
     connect(pf, &PrintForm::getCompliteTime, this, &MainWindow::setCompliteTime);
     connect(pf, &PrintForm::getGenericTime, this, &MainWindow::setGenericTime);
+    connect(pf, &PrintForm::getStudyTime, this, &MainWindow::setStudyTime);
 
     pf->exec();
 }
@@ -150,4 +152,9 @@ void MainWindow::setGenericTime(WorkType type, PrintGenericData *c)
         ui->tab_sport->setGenericTime(c);
     else if(type == WorkType::OtherWork)
         ui->tab_other->setGenericTime(c);
+}
+
+void MainWindow::setStudyTime(PrintStudyData *c)
+{
+    ui->tab_educationWork->setStudyTime(c);
 }
