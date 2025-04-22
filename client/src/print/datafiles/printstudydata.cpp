@@ -65,6 +65,16 @@ void PrintStudyWork::addHours(int week, int plane, int fact)
     m_hours.insert(week, qMakePair(plane, fact));
 }
 
+QString PrintStudyWork::comments() const
+{
+    return m_comments;
+}
+
+void PrintStudyWork::setComments(const QString &newComments)
+{
+    m_comments = newComments;
+}
+
 //======================================== PrintStudyData ==============================================
 PrintStudyData::PrintStudyData(QObject *parent) : PrintData(parent)
 {

@@ -50,25 +50,44 @@ void PageStudy::paintData(QPainter &painter)
 
     QRect name = m_workNameTitle;
     name.setHeight(singleRow());
-    name.moveTop(position.top());
 
-    QRect typePlane = m_hoursTypeTitle;
-    typePlane.setHeight((singleRow() / 2) + 1);
-    typePlane.moveTop(position.top());
-    QRect typeFact = typePlane;
-    typeFact.setHeight(typeFact.height() - 1);
-    typeFact.moveTop(typePlane.bottom());
+    QRect type = m_hoursTypeTitle;
+    type.setHeight((singleRow() / 2));
+
+    QRect comments = m_commentsTitle;
+    comments.setHeight(singleRow());
+
+    QRect typeHours = m_totalTitle;
+    typeHours.setHeight((singleRow() / 2));
+
+    QRect typeHoursYear = m_totalYearTitle;
+    typeHoursYear.setHeight((singleRow() / 2));
 
     for(auto work = works.begin(); work != works.end(); ++work){
         position.moveTop(position.bottom() + 1);
         name.moveTop(position.top());
-        typePlane.moveTop(position.top());
-        typeFact.moveTop(typePlane.bottom() + 1);
+        type.moveTop(position.top());
+        comments.moveTop(position.top());
+        typeHours.moveTop(position.top());
+        typeHoursYear.moveTop(position.top());
 
         drawCell(&painter, position, Qt::AlignCenter, QString::number(work.key()));
         drawCell(&painter, name, Qt::AlignJustify|Qt::TextWordWrap, work.value()->name(), 0.5);
-        drawCell(&painter, typePlane, Qt::AlignCenter, "план", 0.5);
-        drawCell(&painter, typeFact, Qt::AlignCenter, "факт", 0.5);
+        drawCell(&painter, type, Qt::AlignCenter, "план", 0.5);
+        type.moveTop(type.bottom() + 1);
+        drawCell(&painter, type, Qt::AlignCenter, "факт", 0.5);
+
+        drawCell(&painter, typeHours, Qt::AlignCenter,
+                 QString("%1").arg(m_data->isSecond() ? work.value()->totalPlaneII() : work.value()->totalPlaneI()));
+        typeHours.moveTop(typeHours.bottom() + 1);
+        drawCell(&painter, typeHours, Qt::AlignCenter,
+                 QString("%1").arg(m_data->isSecond() ? work.value()->totalFactII() : work.value()->totalFactI()));
+
+        drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalPlaneYear()));
+        typeHoursYear.moveTop(typeHoursYear.bottom() + 1);
+        drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalFactYear()));
+
+        drawCell(&painter, comments, Qt::AlignJustify|Qt::TextWordWrap, work.value()->comments(), 0.5);
     }
 }
 
@@ -82,6 +101,7 @@ void PageStudy::drawWeek(QPainter &p, QRect baseRect, int week)
     writeRect.moveTop(writeRect.bottom() + 1);
     drawCell(&p, writeRect, Qt::AlignCenter, QString::number(dates.second), 0.8);
     writeRect.moveTop(writeRect.bottom() + 1);
+    writeRect.setHeight(writeRect.height() + 2);
     drawCell(&p, writeRect, Qt::AlignCenter, QString::number(week), 0.8);
 }
 
@@ -106,7 +126,7 @@ void PageStudy::setRects()
     m_commentsTitle = QRect(m_totalYearTitle.right() + 1, m_workTitle.top(), point(50), singleRow() * 3);
 
     m_hoursTotalPlaneTitle = QRect(m_totalTitle.left(), m_totalTitle.bottom() + 1, point(17), ((singleRow() * 2) / 3));
-    m_hoursTotalFactTitle = QRect(m_totalTitle.left(), m_hoursTotalPlaneTitle.bottom() + 1, point(17), ((singleRow() * 2) / 3));
+    m_hoursTotalFactTitle = QRect(m_totalTitle.left(), m_hoursTotalPlaneTitle.bottom() + 1, point(17), ((singleRow() * 2) / 3) + 2);
 
     m_positionTitle = QRect(m_workTitle.left(), m_workTitle.bottom() + 1, point(5), singleRow() * 2);
     m_workNameTitle = QRect(m_positionTitle.right() + 1, m_workTitle.bottom() + 1, point(85), singleRow() * 2);

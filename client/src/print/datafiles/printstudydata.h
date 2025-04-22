@@ -22,6 +22,9 @@ public:
     QMap<int, QPair<int, int> > hours() const;
     void addHours(int week, int plane, int fact);
 
+    QString comments() const;
+    void setComments(const QString &newComments);
+
 private:
     int m_position;
     QString m_name;
