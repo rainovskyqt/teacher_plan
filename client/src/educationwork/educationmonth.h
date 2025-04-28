@@ -27,8 +27,8 @@ public:
     bool haveCurrentWeek(int week);
     void clear();
     void setNewWorkId(int id);
-
     Month::Months month() const;
+    QPair<bool, QPair<int, int>> weekHours(int week);     //bool - что такая неделя есть, <int, int> - план и факт
 
 signals:
     void hoursChanged(EducationalHour *hour);

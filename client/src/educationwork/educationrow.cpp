@@ -219,6 +219,18 @@ QString EducationRow::name() const
     return QString("%1/%2/%3").arg(ui->cb_discipline->currentText(), ui->cb_course->currentText(), ui->cb_workForm->currentText());
 }
 
+QPair<bool, QPair<int, int>> EducationRow::weekHours(int week)
+{
+    auto month = this->findChildren<EducationMonth*>();
+    for(auto m: month){
+        auto wh = m->weekHours(week);
+        if(wh.first){
+            return wh;
+        }
+    }
+    return qMakePair(false, qMakePair(-1,-1));
+}
+
 void EducationRow::setScrolBarValue(int val)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(val);

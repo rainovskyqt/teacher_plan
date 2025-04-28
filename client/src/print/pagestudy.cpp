@@ -46,7 +46,7 @@ void PageStudy::paintData(QPainter &painter)
     auto works = m_data->works();
     QRect position = m_positionTitle;
     position.setHeight(singleRow());
-    position.moveTop(position.bottom() + 1);
+    position.moveTop(position.bottom() + 2);
 
     QRect name = m_workNameTitle;
     name.setHeight(singleRow());
@@ -64,7 +64,7 @@ void PageStudy::paintData(QPainter &painter)
     typeHoursYear.setHeight((singleRow() / 2));
 
     for(auto work = works.begin(); work != works.end(); ++work){
-        position.moveTop(position.bottom() + 1);
+        position.moveTop(position.bottom() + 2);
         name.moveTop(position.top());
         type.moveTop(position.top());
         comments.moveTop(position.top());
@@ -74,8 +74,30 @@ void PageStudy::paintData(QPainter &painter)
         drawCell(&painter, position, Qt::AlignCenter, QString::number(work.key()));
         drawCell(&painter, name, Qt::AlignJustify|Qt::TextWordWrap, work.value()->name(), 0.5);
         drawCell(&painter, type, Qt::AlignCenter, "план", 0.5);
+
+        QRect planHour = type;
+        planHour.setWidth(m_weekStartTitle.width());
+        planHour.moveLeft(type.right() + 1);
         type.moveTop(type.bottom() + 1);
+
         drawCell(&painter, type, Qt::AlignCenter, "факт", 0.5);
+        QRect factHour = type;
+        factHour.setWidth(m_weekStartTitle.width());
+        factHour.moveLeft(type.right() + 1);
+        type.moveTop(type.bottom() + 1);
+
+        auto workHour = work.value()->hours();
+        int start = m_data->isSecond() ? 23 : 1;
+        int end = m_data->isSecond() ? 45 : 23;
+
+        for(int week = start;  week < end; ++week){
+            auto weekHours = workHour.value(week);
+            drawCell(&painter, planHour, Qt::AlignCenter, weekHours.first == 0 ? "" : QString::number(weekHours.first), 0.8);
+            planHour.moveLeft(planHour.right() + 1);
+
+            drawCell(&painter, factHour, Qt::AlignCenter, weekHours.second == 0 ? "" : QString::number(weekHours.second), 0.8);
+            factHour.moveLeft(factHour.right() + 1);
+        }
 
         drawCell(&painter, typeHours, Qt::AlignCenter,
                  QString("%1").arg(m_data->isSecond() ? work.value()->totalPlaneII() : work.value()->totalPlaneI()));

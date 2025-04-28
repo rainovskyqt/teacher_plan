@@ -39,12 +39,10 @@ public:
     int totalPlaneYear() const;
     int totalFactYear() const;
     QString comments();
-
     int countMonthHourse(Month::Months month, EducationalHour::HourType type);
-
     int workForm();
-
     QString name() const;
+    QPair<bool, QPair<int, int> > weekHours(int week);
 
 public slots:
     void setScrolBarValue(int val);

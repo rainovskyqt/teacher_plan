@@ -89,3 +89,15 @@ Month::Months EducationMonth::month() const
 {
     return m_month;
 }
+
+QPair<bool, QPair<int, int> > EducationMonth::weekHours(int week)
+{
+    auto weeks = this->findChildren<EducationWeek*>();
+    for(auto w: weeks){
+        if(w->number() == week){
+            auto wh = qMakePair(w->getTime(EducationalHour::Plane), (w->getTime(EducationalHour::Factical)));
+            return qMakePair(true, wh);
+        }
+    }
+    return qMakePair(false, qMakePair(-1,-1));
+}

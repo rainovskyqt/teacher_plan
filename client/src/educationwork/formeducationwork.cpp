@@ -40,11 +40,20 @@ void FormEducationWork::setStudyTime(PrintStudyData *c)
     for(int row = 0; row < ui->lw_educationWork->count(); ++row){
         auto item = ui->lw_educationWork->item(row);
         auto work = qobject_cast<EducationRow*>(ui->lw_educationWork->itemWidget(item));
-        c->addWork(work->row(), new PrintStudyWork(work->row(), work->name(),
-                                           work->totalPlaneI(), work->totalFactI(),
-                                           work->totalPlaneII(), work->totalFactII(),
-                                           work->totalPlaneYear(), work->totalFactYear(),
-                                           work->comments()));
+
+        auto psw = new PrintStudyWork(work->row(), work->name(),
+                                      work->totalPlaneI(), work->totalFactI(),
+                                      work->totalPlaneII(), work->totalFactII(),
+                                      work->totalPlaneYear(), work->totalFactYear(),
+                                      work->comments());
+        for(int week = 1; week < 45; ++week){
+            auto wh = work->weekHours(week);
+            if(wh.first){
+                auto h = wh.second;
+                psw->addHours(week, h.first, h.second);
+            }
+        }
+        c->addWork(work->row(), psw);
     }
 }
 
