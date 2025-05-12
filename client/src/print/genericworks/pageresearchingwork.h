@@ -8,7 +8,7 @@ class PageResearchingWork : public PageGenericWork
     Q_OBJECT
 
 public:
-    PageResearchingWork(int wigth, int height, int coefficient, QWidget *parent = nullptr);
+    PageResearchingWork(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
 };
 
 #endif // PAGERESEARCHINGWORK_H

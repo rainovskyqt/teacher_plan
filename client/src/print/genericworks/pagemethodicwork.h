@@ -7,7 +7,7 @@ class PageMethodicWork : public PageGenericWork
 {
     Q_OBJECT
 public:
-    PageMethodicWork(int wigth, int height, int coefficient, QWidget *parent = nullptr);
+    PageMethodicWork(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
 };
 
 #endif // PAGEMETHODICWORK_H

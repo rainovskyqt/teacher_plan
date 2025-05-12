@@ -2,8 +2,8 @@
 
 #include <QPainter>
 
-PageGenericWork::PageGenericWork(int wigth, int height, int coefficient, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, parent)
+PageGenericWork::PageGenericWork(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, parent)
 {
 }
 
@@ -15,13 +15,13 @@ void PageGenericWork::setData(PrintData *data)
 void PageGenericWork::paintData(QPainter &painter)
 {
     painter.setFont(m_fontMain);
-    if(m_data->isSecond()){
-    painter.drawText(m_approved, "СОГЛАСОВАНО");
-    painter.drawText(m_approvedUser, QString("%1\n"
-                                             "________________ %2\n"
-                                             "\"_____\" _______________ 20___г.")
-                                         .arg(m_data->approvedPost(), m_data->approvedUser())
-                     );
+    if(!m_data->isSecond() && m_pagePosition == PagePosition::First){
+        painter.drawText(m_approved, "СОГЛАСОВАНО");
+        painter.drawText(m_approvedUser, QString("%1\n"
+                                                 "________________ %2\n"
+                                                 "\"_____\" _______________ 20___г.")
+                                             .arg(m_data->approvedPost(), m_data->approvedUser())
+                         );
     }
 
     drawCell(&painter, m_title, Qt::AlignLeft, m_data->workName());
@@ -52,12 +52,14 @@ void PageGenericWork::paintData(QPainter &painter)
     drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, "");
     bottom += singleRow() + point(5);
 
-    painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
-                     QString("Преподаватель __________________/%1/").arg("________________"));
+    if(m_pagePosition == PagePosition::Last){
+        painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
+                         QString("Преподаватель __________________/%1/").arg("________________"));
 
-    bottom += singleRow() + point(5);
-    painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
-                     QString("Выполнение проверил заведующий кафедрой __________________/%1/").arg("________________"));
+        bottom += singleRow() + point(5);
+        painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
+                         QString("Выполнение проверил заведующий кафедрой __________________/%1/").arg("________________"));
+    }
 }
 
 void PageGenericWork::setRects()

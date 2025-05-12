@@ -16,13 +16,20 @@ class PrintPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit PrintPage(int absWigth, int absHeight, int coefficient, QWidget *parent = nullptr);
+    enum class PagePosition{
+        First,
+        Middle,
+        Last
+    };
+
+    explicit PrintPage(int absWigth, int absHeight, int coefficient, PagePosition position, QWidget *parent = nullptr);
     ~PrintPage();
 
     virtual void print(QPrinter *printer);
     virtual void paintEvent(QPaintEvent *e);
     virtual void setData(PrintData *data) = 0;
     void init();
+
 
 private:
     Ui::PrintPage *ui;
@@ -36,6 +43,7 @@ protected:
     const int m_rigthBord;
     const int m_topBord;
     const int m_bottomBord;
+    const PagePosition m_pagePosition;
 
     PrintData m_data;
 

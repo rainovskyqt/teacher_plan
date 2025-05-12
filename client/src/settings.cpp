@@ -174,3 +174,8 @@ int Settings::secondSemesterWeek()
 {
     return get<int>("secondSemester", 22);
 }
+
+int Settings::maxWorkRowCount()
+{
+    return get<int>("maxWorkRowCount", 30);
+}

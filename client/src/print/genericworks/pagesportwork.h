@@ -8,7 +8,7 @@ class PageSportWork : public PageGenericWork
     Q_OBJECT
 
 public:
-    PageSportWork(int wigth, int height, int coefficient, QWidget *parent = nullptr);
+    PageSportWork(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
 };
 
 #endif // PAGESPORTWORK_H

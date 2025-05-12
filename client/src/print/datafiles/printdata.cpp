@@ -14,4 +14,3 @@ void PrintData::setSecondSemester(bool newSecondSemester)
 {
     m_secondSemester = newSecondSemester;
 }
-

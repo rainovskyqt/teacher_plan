@@ -4,6 +4,9 @@
 #include <QMap>
 #include <QObject>
 
+#include "settings.h"
+
+
 class PrintData : public QObject
 {
     Q_OBJECT
@@ -15,6 +18,32 @@ public:
 
 protected:
     bool m_secondSemester;
+
+    template<typename T>
+    QVector<QMap<int, T>> splitData(QMap<int, T> &originalMap){
+        int chunkSize = Settings::get().maxWorkRowCount();
+        QVector<QMap<int, T>> chunks;
+        QMap<int, T> currentChunk;
+
+        int count = 0;
+        for (auto it = originalMap.begin(); it != originalMap.end(); ++it) {
+            currentChunk.insert(it.key(), it.value());
+            count++;
+
+            if (count == chunkSize) {
+                chunks.append(currentChunk);
+                currentChunk.clear();
+                count = 0;
+            }
+        }
+
+        if (!currentChunk.isEmpty()) {
+            chunks.append(currentChunk);
+        }
+
+        return chunks;
+    }
+
 };
 
 #endif // PRINTDATA_H

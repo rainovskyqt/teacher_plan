@@ -1,4 +1,5 @@
 #include "printstudydata.h"
+#include <QVector>
 
 PrintStudyWork::PrintStudyWork(int position, QString name, int totalPlaneI, int totalFactI,
                                int totalPlaneII, int totalFactII, int totalPlaneYear, int totalFactYear, QString comments, QObject *parent) :
@@ -55,8 +56,9 @@ int PrintStudyWork::totalFactYear() const
     return m_totalFactYear;
 }
 
-QMap<int, QPair<int, int> > PrintStudyWork::hours() const
+QMap<int, QPair<int, int>> PrintStudyWork::hours() const
 {
+
     return m_hours;
 }
 
@@ -160,7 +162,8 @@ void PrintStudyData::setTotalSecondFact(int newTotalSecondFact)
     m_totalSecondFact = newTotalSecondFact;
 }
 
-QMap<int, PrintStudyWork *> PrintStudyData::works() const
+QVector<QMap<int, PrintStudyWork *> > PrintStudyData::works()
 {
-    return m_works;
+    auto w = splitData(m_works);
+    return w;
 }

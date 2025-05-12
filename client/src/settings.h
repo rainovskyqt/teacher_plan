@@ -28,6 +28,8 @@ public:
 
     int secondSemesterWeek();
 
+    int maxWorkRowCount();
+
 private:
     Settings();
 

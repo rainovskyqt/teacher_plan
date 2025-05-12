@@ -5,8 +5,8 @@
 #define ROW_COUNT 10
 #define ROW_COF 1.2
 
-PageAnalysis::PageAnalysis(int wigth, int height, int coefficient, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, parent)
+PageAnalysis::PageAnalysis(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, parent)
 {
 }
 
@@ -22,8 +22,8 @@ void PageAnalysis::paintData(QPainter &painter)
     painter.drawText(m_title, Qt::AlignCenter, "VI. АНАЛИЗ ВЫПОЛНЕНИЯ ИНДИВИДУАЛЬНОГО ПЛАНА");
     painter.drawText(m_half, Qt::AlignCenter, QString("%1-е полугодие\n"
                                                        "Пояснения преподавателя по результатам выполнения нагрузки %2:")
-                                                  .arg(m_data->isSecond() ? "2" : "1")
-                                                  .arg(m_data->isSecond() ? "2-го полугодия и за год в целом" : "1-го полугодия"));
+                                                  .arg(m_data->isSecond() ? "2" : "1",
+                                                       m_data->isSecond() ? "2-го полугодия и за год в целом" : "1-го полугодия"));
     int row = m_half.bottom();
     for(int rowNumber = 1; rowNumber <= ROW_COUNT; ++rowNumber){
         int line = row + (singleRow() * ROW_COF) * rowNumber;

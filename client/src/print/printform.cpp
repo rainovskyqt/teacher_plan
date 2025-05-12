@@ -22,6 +22,9 @@
 #define PAGE_WIGTH 210
 #define PAGE_HEIGTH 297
 #define COEFFICIENT 4
+#define MAX_ROW_COUNT 30
+
+using PP = PrintPage::PagePosition;
 
 PrintForm::PrintForm(TeacherPlan *plan, User *user, QWidget *parent)
     : QDialog(parent)
@@ -46,8 +49,10 @@ void PrintForm::print()
     if(!printer)
         return;
 
-    PrintPage *p = qobject_cast<PrintPage*>(ui->vl_printData->itemAt(0)->widget());
-    p->print(printer);
+    for(int i = 0; i < ui->vl_printData->count(); ++i){
+        PrintPage *p = qobject_cast<PrintPage*>(ui->vl_printData->itemAt(i)->widget());
+        p->print(printer);
+    }
 
     delete printer;
 }
@@ -120,7 +125,7 @@ void PrintForm::on_btn_title_clicked()
     d->setPost(m_plan->getStaff().postName);
 
 
-    PageTitle *w = new PageTitle(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageTitle *w = new PageTitle(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(d);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -137,7 +142,7 @@ void PrintForm::on_btn_total_clicked()
     emit getTotalTime(d);
 
 
-    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(d);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -158,7 +163,7 @@ void PrintForm::on_btn_analisis_clicked()
     PrintAnalysisData *ad = new PrintAnalysisData(this);
     ad->setSecondSemester(ui->rb_second->isChecked());
 
-    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(ad);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -182,7 +187,7 @@ QPrinter::Orientation PrintForm::getOrientation()
 
     auto currentWidget = ui->vl_printData->itemAt(0)->widget();
     if(qobject_cast<PageComplete*>(currentWidget)){
-                o = QPrinter::Landscape;
+        o = QPrinter::Landscape;
     }
 
     return o;
@@ -198,7 +203,7 @@ void PrintForm::on_btn_complete_clicked()
     pc->setComments(m_plan->comments());
     emit getCompliteTime(pc);
 
-    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::First, this); //При горизонтальной ориентации меняем ширину и высоту местами
     w->setData(pc);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -215,7 +220,7 @@ void PrintForm::on_btn_workMethodic_clicked()
     gd->setWorkName("II. УЧЕБНО-МЕТОДИЧЕСКАЯ РАБОТА");
     emit getGenericTime(WorkType::MethodicWork, gd);
 
-    PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -229,13 +234,13 @@ void PrintForm::on_btn_researchingWork_clicked()
 
     PrintGenericData *gd = new PrintGenericData(this);
     gd->setApprovedPost("Проректор по научно-исследовательской\n"
-    "работе ФГБОУ ВО \"ВГАФК\"");
+                        "работе ФГБОУ ВО \"ВГАФК\"");
     gd->setApprovedUser("И.А. Фатьянов");
     gd->setSecondSemester(ui->rb_second->isChecked());
     gd->setWorkName("III. НАУЧНО-ИССЛЕДОВАТЕЛЬСКАЯ РАБОТА");
     emit getGenericTime(WorkType::ResearchingWork, gd);
 
-    PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -255,7 +260,7 @@ void PrintForm::on_btn_sportWork_clicked()
     gd->setWorkName("IV. ВОСПИТАТЕЛЬНАЯ И СПОРТИВНАЯ РАБОТА");
     emit getGenericTime(WorkType::SportWork, gd);
 
-    PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -275,7 +280,7 @@ void PrintForm::on_btn_otherWork_clicked()
     gd->setWorkName("V. ДРУГИЕ ВИДЫ РАБОТ");
     emit getGenericTime(WorkType::OtherWork, gd);
 
-    PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, this);
+    PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -291,9 +296,16 @@ void PrintForm::on_btn_workStudy_clicked()
     ps->setSecondSemester(ui->rb_second->isChecked());
     emit getStudyTime(ps);
 
-    PageStudy *w = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    PageStudy *w = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::First, this); //При горизонтальной ориентации меняем ширину и высоту местами
     w->setData(ps);
     w->init();
     ui->vl_printData->addWidget(w);
+
+    if(ps->works().count() > 1){
+        PageStudy *w1 = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::Last, this); //При горизонтальной ориентации меняем ширину и высоту местами
+        w1->setData(ps);
+        w1->init();
+        ui->vl_printData->addWidget(w1);
+    }
 }
 

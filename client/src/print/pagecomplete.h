@@ -9,7 +9,7 @@ class PageComplete : public PrintPage
 {
     Q_OBJECT
 public:
-    PageComplete(int wigth, int height, int coefficient, QWidget *parent = nullptr);
+    PageComplete(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
     void setData(PrintData *data) override;
 
 private:

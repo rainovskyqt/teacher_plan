@@ -64,7 +64,7 @@ public:
     int totalSecondFact() const;
     void setTotalSecondFact(int newTotalSecondFact);
 
-    QMap<int, PrintStudyWork *> works() const;
+    QVector<QMap<int, PrintStudyWork *>> works();
 
 private:
     int m_totalFirstPlane;
