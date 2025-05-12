@@ -15,13 +15,14 @@ void PageGenericWork::setData(PrintData *data)
 void PageGenericWork::paintData(QPainter &painter)
 {
     painter.setFont(m_fontMain);
-
+    if(m_data->isSecond()){
     painter.drawText(m_approved, "СОГЛАСОВАНО");
     painter.drawText(m_approvedUser, QString("%1\n"
                                              "________________ %2\n"
                                              "\"_____\" _______________ 20___г.")
                                          .arg(m_data->approvedPost(), m_data->approvedUser())
                      );
+    }
 
     drawCell(&painter, m_title, Qt::AlignLeft, m_data->workName());
     drawCell(&painter, m_hoursTitle, Qt::AlignCenter, "Кол-во часов", 0.8);
