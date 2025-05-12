@@ -22,16 +22,17 @@ void PageStudy::paintData(QPainter &painter)
     painter.setFont(m_fontMainBold);
 
     drawCell(&painter, m_workTitle, Qt::AlignLeft, "I. УЧЕБНАЯ РАБОТА");
-    drawCell(&painter, m_month1, Qt::AlignCenter, m_data->isSecond() ? "Февраль" : "Сентябрь");
-    drawCell(&painter, m_month2, Qt::AlignCenter, m_data->isSecond() ? "Март" : "Октябрь");
-    drawCell(&painter, m_month3, Qt::AlignCenter, m_data->isSecond() ? "Апрель" : "Ноябрь");
-    drawCell(&painter, m_month4, Qt::AlignCenter, m_data->isSecond() ? "Май" : "Декабрь");
-    drawCell(&painter, m_month5, Qt::AlignCenter, m_data->isSecond() ? "Июнь" : "Январь");
+    drawCell(&painter, m_month1, Qt::AlignCenter, m_data->isSecond() ? "Февраль" : "Сентябрь", 0.8);
+    drawCell(&painter, m_month2, Qt::AlignCenter, m_data->isSecond() ? "Март" : "Октябрь", 0.8);
+    drawCell(&painter, m_month3, Qt::AlignCenter, m_data->isSecond() ? "Апрель" : "Ноябрь", 0.8);
+    drawCell(&painter, m_month4, Qt::AlignCenter, m_data->isSecond() ? "Май" : "Декабрь", 0.8);
+    drawCell(&painter, m_month5, Qt::AlignCenter, m_data->isSecond() ? "Июнь" : "Январь", 0.8);
     drawCell(&painter, m_totalTitle, Qt::AlignCenter, m_data->isSecond() ? "II\nсем." : "I\nсем.", 0.8);
-    drawCell(&painter, m_totalYearTitle, Qt::AlignCenter, "За\nгод", 0.8);
+    if(m_data->isSecond())
+        drawCell(&painter, m_totalYearTitle, Qt::AlignCenter, "За\nгод", 0.8);
     drawCell(&painter, m_commentsTitle, Qt::AlignCenter, "Примечание");
-    drawCell(&painter, m_hoursTotalPlaneTitle, Qt::AlignCenter, "План");
-    drawCell(&painter, m_hoursTotalFactTitle, Qt::AlignCenter, "Факт");
+    drawCell(&painter, m_hoursTotalPlaneTitle, Qt::AlignCenter, "План", 0.8);
+    drawCell(&painter, m_hoursTotalFactTitle, Qt::AlignCenter, "Факт", 0.8);
 
     drawCell(&painter, m_positionTitle, Qt::AlignCenter, "№\n п/п", 0.8);
     drawCell(&painter, m_workNameTitle, Qt::AlignCenter|Qt::TextWordWrap, "Наименование дисциплины, курс, группа. Виды работ", 0.8);
@@ -73,14 +74,14 @@ void PageStudy::paintData(QPainter &painter)
 
         drawCell(&painter, position, Qt::AlignCenter, QString::number(work.key()));
         drawCell(&painter, name, Qt::AlignJustify|Qt::TextWordWrap, work.value()->name(), 0.5);
-        drawCell(&painter, type, Qt::AlignCenter, "план", 0.5);
+        drawCell(&painter, type, Qt::AlignCenter, "план", 0.6);
 
         QRect planHour = type;
         planHour.setWidth(m_weekStartTitle.width());
         planHour.moveLeft(type.right() + 1);
         type.moveTop(type.bottom() + 1);
 
-        drawCell(&painter, type, Qt::AlignCenter, "факт", 0.5);
+        drawCell(&painter, type, Qt::AlignCenter, "факт", 0.6);
         QRect factHour = type;
         factHour.setWidth(m_weekStartTitle.width());
         factHour.moveLeft(type.right() + 1);
@@ -92,22 +93,24 @@ void PageStudy::paintData(QPainter &painter)
 
         for(int week = start;  week < end; ++week){
             auto weekHours = workHour.value(week);
-            drawCell(&painter, planHour, Qt::AlignCenter, weekHours.first == 0 ? "" : QString::number(weekHours.first), 0.8);
+            drawCell(&painter, planHour, Qt::AlignCenter, weekHours.first == 0 ? "" : QString::number(weekHours.first), 0.7);
             planHour.moveLeft(planHour.right() + 1);
 
-            drawCell(&painter, factHour, Qt::AlignCenter, weekHours.second == 0 ? "" : QString::number(weekHours.second), 0.8);
+            drawCell(&painter, factHour, Qt::AlignCenter, weekHours.second == 0 ? "" : QString::number(weekHours.second), 0.7);
             factHour.moveLeft(factHour.right() + 1);
         }
 
         drawCell(&painter, typeHours, Qt::AlignCenter,
-                 QString("%1").arg(m_data->isSecond() ? work.value()->totalPlaneII() : work.value()->totalPlaneI()));
+                 QString("%1").arg(m_data->isSecond() ? work.value()->totalPlaneII() : work.value()->totalPlaneI()), 0.7);
         typeHours.moveTop(typeHours.bottom() + 1);
         drawCell(&painter, typeHours, Qt::AlignCenter,
-                 QString("%1").arg(m_data->isSecond() ? work.value()->totalFactII() : work.value()->totalFactI()));
+                 QString("%1").arg(m_data->isSecond() ? work.value()->totalFactII() : work.value()->totalFactI()), 0.7);
 
-        drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalPlaneYear()));
-        typeHoursYear.moveTop(typeHoursYear.bottom() + 1);
-        drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalFactYear()));
+        if(m_data->isSecond()){
+            drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalPlaneYear()), 0.7);
+            typeHoursYear.moveTop(typeHoursYear.bottom() + 1);
+            drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalFactYear()), 0.7);
+        }
 
         drawCell(&painter, comments, Qt::AlignJustify|Qt::TextWordWrap, work.value()->comments(), 0.5);
     }

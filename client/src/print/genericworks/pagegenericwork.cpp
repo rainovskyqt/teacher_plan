@@ -24,9 +24,9 @@ void PageGenericWork::paintData(QPainter &painter)
                      );
 
     drawCell(&painter, m_title, Qt::AlignLeft, m_data->workName());
-    drawCell(&painter, m_hoursTitle, Qt::AlignCenter, "Кол-во часов", 0.9);
-    drawCell(&painter, m_planeTitle, Qt::AlignCenter, "План", 0.9);
-    drawCell(&painter, m_factTitle, Qt::AlignCenter, "Факт", 0.9);
+    drawCell(&painter, m_hoursTitle, Qt::AlignCenter, "Кол-во часов", 0.8);
+    drawCell(&painter, m_planeTitle, Qt::AlignCenter, "План", 0.8);
+    drawCell(&painter, m_factTitle, Qt::AlignCenter, "Факт", 0.8);
     drawCell(&painter, m_commentsTitle, Qt::AlignCenter|Qt::TextWordWrap, "Отметка о выполнении с указанием сроков "
                                                                             "проведенеия и реквизитов подтверждающих документов ", 0.5);
 
