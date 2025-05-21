@@ -89,7 +89,7 @@ void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text, double mo
 
 double PrintPage::singleRow()
 {
-    int size = m_fontTitle.pointSize() * 1.2;
+    int size = m_fontTitle.pointSize() * 1.7;
     if(size % 2)
         size++;
     return size;

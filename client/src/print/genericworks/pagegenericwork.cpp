@@ -39,10 +39,10 @@ void PageGenericWork::paintData(QPainter &painter)
 
     for(auto const w: works){
         drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width(), m_position.height()), Qt::AlignCenter, QString::number(w->number()));
-        drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.8);
+        drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.6);
         drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->plane()));
         drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->fact()));
-        drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, w->getComments(), 0.8);
+        drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, w->getComments(), 0.6);
         bottom += m_position.height();
     }
 

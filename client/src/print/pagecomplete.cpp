@@ -75,27 +75,30 @@ void PageComplete::drawColumnNames(QPainter &painter)
 
 
     for(int column = 0; column < workTypes.count(); ++column){
-        drawCell(&painter, QRect(m_tableHeader.left() + m_cellWigth * column, m_tableHeader.bottom(), m_cellWigth, singleRow() * 4),
+        drawCell(&painter, QRect(m_tableHeader.left() + m_cellWigth * column, m_tableHeader.bottom() + 1, m_cellWigth, singleRow() * 4),
                  Qt::AlignCenter|Qt::TextWordWrap, workTypes.at(column).name(), 1.0, true);
     }
 
-    drawCell(&painter, QRect(m_tableHeader.left() + m_cellWigth * workTypes.count(), m_tableHeader.bottom(), m_cellWigth - 6, singleRow() * 4),
-             Qt::AlignCenter|Qt::TextWordWrap, "Всего\nчасов", 1.0, true);
+    auto r = QRect(m_tableHeader.left() + m_cellWigth * workTypes.count(), m_tableHeader.bottom() + 1, m_cellWigth - 6, singleRow() * 4);
+    r.setCoords(r.left(), r.top(), m_tableHeader.right(), r.bottom());
+    drawCell(&painter, r, Qt::AlignCenter|Qt::TextWordWrap, "Всего\nчасов", 1.0, true);
 }
 
 void PageComplete::drawValues(QPainter &painter)
 {
     auto values = m_data->values();
+    int col = 0;
 
     for(auto it = values.begin(); it != values.end(); ++it){
         auto val = it.value();
-        int offset = 0;
-        if(it.value() == values.first())
-            offset = 6;
-        drawCell(&painter, QRect(m_startCell.right() + m_cellWigth * val.first,
-                                 m_startCell.bottom() + m_cellHeigth * it.key(),
-                                 m_cellWigth - offset, m_cellHeigth),
-                 Qt::AlignCenter, it.value().second, 0.9);
+
+        auto r = QRect(m_startCell.right() + m_cellWigth * val.first,
+                       m_startCell.bottom() + m_cellHeigth * it.key(),
+                       m_cellWigth, m_cellHeigth);
+
+        if(it.value().first == 16)
+            r.setCoords(r.left(),r.top(), m_tableHeader.right(), r.bottom());
+        drawCell(&painter, r,Qt::AlignCenter,  it.value().second, 0.9);
     }
 
 }
@@ -105,7 +108,7 @@ void PageComplete::setRects()
     m_title = QRect(m_leftBord, point(5), m_rigthBord, singleRow());
     m_totalHourses = QRect(m_leftBord, m_title.bottom(), m_rigthBord, singleRow());
     m_startCell = QRect(m_leftBord - point(5), m_totalHourses.bottom(), point(17), singleRow() *5);
-    m_tableHeader = QRect(m_startCell.right(), m_startCell.top(), m_rigthBord - point(5), singleRow());
+    m_tableHeader = QRect(m_startCell.right(), m_startCell.top(), m_rigthBord - point(10), singleRow());
     m_comments = QRect(m_leftBord, 0, m_rigthBord - point(5), m_bottomBord);
 
     m_cellHeigth = singleRow();

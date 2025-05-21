@@ -73,7 +73,7 @@ void PageStudy::paintData(QPainter &painter)
         typeHoursYear.moveTop(position.top());
 
         drawCell(&painter, position, Qt::AlignCenter, QString::number(work.key()));
-        drawCell(&painter, name, Qt::AlignJustify|Qt::TextWordWrap, work.value()->name(), 0.5);
+        drawCell(&painter, name, Qt::AlignCenter|Qt::TextWordWrap, work.value()->name(), 0.5);
         drawCell(&painter, type, Qt::AlignCenter, "план", 0.6);
 
         QRect planHour = type;

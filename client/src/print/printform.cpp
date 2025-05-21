@@ -22,7 +22,7 @@
 #define PAGE_WIGTH 210
 #define PAGE_HEIGTH 297
 #define COEFFICIENT 4
-#define MAX_ROW_COUNT 30
+#define MAX_ROW_COUNT 25
 
 using PP = PrintPage::PagePosition;
 
