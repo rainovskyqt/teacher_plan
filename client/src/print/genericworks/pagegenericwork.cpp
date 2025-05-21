@@ -28,7 +28,7 @@ void PageGenericWork::paintData(QPainter &painter)
     drawCell(&painter, m_hoursTitle, Qt::AlignCenter, "Кол-во часов", 0.8);
     drawCell(&painter, m_planeTitle, Qt::AlignCenter, "План", 0.8);
     drawCell(&painter, m_factTitle, Qt::AlignCenter, "Факт", 0.8);
-    drawCell(&painter, m_commentsTitle, Qt::AlignCenter|Qt::TextWordWrap, "Отметка о выполнении с указанием сроков "
+    drawCell(&painter, m_commentsTitle, Qt::AlignCenter, "Отметка о выполнении с указанием сроков "
                                                                             "проведенеия и реквизитов подтверждающих документов ", 0.5);
 
     drawCell(&painter, m_semester, Qt::AlignCenter, m_data->isSecond() ? "ВТОРОЕ ПОЛУГОДИЕ" : "ПЕРВОЕ ПОЛУГОДИЕ");
@@ -39,17 +39,17 @@ void PageGenericWork::paintData(QPainter &painter)
 
     for(auto const w: works){
         drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width(), m_position.height()), Qt::AlignCenter, QString::number(w->number()));
-        drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.8);
-        drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->plane()));
-        drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->fact()));
-        drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, w->getComments(), 0.8);
+        drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify, w->name(), 0.8);
+        drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter, QString::number(w->plane()));
+        drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter, QString::number(w->fact()));
+        drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify, w->getComments(), 0.8);
         bottom += m_position.height();
     }
 
     drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width() + m_name.width(), m_position.height()), Qt::AlignRight, "Всего часов:");
-    drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(m_data->totalPlane()));
-    drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(m_data->totalFact()));
-    drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, "");
+    drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter, QString::number(m_data->totalPlane()));
+    drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter, QString::number(m_data->totalFact()));
+    drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify, "");
     bottom += singleRow() + point(5);
 
     if(m_pagePosition == PagePosition::Last){

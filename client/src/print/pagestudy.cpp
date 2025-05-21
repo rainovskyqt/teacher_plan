@@ -35,7 +35,7 @@ void PageStudy::paintData(QPainter &painter)
     drawCell(&painter, m_hoursTotalFactTitle, Qt::AlignCenter, "Факт", 0.8);
 
     drawCell(&painter, m_positionTitle, Qt::AlignCenter, "№\n п/п", 0.8);
-    drawCell(&painter, m_workNameTitle, Qt::AlignCenter|Qt::TextWordWrap, "Наименование дисциплины, курс, группа. Виды работ", 0.8);
+    drawCell(&painter, m_workNameTitle, Qt::AlignCenter, "Наименование дисциплины, курс, группа. Виды работ", 0.8);
     drawCell(&painter, m_hoursTypeTitle, Qt::AlignCenter, "");
 
     int startWeek = m_data->isSecond() ? Settings::get().secondSemesterWeek() + 1 : 1;
@@ -73,7 +73,7 @@ void PageStudy::paintData(QPainter &painter)
         typeHoursYear.moveTop(position.top());
 
         drawCell(&painter, position, Qt::AlignCenter, QString::number(work.key()));
-        drawCell(&painter, name, Qt::AlignJustify|Qt::TextWordWrap, work.value()->name(), 0.5);
+        drawCell(&painter, name, Qt::AlignJustify, work.value()->name(), 0.5);
         drawCell(&painter, type, Qt::AlignCenter, "план", 0.6);
 
         QRect planHour = type;
@@ -112,7 +112,7 @@ void PageStudy::paintData(QPainter &painter)
             drawCell(&painter, typeHoursYear, Qt::AlignCenter, QString("%1").arg(work.value()->totalFactYear()), 0.7);
         }
 
-        drawCell(&painter, comments, Qt::AlignJustify|Qt::TextWordWrap, work.value()->comments(), 0.5);
+        drawCell(&painter, comments, Qt::AlignJustify, work.value()->comments(), 0.5);
     }
 }
 

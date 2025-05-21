@@ -45,6 +45,8 @@ protected:
     const int m_bottomBord;
     const PagePosition m_pagePosition;
 
+    QRect m_currentCell;
+
     PrintData m_data;
 
     QFont m_fontMain;
@@ -55,7 +57,8 @@ protected:
     virtual void setRects() = 0;
 
     int point(int absPoint);
-    void drawCell(QPainter *p, QRect r, int flag = 0, QString text = "", double modification = 1.0, bool vertical = false);
+    void drawCell(QPainter *p, QRect r, Qt::Alignment alignment = Qt::AlignLeft, QString text = "",
+                  double modification = 1.0, double interval = 1.0, bool vertical = false, bool wordWrap = true);
     double singleRow();
 };
 

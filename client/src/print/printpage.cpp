@@ -3,6 +3,7 @@
 
 #include <QPainter>
 #include <QPrinter>
+#include <QTextLayout>
 
 PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, PagePosition position, QWidget *parent)
     : QWidget(parent)
@@ -69,21 +70,57 @@ int PrintPage::point(int absPoint)
     return absPoint * m_coef;
 }
 
-void PrintPage::drawCell(QPainter *p, QRect r, int flag, QString text, double modification, bool vertical)
+void PrintPage::drawCell(QPainter *p, QRect r, Qt::Alignment alignment, QString text, double modification,
+                         double interval, bool vertical, bool wordWrap)
 {
     p->save();
-
     p->setFont(QFont(p->font().family(), p->font().pointSize() * modification));
 
-    p->drawRect(r);
+    QRect rctPaint = r;
 
-    if(vertical){
-        p->translate(r.x(), r.y());
+    if (vertical) {
+        p->translate(rctPaint.x(), rctPaint.y() + rctPaint.height());
         p->rotate(-90);
-        p->drawText(-r.height(), 0, r.height(), r.width(), flag, text);
-    } else {
-        p->drawText(r, flag, text);
+        rctPaint.setWidth(r.height());
+        rctPaint.setHeight(r.width());
     }
+
+
+    QTextOption textOption;
+    textOption.setAlignment(alignment);
+    if (wordWrap)
+        textOption.setWrapMode(QTextOption::WordWrap);
+    else
+        textOption.setWrapMode(QTextOption::NoWrap);
+
+    QTextLayout textLayout(text, p->font());
+    textLayout.beginLayout();
+    textLayout.setTextOption(textOption);
+
+    qreal cursorY = 0;
+    QTextLine line;
+
+    while ((line = textLayout.createLine()).isValid()) {
+        line.setLineWidth(rctPaint.width());
+        if (vertical) {
+            line.setPosition(QPointF(0, cursorY));
+            cursorY += line.height() * interval;
+        } else {
+            line.setPosition(QPointF(0, cursorY));
+            cursorY += line.height() * interval;
+        }
+    }
+
+    textLayout.endLayout();
+
+    if (vertical) {
+        textLayout.draw(p, QPoint(0, 0)); // Для вертикального текста
+        p->drawRect(QRect(0, 0, rctPaint.width(), rctPaint.height()));
+    } else {
+        textLayout.draw(p, QPoint(rctPaint.x(), rctPaint.y())); // Для горизонтального текста
+        p->drawRect(rctPaint);
+    }
+
     p->restore();
 }
 
