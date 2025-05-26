@@ -19,6 +19,8 @@ Header::Header(QWidget *parent)
     ui->lbl_planNumbers->setVisible(false);
     ui->lbl_planNumbersText->setVisible(false);
 
+    ui->btn_toApprove->setVisible(false);
+
     setCurrentIndexes();
 }
 

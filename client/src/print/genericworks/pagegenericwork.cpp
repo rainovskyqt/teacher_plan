@@ -15,7 +15,7 @@ void PageGenericWork::setData(PrintData *data)
 void PageGenericWork::paintData(QPainter &painter)
 {
     painter.setFont(m_fontMain);
-    if(!m_data->isSecond() && m_pagePosition == PagePosition::First){
+    if(!m_data->approvedUser().isEmpty() && !m_data->isSecond() && m_pagePosition == PagePosition::First){
         painter.drawText(m_approved, "СОГЛАСОВАНО");
         painter.drawText(m_approvedUser, QString("%1\n"
                                                  "________________ %2\n"
