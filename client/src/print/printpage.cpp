@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QPrinter>
 
-PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, PagePosition position, QWidget *parent)
+PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, PagePosition position, int part, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PrintPage)
     , m_coef(coefficient)
@@ -15,6 +15,7 @@ PrintPage::PrintPage(int absWigth, int absHeight, int coefficient, PagePosition 
     , m_topBord(point(10))
     , m_bottomBord(m_height - point(10))
     , m_pagePosition(position)
+    , m_part(part)
 {
     ui->setupUi(this);
 }

@@ -125,7 +125,7 @@ void PrintForm::on_btn_title_clicked()
     d->setPost(m_plan->getStaff().postName);
 
 
-    PageTitle *w = new PageTitle(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageTitle *w = new PageTitle(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(d);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -142,7 +142,7 @@ void PrintForm::on_btn_total_clicked()
     emit getTotalTime(d);
 
 
-    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(d);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -163,7 +163,7 @@ void PrintForm::on_btn_analisis_clicked()
     PrintAnalysisData *ad = new PrintAnalysisData(this);
     ad->setSecondSemester(ui->rb_second->isChecked());
 
-    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(ad);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -203,7 +203,7 @@ void PrintForm::on_btn_complete_clicked()
     pc->setComments(m_plan->comments());
     emit getCompliteTime(pc);
 
-    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::First, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::First, 0, this); //При горизонтальной ориентации меняем ширину и высоту местами
     w->setData(pc);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -220,7 +220,7 @@ void PrintForm::on_btn_workMethodic_clicked()
     gd->setWorkName("II. УЧЕБНО-МЕТОДИЧЕСКАЯ РАБОТА");
     emit getGenericTime(WorkType::MethodicWork, gd);
 
-    PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -240,7 +240,7 @@ void PrintForm::on_btn_researchingWork_clicked()
     gd->setWorkName("III. НАУЧНО-ИССЛЕДОВАТЕЛЬСКАЯ РАБОТА");
     emit getGenericTime(WorkType::ResearchingWork, gd);
 
-    PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -260,7 +260,7 @@ void PrintForm::on_btn_sportWork_clicked()
     gd->setWorkName("IV. ВОСПИТАТЕЛЬНАЯ И СПОРТИВНАЯ РАБОТА");
     emit getGenericTime(WorkType::SportWork, gd);
 
-    PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -280,7 +280,7 @@ void PrintForm::on_btn_otherWork_clicked()
     gd->setWorkName("V. ДРУГИЕ ВИДЫ РАБОТ");
     emit getGenericTime(WorkType::OtherWork, gd);
 
-    PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, this);
+    PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
     w->setData(gd);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -296,16 +296,20 @@ void PrintForm::on_btn_workStudy_clicked()
     ps->setSecondSemester(ui->rb_second->isChecked());
     emit getStudyTime(ps);
 
-    PageStudy *w = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::First, this); //При горизонтальной ориентации меняем ширину и высоту местами
-    w->setData(ps);
-    w->init();
-    ui->vl_printData->addWidget(w);
+    for(int i = 0; i < ps->works().count(); ++i){
 
-    if(ps->works().count() > 1){
-        PageStudy *w1 = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::Last, this); //При горизонтальной ориентации меняем ширину и высоту местами
-        w1->setData(ps);
-        w1->init();
-        ui->vl_printData->addWidget(w1);
+        auto pagePosition =PP::Middle;
+        if(i == 0) {
+            pagePosition = PP::First;
+        }
+        if (i == ps->works().count() - 1) {
+            pagePosition = PP::Last;
+        }
+
+        PageStudy *w = new PageStudy(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, pagePosition, i, this); //При горизонтальной ориентации меняем ширину и высоту местами
+        w->setData(ps);
+        w->init();
+        ui->vl_printData->addWidget(w);
     }
 }
 

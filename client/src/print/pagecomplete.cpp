@@ -7,8 +7,8 @@
 
 #include <misc/month.h>
 
-PageComplete::PageComplete(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, position, parent)
+PageComplete::PageComplete(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, part, parent)
 {
 }
 

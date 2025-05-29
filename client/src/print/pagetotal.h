@@ -12,7 +12,7 @@ class PageTotal : public PrintPage
 {
     Q_OBJECT
 public:
-    PageTotal(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
+    PageTotal(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent = nullptr);
     void setData(PrintData *data) override;
 
 private:

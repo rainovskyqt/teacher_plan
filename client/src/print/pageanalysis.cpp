@@ -5,8 +5,8 @@
 #define ROW_COUNT 10
 #define ROW_COF 1.2
 
-PageAnalysis::PageAnalysis(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, position, parent)
+PageAnalysis::PageAnalysis(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, part, parent)
 {
 }
 

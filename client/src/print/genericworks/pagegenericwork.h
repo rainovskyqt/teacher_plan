@@ -10,7 +10,7 @@ class PageGenericWork : public PrintPage
     Q_OBJECT
 
 public:
-    PageGenericWork(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
+    PageGenericWork(int wigth, int height, int coefficient, PagePosition position, int part,  QWidget *parent = nullptr);
     void setData(PrintData *data) override;
 
 private:

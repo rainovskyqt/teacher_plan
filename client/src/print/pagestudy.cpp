@@ -5,8 +5,8 @@
 #include "datafiles/printstudydata.h"
 #include "settings.h"
 
-PageStudy::PageStudy(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, position, parent)
+PageStudy::PageStudy(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, part, parent)
     , m_data(nullptr)
 {
 }
@@ -44,7 +44,7 @@ void PageStudy::paintData(QPainter &painter)
     for(int week = startWeek; week <= endWeek; ++week)
         drawWeek(painter, m_weekStartTitle, week);
 
-    auto works = m_data->works().at(m_pagePosition == PagePosition::First ? 0 : 1);
+    auto works = m_data->works().at(m_part);
     QRect position = m_positionTitle;
     position.setHeight(singleRow());
     position.moveTop(position.bottom() + 2);

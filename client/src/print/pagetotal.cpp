@@ -3,8 +3,8 @@
 
 #include <QPainter>
 
-PageTotal::PageTotal(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, position, parent)
+PageTotal::PageTotal(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, part, parent)
 {}
 
 void PageTotal::setData(PrintData *data)

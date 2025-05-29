@@ -9,7 +9,7 @@ class PageStudy : public PrintPage
 {
     Q_OBJECT
 public:
-    explicit PageStudy(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
+    explicit PageStudy(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent = nullptr);
     void setData(PrintData *data) override;
 
 private:

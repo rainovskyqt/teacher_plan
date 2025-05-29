@@ -22,7 +22,7 @@ public:
         Last
     };
 
-    explicit PrintPage(int absWigth, int absHeight, int coefficient, PagePosition position, QWidget *parent = nullptr);
+    explicit PrintPage(int absWigth, int absHeight, int coefficient, PagePosition position, int part, QWidget *parent = nullptr);
     ~PrintPage();
 
     virtual void print(QPrinter *printer);
@@ -44,6 +44,7 @@ protected:
     const int m_topBord;
     const int m_bottomBord;
     const PagePosition m_pagePosition;
+    const int m_part;
 
     PrintData m_data;
 

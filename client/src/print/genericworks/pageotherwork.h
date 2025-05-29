@@ -8,7 +8,7 @@ class PageOtherWork : public PageGenericWork
     Q_OBJECT
 
 public:
-    PageOtherWork(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
+    PageOtherWork(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent = nullptr);
 };
 
 #endif // PAGEOTHERWORK_H

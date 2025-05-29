@@ -9,7 +9,7 @@ class PageTitle : public PrintPage
 {
     Q_OBJECT
 public:
-    explicit PageTitle(int wigth, int height, int coefficient, PagePosition position, QWidget *parent = nullptr);
+    explicit PageTitle(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent = nullptr);
     void setData(PrintData *data) override;
 
 private:

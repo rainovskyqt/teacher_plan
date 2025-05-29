@@ -45,7 +45,6 @@ private slots:
     void on_btn_researchingWork_clicked();
     void on_btn_sportWork_clicked();
     void on_btn_otherWork_clicked();
-
     void on_btn_workStudy_clicked();
 
 private:

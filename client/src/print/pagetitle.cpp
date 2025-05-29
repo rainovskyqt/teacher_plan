@@ -3,8 +3,8 @@
 
 #include <QPainter>
 
-PageTitle::PageTitle(int wigth, int height, int coefficient, PagePosition position, QWidget *parent) :
-    PrintPage(wigth, height, coefficient, position, parent)
+PageTitle::PageTitle(int wigth, int height, int coefficient, PagePosition position, int part, QWidget *parent) :
+    PrintPage(wigth, height, coefficient, position, part, parent)
 {
 }
 
