@@ -15,7 +15,7 @@ void PageGenericWork::setData(PrintData *data)
 void PageGenericWork::paintData(QPainter &painter)
 {
     painter.setFont(m_fontMain);
-    if(!m_data->approvedUser().isEmpty() && !m_data->isSecond() && m_pagePosition == PagePosition::First){
+    if(!m_data->approvedUser().isEmpty() && !m_data->isSecond() && (m_pagePosition == PagePosition::Single || m_pagePosition == PagePosition::First)){
         painter.drawText(m_approved, "СОГЛАСОВАНО");
         painter.drawText(m_approvedUser, QString("%1\n"
                                                  "________________ %2\n"
@@ -33,7 +33,7 @@ void PageGenericWork::paintData(QPainter &painter)
 
     drawCell(&painter, m_semester, Qt::AlignCenter, m_data->isSecond() ? "ВТОРОЕ ПОЛУГОДИЕ" : "ПЕРВОЕ ПОЛУГОДИЕ");
 
-    auto const works = m_data->works();
+    auto const works = m_data->works().at(m_part);
 
     int bottom = 0;
 
@@ -52,7 +52,7 @@ void PageGenericWork::paintData(QPainter &painter)
     drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignJustify|Qt::TextWordWrap, "");
     bottom += singleRow() + point(5);
 
-    if(m_pagePosition == PagePosition::Last){
+    if(m_pagePosition == PagePosition::Single || m_pagePosition == PagePosition::Last){
         painter.drawText(QRect(m_position.left(), m_position.top() + bottom, m_height, singleRow()),
                          QString("Преподаватель __________________/%1/").arg("________________"));
 
@@ -64,21 +64,21 @@ void PageGenericWork::paintData(QPainter &painter)
 
 void PageGenericWork::setRects()
 {
-    m_approved = QRect(point(110), m_topBord, m_rigthBord - point(110), 0);
+    m_approved = QRect(point(210), m_topBord, m_rigthBord - point(110), 0);
     if(!m_data->approvedUser().isEmpty() && !m_data->isSecond()){
         m_approved.setHeight(singleRow());
     }
 
     m_approvedUser = QRect(m_approved.left(), m_approved.bottom(), m_wigth, 0);
     if(!m_data->approvedUser().isEmpty() && !m_data->isSecond())
-        m_approvedUser.setHeight(singleRow() * 4.5);
+        m_approvedUser.setHeight(singleRow() * 4);
 
     m_title = QRect(m_leftBord, m_approvedUser.bottom(), point(130), singleRow());
+    m_semester = QRect(m_leftBord, m_title.bottom() + 1, m_rigthBord + point(5), singleRow());
     m_hoursTitle = QRect(m_title.right() + 1, m_title.top(), point(20), singleRow() / 2);
     m_planeTitle = QRect(m_title.right() + 1, m_hoursTitle.bottom() + 2, point(10), singleRow() / 2);
     m_factTitle = QRect(m_title.right() + point(10) + 1, m_hoursTitle.bottom() + 2, point(10), singleRow() / 2);
-    m_commentsTitle = QRect(m_title.right() + point(20) + 1, m_title.top(), point(45), singleRow());
-    m_semester = QRect(m_leftBord, m_title.bottom() + 1, m_rigthBord + point(5), singleRow());
+    m_commentsTitle = QRect(m_title.right() + point(20) + 1, m_title.top(), point(132), singleRow());
 
     m_position = QRect(m_title.left(), m_semester.bottom() + 1, point(5), singleRow() * 1.2);
     m_name = QRect(m_position.right() + 1, m_position.top(), m_title.width() - m_position.width(), singleRow() * 1.2);

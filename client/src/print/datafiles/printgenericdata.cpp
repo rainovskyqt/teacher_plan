@@ -61,11 +61,6 @@ void PrintGenericData::setApprovedUser(const QString &newApprovedUser)
     m_approvedUser = newApprovedUser;
 }
 
-const QMap<int, PrintGenericWork *> PrintGenericData::works() const
-{
-    return m_works;
-}
-
 void PrintGenericData::addWork(int position, PrintGenericWork *work)
 {
     if(auto w = m_works.value(position))
@@ -112,4 +107,10 @@ int PrintGenericData::totalFact() const
 void PrintGenericData::setTotalFact(int newTotalFact)
 {
     m_totalFact = newTotalFact;
+}
+
+QVector<QMap<int, PrintGenericWork *> > PrintGenericData::works()
+{
+    auto w = splitData(m_works, false);
+    return w;
 }

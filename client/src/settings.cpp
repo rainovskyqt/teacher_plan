@@ -175,7 +175,12 @@ int Settings::secondSemesterWeek()
     return get<int>("secondSemester", 22);
 }
 
-int Settings::maxWorkRowCount()
+int Settings::maxLandscapeWorkRowCount()
 {
-    return get<int>("maxWorkRowCount", 21);
+    return get<int>("maxLandscapeWorkRowCount", 15);
+}
+
+int Settings::maxPortraitWorkRowCount()
+{
+    return get<int>("maxPortraitWorkRowCount", 21);
 }

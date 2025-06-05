@@ -37,7 +37,7 @@ public:
     void setApprovedUser(const QString &newApprovedUser);
 
 
-    const QMap<int, PrintGenericWork *> works() const;
+    // const QMap<int, PrintGenericWork *> works() const;
     void addWork(int position, PrintGenericWork *work);
 
     QString department() const;
@@ -50,6 +50,8 @@ public:
     void setTotalPlane(int newTotalPlane);
     int totalFact() const;
     void setTotalFact(int newTotalFact);
+
+    QVector<QMap<int, PrintGenericWork *>> works();
 
 private:
     QString m_approvedPost;

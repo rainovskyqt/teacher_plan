@@ -17,6 +17,7 @@ class PrintPage : public QWidget
 
 public:
     enum class PagePosition{
+        Single,
         First,
         Middle,
         Last

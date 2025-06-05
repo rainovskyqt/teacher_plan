@@ -28,7 +28,8 @@ public:
 
     int secondSemesterWeek();
 
-    int maxWorkRowCount();
+    int maxPortraitWorkRowCount();
+    int maxLandscapeWorkRowCount();
 
 private:
     Settings();

@@ -20,8 +20,10 @@ protected:
     bool m_secondSemester;
 
     template<typename T>
-    QVector<QMap<int, T>> splitData(QMap<int, T> &originalMap){
-        int chunkSize = Settings::get().maxWorkRowCount();
+    QVector<QMap<int, T>> splitData(QMap<int, T> &originalMap, int landscape){
+        int chunkSize = landscape ?
+                            Settings::get().maxLandscapeWorkRowCount() :
+                            Settings::get().maxPortraitWorkRowCount();
         QVector<QMap<int, T>> chunks;
         QMap<int, T> currentChunk;
 

@@ -164,6 +164,6 @@ void PrintStudyData::setTotalSecondFact(int newTotalSecondFact)
 
 QVector<QMap<int, PrintStudyWork *> > PrintStudyData::works()
 {
-    auto w = splitData(m_works);
+    auto w = splitData(m_works, false);
     return w;
 }

@@ -125,7 +125,7 @@ void PrintForm::on_btn_title_clicked()
     d->setPost(m_plan->getStaff().postName);
 
 
-    PageTitle *w = new PageTitle(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
+    PageTitle *w = new PageTitle(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::Single, 0, this);
     w->setData(d);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -142,7 +142,7 @@ void PrintForm::on_btn_total_clicked()
     emit getTotalTime(d);
 
 
-    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
+    PageTotal *w = new PageTotal(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::Single, 0, this);
     w->setData(d);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -154,7 +154,6 @@ void PrintForm::on_btn_cancel_clicked()
     this->close();
 }
 
-
 void PrintForm::on_btn_analisis_clicked()
 {
     ui->w_semester->setVisible(true);
@@ -163,7 +162,7 @@ void PrintForm::on_btn_analisis_clicked()
     PrintAnalysisData *ad = new PrintAnalysisData(this);
     ad->setSecondSemester(ui->rb_second->isChecked());
 
-    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
+    PageAnalysis *w = new PageAnalysis(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::Single, 0, this);
     w->setData(ad);
     w->init();
     ui->vl_printData->addWidget(w);
@@ -188,7 +187,10 @@ QPrinter::Orientation PrintForm::getOrientation()
     auto currentWidget = ui->vl_printData->itemAt(0)->widget();
     if(qobject_cast<PageComplete*>(currentWidget)){
         o = QPrinter::Landscape;
+    } else if (qobject_cast<PageMethodicWork*>(currentWidget)){
+         o = QPrinter::Landscape;
     }
+
 
     return o;
 }
@@ -220,10 +222,22 @@ void PrintForm::on_btn_workMethodic_clicked()
     gd->setWorkName("II. УЧЕБНО-МЕТОДИЧЕСКАЯ РАБОТА");
     emit getGenericTime(WorkType::MethodicWork, gd);
 
-    PageMethodicWork *w = new PageMethodicWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
-    w->setData(gd);
-    w->init();
-    ui->vl_printData->addWidget(w);
+    for(int i = 0; i < gd->works().count(); ++i){
+
+        auto pagePosition =PP::Middle;
+        if(gd->works().count() == 1){
+            pagePosition =PP::Single;
+        } else if(i == 0) {
+            pagePosition = PP::First;
+        } else if (i == gd->works().count() - 1) {
+            pagePosition = PP::Last;
+        }
+
+        PageMethodicWork *w = new PageMethodicWork(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, pagePosition, i, this); //При горизонтальной ориентации меняем ширину и высоту местами
+        w->setData(gd);
+        w->init();
+        ui->vl_printData->addWidget(w);
+    }
 }
 
 
@@ -240,10 +254,22 @@ void PrintForm::on_btn_researchingWork_clicked()
     gd->setWorkName("III. НАУЧНО-ИССЛЕДОВАТЕЛЬСКАЯ РАБОТА");
     emit getGenericTime(WorkType::ResearchingWork, gd);
 
-    PageResearchingWork *w = new PageResearchingWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
-    w->setData(gd);
-    w->init();
-    ui->vl_printData->addWidget(w);
+    for(int i = 0; i < gd->works().count(); ++i){
+
+        auto pagePosition =PP::Middle;
+        if(gd->works().count() == 1){
+            pagePosition =PP::Single;
+        } else if(i == 0) {
+            pagePosition = PP::First;
+        } else if (i == gd->works().count() - 1) {
+            pagePosition = PP::Last;
+        }
+
+        PageResearchingWork *w = new PageResearchingWork(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, pagePosition, i, this); //При горизонтальной ориентации меняем ширину и высоту местами
+        w->setData(gd);
+        w->init();
+        ui->vl_printData->addWidget(w);
+    }
 }
 
 
@@ -260,10 +286,22 @@ void PrintForm::on_btn_sportWork_clicked()
     gd->setWorkName("IV. ВОСПИТАТЕЛЬНАЯ И СПОРТИВНАЯ РАБОТА");
     emit getGenericTime(WorkType::SportWork, gd);
 
-    PageSportWork *w = new PageSportWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
-    w->setData(gd);
-    w->init();
-    ui->vl_printData->addWidget(w);
+    for(int i = 0; i < gd->works().count(); ++i){
+
+        auto pagePosition =PP::Middle;
+        if(gd->works().count() == 1){
+            pagePosition =PP::Single;
+        } else if(i == 0) {
+            pagePosition = PP::First;
+        } else if (i == gd->works().count() - 1) {
+            pagePosition = PP::Last;
+        }
+
+        PageSportWork *w = new PageSportWork(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, pagePosition, i, this); //При горизонтальной ориентации меняем ширину и высоту местами
+        w->setData(gd);
+        w->init();
+        ui->vl_printData->addWidget(w);
+    }
 }
 
 
@@ -280,10 +318,22 @@ void PrintForm::on_btn_otherWork_clicked()
     gd->setWorkName("V. ДРУГИЕ ВИДЫ РАБОТ");
     emit getGenericTime(WorkType::OtherWork, gd);
 
-    PageOtherWork *w = new PageOtherWork(PAGE_WIGTH, PAGE_HEIGTH, COEFFICIENT, PP::First, 0, this);
-    w->setData(gd);
-    w->init();
-    ui->vl_printData->addWidget(w);
+    for(int i = 0; i < gd->works().count(); ++i){
+
+        auto pagePosition =PP::Middle;
+        if(gd->works().count() == 1){
+            pagePosition =PP::Single;
+        } else if(i == 0) {
+            pagePosition = PP::First;
+        } else if (i == gd->works().count() - 1) {
+            pagePosition = PP::Last;
+        }
+
+        PageOtherWork *w = new PageOtherWork(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, pagePosition, i, this); //При горизонтальной ориентации меняем ширину и высоту местами
+        w->setData(gd);
+        w->init();
+        ui->vl_printData->addWidget(w);
+    }
 }
 
 
@@ -299,10 +349,11 @@ void PrintForm::on_btn_workStudy_clicked()
     for(int i = 0; i < ps->works().count(); ++i){
 
         auto pagePosition =PP::Middle;
-        if(i == 0) {
+        if(ps->works().count() == 1){
+            pagePosition =PP::Single;
+        } else if(i == 0) {
             pagePosition = PP::First;
-        }
-        if (i == ps->works().count() - 1) {
+        } else if (i == ps->works().count() - 1) {
             pagePosition = PP::Last;
         }
 
