@@ -87,7 +87,6 @@ void PageComplete::drawColumnNames(QPainter &painter)
 void PageComplete::drawValues(QPainter &painter)
 {
     auto values = m_data->values();
-    int col = 0;
 
     for(auto it = values.begin(); it != values.end(); ++it){
         auto val = it.value();

@@ -187,7 +187,7 @@ QPrinter::Orientation PrintForm::getOrientation()
     auto currentWidget = ui->vl_printData->itemAt(0)->widget();
     if(qobject_cast<PageComplete*>(currentWidget)){
         o = QPrinter::Landscape;
-    } else if (qobject_cast<PageMethodicWork*>(currentWidget)){
+    } else if (qobject_cast<PageGenericWork*>(currentWidget)){
          o = QPrinter::Landscape;
     }
 
@@ -205,7 +205,7 @@ void PrintForm::on_btn_complete_clicked()
     pc->setComments(m_plan->comments());
     emit getCompliteTime(pc);
 
-    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::First, 0, this); //При горизонтальной ориентации меняем ширину и высоту местами
+    PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::Single, 0, this); //При горизонтальной ориентации меняем ширину и высоту местами
     w->setData(pc);
     w->init();
     ui->vl_printData->addWidget(w);

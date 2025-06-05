@@ -1,5 +1,7 @@
 #include "printgenericdata.h"
 
+#include <QVector>
+
 PrintGenericWork::PrintGenericWork(int number, const QString &name, int plane, int fact, const QString &comments, QObject *parent) :
     QObject(parent)
     , m_number(number)
@@ -111,6 +113,6 @@ void PrintGenericData::setTotalFact(int newTotalFact)
 
 QVector<QMap<int, PrintGenericWork *> > PrintGenericData::works()
 {
-    auto w = splitData(m_works, false);
+    auto w = splitData(m_works, true);
     return w;
 }

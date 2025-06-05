@@ -64,14 +64,19 @@ void PageGenericWork::paintData(QPainter &painter)
 
 void PageGenericWork::setRects()
 {
-    m_approved = QRect(point(210), m_topBord, m_rigthBord - point(110), 0);
-    if(!m_data->approvedUser().isEmpty() && !m_data->isSecond()){
+    bool approved = !m_data->approvedUser().isEmpty() &&
+            !m_data->isSecond() &&
+            (m_pagePosition == PagePosition::First || m_pagePosition == PagePosition::Single);
+
+    m_approved = QRect(point(200), m_topBord, m_rigthBord - point(110), 0);
+    if(approved){
         m_approved.setHeight(singleRow());
     }
 
     m_approvedUser = QRect(m_approved.left(), m_approved.bottom(), m_wigth, 0);
-    if(!m_data->approvedUser().isEmpty() && !m_data->isSecond())
+    if(approved){
         m_approvedUser.setHeight(singleRow() * 4);
+    }
 
     m_title = QRect(m_leftBord, m_approvedUser.bottom(), point(130), singleRow());
     m_semester = QRect(m_leftBord, m_title.bottom() + 1, m_rigthBord + point(5), singleRow());
