@@ -71,7 +71,7 @@ void FacultyPanel::loadStaff()
         // auto staffUnique = QSet<QPair<QString, int>>(staff.begin(), staff.end());
         QSet<QPair<QString, int>> staffUnique = QSet<QPair<QString, int>>::fromList(staff);
 
-        for(const auto value : qAsConst(staffUnique)) {
+        for(const auto &value : qAsConst(staffUnique)) {
             QTreeWidgetItem* childItem = new QTreeWidgetItem(parentItem);
             childItem->setData(0, Qt::UserRole, value.second);
             childItem->setText(0, value.first);
