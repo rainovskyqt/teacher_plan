@@ -33,17 +33,17 @@ void PageGenericWork::paintData(QPainter &painter)
 
     drawCell(&painter, m_semester, Qt::AlignCenter, m_data->isSecond() ? "ВТОРОЕ ПОЛУГОДИЕ" : "ПЕРВОЕ ПОЛУГОДИЕ");
 
-    auto const works = m_data->works().at(m_part);
-
     int bottom = 0;
-
-    for(auto const w: works){
-        drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width(), m_position.height()), Qt::AlignCenter, QString::number(w->number()));
-        drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.6);
-        drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->plane()));
-        drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->fact()));
-        drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignLeft|Qt::TextWordWrap, w->getComments(), 0.5);
-        bottom += m_position.height();
+    if(m_data->works().count() > 0) {
+        auto const works = m_data->works().at(m_part);
+        for(auto const w: works){
+            drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width(), m_position.height()), Qt::AlignCenter, QString::number(w->number()));
+            drawCell(&painter, QRect(m_name.left(), m_name.top() + bottom, m_name.width(), m_name.height()), Qt::AlignJustify|Qt::TextWordWrap, w->name(), 0.6);
+            drawCell(&painter, QRect(m_plane.left(), m_plane.top() + bottom, m_plane.width(), m_plane.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->plane()));
+            drawCell(&painter, QRect(m_fact.left(), m_fact.top() + bottom, m_fact.width(), m_fact.height()), Qt::AlignCenter|Qt::TextWordWrap, QString::number(w->fact()));
+            drawCell(&painter, QRect(m_comments.left(), m_comments.top() + bottom, m_comments.width(), m_comments.height()), Qt::AlignLeft|Qt::TextWordWrap, w->getComments(), 0.5);
+            bottom += m_position.height();
+        }
     }
 
     drawCell(&painter, QRect(m_position.left(), m_position.top() + bottom, m_position.width() + m_name.width(), m_position.height()), Qt::AlignRight, "Всего часов:");
@@ -65,8 +65,8 @@ void PageGenericWork::paintData(QPainter &painter)
 void PageGenericWork::setRects()
 {
     bool approved = !m_data->approvedUser().isEmpty() &&
-            !m_data->isSecond() &&
-            (m_pagePosition == PagePosition::First || m_pagePosition == PagePosition::Single);
+                    !m_data->isSecond() &&
+                    (m_pagePosition == PagePosition::First || m_pagePosition == PagePosition::Single);
 
     m_approved = QRect(point(200), m_topBord, m_rigthBord - point(110), 0);
     if(approved){

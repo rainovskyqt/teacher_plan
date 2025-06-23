@@ -191,7 +191,6 @@ QPrinter::Orientation PrintForm::getOrientation()
          o = QPrinter::Landscape;
     }
 
-
     return o;
 }
 
@@ -286,11 +285,11 @@ void PrintForm::on_btn_sportWork_clicked()
     gd->setWorkName("IV. ВОСПИТАТЕЛЬНАЯ И СПОРТИВНАЯ РАБОТА");
     emit getGenericTime(WorkType::SportWork, gd);
 
-    for(int i = 0; i < gd->works().count(); ++i){
+    for(int i = 0; i < gd->works().count() || i == 0; ++i){
 
         auto pagePosition =PP::Middle;
-        if(gd->works().count() == 1){
-            pagePosition =PP::Single;
+        if(gd->works().count() <= 1){
+            pagePosition = PP::Single;
         } else if(i == 0) {
             pagePosition = PP::First;
         } else if (i == gd->works().count() - 1) {
