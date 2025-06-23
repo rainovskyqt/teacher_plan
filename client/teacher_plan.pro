@@ -6,7 +6,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-VERSION = 0.0.1.16
+VERSION = 0.0.1.17
 
 SOURCES += \
     src/database/adapters/dictionaryadapter.cpp \

@@ -221,7 +221,7 @@ void PrintForm::on_btn_workMethodic_clicked()
     gd->setWorkName("II. УЧЕБНО-МЕТОДИЧЕСКАЯ РАБОТА");
     emit getGenericTime(WorkType::MethodicWork, gd);
 
-    for(int i = 0; i < gd->works().count(); ++i){
+    for(int i = 0; i < gd->works().count() || i == 0; ++i){
 
         auto pagePosition =PP::Middle;
         if(gd->works().count() == 1){
@@ -253,7 +253,7 @@ void PrintForm::on_btn_researchingWork_clicked()
     gd->setWorkName("III. НАУЧНО-ИССЛЕДОВАТЕЛЬСКАЯ РАБОТА");
     emit getGenericTime(WorkType::ResearchingWork, gd);
 
-    for(int i = 0; i < gd->works().count(); ++i){
+    for(int i = 0; i < gd->works().count() || i == 0; ++i){
 
         auto pagePosition =PP::Middle;
         if(gd->works().count() == 1){
@@ -317,7 +317,7 @@ void PrintForm::on_btn_otherWork_clicked()
     gd->setWorkName("V. ДРУГИЕ ВИДЫ РАБОТ");
     emit getGenericTime(WorkType::OtherWork, gd);
 
-    for(int i = 0; i < gd->works().count(); ++i){
+    for(int i = 0; i < gd->works().count() || i == 0; ++i){
 
         auto pagePosition =PP::Middle;
         if(gd->works().count() == 1){

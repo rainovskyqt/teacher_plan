@@ -17,6 +17,7 @@ public:
 
     int totalPlane() const;
     int totalFact() const;
+    void clearData();
 
 public slots:
     void setPosition(int val);

@@ -124,6 +124,8 @@ void FormGenerikWork::clearAllData()
 {
     clearData(ui->lw_first);
     clearData(ui->lw_second);
+    ui->w_footerFirst->clearData();
+    ui->w_footerSecond->clearData();
     emit clear();
 }
 

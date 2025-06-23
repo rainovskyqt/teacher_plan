@@ -25,6 +25,12 @@ int GenericFooter::totalFact() const
     return ui->lbl_fact->text().toInt();
 }
 
+void GenericFooter::clearData()
+{
+    ui->lbl_plan->setText("");
+    ui->lbl_fact->setText("");
+}
+
 void GenericFooter::setPosition(int val)
 {
     ui->scrollArea->horizontalScrollBar()->setValue(val);
