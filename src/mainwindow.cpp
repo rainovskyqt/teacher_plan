@@ -14,6 +14,7 @@
 #include "user/usermanager.h"
 
 #include <teacherplan/planemanager.h>
+#include "faculty/facultysettings.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -128,6 +129,7 @@ void MainWindow::init()
     initFacultyPanel();
     loadSpliterState();
     initConnections();
+    initStaffEdit();
 }
 
 void MainWindow::setTypes()
@@ -177,6 +179,16 @@ void MainWindow::initConnections()
     connect(ui->a_exit, &QAction::triggered, this, []{ qApp->exit(0); });
 }
 
+void MainWindow::initStaffEdit()
+{
+    using R = UserRights;
+    auto u = UserManager::get()->user();
+    if(u->hasAnyRights({R::DepartmentStaffEdit, R::TotalAdmin}))
+        ui->a_depStaffEdit->setEnabled(true);
+    else
+        ui->a_depStaffEdit->setEnabled(false);
+}
+
 void MainWindow::checkUpdateComments()
 {
     UpdateComments comments;
@@ -197,5 +209,13 @@ void MainWindow::on_btn_create_clicked()
 {
     PlaneManager::get()->savePlan(m_plan);
     getPlans(m_plan->staffId());
+}
+
+
+void MainWindow::on_a_depStaffEdit_triggered()
+{
+    FacultySettings *s = new FacultySettings(this);
+    s->exec();
+    s->deleteLater();
 }
 

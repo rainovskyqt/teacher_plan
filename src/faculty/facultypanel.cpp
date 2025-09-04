@@ -55,10 +55,10 @@ bool FacultyPanel::personalPlanOnly()
 
 void FacultyPanel::setYearModel()
 {
-    m_modelYear.setSourceModel(DictionaryManager::get()->years());
-    ui->cb_year->setModel(&m_modelYear);
+    auto years = DictionaryManager::get()->years();
+    ui->cb_year->setModel(years);
     ui->cb_year->setModelColumn(DictionaryModel::Name);
-
+    ui->cb_year->setCurrentIndex(years->currentYear());
 }
 
 void FacultyPanel::setUserData(User *user)
@@ -105,8 +105,9 @@ void FacultyPanel::setOwnPlans()
 void FacultyPanel::loadTechers(int index)
 {
     auto user = UserManager::get()->user();
+    auto years = DictionaryManager::get()->years();
     int dep = user->hasAnyRights({R::DepartmentTeacherPlans}) ? user->mainStaff()->departmentId() : 0;
-    int year = m_modelYear.data(m_modelYear.index(index, 0)).toInt();
+    int year = years->data(years->index(index, 0)).toInt();
 
     m_model.loadByDepartment(year, dep);
 }

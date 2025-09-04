@@ -18,7 +18,8 @@ Header::Header(QWidget *parent)
     this->setVisible(false);
 
     connect(ui->cb_years, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](){
-        int yearId = m_modelYear.data(m_modelYear.index(ui->cb_years->currentIndex(), DictionaryModel::Id)).toInt();
+        auto years = DictionaryManager::get()->years();;
+        int yearId = years->data(years->index(ui->cb_years->currentIndex(), DictionaryModel::Id)).toInt();
         Months::get()->loadSettings(yearId);
         setDepartments(yearId);
     });
@@ -57,7 +58,8 @@ void Header::setTeacher(int id)
 void Header::setDepartments(int index)
 {
     ui->cb_department->clear();
-    int id = m_modelYear.data(m_modelYear.index(index, DictionaryModel::Id)).toInt();
+    auto years = DictionaryManager::get()->years();
+    int id = years->data(years->index(index, DictionaryModel::Id)).toInt();
     auto deps = m_modelStaff.departments(id);
     for(const auto &d : qAsConst(deps))
         ui->cb_department->addItem(d.second, d.first);
@@ -95,9 +97,10 @@ void Header::setTeacherData()
 
 void Header::initYearModel()
 {
-    m_modelYear.setSourceModel(DictionaryManager::get()->years());
-    ui->cb_years->setModel(&m_modelYear);
+    auto years = DictionaryManager::get()->years();
+    ui->cb_years->setModel(years);
     ui->cb_years->setModelColumn(DictionaryModel::Name);
+    ui->cb_years->setCurrentIndex(years->currentYear());
     setDepartments(0);
 }
 

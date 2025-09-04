@@ -129,7 +129,8 @@ Settings Settings::get()
 
 QString Settings::dbHost()
 {
-    return get<QString>("dbHost", "127.0.0.1");
+    // return get<QString>("dbHost", "127.0.0.1");
+    return get<QString>("dbHost", "10.0.2.18");
 }
 
 void Settings::setDbHost(QString host)

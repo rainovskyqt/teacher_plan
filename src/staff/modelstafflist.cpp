@@ -77,7 +77,7 @@ void ModelStaffList::loadStaff(QString where, Arguments args)
 
 bool ModelStaffList::exists(const QVector<QPair<int, QString> > &list, const QString &name)
 {
-    for(auto v : list){
+    for(const auto &v : list){
         if(v.second == name)
             return true;
     }

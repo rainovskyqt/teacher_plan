@@ -24,6 +24,7 @@ list(APPEND PRJ_SRCS ${PRJ_SRCS0})
 
 add_executable(teacher_plan
     ${PROJECT_SOURCES}
+    src/faculty/facultysettings.h src/faculty/facultysettings.cpp src/faculty/facultysettings.ui
 )
 
 list(APPEND PRJ_RESOURCES

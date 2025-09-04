@@ -18,6 +18,7 @@ public:
     };
 
     explicit DictionaryModel(QObject *parent = nullptr);
+
 };
 
 #endif // DICTIONARYMODEL_H

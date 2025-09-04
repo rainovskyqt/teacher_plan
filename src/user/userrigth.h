@@ -13,7 +13,8 @@ public:
     enum Right{
         DepartmentTeacherPlans = 1,
         AllTeacherPlans,
-        OwnTeacherPlans
+        TotalAdmin,
+        DepartmentStaffEdit
     };
 
     explicit UserRights(QObject *parent = nullptr);

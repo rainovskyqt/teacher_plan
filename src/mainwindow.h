@@ -30,6 +30,8 @@ private slots:
     void setPlanRate(double rate);
     void on_btn_create_clicked();
 
+    void on_a_depStaffEdit_triggered();
+
 private:
     Ui::MainWindow *ui;
 
@@ -46,6 +48,7 @@ private:
     void saveSpliterState();
     void initFacultyPanel();
     void initConnections();
+    void initStaffEdit();
     void checkUpdateComments();
     void setPlanData();
 
