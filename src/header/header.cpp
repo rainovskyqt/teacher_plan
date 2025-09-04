@@ -37,7 +37,7 @@ void Header::init()
 {
     this->setVisible(true);
 
-    initModels();
+    setDepartments(0);
     setTeacherData();
 
     ui->lbl_planNumbers->setVisible(false);
@@ -83,25 +83,11 @@ void Header::changePost(int index)
     emit staffChanged(id);
 }
 
-void Header::initModels()
-{
-    initYearModel();
-}
-
 void Header::setTeacherData()
 {
     ui->line_fio->setText(QString("%1 %2 %3").arg(m_modelStaff.data(m_modelStaff.index(0, ModelStaffList::UserSurname)).toString(),
                                                   m_modelStaff.data(m_modelStaff.index(0, ModelStaffList::UserName)).toString(),
                                                   m_modelStaff.data(m_modelStaff.index(0, ModelStaffList::UserMiddleName)).toString()));
-}
-
-void Header::initYearModel()
-{
-    auto years = DictionaryManager::get()->years();
-    ui->cb_years->setModel(years);
-    ui->cb_years->setModelColumn(DictionaryModel::Name);
-    ui->cb_years->setCurrentIndex(years->currentYear());
-    setDepartments(0);
 }
 
 

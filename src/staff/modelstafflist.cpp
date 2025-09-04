@@ -57,6 +57,11 @@ QVector<QPair<int, QString>> ModelStaffList::posts(int depId)
     return post;
 }
 
+void ModelStaffList::departmentList(int year, int departmentId)
+{
+    loadDepartmentList(year, departmentId);
+}
+
 void ModelStaffList::loadStaff(QString where, Arguments args)
 {
     QString queryString = QString("SELECT U.id AS u_id, U.surname AS u_sname, U.`name` AS u_name, U.middle_name AS u_mname, "
@@ -69,6 +74,34 @@ void ModelStaffList::loadStaff(QString where, Arguments args)
                                   "LEFT JOIN teacher_plan TP ON TP.staff_id = S.id "
                                   "%1 "
                                   "ORDER BY U.surname, U.`name`, TP.rate DESC").arg(where);
+
+    auto query = Database::get()->selectQuery(queryString, args);
+
+    setQuery(query);
+}
+
+void ModelStaffList::loadDepartmentList(int yearId, int depId)
+{
+    QString queryString = QString("SELECT U.id AS u_id, "
+                                  "TRIM(CONCAT( "
+                                  "U.surname, ' ', "
+                                  "U.name, ' ', "
+                                  "U.middle_name, ' (', "
+                                  "COALESCE(GROUP_CONCAT(CONCAT(P.name, '(', TP.rate, ')') "
+                                  "ORDER BY P.name SEPARATOR ', '), ')'), ')' "
+                                  ")) AS name "
+                                  "FROM `user` U "
+                                  "INNER JOIN staff S ON S.user_id = U.id "
+                                  "INNER JOIN department D ON S.department_id = D.id "
+                                  "INNER JOIN post P ON S.post_id = P.id "
+                                  "LEFT JOIN teacher_plan TP ON TP.staff_id = S.id "
+                                  "WHERE S.year = :year AND S.department_id = :department_id "
+                                  "GROUP BY U.id, U.surname, U.name, U.middle_name "
+                                  "ORDER BY name;");
+
+    Arguments args;
+    args.insert(":year", yearId);
+    args.insert(":department_id", depId);
 
     auto query = Database::get()->selectQuery(queryString, args);
 

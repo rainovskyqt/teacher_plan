@@ -8,7 +8,8 @@ class ModelYear : public DictionaryModel
 public:
     explicit ModelYear(QObject *parent = nullptr);
 
-    int currentYear();
+    int currentYearIndex();
+    int currentYearId();
 };
 
 #endif // MODELYEAR_H

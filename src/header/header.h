@@ -50,9 +50,6 @@ private:
     ModelStaffList m_modelStaff;
 
     void setTeacherData();
-
-    void initModels();
-    void initYearModel();
 };
 
 #endif // HEADER_H

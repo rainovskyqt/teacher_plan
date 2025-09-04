@@ -54,7 +54,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cb_year"/>
+      <widget class="YearCombobox" name="cb_year"/>
      </item>
     </layout>
    </item>
@@ -91,6 +91,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>YearCombobox</class>
+   <extends>QComboBox</extends>
+   <header>misc/yearcombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

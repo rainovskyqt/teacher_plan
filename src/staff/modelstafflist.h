@@ -32,8 +32,11 @@ public:
     QVector<QPair<int, QString>> departments(int yearId);
     QVector<QPair<int, QString>> posts(int depId);
 
+    void departmentList(int year, int departmentId);
+
 private:
     void loadStaff(QString where, Arguments arg = {});
+    void loadDepartmentList(int yearId, int depId);
     bool exists(const QVector<QPair<int, QString>> &list, const QString &name);
 };
 

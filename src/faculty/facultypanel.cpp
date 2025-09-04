@@ -29,7 +29,6 @@ void FacultyPanel::init()
     setUserData(user);
 
     if(!personalPlanOnly()){
-        setYearModel();
         setModel();
         loadTechers(ui->cb_year->currentIndex());
         connect(ui->cb_year, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FacultyPanel::loadTechers);
@@ -51,14 +50,6 @@ bool FacultyPanel::personalPlanOnly()
                                     R::AllTeacherPlans});
 
     return !boss;
-}
-
-void FacultyPanel::setYearModel()
-{
-    auto years = DictionaryManager::get()->years();
-    ui->cb_year->setModel(years);
-    ui->cb_year->setModelColumn(DictionaryModel::Name);
-    ui->cb_year->setCurrentIndex(years->currentYear());
 }
 
 void FacultyPanel::setUserData(User *user)

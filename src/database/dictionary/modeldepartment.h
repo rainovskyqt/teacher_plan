@@ -7,6 +7,8 @@ class ModelDepartment : public DictionaryModel
 {
 public:
     explicit ModelDepartment(QObject *parent = nullptr);
+
+    int departmentIndex(int depId);
 };
 
 #endif // MODELDEPARTMENT_H

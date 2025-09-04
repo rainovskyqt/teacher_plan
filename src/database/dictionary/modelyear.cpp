@@ -10,7 +10,15 @@ ModelYear::ModelYear(QObject *parent)
     setQuery(query);
 }
 
-int ModelYear::currentYear()
+int ModelYear::currentYearId()
+{
+    auto row = currentYearIndex();
+    if(row)
+        return data(index(row, DictionaryModel::Id)).toInt();
+    return 0;
+}
+
+int ModelYear::currentYearIndex()
 {
     for(int i = 0; i < rowCount(); ++i){
         if(data(index(i, 2)).toInt() == 1)
