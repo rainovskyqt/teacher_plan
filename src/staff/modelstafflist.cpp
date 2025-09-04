@@ -82,22 +82,15 @@ void ModelStaffList::loadStaff(QString where, Arguments args)
 
 void ModelStaffList::loadDepartmentList(int yearId, int depId)
 {
-    QString queryString = QString("SELECT U.id AS u_id, "
-                                  "TRIM(CONCAT( "
-                                  "U.surname, ' ', "
-                                  "U.name, ' ', "
-                                  "U.middle_name, ' (', "
-                                  "COALESCE(GROUP_CONCAT(CONCAT(P.name, '(', TP.rate, ')') "
-                                  "ORDER BY P.name SEPARATOR ', '), ')'), ')' "
-                                  ")) AS name "
+    QString queryString = QString("SELECT U.id AS u_id, TRIM(CONCAT(U.surname, ' ', U.name, ' ', U.middle_name, "
+                                  "'(', P.`name`, '(', IFNULL(TP.rate, 'NOP'), ')', ')')) AS NAME, S.post_id "
                                   "FROM `user` U "
                                   "INNER JOIN staff S ON S.user_id = U.id "
-                                  "INNER JOIN department D ON S.department_id = D.id "
                                   "INNER JOIN post P ON S.post_id = P.id "
                                   "LEFT JOIN teacher_plan TP ON TP.staff_id = S.id "
                                   "WHERE S.year = :year AND S.department_id = :department_id "
-                                  "GROUP BY U.id, U.surname, U.name, U.middle_name "
-                                  "ORDER BY name;");
+                                  "GROUP BY U.id, U.surname, U.name, U.middle_name, S.post_id, P.`name`, TP.rate "
+                                  "ORDER BY name, TP.rate DESC");
 
     Arguments args;
     args.insert(":year", yearId);
