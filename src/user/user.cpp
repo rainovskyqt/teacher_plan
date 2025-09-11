@@ -114,6 +114,11 @@ bool User::hasAllRights(QList<UserRights::Right> rights)
     return true;
 }
 
+bool User::isAdmin()
+{
+    return hasAnyRights({UserRights::TotalAdmin});
+}
+
 
 
 

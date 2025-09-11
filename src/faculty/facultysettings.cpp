@@ -3,10 +3,14 @@
 
 #include <QDebug>
 #include <QListWidgetItem>
+#include <QMessageBox>
 
 #include <user/usermanager.h>
 #include <database/dictionary/dictionarymanager.h>
 #include "faculty/departmentlistview.h"
+
+#include <staff/staffmanager.h>
+#include <staff/staffsettings.h>
 
 FacultySettings::FacultySettings(QWidget *parent)
     : QDialog(parent)
@@ -33,9 +37,22 @@ void FacultySettings::init()
     connect(ui->cb_year, &YearCombobox::yearChanged, this, &FacultySettings::changeYear);
 }
 
+void FacultySettings::reloadList()
+{
+    auto model = ui->lv_faculties->model();
+    auto rows = ui->lv_faculties->selectionModel()->selectedIndexes();
+    if(rows.isEmpty())
+        return;
+
+    auto depId = model->data(model->index(rows.at(0).row(), DictionaryModel::Id)).toInt();
+
+    auto yearId = ui->cb_year->selectedYear();
+    selectDepartmentSettings(depId, yearId);
+}
+
 void FacultySettings::setBossVisible()
 {
-    bool admin = UserManager::get()->user()->hasAnyRights({UserRights::TotalAdmin});
+    bool admin = UserManager::get()->user()->isAdmin();
     ui->w_depBoss->setVisible(admin);
     ui->lv_faculties->setVisible(admin);
 }
@@ -62,7 +79,7 @@ void FacultySettings::selectDepartmentSettings(int depId, int yearId)
 
     m_staff->departmentList(year, depId);
     ui->lv_staffList->setModel(m_staff);
-    ui->lv_staffList->setModelColumn(1);
+    ui->lv_staffList->setModelColumn(ModelStaffList::DepUserFullname);
 }
 
 void FacultySettings::initStaffModel()
@@ -71,24 +88,62 @@ void FacultySettings::initStaffModel()
         m_staff = new ModelStaffList(this);
 }
 
+int FacultySettings::getStaffId()
+{
+    auto model = ui->lv_staffList->model();
+    auto indexList = ui->lv_staffList->selectionModel()->selectedIndexes();
+    if(indexList.count() == 0){
+        QMessageBox::information(this, "Не выбран сотрудник", "Выберите сотрудника из списка");
+        return 0;
+    }
+
+    auto staffId = model->data(model->index(indexList.at(0).row(), ModelStaffList::DepStaffId)).toInt();
+    return staffId;
+}
+
 void FacultySettings::on_lv_faculties_clicked(const QModelIndex &index)
 {
-    auto model = ui->lv_faculties->model();
-    auto depId = model->data(model->index(index.row(), DictionaryModel::Id)).toInt();
-
-    auto yearId = ui->cb_year->selectedYear();
-    selectDepartmentSettings(depId, yearId);
+    Q_UNUSED(index)
+    reloadList();
 }
 
 void FacultySettings::changeYear(int yearId)
 {
-    auto model = ui->lv_faculties->model();
-    auto indexList = ui->lv_faculties->selectionModel()->selectedIndexes();
-    if(indexList.count() == 0)
+    Q_UNUSED(yearId)
+    reloadList();
+}
+
+void FacultySettings::on_btn_add_clicked()
+{
+    StaffSettings *s = new StaffSettings(0, this);
+    s->exec();
+    s->deleteLater();
+    reloadList();
+}
+
+void FacultySettings::on_btn_edit_clicked()
+{
+    int id = getStaffId();
+    if(!id)
         return;
 
-    auto depId = model->data(model->index(indexList.at(0).row(), DictionaryModel::Id)).toInt();
+    StaffSettings *s = new StaffSettings(id, this);
+    s->exec();
+    s->deleteLater();
+    reloadList();
+}
 
-    selectDepartmentSettings(depId, yearId);
+void FacultySettings::on_btn_delete_clicked()
+{
+    int id = getStaffId();
+    if(!id)
+        return;
+
+    if(QMessageBox::information(this, "Удаление ставки", "Удалить ставку?") ==
+        QMessageBox::Cancel)
+        return;
+
+    StaffManager::get()->deleteStaff(id);
+    reloadList();
 }
 

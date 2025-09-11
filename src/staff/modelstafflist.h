@@ -12,7 +12,7 @@ class ModelStaffList : public QSqlQueryModel
 public:
     explicit ModelStaffList(QObject *parent = nullptr);
 
-    enum Fields{
+    enum StaffFields{
         UserId,
         UserSurname,
         UserName,
@@ -24,6 +24,12 @@ public:
         PostName,
         StaffMain,
         YearId
+    };
+
+    enum DepFields{
+        DepUserId,
+        DepStaffId,
+        DepUserFullname,
     };
 
     void loadByDepartment(int year, int departmentId);

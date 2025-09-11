@@ -45,7 +45,7 @@ User *UserManager::getUser(int id)
 
     QString queryString = "SELECT U.id AS 'uid', U.surname, U.name, U.middle_name, U.rang_id, R.name AS 'rname', "
                           "S.department_id, S.post_id, S.id AS staff_id, S.main AS main, D.name as d_name, P.name AS p_name, "
-                          "SAR.rights AS rights "
+                          "SAR.rights AS rights, S.rate AS rate, S.year AS year "
                           "FROM user U "
                           "LEFT JOIN `rang` R ON U.rang_id = R.id "
                           "INNER JOIN `staff` S ON S.user_id = U.id "
@@ -67,16 +67,35 @@ User *UserManager::getUser(int id)
         user->setSurname(answer.value("surname").toString());
         user->setName(answer.value("name").toString());
         user->setMiddleName(answer.value("middle_name").toString());
-        user->addStaff(new Staff(answer.value("staff_id").toInt(),
+        user->addStaff(new Staff(answer.value("uid").toInt(),
+                                 answer.value("staff_id").toInt(),
                                  answer.value("department_id").toInt(),
                                  answer.value("d_name").toString(),
                                  answer.value("post_id").toInt(),
                                  answer.value("p_name").toString(),
-                                 answer.value("main").toBool())
+                                 answer.value("main").toBool(),
+                                 answer.value("rate").toBool(),
+                                 answer.value("year").toBool())
                        );
         user->addRights(answer.value("rights").toString());
     }
     return user;
+}
+
+QVector<QPair<int, QString>> UserManager::allUserList()
+{
+    auto base = Database::get();
+
+    QString select = "SELECT id, CONCAT(surname, ' ', `name`, ' ', middle_name) AS full_name "
+                     "FROM `user` "
+                     "ORDER BY surname, `name`";
+    QVector<QPair<int, QString>> list;
+
+    auto answer = base->selectQuery(select);
+    while (answer.next()) {
+        list.append(qMakePair(answer.value("id").toInt(), answer.value("full_name").toString()));
+    }
+    return list;
 }
 
 User *UserManager::user() const

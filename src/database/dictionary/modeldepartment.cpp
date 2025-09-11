@@ -10,13 +10,3 @@ ModelDepartment::ModelDepartment(QObject *parent)
     auto query = Database::get()->selectQuery(queryString);
     setQuery(query);
 }
-
-int ModelDepartment::departmentIndex(int depId)
-{
-    for(int i = 0; i < rowCount(); ++i){
-        if(data(index(i, 0)).toInt() == depId)
-            return i;
-    }
-
-    return 0;
-}

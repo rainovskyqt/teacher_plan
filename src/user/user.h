@@ -43,6 +43,8 @@ public:
     bool hasAnyRights(QList<UserRights::Right> rights);
     bool hasAllRights(QList<UserRights::Right> rights);
 
+    bool isAdmin();
+
 private:
     int m_id;
     QString m_surname;

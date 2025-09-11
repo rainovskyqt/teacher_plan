@@ -10,6 +10,7 @@
 #include <mainwindow.h>
 #include "settings.h"
 #include <user/usermanager.h>
+#include "QPushButton"
 
 Login::Login(QWidget *parent) :
     QMainWindow(parent),
@@ -52,10 +53,3 @@ const QString Login::encodePassword(const QString &password) const
 {
     return QString(QCryptographicHash::hash((password.toUtf8()),QCryptographicHash::Md5).toHex());
 }
-
-void Login::on_btn_register_clicked()
-{
-    UserForm *user = new UserForm(this);
-    user->show();
-}
-

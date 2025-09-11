@@ -35,11 +35,14 @@
       </item>
       <item>
        <widget class="QRadioButton" name="rb_fullTime">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>1.0 ст.</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="rate" stdset="0">
          <double>1.000000000000000</double>
@@ -48,6 +51,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="rb_threeQuaters">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>0.75 ст.</string>
         </property>
@@ -61,6 +67,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="rb_halfTime">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>0.5 ст.</string>
         </property>
@@ -71,6 +80,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="rb_quaterTime">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>0.25 ст.</string>
         </property>

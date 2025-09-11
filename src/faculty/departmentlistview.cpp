@@ -9,6 +9,7 @@ void DepartmentListView::selectDepartment(int depId)
         if(model()->data(model()->index(row, 0)).toInt() == depId){
             QItemSelection sel(model()->index(row, 0), model()->index(row, model()->columnCount() - 1));
             selectionModel()->select(sel, QItemSelectionModel::Select);
+            break;
         }
     }
 }

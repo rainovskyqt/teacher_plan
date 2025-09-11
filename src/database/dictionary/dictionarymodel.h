@@ -7,6 +7,8 @@
 
 class DictionaryModel : public QSqlQueryModel
 {
+    Q_OBJECT
+
 public:
 
     enum Fields{
@@ -18,6 +20,8 @@ public:
     };
 
     explicit DictionaryModel(QObject *parent = nullptr);
+
+    int idRowIndex(int depId);
 
 };
 
