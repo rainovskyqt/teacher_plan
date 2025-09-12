@@ -8,14 +8,15 @@
 
 #include <database/dictionary/dictionarymanager.h>
 
-StaffSettings::StaffSettings(int staffId, QWidget *parent)
+StaffSettings::StaffSettings(int staffId, int departmentId, int yearId, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::StaffSettings)
     , m_staffId(staffId)
+    , m_yearId(yearId)
 {
     ui->setupUi(this);
 
-    init();
+    init(departmentId, yearId);
 }
 
 StaffSettings::~StaffSettings()
@@ -23,11 +24,13 @@ StaffSettings::~StaffSettings()
     delete ui;
 }
 
-void StaffSettings::init()
+void StaffSettings::init(int departmentId, int yearId)
 {
     setAdmin();
     setModels();
     setStaffData();
+    if(departmentId)
+        setBoxData(ui->cb_department, departmentId);
 
     connect(ui->buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &StaffSettings::saveStaff);
     connect(ui->buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &StaffSettings::close);
@@ -82,7 +85,7 @@ int StaffSettings::getId(QComboBox *box)
 
 void StaffSettings::saveStaff()
 {
-    auto userId = getId(ui->cb_user);
+    auto userId = ui->cb_user->currentData().toInt();
     auto depId = getId(ui->cb_department);
     auto postId = getId(ui->cb_post);
     auto rate = ui->cb_rate->currentText().toDouble();

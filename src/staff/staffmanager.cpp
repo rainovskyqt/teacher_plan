@@ -41,7 +41,13 @@ void StaffManager::saveStaff(int userId, Staff staff)
 
 void StaffManager::deleteStaff(int staffId)
 {
+    QMap<QString, QVariant> args;
+    args.insert(":id", staffId);
 
+    QString select = "DELETE FROM staff "
+                     "WHERE id = :id";
+
+    Database::get()->updateDeleteQuery(select, args);
 }
 
 Staff *StaffManager::getStaff(int staffId)

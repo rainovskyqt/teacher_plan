@@ -29,15 +29,15 @@ private slots:
     void getStaffPlan(int staff);
     void setPlanRate(double rate);
     void on_btn_create_clicked();
-
     void on_a_depStaffEdit_triggered();
 
 private:
     Ui::MainWindow *ui;
 
     enum Pages{
-        Message,
-        TotalTime
+        SelectTeacher,
+        NotCreate,
+        Plan
     };
 
     TeacherPlan *m_plan;

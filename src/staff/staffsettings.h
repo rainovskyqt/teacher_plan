@@ -13,13 +13,13 @@ class StaffSettings : public QDialog
     Q_OBJECT
 
 public:
-    explicit StaffSettings(int staffId, QWidget *parent = nullptr);
+    explicit StaffSettings(int staffId, int departmentId, int yearId, QWidget *parent = nullptr);
     ~StaffSettings();
 
 private:
     Ui::StaffSettings *ui;
 
-    void init();
+    void init(int departmentId, int yearId);
     void setAdmin();
     void setModels();
     void setStaffData();
@@ -29,6 +29,7 @@ private:
     void setUsers(QVector<QPair<int, QString> > list);
 
     const int m_staffId;
+    const int m_yearId;
 };
 
 #endif // STAFFSETTINGS_H

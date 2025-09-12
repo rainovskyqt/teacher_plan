@@ -15,6 +15,7 @@ class FacultySettings : public QDialog
 public:
     explicit FacultySettings(QWidget *parent = nullptr);
     ~FacultySettings();
+    void closeEvent(QCloseEvent *);
 
 private slots:
     void on_lv_faculties_clicked(const QModelIndex &index);
@@ -34,6 +35,7 @@ private:
     void selectDepartmentSettings(int depId, int yearId = 0);
     void initStaffModel();
     int getStaffId();
+    int departmentId();
 
     ModelStaffList *m_staff;
 };

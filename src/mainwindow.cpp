@@ -81,13 +81,13 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 void MainWindow::getPlans(int staffId)
 {
     if(!staffId){
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(SelectTeacher);
     } else {
         getStaffPlan(staffId);
         if(!m_plan->id()){
-            ui->stackedWidget->setCurrentIndex(1);
+            ui->stackedWidget->setCurrentIndex(NotCreate);
         } else {
-            ui->stackedWidget->setCurrentIndex(2);
+            ui->stackedWidget->setCurrentIndex(Plan);
             ui->tab_educationWork->setOwnPlan(staffId);
             ui->tab_educationWork->setPlan(m_plan->id());
             setPlanData();
@@ -215,6 +215,9 @@ void MainWindow::on_btn_create_clicked()
 void MainWindow::on_a_depStaffEdit_triggered()
 {
     FacultySettings *s = new FacultySettings(this);
+    connect(s, &QDialog::accepted, this, [this]{
+        ui->w_facultyPanel->loadTechers();
+    });
     s->exec();
     s->deleteLater();
 }

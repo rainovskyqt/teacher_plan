@@ -53,6 +53,7 @@ void Header::setTeacher(int id)
 
     m_modelStaff.loadByUserId(id);
     init();
+    emit staffChanged(id);
 }
 
 void Header::setDepartments(int index)

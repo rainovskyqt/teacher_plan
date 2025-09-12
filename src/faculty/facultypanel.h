@@ -24,6 +24,8 @@ public:
     void init();
     bool canBeVisible();
 
+public slots:
+    void loadTechers();
 
 signals:
     void staffChanged(int);

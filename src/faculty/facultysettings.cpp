@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <QPushButton>
 
 #include <user/usermanager.h>
 #include <database/dictionary/dictionarymanager.h>
@@ -27,6 +28,11 @@ FacultySettings::~FacultySettings()
     delete ui;
 }
 
+void FacultySettings::closeEvent(QCloseEvent *)
+{
+    emit accepted();
+}
+
 void FacultySettings::init()
 {
     setBossVisible();
@@ -35,19 +41,15 @@ void FacultySettings::init()
     selectOwnDepartment();
 
     connect(ui->cb_year, &YearCombobox::yearChanged, this, &FacultySettings::changeYear);
+    connect(ui->btn_close, &QPushButton::clicked, this, &QDialog::close);
 }
 
 void FacultySettings::reloadList()
 {
-    auto model = ui->lv_faculties->model();
-    auto rows = ui->lv_faculties->selectionModel()->selectedIndexes();
-    if(rows.isEmpty())
-        return;
-
-    auto depId = model->data(model->index(rows.at(0).row(), DictionaryModel::Id)).toInt();
-
+    auto depId = departmentId();
     auto yearId = ui->cb_year->selectedYear();
-    selectDepartmentSettings(depId, yearId);
+    if(depId && yearId)
+        selectDepartmentSettings(depId, yearId);
 }
 
 void FacultySettings::setBossVisible()
@@ -101,6 +103,17 @@ int FacultySettings::getStaffId()
     return staffId;
 }
 
+int FacultySettings::departmentId()
+{
+    auto model = ui->lv_faculties->model();
+    auto rows = ui->lv_faculties->selectionModel()->selectedIndexes();
+    if(rows.isEmpty())
+        return 0;
+
+    auto depId = model->data(model->index(rows.at(0).row(), DictionaryModel::Id)).toInt();
+    return depId;
+}
+
 void FacultySettings::on_lv_faculties_clicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -115,7 +128,9 @@ void FacultySettings::changeYear(int yearId)
 
 void FacultySettings::on_btn_add_clicked()
 {
-    StaffSettings *s = new StaffSettings(0, this);
+    auto yearId = ui->cb_year->selectedYear();
+    auto depId = departmentId();
+    StaffSettings *s = new StaffSettings(0, depId, yearId, this);
     s->exec();
     s->deleteLater();
     reloadList();
@@ -127,7 +142,7 @@ void FacultySettings::on_btn_edit_clicked()
     if(!id)
         return;
 
-    StaffSettings *s = new StaffSettings(id, this);
+    StaffSettings *s = new StaffSettings(id, 0, 0, this);
     s->exec();
     s->deleteLater();
     reloadList();

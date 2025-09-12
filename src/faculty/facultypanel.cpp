@@ -31,7 +31,8 @@ void FacultyPanel::init()
     if(!personalPlanOnly()){
         setModel();
         loadTechers(ui->cb_year->currentIndex());
-        connect(ui->cb_year, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &FacultyPanel::loadTechers);
+        connect(ui->cb_year, QOverload<int>::of(&QComboBox::currentIndexChanged),
+                this, QOverload<int>::of(&FacultyPanel::loadTechers));
         setOwnPlans();
     } else {
         loadPlans(UserManager::get()->user()->id());
@@ -91,6 +92,12 @@ void FacultyPanel::setOwnPlans()
     int ownId = UserManager::get()->user()->id();
     int depId = UserManager::get()->user()->mainStaff()->departmentId();
     ui->tree_plans->setCurrentIndex(model->getUserIndex(ownId, depId));
+}
+
+void FacultyPanel::loadTechers()
+{
+    auto index = ui->cb_year->currentIndex();
+    loadTechers(index);
 }
 
 void FacultyPanel::loadTechers(int index)
