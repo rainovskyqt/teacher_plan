@@ -202,6 +202,8 @@ void PrintForm::on_btn_complete_clicked()
 
     PrintComplite *pc = new PrintComplite(this);
     pc->setComments(m_plan->comments());
+    pc->setStartYear(m_plan->year().begin());
+     pc->setEndYear(m_plan->year().end());
     emit getCompliteTime(pc);
 
     PageComplete *w = new PageComplete(PAGE_HEIGTH, PAGE_WIGTH, COEFFICIENT, PP::Single, 0, this); //При горизонтальной ориентации меняем ширину и высоту местами

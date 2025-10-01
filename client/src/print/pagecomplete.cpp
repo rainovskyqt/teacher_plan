@@ -21,7 +21,7 @@ void PageComplete::paintData(QPainter &painter)
 {
     painter.setFont(m_fontMainBold);
     painter.drawText(m_title, Qt::AlignCenter, QString("ВЫПОЛНЕНИЕ УЧЕБНОЙ НАГРУЗКИ В ТЕЧЕНИИ %1 - %2 УЧЕБНОГО ГОДА")
-                                                   .arg("2024", "2025"));
+                                                   .arg(m_data->startYear(), m_data->endYear()));
 
     painter.setFont(m_fontMain);
     painter.drawText(m_totalHourses, Qt::AlignLeft, QString("Учебная годовая нагрузка %1 час.")

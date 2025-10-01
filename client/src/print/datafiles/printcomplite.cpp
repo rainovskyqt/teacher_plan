@@ -33,3 +33,23 @@ void PrintComplite::setTotalHours(int newTotalHours)
 {
     m_totalHours = newTotalHours;
 }
+
+QString PrintComplite::startYear() const
+{
+    return m_startYear;
+}
+
+void PrintComplite::setStartYear(const QString &newStartYear)
+{
+    m_startYear = newStartYear;
+}
+
+QString PrintComplite::endYear() const
+{
+    return m_endYear;
+}
+
+void PrintComplite::setEndYear(const QString &newEndYear)
+{
+    m_endYear = newEndYear;
+}
