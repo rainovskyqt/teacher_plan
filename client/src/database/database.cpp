@@ -534,9 +534,10 @@ int Database::saveGenericWork(TeacherWork *work)
 TeacherPlan * Database::requestPlan(UserPost post, int yearId)
 {
     QString queryString = "SELECT P.id AS pid, P.status_id, P.approved_user_id, P.approved_date, P.rate, P.protocol_number, "
-                          "P.protocol_date, S.user_id, S.department_id, P.comments "
+                          "P.protocol_date, S.user_id, S.department_id, P.comments, EY.begin_year, EY.end_year "
                           "FROM teacher_plan P "
                           "INNER JOIN staff S ON S.id = P.staff_id "
+                          "INNER JOIN educational_years EY ON EY.id = P.year_id "
                           "WHERE staff_id = :staff_id AND year_id = :year_id";
 
     Values vals;
@@ -547,7 +548,6 @@ TeacherPlan * Database::requestPlan(UserPost post, int yearId)
 
     TeacherPlan *plan = new TeacherPlan();  
     plan->setStaff(post);
-    plan->setYearId(yearId);
 
     if(query->next()){
         plan->setBaseId(query->value("pid").toInt());
@@ -558,6 +558,7 @@ TeacherPlan * Database::requestPlan(UserPost post, int yearId)
         plan->setProtocolNumber(query->value("protocol_number").toString());
         plan->setProtocolDate(query->value("protocol_date").toDate());
         plan->setComments(query->value("comments").toString());
+        plan->setYear(StudyYear(query->value("begin_year").toString(), query->value("end_year").toString(), yearId));
     }
 
     return plan;

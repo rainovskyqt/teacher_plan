@@ -35,12 +35,12 @@ void TeacherPlan::setBaseId(int newBaseId)
 
 int TeacherPlan::yearId() const
 {
-    return m_yearId;
+    return m_year.id();
 }
 
-void TeacherPlan::setYearId(int newYearId)
+void TeacherPlan::setYearId(int yearId)
 {
-    m_yearId = newYearId;
+    m_year.setId(yearId);
 }
 
 int TeacherPlan::statusId() const
@@ -136,4 +136,14 @@ QString TeacherPlan::comments() const
 void TeacherPlan::setComments(const QString &newComments)
 {
     m_comments = newComments;
+}
+
+StudyYear TeacherPlan::year() const
+{
+    return m_year;
+}
+
+void TeacherPlan::setYear(const StudyYear &newYear)
+{
+    m_year = newYear;
 }

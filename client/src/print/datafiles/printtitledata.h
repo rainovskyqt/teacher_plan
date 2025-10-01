@@ -11,10 +11,10 @@ public:
 
     QString studyRector() const;
     void setStudyRector(const QString &newStudyRector);
-    int startYear() const;
-    void setStartYear(int newStartYear);
-    int endYear() const;
-    void setEndYear(int newEndYear);
+    QString startYear() const;
+    void setStartYear(QString newStartYear);
+    QString endYear() const;
+    void setEndYear(QString newEndYear);
     QString office() const;
     void setOffice(const QString &newOffice);
     QString fio() const;
@@ -24,8 +24,8 @@ public:
 
 private:
     QString m_studyRector;
-    int m_startYear;
-    int m_endYear;
+    QString m_startYear;
+    QString m_endYear;
     QString m_office;
     QString m_fio;
     QString m_post;

@@ -58,7 +58,7 @@ public:
     void setBaseId(int newBaseId);
 
     int yearId() const;
-    void setYearId(int newYearId);
+    void setYearId(int yearId);
 
     int statusId() const;
     void setStatusId(int newStatusId);
@@ -88,11 +88,14 @@ public:
     QString comments() const;
     void setComments(const QString &newComments);
 
+    StudyYear year() const;
+    void setYear(const StudyYear &newYear);
+
 private:
     bool m_changed;
     int m_baseId;
     UserPost staff;
-    int m_yearId;
+    StudyYear m_year;
     int m_statusId;
     double m_rate;
     QString m_protocolNumber;

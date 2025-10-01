@@ -118,8 +118,8 @@ void PrintForm::on_btn_title_clicked()
 
     PrintTitleData *d = new PrintTitleData(this);
     d->setStudyRector("А.М. Безнебеева");
-    d->setStartYear(2024);
-    d->setEndYear(2025);
+    d->setStartYear(m_plan->year().begin());
+    d->setEndYear(m_plan->year().end());
     d->setOffice(m_plan->getStaff().depName);
     d->setFio(QString("%1 %2 %3").arg(m_user->userData()->surname(), m_user->userData()->name(), m_user->userData()->middle_name()));
     d->setPost(m_plan->getStaff().postName);

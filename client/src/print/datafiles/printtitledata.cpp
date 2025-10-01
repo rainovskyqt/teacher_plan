@@ -15,22 +15,22 @@ void PrintTitleData::setStudyRector(const QString &newStudyRector)
     m_studyRector = newStudyRector;
 }
 
-int PrintTitleData::startYear() const
+QString PrintTitleData::startYear() const
 {
     return m_startYear;
 }
 
-void PrintTitleData::setStartYear(int newStartYear)
+void PrintTitleData::setStartYear(QString newStartYear)
 {
     m_startYear = newStartYear;
 }
 
-int PrintTitleData::endYear() const
+QString PrintTitleData::endYear() const
 {
     return m_endYear;
 }
 
-void PrintTitleData::setEndYear(int newEndYear)
+void PrintTitleData::setEndYear(QString newEndYear)
 {
     m_endYear = newEndYear;
 }

@@ -30,6 +30,12 @@ private:
 class StudyYear
 {
 public:
+    StudyYear(){
+        m_begin = "2025";
+        m_end = "2026";
+        m_id = 0;
+    }
+
     StudyYear(const QString &begin, const QString &end, int id){
         m_begin = begin;
         m_end = end;
@@ -39,6 +45,7 @@ public:
     QString begin() const { return m_begin; }
     QString end() const { return m_end; }
     int id() const { return m_id; }
+    void setId(int newId) { m_id = newId; }
 
 private:
     QString m_begin;
